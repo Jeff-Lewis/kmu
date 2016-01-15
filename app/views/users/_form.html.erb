@@ -1,0 +1,73 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :userid %><br>
+    <%= f.text_field :userid %>
+  </div>
+  <div class="field">
+    <%= f.label :password %><br>
+    <%= f.text_field :password %>
+  </div>
+  <div class="field">
+    <%= f.label :lastname %><br>
+    <%= f.text_field :lastname %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :adress1 %><br>
+    <%= f.text_field :adress1 %>
+  </div>
+  <div class="field">
+    <%= f.label :adress2 %><br>
+    <%= f.text_field :adress2 %>
+  </div>
+  <div class="field">
+    <%= f.label :adress3 %><br>
+    <%= f.text_field :adress3 %>
+  </div>
+  <div class="field">
+    <%= f.label :phone1 %><br>
+    <%= f.text_field :phone1 %>
+  </div>
+  <div class="field">
+    <%= f.label :phone2 %><br>
+    <%= f.text_field :phone2 %>
+  </div>
+  <div class="field">
+    <%= f.label :org %><br>
+    <%= f.text_field :org %>
+  </div>
+  <div class="field">
+    <%= f.label :image %><br>
+    <%= f.text_field :image %>
+  </div>
+  <div class="field">
+    <%= f.label :costrate %><br>
+    <%= f.text_field :costrate %>
+  </div>
+  <div class="field">
+    <%= f.label :costinfo1 %><br>
+    <%= f.text_field :costinfo1 %>
+  </div>
+  <div class="field">
+    <%= f.label :costinfo2 %><br>
+    <%= f.text_field :costinfo2 %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
