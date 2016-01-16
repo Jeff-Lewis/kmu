@@ -1,10 +1,11 @@
-<p id="notice"><%= notice %></p>
+rails <p id="notice"><%= notice %></p>
 
 <h1>Listing Users</h1>
 
 <table>
   <thead>
     <tr>
+      <th>Image</th>
       <th>Userid</th>
       <th>Password</th>
       <th>Lastname</th>
@@ -26,6 +27,11 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
+        <td>
+        <% if user.avatar.url %>
+            <%= image_tag user.avatar.url(:medium) %>
+        <% end %>
+        </td>
         <td><%= user.userid %></td>
         <td><%= user.password %></td>
         <td><%= user.lastname %></td>
@@ -36,7 +42,7 @@
         <td><%= user.phone1 %></td>
         <td><%= user.phone2 %></td>
         <td><%= user.org %></td>
-        <td><%= user.image %></td>
+        <!--<td><%= user.image %></td>-->
         <td><%= user.costrate %></td>
         <td><%= user.costinfo1 %></td>
         <td><%= user.costinfo2 %></td>
