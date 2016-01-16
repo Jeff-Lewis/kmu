@@ -1,3 +1,4 @@
+
 <%= form_for @user, html: { multipart:true } do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
@@ -51,10 +52,12 @@
     <%= f.label :org %><br>
     <%= f.text_field :org %>
   </div>
-  <div class="field">
-    <%= f.label :avatar %><br>
-    <%= f.file_field :avatar %>
-  </div>
+
+    <div class="field">
+      <%= f.label :avatar %><br>
+      <%= f.file_field :avatar %>
+    </div>
+
   <div class="field">
     <%= f.label :costrate %><br>
     <%= f.text_field :costrate %>
