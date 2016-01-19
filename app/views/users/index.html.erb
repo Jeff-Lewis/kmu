@@ -1,15 +1,18 @@
 rails <p id="notice"><%= notice %></p>
 
 <h1>Listing Users</h1>
-
+  <%= button_to "Sort", users_path, :action => 'sorter', :method => :get %>
+  <%= $sorter %>
 <table>
   <thead>
     <tr>
       <th>Image</th>
+      <th>ID</th>
       <th>Userid</th>
       <th>Password</th>
       <th>Lastname</th>
       <th>Name</th>
+      <th>Project list</th>
       <th>Adress1</th>
       <th>Adress2</th>
       <th>Adress3</th>
@@ -29,13 +32,23 @@ rails <p id="notice"><%= notice %></p>
       <tr>
         <td>
         <% if user.avatar.url %>
-            <%= image_tag user.avatar.url(:medium) %>
+            <%= image_tag user.avatar.url(:small) %>
         <% end %>
         </td>
+        <td><% user.id %></td>
         <td><%= user.userid %></td>
         <td><%= user.password %></td>
         <td><%= user.lastname %></td>
         <td><%= user.name %></td>
+        <td>
+          <%= user.projects.count %>
+          <% user.projects.each do |u| %>
+            <%= u.name %>
+            <% if u.avatar.url %>
+                <%= image_tag u.avatar.url(:small) %>
+            <% end %>
+          <% end %>
+        </td>
         <td><%= user.adress1 %></td>
         <td><%= user.adress2 %></td>
         <td><%= user.adress3 %></td>

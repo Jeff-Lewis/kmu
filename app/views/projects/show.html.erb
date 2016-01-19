@@ -1,0 +1,58 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @project.name %>
+</p>
+<p>
+  <strong>Image:</strong><br>
+  <%= @project.avatar.url %><br>
+  <%= image_tag @project.avatar.url(:medium) %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%= @project.description %>
+</p>
+
+<p>
+  <strong>Adress1:</strong>
+  <%= @project.adress1 %>
+</p>
+
+<p>
+  <strong>Adress2:</strong>
+  <%= @project.adress2 %>
+</p>
+
+<p>
+  <strong>Adress3:</strong>
+  <%= @project.adress3 %>
+</p>
+
+<p>
+  <strong>Phone1:</strong>
+  <%= @project.phone1 %>
+</p>
+
+<p>
+  <strong>Phone2:</strong>
+  <%= @project.phone2 %>
+</p>
+
+<p>
+  <strong>Responsibility:</strong>
+  <%= @project.responsibility %>
+</p>
+
+<p>
+  <strong>Costinfo1:</strong>
+  <%= @project.costinfo1 %>
+</p>
+
+<p>
+  <strong>Costinfo2:</strong>
+  <%= @project.costinfo2 %>
+</p>
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>

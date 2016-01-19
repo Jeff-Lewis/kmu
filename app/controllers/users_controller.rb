@@ -4,7 +4,16 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    
+    
+    if $sorter == 'aufsteigend'
+      $sorter = 'absteigend'
+      @users = User.all.order('lastname DESC')
+    else
+      $sorter = 'aufsteigend'
+      @users = User.all.order('lastname ASC')
+    end
+    
   end
   
   def index1
