@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Workorders</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Subproject</th>
+      <th>User</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @workorders.each do |workorder| %>
+      <tr>
+        <td><%= workorder.subproject_id %></td>
+        <td><%= workorder.user_id %></td>
+        <td><%= workorder.name %></td>
+        <td><%= workorder.description %></td>
+        <td><%= link_to 'Show', workorder %></td>
+        <td><%= link_to 'Edit', edit_workorder_path(workorder) %></td>
+        <td><%= link_to 'Destroy', workorder, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Workorder', new_workorder_path %>

@@ -1,0 +1,11 @@
+<div class="panel panel-default background-color: black">
+  <div class="panel-body">
+   <%= image_tag("promis.jpg", :size => "50x50") %>  
+ 	 <div class="btn-group" role="group">
+  		<button type="button" class="btn btn-default"><%= link_to "Users", users_path %>
+  		<button type="button" class="btn btn-default"><%= link_to "Projects", projects_path %>
+  		<button type="button" class="btn btn-default"><%= link_to "Subprojects", subprojects_path %>
+  		<button type="button" class="btn btn-default"><%= link_to "Workorders", workorders_path %>
+ 		<button type="button" class="btn btn-default"><%= link_to "Admin", home_index_path %>
+  </div>
+</div>

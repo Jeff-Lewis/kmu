@@ -9,3 +9,9 @@ Rails.application.config.assets.version = '1.0'
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
+
+%w(b_obama.jpg)
+%w(einsteins_tongue.jpg)
+%w(man-156584_640.pgn)
+%w(manager-312603_640.pgn)
+%w(person-312160_640.pgn)

@@ -1,71 +1,109 @@
-rails <p id="notice"><%= notice %></p>
+<p id="notice"><%= notice %></p>
 
-<h1>Listing Users</h1>
-  <%= button_to "Sort", users_path, :action => 'sorter', :method => :get %>
-  <%= $sorter %>
-<table>
-  <thead>
-    <tr>
-      <th>Image</th>
-      <th>ID</th>
-      <th>Userid</th>
-      <th>Password</th>
-      <th>Lastname</th>
-      <th>Name</th>
-      <th>Project list</th>
-      <th>Adress1</th>
-      <th>Adress2</th>
-      <th>Adress3</th>
-      <th>Phone1</th>
-      <th>Phone2</th>
-      <th>Org</th>
-      <th>Image</th>
-      <th>Costrate</th>
-      <th>Costinfo1</th>
-      <th>Costinfo2</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div class='container'>
+  
+    <h1>Listing Users</h1>
 
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td>
-        <% if user.avatar.url %>
-            <%= image_tag user.avatar.url(:small) %>
-        <% end %>
-        </td>
-        <td><% user.id %></td>
-        <td><%= user.userid %></td>
-        <td><%= user.password %></td>
-        <td><%= user.lastname %></td>
-        <td><%= user.name %></td>
-        <td>
-          <%= user.projects.count %>
-          <% user.projects.each do |u| %>
-            <%= u.name %>
-            <% if u.avatar.url %>
-                <%= image_tag u.avatar.url(:small) %>
+    <%= button_to "Sort", users_path, :action => 'sorter', :method => :get %>
+    <%= $sorter %>
+  
+    <table class='table table-striped'>
+
+      <thead>
+        <tr>
+        <th></th>
+        <th>ID</th>
+        <th>Userid</th>
+        <th colspan=2>Name</th>
+        <th>Action</th>
+        <th colspan=3>Projects</th>
+        </tr>
+      </thead>
+
+      <tbody>
+      <% @users.each do |user| %>
+          <tr>
+            <td>
+            <% if user.avatar.url %>
+              <%= image_tag user.avatar.url(:small) %>
             <% end %>
-          <% end %>
-        </td>
-        <td><%= user.adress1 %></td>
-        <td><%= user.adress2 %></td>
-        <td><%= user.adress3 %></td>
-        <td><%= user.phone1 %></td>
-        <td><%= user.phone2 %></td>
-        <td><%= user.org %></td>
-        <!--<td><%= user.image %></td>-->
-        <td><%= user.costrate %></td>
-        <td><%= user.costinfo1 %></td>
-        <td><%= user.costinfo2 %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+            </td>
+            <td><%= user.id %></td>
+            <td><%= user.userid %></td>
+            <td><%= user.lastname %></td>
+            <td><%= user.name %></td>
+            <td>
+              <%= link_to 'Show', user %><br>
+              <%= link_to 'Edit', edit_user_path(user) %><br>
+              <%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %>
+            </td>
+            <td>
+              <table class='table table-striped'>
+                <tbody>
+                <% user.projects.each do |up| %>
+                  <tr>
+                    <td>
+                      <% if up.avatar.url %>
+                        <%= image_tag up.avatar.url(:small) %>
+                      <% end %>
+                    </td>
+                    <td><%= up.name %></td>
+                    <td>
+                      <% hu = User.find(up.user_id) %>
+                      <% if hu %>
+                        <%= image_tag hu.avatar.url(:small) %>
+                      <% end %>
+                    </td>
+                    <td>
+                      <%= link_to 'Show', up %><br>
+                      <%= link_to 'Edit', edit_project_path(up) %><br>
+                      <%= link_to 'Destroy', up, method: :delete, data: { confirm: 'Are you sure?' } %>
+                    </td>
+                    <td>
+                      <table class='table table-striped'>
+                        <tbody>
+                          <% up.subprojects.each do |sp| %>
+                            <tr>
+                                <td><%= sp.name %></td>
+                                <td>
+                                  <%= link_to 'Show', sp %><br>
+                                  <%= link_to 'Edit', edit_subproject_path(sp) %><br>
+                                  <%= link_to 'Destroy', sp, method: :delete, data: { confirm: 'Are you sure?' } %>
+                                </td>
+                                <td>
+                                  <table class='table table-striped'>
+                                    <tbody>
+                                      <% sp.workorders.each do |wo| %>
+                                        <tr>
+                                          <td><%= wo.name %></td>
+                                          <td>
+                                            <%= link_to 'Show', wo %><br>
+                                            <%= link_to 'Edit', edit_workorder_path(wo) %><br>
+                                            <%= link_to 'Destroy', wo, method: :delete, data: { confirm: 'Are you sure?' } %>
+                                          </td>
+                                          <td><%= button_to "Report h" %></td>
+                                        </tr>
+                                      <% end %>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+      <% end %> 
+      </tbody> 
+    
+    </table>  
+
+</div>
 
 <br>
 

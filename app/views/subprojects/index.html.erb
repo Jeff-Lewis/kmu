@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Subprojects</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>User</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @subprojects.each do |subproject| %>
+      <tr>
+        <td><%= subproject.project_id %></td>
+        <td><%= subproject.user_id %></td>
+        <td><%= subproject.name %></td>
+        <td><%= subproject.description %></td>
+        <td><%= link_to 'Show', subproject %></td>
+        <td><%= link_to 'Edit', edit_subproject_path(subproject) %></td>
+        <td><%= link_to 'Destroy', subproject, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Subproject', new_subproject_path %>

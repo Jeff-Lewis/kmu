@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @subproject.project_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @subproject.user_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @subproject.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @subproject.description %>
+</p>
+
+<%= link_to 'Edit', edit_subproject_path(@subproject) %> |
+<%= link_to 'Back', subprojects_path %>

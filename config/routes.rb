@@ -1,10 +1,16 @@
 Rails.application.routes.draw do
+  get 'home/index'
+
+  resources :workorders
+  resources :subprojects
   resources :projects
-  get 'user/index1'
 
   resources :users
-  root 'users#index'
+  
+  root 'home#index'
   get 'projects/index'
+  get 'subprojects/index'
+  get 'workorders/index'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
