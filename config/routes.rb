@@ -1,16 +1,23 @@
 Rails.application.routes.draw do
-  get 'home/index'
 
+  resources :accesses
   resources :workorders
   resources :subprojects
   resources :projects
-
   resources :users
   
-  root 'home#index'
+  root 'login#login'
+
+  post 'login/login'
+  get 'login/login'
+  get 'home/index'
+  get 'users/index'  
   get 'projects/index'
   get 'subprojects/index'
   get 'workorders/index'
+  
+  get '/choose_a_user', to: 'users#choose'
+  post '/choose_a_user', to: 'users#choose' 
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

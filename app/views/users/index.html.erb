@@ -80,6 +80,7 @@
                                             <%= link_to 'Show', wo %><br>
                                             <%= link_to 'Edit', edit_workorder_path(wo) %><br>
                                             <%= link_to 'Destroy', wo, method: :delete, data: { confirm: 'Are you sure?' } %>
+                                            <%= link_to 'Access rights', accesses_path(:wo => wo.id) %>
                                           </td>
                                           <td><%= button_to "Report h" %></td>
                                         </tr>

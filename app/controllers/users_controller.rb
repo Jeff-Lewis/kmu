@@ -3,9 +3,18 @@ class UsersController < ApplicationController
 
   # GET /users
   # GET /users.json
+  
+  def choose
+  if params[:searchstring] == nil or params[:searchstring] == ""
+     @users = User.all.order("lastname")
+  else
+    str = "name='"+params[:searchstring]+"' OR lastname='"+params[:searchstring]+"' OR userid ='"+params[:searchstring]+ "'"
+    @search = params[:searchstring]
+    @users = User.where(str).order("lastname")
+  end
+  end
+  
   def index
-    
-    
     if $sorter == 'aufsteigend'
       $sorter = 'absteigend'
       @users = User.all.order('lastname DESC')
@@ -84,4 +93,5 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:userid, :password, :lastname, :name, :adress1, :adress2, :adress3, :phone1, :phone2, :org, :costrate, :costinfo1, :avatar )
     end
+    
 end

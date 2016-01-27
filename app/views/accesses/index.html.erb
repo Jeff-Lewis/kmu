@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Accesses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="4">User</th>
+      <th>cost rate</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @accesses.each do |access| %>
+      <tr>
+          <% @u = User.find(access.user_id) %>
+          <% if @u %>
+            <td>
+            <% if @u.avatar.url %>
+              <%= image_tag @u.avatar.url(:small) %>
+            <% end %>
+            </td>
+            <td><%= @u.lastname %></td>
+            <td><%= @u.name %></td>
+            <td><%= @u.userid %></td>
+          <% end %> 
+        <td><%= access.costrate %></td>
+        <td><%= link_to 'Show', access %></td>
+        <td><%= link_to 'Edit', edit_access_path(access) %></td>
+        <td><%= link_to 'Destroy', access, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<%= link_to 'New Access', choose_a_user_path %>

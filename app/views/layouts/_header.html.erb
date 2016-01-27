@@ -1,11 +1,22 @@
-<div class="panel panel-default background-color: black">
-  <div class="panel-body">
-   <%= image_tag("promis.jpg", :size => "50x50") %>  
- 	 <div class="btn-group" role="group">
-  		<button type="button" class="btn btn-default"><%= link_to "Users", users_path %>
-  		<button type="button" class="btn btn-default"><%= link_to "Projects", projects_path %>
-  		<button type="button" class="btn btn-default"><%= link_to "Subprojects", subprojects_path %>
-  		<button type="button" class="btn btn-default"><%= link_to "Workorders", workorders_path %>
- 		<button type="button" class="btn btn-default"><%= link_to "Admin", home_index_path %>
-  </div>
-</div>
+<!--<div class="container">-->
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header navbar-lead">
+          <class="navbar-brand" navbar-strong><%= link_to "ProMIS", home_index_path %></class>
+          <%= image_tag("promis.jpg", :size => "50x50") %>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><%= link_to "Report", home_index_path %></li>
+        <li><%= link_to "Plan", home_index_path %></li>
+        <li><%= link_to "Users", users_path %></li>
+        <li><%= link_to "Projects", projects_path %></li>
+        <li><%= link_to "Access rights", accesses_path %></li>
+       </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "Login", login_login_path %></li>
+        <li><%= link_to "Logout", home_index_path %></li>
+        <li><%= link_to "Sign Up", home_index_path %></li>
+      </ul>
+    </div>
+  </nav>
+<!--</div>-->

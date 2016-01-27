@@ -15,3 +15,5 @@ Rails.application.config.assets.version = '1.0'
 %w(man-156584_640.pgn)
 %w(manager-312603_640.pgn)
 %w(person-312160_640.pgn)
+%w(promis.jpg)
+%w(bg.jpg)

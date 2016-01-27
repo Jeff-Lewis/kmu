@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @access.user_id %>
+</p>
+
+<p>
+  <strong>Workorder:</strong>
+  <%= @access.workorder_id %>
+</p>
+
+<p>
+  <strong>Access:</strong>
+  <%= @access.access %>
+</p>
+
+<p>
+  <strong>Costrate:</strong>
+  <%= @access.costrate %>
+</p>
+
+<%= link_to 'Edit', edit_access_path(@access) %> |
+<%= link_to 'Back', accesses_path(:wo => @access.workorder_id) %>

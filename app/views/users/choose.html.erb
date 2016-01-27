@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<div class='container'>
+  
+    <h1>Choosing Users</h1>
+
+    <%= form_tag do %>
+      <%= label_tag "Username" %>
+      <%= search_field_tag :searchstring, value=@search %>
+      <%= button_tag "Search", class:"btn btn-default" %>
+    <% end %>
+  
+    <table class='table table-striped'>
+
+      <thead>
+        <tr>
+        <th></th>
+        <th>ID</th>
+        <th>Userid</th>
+        <th colspan=2>Name</th>
+        <th>Select</th>
+        </tr>
+      </thead>
+
+      <tbody>
+      <% @users.each do |user| %>
+          <tr>
+            <td>
+            <% if user.avatar.url %>
+              <%= image_tag user.avatar.url(:small) %>
+            <% end %>
+            </td>
+            <td><%= user.id %></td>
+            <td><%= user.userid %></td>
+            <td><%= user.lastname %></td>
+            <td><%= user.name %></td>
+            <td>
+              <%= link_to 'Select', new_access_path(:us => user.id) %><br>
+            </td>
+          </tr>
+      <% end %> 
+      </tbody> 
+    
+    </table>  
+</div>
