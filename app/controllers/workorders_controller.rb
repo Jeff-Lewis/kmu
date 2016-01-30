@@ -4,7 +4,26 @@ class WorkordersController < ApplicationController
   # GET /workorders
   # GET /workorders.json
   def index
-    @workorders = Workorder.all
+    if params[:mode] = "bookable"
+      #only bookable workorders in @workorders
+      @access = Access.where("user_id="+params[:id])
+      if @access.count > 0
+         bookable_wo = []
+         @access.each do |a|
+           bookable_wo.<< a.workorder_id
+         end
+      end 
+      @workorders = Workorder.where(:id => bookable_wo)
+    else
+      #only workorders of selected subproject
+      @workorders = Workorder.all
+    end
+    sqlstring = "            SELECT projects.name AS projectname, subprojects.name AS subprojectname, workorders.* FROM workorders, subprojects, projects "
+    sqlstring = sqlstring + "WHERE workorders.subproject_id = subprojects.id AND "
+    sqlstring = sqlstring + "      subprojects.project_id = projects.id "
+    sqlstring = sqlstring + ""
+    sqlstring = sqlstring + "ORDER BY projects.name, subprojects.name, workorders.name "
+    @workorders = Workorder.find_by_sql(sqlstring)
   end
 
   # GET /workorders/1

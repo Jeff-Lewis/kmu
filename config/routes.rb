@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :timetracks
   resources :accesses
   resources :workorders
   resources :subprojects
@@ -15,7 +16,7 @@ Rails.application.routes.draw do
   get 'projects/index'
   get 'subprojects/index'
   get 'workorders/index'
-  
+
   get '/choose_a_user', to: 'users#choose'
   post '/choose_a_user', to: 'users#choose' 
   

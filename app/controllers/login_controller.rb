@@ -1,26 +1,26 @@
 class LoginController < ApplicationController
 
+$current_user_id = 0
+
 def index
-    @email=""
-    @password=""
-    @username=""
 end
 
 def login
-if params[:email]
+    if params[:email]
     str="userid="+"'"+params[:email]+"'"
     @logonuser = User.where(str)
     if @logonuser.count == 0
         @email = params[:email]
         @password = params[:password]
-        @username= ""
+        @logonuser = nil
     else
         if @logonuser.first.password == params[:password]  
             @username = @logonuser.first.name + " " + @logonuser.first.lastname
-            redirect_to users_url
+            $current_user_id = @logonuser.first.id
+            redirect_to workorders_path(:id => $current_user_id, :mode => "bookable")
         end
     end
-end
+    end
 end
 
 end

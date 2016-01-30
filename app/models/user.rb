@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
     has_many :subprojects
     has_many :workorders
     has_many :accesses
+    has_many :timetracks
     
     @sorter = 'Name'
     

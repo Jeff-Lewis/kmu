@@ -1,5 +1,66 @@
 <p id="notice"><%= notice %></p>
 
+<!-- build a container for every Project -->
+<div class="container-fluid">
+
+  <% vp = "" %>
+  <% @workorders.each do |wo| %>
+
+<!-- panel per project -->
+    <% if wo.projectname != vp %>
+    
+<!-- close thumbnail section but only if not first -->
+      <% if vp != "" %>
+              </div>
+				    </div>
+				  </div>
+  			</div>
+			</div>	
+      <% first=false %>
+      <% end %>
+    
+    	<div class="row">
+	    	<div class="panel panel-primary">
+		  		<div class="panel-heading">
+					  <h3 class="panel-title"><%= wo.projectname %></h3>
+				  </div>
+          <div class="panel-body">
+        		<div class="col-md-12">
+        			<div class="row">
+
+      <% vp = wo.projectname %>
+    <% end %>
+        			  
+        				<div class="col-md-4">
+        					<div class="thumbnail">
+        					  <% if wo.avatar.url %>
+                      <%= image_tag wo.avatar.url(:big) %>
+                    <% end %>
+      						  <!-- <img alt="Bootstrap Thumbnail First" src="http://lorempixel.com/output/people-q-c-600-200-1.jpg" /> -->
+        						<div class="caption">
+      							  <h3><%= wo.subproject.name + " " + wo.name %></h3>
+      							  <p>
+      								  <%= wo.description %>
+      							  </p>
+                        <%= button_to timetracks_path, class:"btn btn-primary btn-lg" do %>
+                            <i class="glyphicon glyphicon-pencil"></i><span class="badge pull-right"><%= wo.timetracks.count %></span> Report 
+                        <% end %>
+                        <%= button_to timetracks_path, class:"btn btn-default btn-lg" do %>
+                            <i class="glyphicon glyphicon-wrench"></i><span class="badge pull-right">42</span> Manage
+                        <% end %> 
+      						  </div>
+      					  </div>
+      				  </div>
+
+      <% end %>
+      				  
+              </div>
+				    </div>
+				  </div>
+  			</div>
+			</div>	
+</div>
+
 <h1>Listing Workorders</h1>
 
 <table>

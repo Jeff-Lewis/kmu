@@ -6,17 +6,16 @@
           <%= image_tag("promis.jpg", :size => "50x50") %>
       </div>
       <ul class="nav navbar-nav">
-        <li class="active"><%= link_to "Report", home_index_path %></li>
+        <li class="active"><%= link_to "Report", workorders_path(:id => $current_user_id, :mode => "bookable")%></li>
         <li><%= link_to "Plan", home_index_path %></li>
         <li><%= link_to "Users", users_path %></li>
         <li><%= link_to "Projects", projects_path %></li>
-        <li><%= link_to "Access rights", accesses_path %></li>
-       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Login", login_login_path %></li>
-        <li><%= link_to "Logout", home_index_path %></li>
-        <li><%= link_to "Sign Up", home_index_path %></li>
       </ul>
+       <ul class="nav navbar-nav navbar-right">
+            <li><%= link_to "Login", login_login_path %></li>
+            <li><%= link_to "Logout", home_index_path %></li>
+            <li><%= link_to "Sign Up", home_index_path %></li>
+       </ul>
     </div>
   </nav>
 <!--</div>-->

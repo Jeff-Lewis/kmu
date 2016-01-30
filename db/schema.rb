@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160125091301) do
+ActiveRecord::Schema.define(version: 20160130143939) do
 
   create_table "accesses", force: :cascade do |t|
     t.integer  "user_id"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20160125091301) do
 
   create_table "projects", force: :cascade do |t|
     t.string   "name"
-    t.string   "description"
+    t.text     "description"
     t.string   "adress1"
     t.string   "adress2"
     t.string   "adress3"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20160125091301) do
     t.string   "responsibility"
     t.string   "costinfo1"
     t.string   "costinfo2"
+    t.boolean  "active"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.integer  "user_id"
@@ -47,8 +48,25 @@ ActiveRecord::Schema.define(version: 20160125091301) do
     t.integer  "user_id"
     t.string   "name"
     t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.boolean  "active"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+  end
+
+  create_table "timetracks", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "workorder_id"
+    t.string   "tandm"
+    t.boolean  "active"
+    t.string   "activity"
+    t.decimal  "amount"
+    t.datetime "datum"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -66,16 +84,8 @@ ActiveRecord::Schema.define(version: 20160125091301) do
     t.decimal  "costrate"
     t.string   "costinfo1"
     t.string   "costinfo2"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.string   "img_file_name"
-    t.string   "img_content_type"
-    t.integer  "img_file_size"
-    t.datetime "img_updated_at"
-    t.string   "picture_file_name"
-    t.string   "picture_content_type"
-    t.integer  "picture_file_size"
-    t.datetime "picture_updated_at"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
@@ -86,9 +96,14 @@ ActiveRecord::Schema.define(version: 20160125091301) do
     t.integer  "subproject_id"
     t.integer  "user_id"
     t.string   "name"
+    t.boolean  "active"
     t.text     "description"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
 end
