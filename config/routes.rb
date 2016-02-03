@@ -8,16 +8,16 @@ Rails.application.routes.draw do
   root 'users#login'
 
   get 'home/index'
-  get 'users/index'  
-  get 'projects/index'
-  get 'subprojects/index'
-  get 'workorders/index'
 
+# user soutes
+  get 'users/index'  
+  post 'users/login', to: 'users#verify_login'
   get 'users/choose_a_user', to: 'users#choose'
   post 'users/choose_a_user', to: 'users#choose'
-  get 'users/login', to: 'users#login'
   post 'users/login', to: 'users#verify_login'
-  
+
+#workorder routes  
+  get 'workorders/index'
   get 'users/workorders_of_user', to: 'users#workorders_of_user'
 
   # The priority is based upon order of creation: first created -> highest priority.

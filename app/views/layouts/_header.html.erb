@@ -12,8 +12,7 @@
         <li><%= link_to "User Mgt", users_path(:userid => $current_user_id) %></li>
       </ul>
        <ul class="nav navbar-nav navbar-right">
-            <li><%= link_to "Login", users_login_path %></li>
-            <li><%= link_to "Logout", home_index_path %></li>
+            <li><%= link_to "Login " + $current_user_name, root_path %></li>
        </ul>
     </div>
   </nav>

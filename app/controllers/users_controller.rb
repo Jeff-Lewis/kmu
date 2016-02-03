@@ -8,17 +8,14 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def login
+    $error_message = "please login or sign in"
   end
   
-  def signin
-  end
-
   def verify_login
       @logonuser = User.where("userid=?", params[:userid])
       if @logonuser.count == 0
-        $current_user_name = ""
-        $current_user_id = 0
         $error_message = "email not registered..."
+        render :action => "login"
       else
         if @logonuser.first.password == params[:password]
             $current_user_id = @logonuser.first.id
@@ -26,16 +23,24 @@ class UsersController < ApplicationController
             redirect_to users_path(:userid => $current_user_id, :superuser => @logonuser.first.superuser)
           else
             $error_message = "password not correct..."
+            render :action => "login"
         end
       end 
   end
   
-  def verify_signIn
+  def verify_signin
       @logonuser = User.where("userid=?", params[:userid])
       if @logonuser.count == 0
+        puts "no user found !!!!!!!! Parameter " + params[:userid]
+
+        @users = User.new
+        @users.userid = params[:userid]
+        @users.superuser = false
+        #render :action => "new"
+
       else
         $error_message = "email already registered..."
-        redirect_to signin_path
+        render :action => "login"
       end 
   end
 
