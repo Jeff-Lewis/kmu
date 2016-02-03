@@ -9,11 +9,8 @@ class AccessesController < ApplicationController
   end
   
   def index
-    if params[:wo] != nil
-      @@wo_id = params[:wo]
-    end
-    str="workorder_id = " + @@wo_id
-    @accesses = Access.where(str)
+    @accesses = Access.where("workorder_id=?",params[:wo])
+    @wo_name = params[:wo_name]
   end
 
   # GET /accesses/1

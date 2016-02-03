@@ -1,5 +1,5 @@
 class WorkordersController < ApplicationController
-  before_action :set_workorder, only: [:show, :edit, :update, :destroy]
+  # before_action :set_workorder, only: [:show, :edit, :update, :destroy]
 
 # Parameter
 # :parent_id 
@@ -12,17 +12,24 @@ class WorkordersController < ApplicationController
   # GET /workorders
   # GET /workorders.json
   
-  def workorders_of_user
+  def show_user_workorders
     array = []
     accesses = Access.where("user_id=?", params[:user_id])
     accesses.each do |ac|
       array << ac.workorder_id
     end
     @workorders = Workorder.where(:id => array)
+    @user = params[:user_name]
   end
   
   def report
-    @workorders = Workorder.where("parent_id=?", params[:parent_id]).order("name")
+     array = []
+    accesses = Access.where("user_id=?", params[:user_id])
+    accesses.each do |ac|
+      array << ac.workorder_id
+    end
+    @workorders = Workorder.where(:id => array)
+    @user = params[:user_name]
   end
   
   def index
@@ -33,6 +40,7 @@ class WorkordersController < ApplicationController
   # GET /workorders/1
   # GET /workorders/1.json
   def show
+    set_workorder
   end
 
   # GET /workorders/new
@@ -43,6 +51,7 @@ class WorkordersController < ApplicationController
 
   # GET /workorders/1/edit
   def edit
+    set_workorder
   end
 
   # POST /workorders
@@ -64,6 +73,7 @@ class WorkordersController < ApplicationController
   # PATCH/PUT /workorders/1
   # PATCH/PUT /workorders/1.json
   def update
+    set_workorder
     respond_to do |format|
       if @workorder.update(workorder_params)
         format.html { redirect_to @workorder, notice: 'Workorder was successfully updated.' }
@@ -78,6 +88,7 @@ class WorkordersController < ApplicationController
   # DELETE /workorders/1
   # DELETE /workorders/1.json
   def destroy
+    set_workorder
     @workorder.destroy
     respond_to do |format|
       format.html { redirect_to workorders_url, notice: 'Workorder was successfully destroyed.' }

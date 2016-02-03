@@ -3,8 +3,8 @@
 <div class="container-fluid">
 	<div class="row">
     <div class="col-md-12">
-      <h1>Listing Accesses</h1>
-      <%= link_to users_choose_a_user_path do %>
+      <h1>Listing Accesses to <%= @wo_name %></h1>
+      <%= link_to users_choose_a_user_path(:wo_name => @wo_name) do %>
         <i class="btn btn-primary glyphicon glyphicon-plus"></i>
       <% end %>
       <br>

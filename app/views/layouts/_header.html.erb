@@ -5,15 +5,22 @@
           <class="navbar-brand" navbar-strong><%= link_to "ProMIS", home_index_path %></class>
           <%= image_tag("promis.jpg", :size => "50x50") %>
       </div>
-      <ul class="nav navbar-nav">
-        <li><%= link_to "Report", workorders_path(:user_id => $current_user_id, :parent_id => 0)%></li>
-        <li><%= link_to "Plan", home_index_path %></li>
-        <li><%= link_to "Workorder Mgt", workorders_path(:parent_id => 0) %></li>
-        <li><%= link_to "User Mgt", users_path(:userid => $current_user_id) %></li>
-      </ul>
-       <ul class="nav navbar-nav navbar-right">
-            <li><%= link_to "Login " + $current_user_name, root_path %></li>
-       </ul>
+          <% if $logon_user_id > 0 %>
+            <ul class="nav navbar-nav">
+            <li><%= link_to "Report", workorders_report_path(:user_id => $logon_user_id, :parent_id => 0) %></li>
+            <!--<li><%= link_to "Plan", home_index_path %></li>-->
+            <li><%= link_to "Workorder Mgt", workorders_path(:parent_id => 0) %></li>
+            <li><%= link_to "User Mgt", users_path(:userid => $logon_user_id) %></li>
+            </ul>
+          <% end %>
+          <ul class="nav navbar-nav navbar-right">
+            <% if $logon_user_id > 0 %>
+               <li><%= link_to "Logout "+ $logon_user_name, user_login_logout_path %></li>
+            <% else %>
+               <li><%= link_to "Login", root_path %></li>
+               <li><%= link_to "Signin", user_login_signin_path %></li>
+            <% end %>
+          </ul>
     </div>
   </nav>
 <!--</div>-->

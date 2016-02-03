@@ -1,0 +1,18 @@
+<<div class="container">
+  <div class="jumbotron">
+    <h1>Welcome to ProMIS</h1>
+    <p>keeps your initiatives under control...</p> 
+    <br>
+    <%= form_tag (user_login_signin_path method: :POST) do %>
+      <div class="form-group">
+        <%= label_tag "email" %><br/>
+        <%= email_field_tag :userid, @email_tag, class:"form-control"%>
+      </div>
+      <p><%= $logon_error_message %></p>
+      <br>
+      <div class="actions">
+            <%= button_to "SignIn", user_login_signin_path, class:"btn btn-primary btn-lg" %>
+      </div>
+    <% end %>
+  </div>  
+</div>

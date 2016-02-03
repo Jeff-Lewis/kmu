@@ -30,7 +30,7 @@
               <td>
                 <ul class="nav nav-pills">
                   <li>
-      				        <%= link_to users_workorders_of_user_path(:user_id => user.id) do %>
+      				        <%= link_to workorders_show_user_workorders_path(:user_id => user.id, :user_name => user.lastname + " "+ user.name) do %>
                         <i class="btn btn-primary glyphicon glyphicon-lock"></i><span class="badge pull-right"><%= user.accesses.where("user_id=?", user.id).count %></span>
                       <% end %>
       				    </li>

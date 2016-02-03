@@ -28,7 +28,7 @@
               <td>
                 <ul class="nav nav-pills">
                   <li>
-      				        <%= link_to accesses_path(:wo => wo.id)  do %>
+      				        <%= link_to accesses_path(:wo => wo.id, :wo_name => wo.name)  do %>
                         <i class="btn btn-primary glyphicon glyphicon-lock"></i><span class="badge pull-right"><%= wo.accesses.count %></span>
                       <% end %>
       				    </li>

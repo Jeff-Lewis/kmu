@@ -2,89 +2,35 @@
 
 <!-- build a container for every Project -->
 <div class="container-fluid">
-
-  <% vp = "" %>
-  <% @workorders.each do |wo| %>
-
-<!-- panel per project -->
-    <% if wo.projectname != vp %>
-    
-<!-- close thumbnail section but only if not first -->
-      <% if vp != "" %>
-              </div>
-				    </div>
-				  </div>
-  			</div>
-			</div>	
-      <% first=false %>
-      <% end %>
-    
-    	<div class="row">
-	    	<div class="panel panel-primary">
-		  		<div class="panel-heading">
-            <%= image_tag wo.subproject.project.avatar.url(:medium) %>
-            <h1 class="panel-title"><%= wo.projectname %></h1>
-					</div>
-          <div class="panel-body">
-        		<div class="col-md-12">
-        			<div class="row">
-
-      <% vp = wo.projectname %>
-    <% end %>
-        			  
-        				<div class="col-md-4">
-        					<div class="thumbnail">
-        					  <% if wo.avatar.url != "/images/original/missing.png" %>
-<!--                    <%= image_tag wo.avatar.url(:medium) %> -->
-                    <% else %>
-                        <!--<%= image_tag("t_anonym.jpg", :size => "200x200") %>-->
-                    <% end %>
-      						  <!-- <img alt="Bootstrap Thumbnail First" src="http://lorempixel.com/output/people-q-c-600-200-1.jpg" /> -->
-        						<div class="caption">
-          						  <blockquote>
-        						      <h3><%= wo.name %></h3>
-	                			  <p><%= wo.description %></p>
-                				  <small><%= wo.subproject.name %><cite> a w.</cite></small>
-                				  <% if wo.subproject.avatar.url != "/images/original/missing.png" %>
-                              <%= image_tag wo.subproject.avatar.url(:small) %>
-                          <% else %>
-                              <%= image_tag("s_anonym.jpg", :size => "50x50") %>
-                          <% end %>
-	  		                </blockquote>
-                        <ul class="nav nav-pills">
-				                  <li class="active">
-				                      <%= link_to timetracks_path do %>
-                                <i class="glyphicon glyphicon-pencil"></i><span class="badge pull-right"><%= wo.timetracks.count %></span> Report 
-                              <% end %>
-	                  			</li>
-	                    		<li>
-				                      <%= link_to wo do %>
-                                <i class="glyphicon glyphicon-info-sign"></i> Show
-                              <% end %>
-				                  </li>
-	                    		<li>
-				                      <%= link_to wo do %>
-                                <i class="glyphicon glyphicon-wrench"></i> Edit
-                              <% end %>
-				                  </li>
-	                    		<li>
-				                      <%= link_to wo, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                                <i class="glyphicon glyphicon-trash"></i> Delete
-                              <% end %>
-				                  </li>
-			                  </ul>
-      						  </div>
-      					  </div>
-      				  </div>
-
-      <% end %>
-      				  
-              </div>
-				    </div>
-				  </div>
-  			</div>
-			</div>	
-</div>
-
-
-<%= link_to 'New Workorder', new_workorder_path %>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                    <% @workorders.each do |wo| %>
+                        <div class="col-md-4">
+    				    <div class="thumbnail">
+                            <%= image_tag wo.avatar.url(:medium) %>
+    					    <div class="caption">
+  	    				        <blockquote>
+		    			          <h3><%= wo.name %></h3>
+        	    		          <p><%= wo.description %></p>
+  	                            </blockquote>
+                                <ul class="nav nav-pills">
+	                              <li class="active">
+	                                  <%= link_to timetracks_path do %>
+                                        <i class="glyphicon glyphicon-pencil"></i><span class="badge pull-right"><%= wo.timetracks.count %></span> Report 
+                                      <% end %>
+                 		          </li>
+                    		      <li>
+		                              <%= link_to wo do %>
+                                        <i class="glyphicon glyphicon-info-sign"></i> Show
+                                      <% end %>
+	                              </li>
+	                            </ul>
+	                        </div>
+  				        </div>
+  				        </div>
+      			    <% end %>
+      		</div>
+	    </div>
+    </div>
+</div>	

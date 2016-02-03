@@ -1,24 +1,39 @@
 Rails.application.routes.draw do
 
+
+  root 'user_login#login'
+
+  get 'home/index'
+  
+  get 'user_login/signin'
+  post 'user_login/signin', to: 'user_login#verify_signin'
+  get 'user_login/login'
+  post 'user_login/login', to: 'user_login#verify_login'
+  get 'user_login/logout'
+  get 'users/index' 
+  get 'users/choose_a_user', to: 'users#choose'
+  post 'users/choose_a_user', to: 'users#choose'
+
+  get 'workorders/index'
+  get 'workorders/show_user_workorders', to: 'workorders#show_user_workorders'
+  get 'workorders/report', to: 'workorders#report'
+
+  
   resources :timetracks
   resources :accesses
   resources :workorders
   resources :users
-  
-  root 'users#login'
-
-  get 'home/index'
 
 # user soutes
-  get 'users/index'  
-  post 'users/login', to: 'users#verify_login'
-  get 'users/choose_a_user', to: 'users#choose'
-  post 'users/choose_a_user', to: 'users#choose'
-  post 'users/login', to: 'users#verify_login'
+#  post 'users/login', to: 'users#verify_login'
+#  get 'users/choose_a_user', to: 'users#choose'
+#  post 'users/choose_a_user', to: 'users#choose'
+#  post 'users/login', to: 'users#verify_login'
 
 #workorder routes  
-  get 'workorders/index'
-  get 'users/workorders_of_user', to: 'users#workorders_of_user'
+#  get 'workorders/report_workorders', to: 'workorders#report_workorders'
+
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
