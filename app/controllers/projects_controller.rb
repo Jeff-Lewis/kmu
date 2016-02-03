@@ -1,10 +1,10 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
-
+  
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
+    @projects = Project.where("user_id=?", params[:id])
   end
 
   # GET /projects/1
@@ -15,6 +15,7 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
+    @project.user_id = params[:id]
   end
 
   # GET /projects/1/edit

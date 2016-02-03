@@ -74,6 +74,8 @@ ActiveRecord::Schema.define(version: 20160130143939) do
     t.string   "password"
     t.string   "lastname"
     t.string   "name"
+    t.boolean  "active"
+    t.boolean  "superuser"
     t.string   "adress1"
     t.string   "adress2"
     t.string   "adress3"
@@ -93,13 +95,22 @@ ActiveRecord::Schema.define(version: 20160130143939) do
   end
 
   create_table "workorders", force: :cascade do |t|
-    t.integer  "subproject_id"
+    t.integer  "parent_id"
     t.integer  "user_id"
-    t.string   "name"
     t.boolean  "active"
+    t.string   "name"
     t.text     "description"
+    t.string   "adress1"
+    t.string   "adress2"
+    t.string   "adress3"
+    t.string   "phone1"
+    t.string   "phone2"
+    t.string   "responsibility"
+    t.string   "costinfo1"
+    t.string   "costinfo2"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.integer  "user_id"
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"

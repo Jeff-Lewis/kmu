@@ -27,7 +27,6 @@ gem 'action_args'
 # paperclip
 gem 'paperclip', '~>4.3'
 
-
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

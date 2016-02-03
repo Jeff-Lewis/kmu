@@ -1,9 +1,44 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  
+  $current_user_id = 0
+  $current_user_name = ""
+  $error_message = ""
 
   # GET /users
   # GET /users.json
+  def login
+  end
   
+  def signin
+  end
+
+  def verify_login
+      @logonuser = User.where("userid=?", params[:userid])
+      if @logonuser.count == 0
+        $current_user_name = ""
+        $current_user_id = 0
+        $error_message = "email not registered..."
+      else
+        if @logonuser.first.password == params[:password]
+            $current_user_id = @logonuser.first.id
+            $current_user_name = @logonuser.first.name + " " + @logonuser.first.lastname
+            redirect_to users_path(:userid => $current_user_id, :superuser => @logonuser.first.superuser)
+          else
+            $error_message = "password not correct..."
+        end
+      end 
+  end
+  
+  def verify_signIn
+      @logonuser = User.where("userid=?", params[:userid])
+      if @logonuser.count == 0
+      else
+        $error_message = "email already registered..."
+        redirect_to signin_path
+      end 
+  end
+
   def choose
   if params[:searchstring] == nil or params[:searchstring] == ""
      @users = User.all.order("lastname")
@@ -15,18 +50,12 @@ class UsersController < ApplicationController
   end
   
   def index
-    if $sorter == 'aufsteigend'
-      $sorter = 'absteigend'
-      @users = User.all.order('lastname DESC')
+    superuser = User.find(params[:userid])
+    if superuser.superuser
+        @users = User.all.order('lastname ASC')
     else
-      $sorter = 'aufsteigend'
-      @users = User.all.order('lastname ASC')
+        @users = User.where("id=?",params[:userid]).order('lastname ASC')
     end
-    
-  end
-  
-  def index1
-    @users = User.all
   end
   
   # GET /users/1
@@ -37,6 +66,7 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    @user.superuser = false
   end
 
   # GET /users/1/edit

@@ -1,24 +1,47 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Subproject:</strong>
-  <%= @workorder.subproject_id %>
+<P>
+<strong>Name</strong><br>
+<%= @workorder.name %>
 </p>
-
-<p>
-  <strong>User:</strong>
-  <%= @workorder.user_id %>
+<P>
+<strong>active</strong><br>
+<% if @workorder.active == true %>
+active
+<% end %>
+not active
 </p>
-
 <p>
-  <strong>Name:</strong>
-  <%= @workorder.name %>
+<strong>responsible</strong><br>
+  <%= image_tag @workorder.user.avatar.url(:medium) %><br>
+  <%= @workorder.user.userid %><br>
+  <%= @workorder.user.lastname %><br>
+  <%= @workorder.user.name %>
 </p>
-
 <p>
-  <strong>Description:</strong>
+<strong>description</strong><br>
   <%= @workorder.description %>
 </p>
-
+<p>
+<strong>logo</strong><br>
+  <%= image_tag @workorder.avatar.url(:medium) %>
+</p>
+<p>
+<strong>adress</strong><br>
+  <%= @workorder.adress1 %><br>
+  <%= @workorder.adress2 %><br>
+  <%= @workorder.adress3 %>
+</p>
+<p>
+<strong>phone</strong><br/>
+  <%= @workorder.phone1 %><br>
+  <%= @workorder.phone2 %>
+</p>
+<p>
+<strong>costinfo</strong><br/>
+  <%= @workorder.costinfo1 %><br>
+  <%= @workorder.costinfo2 %>
+</p>
+<br>
 <%= link_to 'Edit', edit_workorder_path(@workorder) %> |
-<%= link_to 'Back', workorders_path %>
+<%= link_to 'Back', workorders_path(:parent_id => @workorder.parent_id) %>

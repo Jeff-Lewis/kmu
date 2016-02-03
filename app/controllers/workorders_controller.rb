@@ -1,29 +1,33 @@
 class WorkordersController < ApplicationController
   before_action :set_workorder, only: [:show, :edit, :update, :destroy]
 
+# Parameter
+# :parent_id 
+# :user_id 
+# :mode => "bookable" or "admin" - nach Access oder Adminrechte selectieren)
+
+  $current_parent_id = 0
+  $wo_hierachy = []
+
   # GET /workorders
   # GET /workorders.json
-  def index
-    if params[:mode] = "bookable"
-      #only bookable workorders in @workorders
-      @access = Access.where("user_id="+params[:id])
-      if @access.count > 0
-         bookable_wo = []
-         @access.each do |a|
-           bookable_wo.<< a.workorder_id
-         end
-      end 
-      @workorders = Workorder.where(:id => bookable_wo)
-    else
-      #only workorders of selected subproject
-      @workorders = Workorder.all
+  
+  def workorders_of_user
+    array = []
+    accesses = Access.where("user_id=?", params[:user_id])
+    accesses.each do |ac|
+      array << ac.workorder_id
     end
-    sqlstring = "            SELECT projects.name AS projectname, subprojects.name AS subprojectname, workorders.* FROM workorders, subprojects, projects "
-    sqlstring = sqlstring + "WHERE workorders.subproject_id = subprojects.id AND "
-    sqlstring = sqlstring + "      subprojects.project_id = projects.id "
-    sqlstring = sqlstring + ""
-    sqlstring = sqlstring + "ORDER BY projects.name, subprojects.name, workorders.name "
-    @workorders = Workorder.find_by_sql(sqlstring)
+    @workorders = Workorder.where(:id => array)
+  end
+  
+  def report
+    @workorders = Workorder.where("parent_id=?", params[:parent_id]).order("name")
+  end
+  
+  def index
+    @workorders = Workorder.where("parent_id=?", params[:parent_id]).order("name")
+    $current_parent_id = params[:parent_id]
   end
 
   # GET /workorders/1
@@ -34,6 +38,7 @@ class WorkordersController < ApplicationController
   # GET /workorders/new
   def new
     @workorder = Workorder.new
+    @workorder.parent_id = params[:parent_id]
   end
 
   # GET /workorders/1/edit
@@ -88,6 +93,6 @@ class WorkordersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def workorder_params
-      params.require(:workorder).permit(:subproject_id, :user_id, :name, :description)
+      params.require(:workorder).permit(:parent_id, :user_id, :active, :name, :description, :adress1, :adress2, :adress3, :phone1, :phone2, :costonfo1, :costinfo2, :avatar)
     end
 end

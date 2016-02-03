@@ -1,4 +1,5 @@
-<%= form_for(@workorder) do |f| %>
+<%= form_for @workorder, html: {multipart: true}  do |f| %>
+
   <% if @workorder.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@workorder.errors.count, "error") %> prohibited this workorder from being saved:</h2>
@@ -11,23 +12,45 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :subproject_id %><br>
-    <%= f.number_field :subproject_id %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.number_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="form-group">
+      <%= f.label "Workoder" %><br/>
+      <%= f.text_field :name, autofocus: true, class:"form-control"%>
+    </div>
+    <div class="form-group">
+      <%= f.label "active" %>
+      <%= f.check_box :active, class:"form-control"%>
+    </div>
+    <div class="form-group">
+       <%= f.label "Responsible" %><br/>
+       <%= f.select :user_id, User.all.collect { |u| [u.userid, u.id] } %>
+    </div>
+    <div class="form-group">
+      <%= f.label "Description" %><br/>
+      <%= f.text_area :description, rows: 5, class:"form-control"%>
+    </div>
+    <div class="form-group">
+       <%= f.label "Logo" %><br/>
+       <%= f.file_field :avatar, class:"form-control" %>
+    </div>
+    <div class="form-group">
+       <%= f.label "Adress" %><br/>
+       <%= f.text_field :adress1, class:"form-control" %>
+       <%= f.text_field :adress2, class:"form-control" %>
+       <%= f.text_field :adress3, class:"form-control" %>
+    </div>
+    <div class="form-group">
+       <%= f.label "Phone" %><br/>
+       <%= f.text_field :phone1, class:"form-control" %>
+       <%= f.text_field :phone2, class:"form-control" %>
+    </div>
+    <div class="form-group">
+       <%= f.label "Cost Information" %><br/>
+       <%= f.text_field :costinfo1, class:"form-control" %>
+       <%= f.text_field :costinfo2, class:"form-control" %>
+    </div>
+    <br/>
+
+   <div class="actions">
+    <%= f.submit "Save",  class:"btn btn-primary btn-lg"%>
+  </div
 <% end %>

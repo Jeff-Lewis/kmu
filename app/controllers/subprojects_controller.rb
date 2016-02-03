@@ -1,10 +1,13 @@
 class SubprojectsController < ApplicationController
   before_action :set_subproject, only: [:show, :edit, :update, :destroy]
 
+  $current_project_id = 0
+  
   # GET /subprojects
   # GET /subprojects.json
   def index
-    @subprojects = Subproject.all
+    @subprojects = Subproject.where("project_id=?", params[:id])
+    $current_project_id = params[:id]
   end
 
   # GET /subprojects/1
@@ -15,6 +18,7 @@ class SubprojectsController < ApplicationController
   # GET /subprojects/new
   def new
     @subproject = Subproject.new
+    @subproject.project_id = params[:id]
   end
 
   # GET /subprojects/1/edit
@@ -69,6 +73,6 @@ class SubprojectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subproject_params
-      params.require(:subproject).permit(:project_id, :user_id, :name, :description)
+      params.require(:subproject).permit(:project_id, :user_id, :name, :description, :avatar)
     end
 end

@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Subpproject:</strong>
+  <%= @subproject.id %>
+</p>
+
+<p>
   <strong>Project:</strong>
   <%= @subproject.project_id %>
 </p>
@@ -18,6 +23,11 @@
 <p>
   <strong>Description:</strong>
   <%= @subproject.description %>
+</p>
+
+<p>
+  <strong>Image:</strong>
+  <%= image_tag @subproject.avatar.url %>
 </p>
 
 <%= link_to 'Edit', edit_subproject_path(@subproject) %> |

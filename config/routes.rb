@@ -3,23 +3,23 @@ Rails.application.routes.draw do
   resources :timetracks
   resources :accesses
   resources :workorders
-  resources :subprojects
-  resources :projects
   resources :users
   
-  root 'login#login'
+  root 'users#login'
 
-  post 'login/login'
-  get 'login/login'
   get 'home/index'
   get 'users/index'  
   get 'projects/index'
   get 'subprojects/index'
   get 'workorders/index'
 
-  get '/choose_a_user', to: 'users#choose'
-  post '/choose_a_user', to: 'users#choose' 
+  get 'users/choose_a_user', to: 'users#choose'
+  post 'users/choose_a_user', to: 'users#choose'
+  get 'users/login', to: 'users#login'
+  post 'users/login', to: 'users#verify_login'
   
+  get 'users/workorders_of_user', to: 'users#workorders_of_user'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

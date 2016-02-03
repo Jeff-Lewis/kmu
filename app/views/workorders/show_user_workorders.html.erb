@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+<div class="container-fluid">
+	<div class="row">
+    <div class="col-md-12">
+      <h1>Listing Workorders</h1>
+			<table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>image</th>
+            <th>name</th>
+            <th colspan="2">responsibilty</th>
+            <th>description</th>
+            <th>workorder hierachy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @workorders.each do |wo| %>
+            <tr>
+              <td><%= image_tag wo.avatar(:small) %></td>
+              <td><%= wo.name %></td>
+              <td><%= image_tag wo.user.avatar(:small) %></td>
+              <td><%= wo.user.lastname + " " + wo.user.name %></td>
+              <td><%= wo.description %></td>
+              <td>
+                <ul>
+                <% $wo_hierachy = [] %>
+                <% wo_hierachy(wo.parent_id,0) %>
+                <% $wo_hierachy.each do |it| %> 
+                  <li><%= it %></li>
+                <% end %>
+                </ul>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
