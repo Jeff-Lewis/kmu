@@ -2,53 +2,70 @@
 	<div class="row">
     <div class="col-md-12">
       
-<p id="notice"><%= notice %></p>
-<P>
-<strong>Name</strong><br>
-<%= @workorder.name %>
-</p>
-<P>
-<strong>active</strong><br>
-<% if @workorder.active == true %>
-active
-<% end %>
-not active
-</p>
-<p>
-<strong>responsible</strong><br>
-  <%= image_tag @workorder.user.avatar.url(:medium) %><br>
-  <%= @workorder.user.userid %><br>
-  <%= @workorder.user.lastname %><br>
-  <%= @workorder.user.name %>
-</p>
-<p>
-<strong>description</strong><br>
-  <%= @workorder.description %>
-</p>
-<p>
-<strong>logo</strong><br>
-  <%= image_tag @workorder.avatar.url(:medium) %>
-</p>
-<p>
-<strong>adress</strong><br>
-  <%= @workorder.adress1 %><br>
-  <%= @workorder.adress2 %><br>
-  <%= @workorder.adress3 %>
-</p>
-<p>
-<strong>phone</strong><br/>
-  <%= @workorder.phone1 %><br>
-  <%= @workorder.phone2 %>
-</p>
-<p>
-<strong>costinfo</strong><br/>
-  <%= @workorder.costinfo1 %><br>
-  <%= @workorder.costinfo2 %>
-</p>
-<br>
-<%= link_to 'Edit', edit_workorder_path(@workorder) %> |
-<%= link_to 'Back', workorders_path(:parent_id => @workorder.parent_id) %>
-
-</div>
-</div>
+      <p id="notice"><%= notice %></p>
+      
+      <blockquote>
+				<p><h1>
+					<%= @workorder.name %>
+					</h1>
+				</p> <small> <%= @workorder.description %> <cite><%= @workorder.user.name + " " + @workorder.user.lastname %></cite></small>
+			</blockquote>
+			<div class="row">
+				<div class="col-md-4">
+				  <h2>profile</h2>
+          <% if !@workorder.avatar_file_name %>
+                <%= image_tag("t_anonym.jpg", :size => "300x300") %>
+          <% else %>
+                <%= image_tag @workorder.avatar(:medium) %>
+          <% end %>
+				</div>
+				<div class="col-md-4">
+				  <h2>contact</h2>
+          <address>
+            <strong>Adress</strong><br>
+            <%= @workorder.adress1 %><br>
+            <%= @workorder.adress2 %><br>
+            <%= @workorder.adress3 %><br>
+          </address>
+          <br>
+          <address>
+            <strong>Phone numbers</strong><br>
+            <%= @workorder.phone1 %><br>
+            <%= @workorder.phone2 %>
+          </address>
+          <br>
+          <address>
+            <strong>email</strong><br>
+            <% if !@workorder.user.avatar_file_name %>
+                <%= image_tag("ma_anonym.png", :size => "50x50") %>
+            <% else %>
+                <%= image_tag @workorder.user.avatar(:small) %>
+            <% end %>
+            <%= @workorder.user.userid %>
+          </address>
+				</div>
+				<div class="col-md-4">
+				  <h2>accounting</h2>
+          <address>
+            <strong>cost center info</strong><br>
+            <%= @workorder.costinfo1 %><br>
+            <%= @workorder.costinfo2 %>
+          </address>
+				</div>
+			</div>
+			<br>
+        <ul class="nav nav-pills">
+          <li class="active">
+              <%= link_to edit_workorder_path(@workorder) do %>
+                <i class="glyphicon glyphicon-wrench"></i> Edit
+              <% end %>
+           </li>
+          <li>
+              <%= link_to workorders_path(:parent_id => @workorder.parent_id) do %>
+                <i class="glyphicon glyphicon-list"></i> List
+              <% end %>
+           </li>
+        </ul>
+    </div>
+  </div>
 </div>

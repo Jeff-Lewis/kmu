@@ -1,30 +1,60 @@
 <p id="notice"><%= notice %></p>
 
-<!-- build a container for every Project -->
 <div class="container-fluid">
+    <% tt_date = Date.today %>
+    <% tt_day = tt_date.strftime("%A") %>
+    <% tt_dayn = tt_date.day %>
+    <% tt_month = tt_date.strftime("%B") %>
+    <% tt_year = tt_date.year %>
+    <% @booking_date = tt_day +", " + tt_dayn.to_s + " " + tt_month.to_s + " " + tt_year.to_s %>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    
+                    <%= form_tag (workorders_report_path method: :POST) do %>
+                      <div class="form-group">
+                        <%= label_tag "booking date" %>
+                        <%= text_field_tag :report_date, @report_date, class:"form-control"%>
+                      </div>
+                      <div class="actions">
+                            <%= button_to "Set", workorders_report_path, class:"btn btn-warning" %>
+                      </div>
+                    <% end %>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+             
     <div class="row">
         <div class="col-md-12">
             <div class="row">
                     <% @workorders.each do |wo| %>
                         <div class="col-md-4">
     				    <div class="thumbnail">
-                            <%= image_tag wo.avatar.url(:medium) %>
+                          <% if !wo.avatar_file_name %>
+                            <%= image_tag("s_anonym.jpg", :size => "300x300") %>
+                          <% else %>
+                            <%= image_tag wo.avatar(:medium) %>
+                          <% end %>
     					    <div class="caption">
   	    				        <blockquote>
-		    			          <h3><%= wo.name %></h3>
-        	    		          <p><%= wo.description %></p>
+		    			           <h3><%= link_to wo.name, wo %></h3>
+        	    		           <p><%= wo.description %></p>
   	                            </blockquote>
                                 <ul class="nav nav-pills">
 	                              <li class="active">
-	                                  <%= link_to timetracks_path do %>
-                                        <i class="glyphicon glyphicon-pencil"></i><span class="badge pull-right"><%= wo.timetracks.count %></span> Report 
+	                                  <%= link_to new_timetrack_path(:user_id => $logon_user_id, :workorder_id => wo.id) do %>
+                                        <i class="glyphicon glyphicon-pencil"></i> Report 
                                       <% end %>
                  		          </li>
-                    		      <li>
-		                              <%= link_to wo do %>
-                                        <i class="glyphicon glyphicon-info-sign"></i> Show
+	                              <li>
+	                                  <%= link_to timetracks_path do %>
+                                        <i class="glyphicon glyphicon-info-sign"></i><span class="badge pull-right"><%= wo.timetracks.count %></span> Show
                                       <% end %>
-	                              </li>
+                 		          </li>
 	                            </ul>
 	                        </div>
   				        </div>
@@ -33,4 +63,4 @@
       		</div>
 	    </div>
     </div>
-</div>	
+</div>

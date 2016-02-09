@@ -18,7 +18,7 @@ class TimetracksControllerTest < ActionController::TestCase
 
   test "should create timetrack" do
     assert_difference('Timetrack.count') do
-      post :create, timetrack: { amount: @timetrack.amount, hour_or_cost: @timetrack.hour_or_cost, user_id: @timetrack.user_id, workorder_id: @timetrack.workorder_id }
+      post :create, timetrack: { amount: @timetrack.amount, tandm: @timetrack.tandm, user_id: @timetrack.user_id, workorder_id: @timetrack.workorder_id }
     end
 
     assert_redirected_to timetrack_path(assigns(:timetrack))
@@ -35,7 +35,7 @@ class TimetracksControllerTest < ActionController::TestCase
   end
 
   test "should update timetrack" do
-    patch :update, id: @timetrack, timetrack: { amount: @timetrack.amount, hour_or_cost: @timetrack.hour_or_cost, user_id: @timetrack.user_id, workorder_id: @timetrack.workorder_id }
+    patch :update, id: @timetrack, timetrack: { amount: @timetrack.amount, tandm: @timetrack.tandm, user_id: @timetrack.user_id, workorder_id: @timetrack.workorder_id }
     assert_redirected_to timetrack_path(assigns(:timetrack))
   end
 

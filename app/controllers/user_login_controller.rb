@@ -10,7 +10,8 @@ class UserLoginController < ApplicationController
   end
 
   def login
-    
+      @userid = "horst.wurm@bluewin.ch"
+      @password = "password"
   end
 
   def logout
@@ -29,7 +30,7 @@ class UserLoginController < ApplicationController
         if @logonuser.first.password == params[:password]
             $logon_user_id = @logonuser.first.id
             $logon_user_name = @logonuser.first.name + " " + @logonuser.first.lastname
-            $logon_superuser = true
+            $logon_superuser = @logonuser.first.superuser
             redirect_to users_path(:userid => $logon_user_id, :superuser => @logonuser.first.superuser)
           else
             $logon_error_message = "password not correct..."

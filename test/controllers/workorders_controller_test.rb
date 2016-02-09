@@ -18,7 +18,7 @@ class WorkordersControllerTest < ActionController::TestCase
 
   test "should create workorder" do
     assert_difference('Workorder.count') do
-      post :create, workorder: { description: @workorder.description, name: @workorder.name, subproject_id: @workorder.subproject_id, user_id: @workorder.user_id }
+      post :create, workorder: { description: @workorder.description, name: @workorder.name, user_id: @workorder.user_id }
     end
 
     assert_redirected_to workorder_path(assigns(:workorder))
@@ -35,7 +35,7 @@ class WorkordersControllerTest < ActionController::TestCase
   end
 
   test "should update workorder" do
-    patch :update, id: @workorder, workorder: { description: @workorder.description, name: @workorder.name, subproject_id: @workorder.subproject_id, user_id: @workorder.user_id }
+    patch :update, id: @workorder, workorder: { description: @workorder.description, name: @workorder.name, user_id: @workorder.user_id }
     assert_redirected_to workorder_path(assigns(:workorder))
   end
 

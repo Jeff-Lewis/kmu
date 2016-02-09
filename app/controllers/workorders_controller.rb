@@ -23,18 +23,27 @@ class WorkordersController < ApplicationController
   end
   
   def report
-     array = []
+    array = []
     accesses = Access.where("user_id=?", params[:user_id])
     accesses.each do |ac|
       array << ac.workorder_id
     end
     @workorders = Workorder.where(:id => array)
     @user = params[:user_name]
+    @report_date = $booking_date
+  end
+  
+  def set_booking_date
+    $booking_date = params[:report_date]
+    puts $booking_date
+    @report_date = $booking_date
+    redirect_to workorders_report_path(:user_id => $logon_user_id)
   end
   
   def index
-    @workorders = Workorder.where("parent_id=?", params[:parent_id]).order("name")
+    @workorders = Workorder.where("parent_id=?", params[:parent_id]).name
     $current_parent_id = params[:parent_id]
+    @workorders = Workorder.all
   end
 
   # GET /workorders/1
@@ -47,6 +56,8 @@ class WorkordersController < ApplicationController
   def new
     @workorder = Workorder.new
     @workorder.parent_id = params[:parent_id]
+    @workorder.active = true
+    @workorder.user_id = $current_user_id
   end
 
   # GET /workorders/1/edit

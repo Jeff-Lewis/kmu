@@ -1,16 +1,18 @@
 class AccessesController < ApplicationController
   before_action :set_access, only: [:show, :edit, :update, :destroy]
-  permits :user_id, :workorder_id, :access, :costrate, :wo, :us
+  permits :user_id, :workorder_id, :access, :costrate
 
-  @@wo_id = ""
+  $workorder_id =""
+  $workorder_name = ""
 
   # GET /accesses
   def rights
   end
   
   def index
-    @accesses = Access.where("workorder_id=?",params[:wo])
-    @wo_name = params[:wo_name]
+    @accesses = Access.where("workorder_id=?",params[:workorder_id])
+    $workorder_id = params[:workorder_id]
+    $workorder_name = params[:workorder_name]
   end
 
   # GET /accesses/1
@@ -20,9 +22,9 @@ class AccessesController < ApplicationController
   # GET /accesses/new
   def new
     @access = Access.new
-    @access.user_id = params[:us]
-    @access.workorder_id = $wo_id
-    @access.costrate = 250
+    @access.user_id = params[:user_id]
+    @access.workorder_id = $workorder_id
+    @access.costrate = 100
   end
 
   # GET /accesses/1/edit
@@ -32,9 +34,8 @@ class AccessesController < ApplicationController
   # POST /accesses
   def create(access)
     @access = Access.new(access)
-
     if @access.save
-      redirect_to @access, notice: 'Access was successfully created.'
+      redirect_to accesses_path(:workorder_id => $workorder_id, :workorder_name => $workorder_name), notice: 'Access was successfully created.'
     else
       render :new
     end
@@ -43,7 +44,7 @@ class AccessesController < ApplicationController
   # PUT /accesses/1
   def update(access)
     if @access.update(access)
-      redirect_to @access, notice: 'Access was successfully updated.'
+      redirect_to accesses_path(:workorder_id => $workorder_id, :workorder_name => $workorder_name), notice: 'Access was successfully updated.'
     else
       render :edit
     end
@@ -62,7 +63,7 @@ class AccessesController < ApplicationController
     end
 
     def user_params
-      params.require(:access).permit(:workorder_id, :user_id, :access, :costrate, :wo, :us)
+      params.require(:access).permit(:workorder_id, :user_id, :access, :costrate)
     end
 
 end

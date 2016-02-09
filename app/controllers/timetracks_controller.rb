@@ -2,6 +2,8 @@ class TimetracksController < ApplicationController
   before_action :set_timetrack, only: [:show, :edit, :update, :destroy]
   permits :user_id, :workorder_id, :tandm, :amount, :activity, :datum
 
+  $current_report_date = Date.today
+
   # GET /timetracks
   def index
     @timetracks = Timetrack.all
@@ -14,6 +16,10 @@ class TimetracksController < ApplicationController
   # GET /timetracks/new
   def new
     @timetrack = Timetrack.new
+    @timetrack.tandm = "TIME"
+    @timetrack.user_id = params[:user_id]
+    @timetrack.workorder_id = params[:workorder_id]
+    @timetrack.datum = $booking_date
   end
 
   # GET /timetracks/1/edit

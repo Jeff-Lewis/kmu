@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
 
+  get 'stats/user'
+
+  get 'stats/workorder'
+
   root 'user_login#login'
 
   get 'home/index'
@@ -17,7 +21,7 @@ Rails.application.routes.draw do
   get 'workorders/index'
   get 'workorders/show_user_workorders', to: 'workorders#show_user_workorders'
   get 'workorders/report', to: 'workorders#report'
-
+  post 'workorders/report', to: 'workorders#set_booking_date'
   
   resources :timetracks
   resources :accesses

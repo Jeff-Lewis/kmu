@@ -21,14 +21,26 @@
         <tbody>
           <% @workorders.each do |wo| %>
             <tr>
-              <td><%= image_tag wo.avatar(:small) %></td>
+              <td>
+              <% if !wo.avatar_file_name %>
+                <%= image_tag("s_anonym.jpg", :size => "50x50") %>
+              <% else %>
+                <%= image_tag wo.avatar(:small) %>
+              <% end %>
+              </td>
               <td><%= wo.name %></td>
-              <td><%= image_tag wo.user.avatar(:small) %></td>
+              <td>
+              <% if !wo.user.avatar_file_name %>
+                <%= image_tag("ma_anonym.png", :size => "50x50") %>
+              <% else %>
+                <%= image_tag wo.user.avatar(:small) %>
+              <% end %>
+              </td>
               <td><%= wo.user.userid %></td>
               <td>
                 <ul class="nav nav-pills">
                   <li>
-      				        <%= link_to accesses_path(:wo => wo.id, :wo_name => wo.name)  do %>
+      				        <%= link_to accesses_path(:user_id => $logon_user_id, :workorder_id => wo.id, :workorder_name => wo.name)  do %>
                         <i class="btn btn-primary glyphicon glyphicon-lock"></i><span class="badge pull-right"><%= wo.accesses.count %></span>
                       <% end %>
       				    </li>

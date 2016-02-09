@@ -32,8 +32,6 @@ class UsersController < ApplicationController
     if params[:mode] = "signin"
       @user.userid = params[:user_id]
       @user.active = true
-      @user.lastname = "lastname"
-      @user.name = "prename"
     end
   end
 
@@ -89,7 +87,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:userid, :password, :lastname, :name, :adress1, :adress2, :adress3, :phone1, :phone2, :org, :costrate, :costinfo1, :avatar )
+      params.require(:user).permit(:userid, :password, :lastname, :name, :adress1, :adress2, :adress3, :phone1, :phone2, :org, :title, :costrate, :costinfo1, :avatar )
     end
     
 end

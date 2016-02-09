@@ -8,11 +8,11 @@
     <%= form_tag (user_login_login_path method: :POST) do %>
       <div class="form-group">
         <%= label_tag "email" %><br/>
-        <%= email_field_tag :userid, nil, class:"form-control"%>
+        <%= email_field_tag :userid, @userid, class:"form-control"%>
       </div>
       <div class="form-group">
         <%= label_tag "password" %><br/>
-        <%= password_field_tag :password, nil, class:"form-control"%>
+        <%= password_field_tag :password, @password, class:"form-control"%>
       </div>
       <br/>
       <p><%= $error_message %></p>

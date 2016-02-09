@@ -1,18 +1,16 @@
-table
- {
-    background-color: red;
+
+body
+{
+    margin-bottom: 0px;
+    // background-image: asset-url("bg.jpeg");
+    background-color: light-blue;
     background-size: cover;
     background-repeat: no-repeat
 }
 
-
-body
- {
-    margin-bottom: 0px;
-    background-image: asset-url("bg.jpeg");
-    background-color: none;
-    background-size: cover;
-    background-repeat: no-repeat
+jumbotron
+{
+ background-color: blue;
 }
 
 @import "bootstrap-sprockets";

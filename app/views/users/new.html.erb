@@ -6,7 +6,19 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Back', users_path %>
+<ul class="nav nav-pills">
+  <li class="active">
+      <%= link_to @user do %>
+        <i class="glyphicon glyphicon-info-sign"></i> Show
+      <% end %>
+   </li>
+  <li>
+      <%= link_to users_path do %>
+        <i class="glyphicon glyphicon-list"></i> List
+      <% end %>
+   </li>
+</ul>
+
 
 </div>
 </div>

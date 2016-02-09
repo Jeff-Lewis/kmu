@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160130143939) do
+ActiveRecord::Schema.define(version: 20160208155953) do
 
   create_table "accesses", force: :cascade do |t|
     t.integer  "user_id"
@@ -19,41 +19,6 @@ ActiveRecord::Schema.define(version: 20160130143939) do
     t.decimal  "costrate"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-  end
-
-  create_table "projects", force: :cascade do |t|
-    t.string   "name"
-    t.text     "description"
-    t.string   "adress1"
-    t.string   "adress2"
-    t.string   "adress3"
-    t.string   "phone1"
-    t.string   "phone2"
-    t.string   "responsibility"
-    t.string   "costinfo1"
-    t.string   "costinfo2"
-    t.boolean  "active"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.integer  "user_id"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
-  end
-
-  create_table "subprojects", force: :cascade do |t|
-    t.integer  "project_id"
-    t.integer  "user_id"
-    t.string   "name"
-    t.text     "description"
-    t.boolean  "active"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
   end
 
   create_table "timetracks", force: :cascade do |t|
@@ -91,6 +56,7 @@ ActiveRecord::Schema.define(version: 20160130143939) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.string   "title"
   end
 
   create_table "workorders", force: :cascade do |t|
@@ -109,7 +75,6 @@ ActiveRecord::Schema.define(version: 20160130143939) do
     t.string   "costinfo2"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
-    t.integer  "user_id"
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"

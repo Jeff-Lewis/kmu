@@ -3,8 +3,8 @@
 <div class="container-fluid">
 	<div class="row">
     <div class="col-md-12">
-      <h1>Listing Accesses to <%= @wo_name %></h1>
-      <%= link_to users_choose_a_user_path(:wo_name => @wo_name) do %>
+      <h1>Listing Accesses to <%= $workorder_name %></h1>
+      <%= link_to users_choose_a_user_path(:workorder_name => $workorder_name, :workorder_id => $workorder_id) do %>
         <i class="btn btn-primary glyphicon glyphicon-plus"></i>
       <% end %>
       <br>
@@ -22,16 +22,15 @@
         <tbody>
           <% @accesses.each do |access| %>
             <tr>
-              <% @u = User.find(access.user_id) %>
-              <% if @u %>
-                <td>
-                  <% if @u.avatar.url %>
-                    <%= image_tag @u.avatar.url(:small) %>
-                  <% end %>
-                </td>
-                <td><%= @u.userid %></td>
-                <td><%= @u.lastname + " " + @u.name %></td>
-              <% end %> 
+              <td>
+                <% if !access.user.avatar_file_name %>
+                  <%= image_tag("ma_anonym.png", :size => "50x50") %>
+                <% else %>
+                  <%= image_tag access.user.avatar(:small) %>
+                <% end %>
+              </td>
+              <td><%= access.user.userid %></td>
+              <td><%= access.user.lastname + " " + access.user.name %></td>
               <td><%= access.costrate %></td>
               <td>
                 <ul class="nav nav-pills">
