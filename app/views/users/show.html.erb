@@ -1,73 +1,81 @@
 <div class="container-fluid">
-	<div class="row">
-    <div class="col-md-12">
-      
-      <p id="notice"><%= notice %></p>
-      
-      <blockquote>
-				<p><h1>
-					<%= @user.name + " " + @user.lastname %>
-					</h1>
-				</p> <small> <%= @user.org %> <cite><%= @user.title %></cite></small>
-			</blockquote>
-			<div class="row">
-				<div class="col-md-4">
-				  <h2>profile</h2>
-          <% if !@user.avatar_file_name %>
-                <%= image_tag("ma_anonym.png", :size => "300x300") %>
-          <% else %>
-                <%= image_tag @user.avatar(:medium) %>
-          <% end %>
-				</div>
-				<div class="col-md-4">
-				  <h2>contact</h2>
-          <address>
-            <strong>Adress</strong><br>
-            <%= @user.adress1 %><br>
-            <%= @user.adress2 %><br>
-            <%= @user.adress3 %><br>
-            <%= @user.org %>
-          </address>
-          <br>
-          <address>
-            <strong>Phone numbers</strong><br>
-            <%= @user.phone1 %><br>
-            <%= @user.phone2 %>
-          </address>
-          <br>
-          <address>
-            <strong>email</strong><br>
-            <%= @user.userid %>
-          </address>
-				</div>
-				<div class="col-md-4">
-				  <h2>accounting</h2>
-          <address>
-            <strong>cost center info</strong><br>
-            <%= @user.costinfo1 %><br>
-            <%= @user.costinfo2 %>
-          </address>
-          <br>
-          <address>
-            <strong>standard cost rate</strong><br>
-            <%= @user.costrate %>
-          </address>
-				</div>
-			</div>
-			<br>
-        <ul class="nav nav-pills">
-          <li class="active">
-              <%= link_to edit_user_path(@user) do %>
-                <i class="glyphicon glyphicon-wrench"></i> Edit
-              <% end %>
-           </li>
-          <li>
-              <%= link_to users_path do %>
-                <i class="glyphicon glyphicon-list"></i> List
-              <% end %>
-           </li>
-        </ul>
-    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h1>user</h1>
+                  <ul class="nav nav-pills">
+                    <li class="active">
+                        <%= link_to edit_user_path(@user) do %>
+                          <i class="glyphicon glyphicon-wrech"></i> Edit
+                        <% end %>
+                     </li>
+                    <li>
+                        <%= link_to users_path do %>
+                          <i class="glyphicon glyphicon-list"></i> List
+                        <% end %>
+                     </li>
+                  </ul>                  
+                  
+                </div>
+                <div class="panel-body">
+
+                  <blockquote>
+            				<p><h1>
+            					<%= @user.name + " " + @user.lastname %>
+            					</h1>
+            				</p> <small> <%= @user.org %> <cite><%= @user.title %></cite></small>
+            			</blockquote>
+            			<div class="row">
+            				<div class="col-md-4">
+            				  <h2>profile</h2>
+                      <% if !@user.avatar_file_name %>
+                            <%= image_tag("ma_anonym.png", :size => "300x300") %>
+                      <% else %>
+                            <%= image_tag @user.avatar(:medium) %>
+                      <% end %>
+            				</div>
+            				<div class="col-md-4">
+            				  <h2>contact</h2>
+                      <address>
+                        <strong>Adress</strong><br>
+                        <%= @user.adress1 %><br>
+                        <%= @user.adress2 %><br>
+                        <%= @user.adress3 %><br>
+                        <%= @user.org %>
+                      </address>
+                      <br>
+                      <address>
+                        <strong>Phone numbers</strong><br>
+                        <%= @user.phone1 %><br>
+                        <%= @user.phone2 %>
+                      </address>
+                      <br>
+                      <address>
+                        <strong>email</strong><br>
+                        <%= @user.userid %>
+                      </address>
+            				</div>
+            				<div class="col-md-4">
+            				  <h2>accounting</h2>
+                      <address>
+                        <strong>cost center info</strong><br>
+                        <%= @user.costinfo1 %><br>
+                        <%= @user.costinfo2 %>
+                      </address>
+                      <br>
+                      <address>
+                        <strong>standard cost rate</strong><br>
+                        <%= @user.costrate %>
+                      </address>
+            				</div>
+            			</div>
+            			
+              </div>
+              <div class="panel-footer">
+                  <p id="notice"><%= notice %></p>
+              </div>
+          </div>
+      </div>
   </div>
 </div>
-

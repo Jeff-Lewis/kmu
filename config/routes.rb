@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
 
   get 'stats/user'
+  post 'stats/user'
 
   get 'stats/workorder'
 

@@ -9,6 +9,7 @@
             <ul class="nav navbar-nav">
             <li><%= link_to "Report", workorders_report_path(:user_id => $logon_user_id, :parent_id => 0) %></li>
             <li><%= link_to "Statistics", stats_user_path(:user_id => $logon_user_id) %></li>
+            <li><%= link_to "Test", stats_workorder_path %></li>
             <li><%= link_to "Workorder Mgt", workorders_path(:user_id => $logon_user_id, :parent_id => 0) %></li>
             <li><%= link_to "User Mgt", users_path(:userid => $logon_user_id) %></li>
             </ul>

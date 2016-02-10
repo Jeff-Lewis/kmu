@@ -1,21 +1,2 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12"><h1>Editing User</h1>
-
-        <%= render 'form' %>
+<%= render 'form' %>
         
-        <ul class="nav nav-pills">
-          <li class="active">
-              <%= link_to @user do %>
-                <i class="glyphicon glyphicon-info-sign"></i> Show
-              <% end %>
-           </li>
-          <li>
-              <%= link_to users_path do %>
-                <i class="glyphicon glyphicon-list"></i> List
-              <% end %>
-           </li>
-        </ul>
-        </div>
-    </div>
-</div>

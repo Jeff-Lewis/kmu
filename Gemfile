@@ -33,6 +33,10 @@ gem 'jquery-ui-rails'
 
 gem 'jquery-turbolinks'
 
+gem 'morrisjs-rails'
+
+gem 'raphael-rails'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

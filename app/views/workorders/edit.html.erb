@@ -1,24 +1,2 @@
-<div class="container-fluid">
-	<div class="row">
-    <div class="col-md-12">
-        
-<h1>Editing Workorder</h1>
 
 <%= render 'form' %>
-
-<ul class="nav nav-pills">
-  <li class="active">
-      <%= link_to @workorder do %>
-        <i class="glyphicon glyphicon-info-sign"></i> Show
-      <% end %>
-   </li>
-  <li>
-      <%= link_to workorders_path(:parent_id => $current_parent_id) do %>
-        <i class="glyphicon glyphicon-list"></i> List
-      <% end %>
-   </li>
-</ul>
-
-</div>
-</div>
-</div>

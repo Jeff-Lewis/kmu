@@ -31,6 +31,7 @@ class WorkordersController < ApplicationController
     @workorders = Workorder.where(:id => array)
     @user = params[:user_name]
     @report_date = $booking_date
+    @timetracks = Timetrack.all
   end
   
   def set_booking_date
