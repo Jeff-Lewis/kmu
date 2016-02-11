@@ -4,13 +4,11 @@
 jQuery ->
     $('#starting_date').datepicker dateFormat: 'yy-mm-dd'
     $('#ending_date').datepicker dateFormat: 'yy-mm-dd'
-    $('#reporting_date').datepicker dateFormat: 'yy-mm-dd' 
-    $('#datum').datepicker dateFormat: 'yy-mm-dd' 
+    $('#reporting_date').datepicker dateFormat: 'yy-mm-dd'
     
     Morris.Line
-        element: 'timetracks_chart' 
-        data: $('#timetracks_chart').data('timetracks')
+        element: 'reports_chart' 
+        data: $('#reports_chart').data('reports')
         xkey: 'datum' 
         ykeys: ['amount'] 
         labels: ['hours reported']
-

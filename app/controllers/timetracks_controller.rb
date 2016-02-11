@@ -6,7 +6,7 @@ class TimetracksController < ApplicationController
 
   # GET /timetracks
   def index
-    @timetracks = Timetrack.all
+    @timetracks = Timetrack.where("user_id=? and workorder_id=? and datum>=? and datum<=?", params[:user_id], params[:workorder_id], params[:bom], params[:eom])
   end
 
   # GET /timetracks/1
@@ -19,7 +19,7 @@ class TimetracksController < ApplicationController
     @timetrack.tandm = "TIME"
     @timetrack.user_id = params[:user_id]
     @timetrack.workorder_id = params[:workorder_id]
-    @timetrack.datum = $booking_date
+    @timetrack.datum = $def_date
   end
 
   # GET /timetracks/1/edit
@@ -31,7 +31,8 @@ class TimetracksController < ApplicationController
     @timetrack = Timetrack.new(timetrack)
 
     if @timetrack.save
-      redirect_to @timetrack, notice: 'Timetrack was successfully created.'
+      redirect_to workorders_report_path(:user_id => $logon_user_id, :parent_id => 0), notice: 'Timetrack was successfully created.'
+      # redirect_to @timetrack, notice: 'Timetrack was successfully created.'
     else
       render :new
     end

@@ -13,4 +13,8 @@ module WorkordersHelper
         end
     end
     
+   def anzahl(wo, bom, eom)
+     return wo.timetracks.where("user_id=? and datum>=? and datum<=?", $logon_user_id, bom, eom).count
+   end
+
 end

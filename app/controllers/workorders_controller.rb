@@ -1,43 +1,39 @@
 class WorkordersController < ApplicationController
   # before_action :set_workorder, only: [:show, :edit, :update, :destroy]
 
-# Parameter
-# :parent_id 
-# :user_id 
-# :mode => "bookable" or "admin" - nach Access oder Adminrechte selectieren)
-
   $current_parent_id = 0
-  $wo_hierachy = []
+  $def_date = Date.today
+  $bom = ""
+  $eom = ""
+  $hours_reported = 0
+  # $wo_hierachy = []
+
+  def init
+    array = []
+    accesses = Access.where("user_id=?", params[:user_id])
+    accesses.each do |ac|
+      array << ac.workorder_id
+    end
+    @workorders = Workorder.where(:id => array)
+    @user = params[:user_name]
+  end
 
   # GET /workorders
   # GET /workorders.json
-  
   def show_user_workorders
-    array = []
-    accesses = Access.where("user_id=?", params[:user_id])
-    accesses.each do |ac|
-      array << ac.workorder_id
-    end
-    @workorders = Workorder.where(:id => array)
-    @user = params[:user_name]
+    init
   end
   
   def report
-    array = []
-    accesses = Access.where("user_id=?", params[:user_id])
-    accesses.each do |ac|
-      array << ac.workorder_id
-    end
-    @workorders = Workorder.where(:id => array)
-    @user = params[:user_name]
-    @report_date = $booking_date
-    @timetracks = Timetrack.all
+    init
+    $bom = $def_date.to_date.beginning_of_month
+    $eom = $def_date.to_date.end_of_month
+    @tt = Timetrack.where("user_id=? and datum >= ? and datum <= ?", $logon_user_id, $bom, $eom)
+    $hours_reported = @tt.sum(:amount)
   end
   
   def set_booking_date
-    $booking_date = params[:report_date]
-    puts $booking_date
-    @report_date = $booking_date
+    $def_date = params[:reporting_date]
     redirect_to workorders_report_path(:user_id => $logon_user_id)
   end
   

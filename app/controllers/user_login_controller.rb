@@ -11,6 +11,7 @@ class UserLoginController < ApplicationController
 
   def login
       @userid = "horst.wurm@bluewin.ch"
+      @userid = "anton.meier@outlook.com"
       @password = "password"
   end
 
@@ -31,7 +32,8 @@ class UserLoginController < ApplicationController
             $logon_user_id = @logonuser.first.id
             $logon_user_name = @logonuser.first.name + " " + @logonuser.first.lastname
             $logon_superuser = @logonuser.first.superuser
-            redirect_to users_path(:userid => $logon_user_id, :superuser => @logonuser.first.superuser)
+            # redirect_to users_path(:userid => $logon_user_id, :superuser => @logonuser.first.superuser)
+            redirect_to workorders_report_path(:user_id => $logon_user_id, :parent_id => 0)
           else
             $logon_error_message = "password not correct..."
             render :action => "login"

@@ -24,7 +24,7 @@
         <tbody>
           <% @timetracks.each do |tt| %>
             <tr>
-              <td><%= tt.datum %></td>
+              <td><%= tt.datum.strftime("%d-%m-%Y") %></td>
               <td><%= tt.activity %></td>
               <td><%= tt.workorder.name %></td>
               <td><%= tt.user.lastname + " " + tt.user.name %></td>

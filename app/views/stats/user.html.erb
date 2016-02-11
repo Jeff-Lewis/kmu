@@ -7,34 +7,38 @@
                     <%= form_tag (stats_user_path method: :POST) do %>
                       <div class="form-group">
                         <%= label_tag "starting date" %>
-                        <%= text_field_tag :starting_date, @report_date, class:"form-control"%>
+                        <%= text_field_tag :starting_date, $start_date, class:"form-control"%>
                       </div>
                       <div class="form-group">
                         <%= label_tag "ending date" %>
-                        <%= text_field_tag :ending_date, @report_date, class:"form-control"%>
+                        <%= text_field_tag :ending_date, $end_date, class:"form-control"%>
                       </div>
                       <div class="form-group">
-                        <%= check_box_tag :user_active, class:"form-control"%>
-                        <%= label_tag "user" %>
-                      </div>
-                      <div class="form-group">
-                        <%= select_tag "people", options_from_collection_for_select(@people, "id", "userid"), {class: "form-control", multiple: true} %>
+                        <%= select_tag "workorder", options_from_collection_for_select(@workorders, "id", "name"), {class: "form-control"} %>
                       </div>
                       <div class="form-group">
                         <%= check_box_tag :workorder_active, class:"form-control"%>
-                        <%= label_tag "workorder" %>
-                      </div>
-                      <div class="form-group">
-                        <%= select_tag "workorder", options_from_collection_for_select(@workorders, "id", "name"), {class: "form-control", multiple: true} %>
+                        <%= label_tag "include sub workorders" %>
                       </div>
                         <div class="form-group">
-                          <%= label_tag "hours or costs" %><br/>
-                          <%= radio_button_tag :time, "time positions" %> time <br>
-                          <%= radio_button_tag :time, "cost positions" %> material <br>
-                          <%= radio_button_tag :time, "time & cost positions" %> time & material <br>
+                          <%= radio_button_tag :time, "time view" %> time-view <br>
+                          <%= radio_button_tag :time, "cost view" %> cost-view
+                          <%= check_box_tag :material, {class:"form-control"} %>
+                          <%= label_tag "include materials" %>
                       </div>
+                        <% if $logon_superuser %>
+                          <div class="form-group">
+                            <%= label_tag "user" %>
+                          </div>
+                          <div class="form-group">
+                            <%= select_tag "people", options_from_collection_for_select(@people, "id", "userid"), {class: "form-control", include_blank: true} %>
+                          </div>
+                      <% end %>
                       <div class="actions">
                             <%= button_to "Update Chart", stats_user_path, class:"btn btn-primary" %>
+                      </div>
+                      <div class="actions">
+                            <%= button_to "Export Excel", stats_user_path, class:"btn btn-default" %>
                       </div>
                     <% end %>
                     
@@ -42,7 +46,8 @@
             </div>
         </div>
         <div class="col-md-6">
-                <%= content_tag :div, "", id: "timetracks_chart", data: {timetracks: @timetracks} %>
+                <h1><%= @timetracks.sum(:amount).to_s + " hours reported" %></h1>
+                <%= content_tag :div, "", id: "reports_chart", data: {reports: @timetracks} %>
         </div>
     </div>
 </div>
