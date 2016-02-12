@@ -7,6 +7,7 @@ class TimetracksController < ApplicationController
   # GET /timetracks
   def index
     @timetracks = Timetrack.where("user_id=? and workorder_id=? and datum>=? and datum<=?", params[:user_id], params[:workorder_id], params[:bom], params[:eom])
+    puts @timetracks.count
   end
 
   # GET /timetracks/1
@@ -15,6 +16,7 @@ class TimetracksController < ApplicationController
 
   # GET /timetracks/new
   def new
+    @tt = Timetrack.where("workorder_id=? and user_id=? and datum>=? and datum<=?", params[:workorder_id], $logon_user_id, $def_date.beginning_of_month, $def_date.end_of_month).order(:datum)
     @timetrack = Timetrack.new
     @timetrack.tandm = "TIME"
     @timetrack.user_id = params[:user_id]

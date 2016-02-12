@@ -6,9 +6,10 @@ jQuery ->
     $('#ending_date').datepicker dateFormat: 'yy-mm-dd'
     $('#reporting_date').datepicker dateFormat: 'yy-mm-dd'
     
-    Morris.Line
+    Morris.Bar
         element: 'reports_chart' 
         data: $('#reports_chart').data('reports')
         xkey: 'datum' 
         ykeys: ['amount'] 
         labels: ['hours reported']
+        
