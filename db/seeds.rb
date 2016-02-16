@@ -15,10 +15,10 @@ users = User.create({userid:"e.oschewsky@bluewin.ch", password:"password", name:
 users = User.create({userid:"henning.gebert@outlook.com", password:"password", name:"Henning", lastname:"Gebert", superuser:false})
 
 #create workorders hierachy...
-workorders = Workorder.create({user_id:1, parent_id:0, name:"Project 4711", description:"this is a it project 4711"})
-workorders = Workorder.create({user_id:2, parent_id:0, name:"Project 0815", description:"this is a it project 4711"})
-workorders = Workorder.create({user_id:3, parent_id:0, name:"Projekt 0909090909", description:"this is a it project 4711"})
-workorders = Workorder.create({user_id:4, parent_id:0, name:"Initiative Trcik 17", description:"this is a it project 4711"})
+# workorders = Workorder.create({user_id:1, parent_id:0, name:"Project 4711", description:"this is a it project 4711"})
+# workorders = Workorder.create({user_id:2, parent_id:0, name:"Project 0815", description:"this is a it project 4711"})
+# workorders = Workorder.create({user_id:3, parent_id:0, name:"Projekt 0909090909", description:"this is a it project 4711"})
+# workorders = Workorder.create({user_id:4, parent_id:0, name:"Initiative Trcik 17", description:"this is a it project 4711"})
 
     # workorders = Workorder.create({user_id:1, parent_id:1, name:"Organisation", description:"this is subproject organization"})
     #     workorders = Workorder.create({user_id:1, parent_id:2, name:"Process definitions", description:"these are the descriptions of the processes A..B"})

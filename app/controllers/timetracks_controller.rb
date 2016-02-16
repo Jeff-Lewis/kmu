@@ -13,25 +13,30 @@ class TimetracksController < ApplicationController
   # GET /timetracks/1
   def show
   end
+  
+  def build_tt
+        @tt = Timetrack.where("workorder_id=? and user_id=? and datum>=? and datum<=?", params[:workorder_id], $logon_user_id, $def_date.to_date.beginning_of_month, $def_date.to_date.end_of_month).order(:datum)
+  end
 
   # GET /timetracks/new
   def new
-    @tt = Timetrack.where("workorder_id=? and user_id=? and datum>=? and datum<=?", params[:workorder_id], $logon_user_id, $def_date.beginning_of_month, $def_date.end_of_month).order(:datum)
+    build_tt
     @timetrack = Timetrack.new
     @timetrack.tandm = "TIME"
     @timetrack.user_id = params[:user_id]
     @timetrack.workorder_id = params[:workorder_id]
     @timetrack.datum = $def_date
+    @timetrack.amount = 0
   end
 
   # GET /timetracks/1/edit
   def edit
+    build_tt
   end
 
   # POST /timetracks
   def create(timetrack)
     @timetrack = Timetrack.new(timetrack)
-
     if @timetrack.save
       redirect_to workorders_report_path(:user_id => $logon_user_id, :parent_id => 0), notice: 'Timetrack was successfully created.'
       # redirect_to @timetrack, notice: 'Timetrack was successfully created.'

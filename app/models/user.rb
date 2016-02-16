@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
     has_many :workorders
     has_many :accesses
     has_many :timetracks
+    has_many :companies
 
     validates :userid, presence: true, :uniqueness => true
     validates :lastname, presence: true    

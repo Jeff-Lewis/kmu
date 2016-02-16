@@ -6,12 +6,14 @@ class UserLoginController < ApplicationController
   $logon_superuser = false
   
   def signin
+    @companies = Company.all
     @email_tag = "your email adress"
   end
 
   def login
-      @userid = "horst.wurm@bluewin.ch"
-      @userid = "anton.meier@outlook.com"
+    @companies = Company.all
+    @userid = "horst.wurm@bluewin.ch"
+      # @userid = "anton.meier@outlook.com"
       @password = "password"
   end
 

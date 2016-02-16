@@ -3,73 +3,120 @@
 <div class="container-fluid">
 	<div class="row">
     <div class="col-md-12">
-      <h1>Listing Workorders</h1>
-      <%= link_to new_workorder_path(:parent_id => $current_parent_id) do %>
-        <i class="btn btn-primary glyphicon glyphicon-plus"></i>
-      <% end %>
-      <br>
-			<table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>logo</th>
-            <th>name</th>
-            <th colspan="2">responsibility</th>
-            <th colspan="4"></th>
-          </tr>
-        </thead>
       
-        <tbody>
-          <% @workorders.each do |wo| %>
-            <tr>
-              <td>
-              <% if !wo.avatar_file_name %>
-                <%= image_tag("s_anonym.jpg", :size => "50x50") %>
-              <% else %>
-                <%= image_tag wo.avatar(:small) %>
-              <% end %>
-              </td>
-              <td><%= wo.name %></td>
-              <td>
-              <% if !wo.user.avatar_file_name %>
-                <%= image_tag("ma_anonym.png", :size => "50x50") %>
-              <% else %>
-                <%= image_tag wo.user.avatar(:small) %>
-              <% end %>
-              </td>
-              <td><%= wo.user.userid %></td>
-              <td>
-                <ul class="nav nav-pills">
-                  <li>
-      				        <%= link_to accesses_path(:user_id => $logon_user_id, :workorder_id => wo.id, :workorder_name => wo.name)  do %>
-                        <i class="btn btn-primary glyphicon glyphicon-lock"></i><span class="badge pull-right"><%= wo.accesses.count %></span>
-                      <% end %>
-      				    </li>
-      				    <li>
-      				        <%= link_to wo do %>
-                        <i class="btn btn-info glyphicon glyphicon-info-sign"></i>
-                      <% end %>
-      				    </li>
-      	          <li>
-      				        <%= link_to edit_workorder_path(wo) do %>
-                        <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
-                      <% end %>
-      				    </li>
-          	      <li>
-      				        <%= link_to wo, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                        <i class="btn btn-danger glyphicon glyphicon-trash"></i>
-                      <% end %>
-      				    </li>
-          	      <li>
-      				        <%= link_to workorders_path(:parent_id => wo.id) do %>
-                        <i class="btn btn-primary glyphicon glyphicon-tasks"></i><span class="badge pull-right"><%= Workorder.where("parent_id=?", wo.id).count %></span>
-                      <% end %>
-      				    </li>
-      			    </ul>
-              </td>
-            </tr>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+
+          <%= link_to new_workorder_path(:parent_id => $current_parent_id, :company_id => $current_company_id) do %>
+            <i class="btn btn-primary glyphicon glyphicon-plus"></i>
           <% end %>
-        </tbody>
-      </table>
+          
+          <% pid = $current_parent_id.to_i %>
+          <% parents = true %>
+          <% counter = 1 %>
+          <% while parents == true do %>
+             <% w = Workorder.where("id=?", pid).first %>
+             <% if w != nil %>
+
+              <br>
+              <% str = "---" * counter + ">" %>
+              <%= str %>
+              <%= link_to workorders_path(:parent_id => w.parent_id) do %>
+                <i class="btn btn-default glyphicon glyphicon-collapse-up"></i>
+              <% end %>
+              <b><%= w.name %></b>              
+              <% pid = w.parent_id %>
+              <% counter = counter + 1 %>
+
+            <% else %>
+
+              <% parents = false %>
+
+            <% end %>
+          <% end %>
+
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+  			<table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th colspan="2">company</th>
+              <th colspan="2">workorder</th>
+              <th colspan="2">responsibility</th>
+              <th colspan="4"></th>
+            </tr>
+          </thead>
+        
+          <tbody>
+            <% @workorders.each do |wo| %>
+              <% if wo.company.user_id == $logon_user_id %>
+                <tr>
+                  <td>
+                    <% if !wo.company.avatar_file_name %>
+                      <%= image_tag("p_anonym.png", :size => "50x50") %>
+                    <% else %>
+                      <%= image_tag wo.company.avatar(:small) %>
+                    <% end %>
+                  </td>
+                  <td>
+                      <%= wo.company.name %>
+                  </td>
+                  <td>
+                  <% if !wo.avatar_file_name %>
+                    <%= image_tag("s_anonym.jpg", :size => "50x50") %>
+                  <% else %>
+                    <%= image_tag wo.avatar(:small) %>
+                  <% end %>
+                  </td>
+                  <td><%= wo.name %></td>
+                  <td>
+                  <% if !wo.user.avatar_file_name %>
+                    <%= image_tag("ma_anonym.png", :size => "50x50") %>
+                  <% else %>
+                    <%= image_tag wo.user.avatar(:small) %>
+                  <% end %>
+                  </td>
+                  <td><%= wo.user.userid %></td>
+                  <td>
+                    <ul class="nav nav-pills">
+                      <li>
+          				        <%= link_to accesses_path(:user_id => $logon_user_id, :workorder_id => wo.id, :workorder_name => wo.name)  do %>
+                            <i class="btn btn-default glyphicon glyphicon-user"></i><span class="badge pull-right"><%= wo.accesses.count %></span>
+                          <% end %>
+          				    </li>
+              	      <li>
+              	          <% if $current_parent_id == 0 %>
+              	            <% $current_company_id = wo.company_id %>
+               	         <% end %>
+          				        <%= link_to workorders_path(:parent_id => wo.id, :company_id => wo.company_id) do %>
+                            <i class="btn btn-default glyphicon glyphicon-list"></i><span class="badge pull-right"><%= Workorder.where("parent_id=?", wo.id).count %></span>
+                          <% end %>
+          				    </li>
+          				    <!--<li>-->
+          				    <!--    <%= link_to wo do %>-->
+                  <!--          <i class="btn btn-info glyphicon glyphicon-info-sign"></i>-->
+                  <!--        <% end %>-->
+          				    <!--</li>-->
+          	          <li>
+          				        <%= link_to edit_workorder_path(wo) do %>
+                            <i class="btn btn-default glyphicon glyphicon-wrench"></i>
+                          <% end %>
+          				    </li>
+              	      <li>
+          				        <%= link_to wo, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                            <i class="btn btn-danger glyphicon glyphicon-trash"></i>
+                          <% end %>
+          				    </li>
+          			    </ul>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

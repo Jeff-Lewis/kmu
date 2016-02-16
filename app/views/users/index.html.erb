@@ -1,68 +1,70 @@
 <p id="notice"><%= notice %></p>
-
 <div class="container-fluid">
 	<div class="row">
     <div class="col-md-12">
-      <h1>Listing Users</h1>
-      <% if $logon_superuser %>
-        <%= link_to new_user_path do %>
-          <i class="btn btn-primary glyphicon glyphicon-plus"></i>
-        <% end %>
-      <% end %>
-      <br>
-			<table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>image</th>
-            <th>email</th>
-            <th colspan="2">name</th>
-            <th colspan="4"></th>
-          </tr>
-        </thead>
-      
-        <tbody>
-          <% @users.each do |user| %>
-            <tr>
-              <td>
-              <% if !user.avatar_file_name %>
-                <%= image_tag("ma_anonym.png", :size => "50x50") %>
-              <% else %>
-                <%= image_tag user.avatar(:small) %>
-              <% end %>
-              </td>
-              <td><%= user.userid %></td>
-              <td><%= user.lastname %></td>             
-              <td><%= user.name %></td>
-              <td>
-              </td>
-              <td>
-                <ul class="nav nav-pills">
-                  <li>
-      				        <%= link_to workorders_show_user_workorders_path(:user_id => user.id, :user_name => user.lastname + " "+ user.name) do %>
-                        <i class="btn btn-primary glyphicon glyphicon-lock"></i><span class="badge pull-right"><%= user.accesses.where("user_id=?", user.id).count %></span>
-                      <% end %>
-      				    </li>
-      				    <li>
-      				        <%= link_to user do %>
-                        <i class="btn btn-info glyphicon glyphicon-info-sign"></i>
-                      <% end %>
-      				    </li>
-      	          <li>
-      				        <%= link_to edit_user_path(user) do %>
-                        <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
-                      <% end %>
-      				    </li>
-          	      <li>
-      				        <%= link_to user, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                        <i class="btn btn-danger glyphicon glyphicon-trash"></i>
-                      <% end %>
-      				    </li>
-      			    </ul>
-              </td>
-            </tr>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <% if $logon_superuser %>
+            <%= link_to new_user_path do %>
+              <i class="btn btn-primary glyphicon glyphicon-plus"></i>
+            <% end %>
+            <b>users</b>
           <% end %>
-        </tbody>
-      </table>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+  			<table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th></th>
+              <th>email</th>
+              <th>name</th>
+              <th colspan="3"></th>
+            </tr>
+          </thead>
+        
+          <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td>
+                <% if !user.avatar_file_name %>
+                  <%= image_tag("ma_anonym.png", :size => "50x50") %>
+                <% else %>
+                  <%= image_tag user.avatar(:small) %>
+                <% end %>
+                </td>
+                <td><%= user.userid %></td>
+                <td><%= user.lastname + " " + user.name %></td>             
+                <td>
+                  <ul class="nav nav-pills">
+                    <li>
+        				        <%= link_to workorders_show_user_workorders_path(:user_id => user.id, :user_name => user.lastname + " "+ user.name) do %>
+                          <i class="btn btn-default glyphicon glyphicon-user"></i><span class="badge pull-right"><%= user.accesses.where("user_id=?", user.id).count %></span>
+                        <% end %>
+        				    </li>
+        				    <!--<li>-->
+        				    <!--    <%= link_to user do %>-->
+                <!--          <i class="btn btn-info glyphicon glyphicon-info-sign"></i>-->
+                <!--        <% end %>-->
+        				    <!--</li>-->
+        	          <li>
+        				        <%= link_to edit_user_path(user) do %>
+                          <i class="btn btn-default glyphicon glyphicon-wrench"></i>
+                        <% end %>
+        				    </li>
+            	      <li>
+        				        <%= link_to user, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                          <i class="btn btn-danger glyphicon glyphicon-trash"></i>
+                        <% end %>
+        				    </li>
+        			    </ul>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

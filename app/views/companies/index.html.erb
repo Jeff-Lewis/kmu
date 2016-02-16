@@ -1,0 +1,68 @@
+<p id="notice"><%= notice %></p>
+<div class="container-fluid">
+	<div class="row">
+    <div class="col-md-12">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <%= link_to new_company_path do %>
+            <i class="btn btn-primary glyphicon glyphicon-plus"></i>
+          <% end %>
+          <b>companies</b>
+        </div>
+      </div>
+      
+      <div class="panel panel-default">
+    		<table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th colspan="2">company</th>
+              <th>owner</th>
+              <th colspan="3"></th>
+            </tr>
+          </thead>
+        
+          <tbody>
+            <% @companies.each do |comp| %>
+              <tr>
+                <td>
+                <% if !comp.avatar_file_name %>
+                  <%= image_tag("p_anonym.png", :size => "50x50") %>
+                <% else %>
+                  <%= image_tag comp.avatar(:small) %>
+                <% end %>
+                </td>
+                <td><%= comp.name %></td>
+                <td><%= comp.user.userid %></td>
+                <td>
+                  <ul class="nav nav-pills">
+                    <li>
+        				        <%= link_to rights_path(:company_id => comp.id, :company_name => comp.name) do %>
+                          <i class="btn btn-default glyphicon glyphicon-user"></i><span class="badge pull-right"><%= comp.rights.where("company_id=?", comp.id).count %></span>
+                        <% end %>
+        				    </li>
+        				    <!--<li>-->
+        				    <!--    <%= link_to comp do %>-->
+                <!--          <i class="btn btn-info glyphicon glyphicon-info-sign"></i>-->
+                <!--        <% end %>-->
+        				    <!--</li>-->
+        	          <li>
+        				        <%= link_to edit_company_path(comp) do %>
+                          <i class="btn btn-default glyphicon glyphicon-wrench"></i>
+                        <% end %>
+        				    </li>
+            	      <li>
+        				        <%= link_to comp, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                          <i class="btn btn-danger glyphicon glyphicon-trash"></i>
+                        <% end %>
+        				    </li>
+        			    </ul>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

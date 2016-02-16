@@ -1,8 +1,10 @@
 class Workorder < ActiveRecord::Base
     belongs_to :user
+    belongs_to :company
     has_many  :accesses
     has_many :timetracks
     
+    validates :company_id, presence: true
     validates :parent_id, presence: true
     validates :user_id, presence: true    
     validates :name, presence: true

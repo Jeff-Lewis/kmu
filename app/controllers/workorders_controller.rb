@@ -2,6 +2,7 @@ class WorkordersController < ApplicationController
   # before_action :set_workorder, only: [:show, :edit, :update, :destroy]
 
   $current_parent_id = 0
+  $current_company_id = nil
   $def_date = Date.today
   $bom = ""
   $eom = ""
@@ -32,15 +33,30 @@ class WorkordersController < ApplicationController
     $hours_reported = @tt.sum(:amount)
   end
   
+  def set_company
+    $current_company_id = params[:company_id]
+    puts "ACHTUNGS::::::" + params[:company_id].to_s
+    redirect_to workorders_path(:parent_id => 0)
+  end
+  
   def set_booking_date
     $def_date = params[:reporting_date]
     redirect_to workorders_report_path(:user_id => $logon_user_id)
   end
   
   def index
-    @workorders = Workorder.where("parent_id=?", params[:parent_id]).name
-    $current_parent_id = params[:parent_id]
-    @workorders = Workorder.all
+    
+    puts "PARENT ----> " + params[:parent_id].to_s
+    puts "COMPAN ----> " + params[:company_id].to_s
+    
+    if params[:parent_id] != 0
+      $current_parent_id = params[:parent_id]
+    end
+    if params[:company_id] != nil
+      $current_company_id = params[:company_id]
+    end
+    @workorders = Workorder.where("parent_id=?", $current_parent_id).order(:company_id)
+    @comps = Company.where("user_id=?", $logon_user_id)
   end
 
   # GET /workorders/1
@@ -52,9 +68,10 @@ class WorkordersController < ApplicationController
   # GET /workorders/new
   def new
     @workorder = Workorder.new
+    @workorder.company_id = params[:company_id]
     @workorder.parent_id = params[:parent_id]
-    @workorder.active = true
     @workorder.user_id = $current_user_id
+    @workorder.active = true
   end
 
   # GET /workorders/1/edit
@@ -69,7 +86,7 @@ class WorkordersController < ApplicationController
 
     respond_to do |format|
       if @workorder.save
-        format.html { redirect_to @workorder, notice: 'Workorder was successfully created.' }
+        format.html { redirect_to workorders_path(:parent_id => $current_parent_id, :company_id => $current_company_id), notice: 'Workorder was successfully created.' }
         format.json { render :show, status: :created, location: @workorder }
       else
         format.html { render :new }
@@ -84,7 +101,7 @@ class WorkordersController < ApplicationController
     set_workorder
     respond_to do |format|
       if @workorder.update(workorder_params)
-        format.html { redirect_to @workorder, notice: 'Workorder was successfully updated.' }
+        format.html { redirect_to redirect_to workorders_path(:parent_id => $current_parent_id, :company_id => $current_company_id), notice: 'Workorder was successfully updated.' }
         format.json { render :show, status: :ok, location: @workorder }
       else
         format.html { render :edit }
@@ -99,7 +116,7 @@ class WorkordersController < ApplicationController
     set_workorder
     @workorder.destroy
     respond_to do |format|
-      format.html { redirect_to workorders_url, notice: 'Workorder was successfully destroyed.' }
+      format.html { redirect_to workorders_path(:parent_id => $current_parent_id, :company_id => $current_company_id), notice: 'Workorder was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -112,6 +129,6 @@ class WorkordersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def workorder_params
-      params.require(:workorder).permit(:parent_id, :user_id, :active, :name, :description, :adress1, :adress2, :adress3, :phone1, :phone2, :costonfo1, :costinfo2, :avatar)
+      params.require(:workorder).permit(:company_id, :parent_id, :user_id, :active, :name, :description, :adress1, :adress2, :adress3, :phone1, :phone2, :costinfo1, :costinfo2, :avatar)
     end
 end

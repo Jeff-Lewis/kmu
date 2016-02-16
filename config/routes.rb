@@ -1,12 +1,19 @@
 Rails.application.routes.draw do
 
+  get 'rights/index'
+  post 'rights/add',  to: 'rights#add'
+  post 'rights/remove', to: 'rights#remove'
+  
+  get 'accesses/index'
+  post 'accesses/add',  to: 'accesses#add'
+  post 'accesses/remove', to: 'accesses#remove'
+
+  root 'user_login#login'
 
   get 'stats/user'
   post 'stats/user'
 
   get 'stats/workorder'
-
-  root 'user_login#login'
 
   get 'home/index'
   
@@ -20,14 +27,18 @@ Rails.application.routes.draw do
   post 'users/choose_a_user', to: 'users#choose'
 
   get 'workorders/index'
+  post 'workorders/index', to: 'workorders#set_company'
+
   get 'workorders/show_user_workorders', to: 'workorders#show_user_workorders'
   get 'workorders/report', to: 'workorders#report'
   post 'workorders/report', to: 'workorders#set_booking_date'
   
+  resources :companies
+  resources :users
+  resources :workorders
   resources :timetracks
   resources :accesses
-  resources :workorders
-  resources :users
+  resources :rights
 
 # user soutes
 #  post 'users/login', to: 'users#verify_login'

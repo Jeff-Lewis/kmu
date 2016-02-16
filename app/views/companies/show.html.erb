@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @company.active %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @company.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @company.description %>
+</p>
+
+<p>
+  <strong>Address1:</strong>
+  <%= @company.adress1 %>
+</p>
+
+<p>
+  <strong>Adress2:</strong>
+  <%= @company.adress2 %>
+</p>
+
+<p>
+  <strong>Adress3:</strong>
+  <%= @company.adress3 %>
+</p>
+
+<p>
+  <strong>Phone1:</strong>
+  <%= @company.phone1 %>
+</p>
+
+<p>
+  <strong>Phone2:</strong>
+  <%= @company.phone2 %>
+</p>
+
+<p>
+  <strong>Avatar file name:</strong>
+  <%= @company.avatar_file_name %>
+</p>
+
+<p>
+  <strong>Avatar content type:</strong>
+  <%= @company.avatar_content_type %>
+</p>
+
+<p>
+  <strong>Avatar file size:</strong>
+  <%= @company.avatar_file_size %>
+</p>
+
+<p>
+  <strong>Avatar updated at:</strong>
+  <%= @company.avatar_updated_at %>
+</p>
+
+<%= link_to 'Edit', edit_company_path(@company) %> |
+<%= link_to 'Back', companies_path %>

@@ -1,0 +1,60 @@
+
+<div class="container-fluid">
+    
+    <ul class="nav nav-pills">
+        <li>
+            <%= link_to companies_path do %>
+              <i class="glyphicon glyphicon-list"></i> List
+            <% end %>
+         </li>
+     </ul>                  
+
+    <%= form_for (rights_path method: :POST) do |f| %>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h1>access rights for company <%= $company_name %></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="form-group">
+                          <%= label_tag "Users with access" %>
+                    </div>
+                    <div class="actions">
+                      <%= f.button "Remove >>", 	:formaction => rights_remove_path, class:"btn btn-default btn-block" %>
+                    </div>
+                    <%= select_tag "company_user", options_from_collection_for_select(@c_user, "id", "userid"), {class: "form-control", multiple: true, size:24} %>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="form-group">
+                          <%= label_tag "ProMIS Users" %>
+                    </div>
+                    <div class="actions">
+                      <%= f.button "Add <<", 	:formaction => rights_add_path, class:"btn btn-primary btn-block" %>
+                    </div>
+                    <%= select_tag "promis_user", options_from_collection_for_select(@p_user, "id", "userid"), {class: "form-control", multiple: true, size:20} %>
+                    <div class="form-group">
+                          <%= label_tag "superuser only " %>
+                          <%= check_box_tag :suser, "yes", false, class:"form-control" %>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <% end %>
+</div>
+
