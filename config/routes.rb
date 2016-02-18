@@ -32,11 +32,15 @@ Rails.application.routes.draw do
   get 'workorders/show_user_workorders', to: 'workorders#show_user_workorders'
   get 'workorders/report', to: 'workorders#report'
   post 'workorders/report', to: 'workorders#set_booking_date'
+
+  post 'plannings/prevp', to: 'plannings#prevp'
+  post 'plannings/nextp', to: 'plannings#nextp'
   
   resources :companies
   resources :users
   resources :workorders
   resources :timetracks
+  resources :plannings
   resources :accesses
   resources :rights
 

@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @planning.user_id %>
+</p>
+
+<p>
+  <strong>Workorder:</strong>
+  <%= @planning.workorder_id %>
+</p>
+
+<p>
+  <strong>Event:</strong>
+  <%= @planning.event %>
+</p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @planning.year %>
+</p>
+<p>
+  <strong>Month:</strong>
+  <%= @planning.month %>
+</p>
+<p>
+  <strong>Week:</strong>
+  <%= @planning.week %>
+</p>
+<p>
+  <strong>Day:</strong>
+  <%= @planning.day %>
+</p>
+<p>
+  <strong>Percentage:</strong>
+  <%= @planning.percentage %>
+</p>
+
+
+<%= link_to 'Edit', edit_planning_path(@planning) %> |
+<%= link_to 'Back', plannings_path %>

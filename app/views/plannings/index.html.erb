@@ -1,0 +1,102 @@
+<p id="notice"><%= notice %></p>
+<div class="container-fluid">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+
+      <div class="row">
+        <div class="col-md-1">
+          <%= link_to plannings_path(:user_id => $logon_user_id, :dir => "<")  do %>
+            <i class="btn btn-primary glyphicon glyphicon-chevron-left"></i>
+          <% end %>
+        </div>
+
+        <%= form_tag do %>
+          <div class="col-md-8">
+              <%= select_tag "period", options_for_select($period_options, $period_options[3]), class:"form-control" %>
+          </div>
+          <div class="col-md-2">
+              <%= button_tag "Set", :formaction => plannings_prevp_path, class:"btn btn-warning" %>
+          </div>
+        <% end %>
+
+        <div class="col-md-1">
+          <%= link_to plannings_path(:user_id => $logon_user_id, :dir => ">") do %>
+            <i class="pull-right btn btn-primary btn glyphicon glyphicon-chevron-right"></i>
+          <% end %>
+        </div>
+      </div>
+
+      <br>
+      
+      <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-11">
+          <%= label_tag $c_label %>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+<table class="table">
+  <tr>
+    <th>workorder</th>
+    <% for i in 0..@header.length-1 do %>
+      <% if Date.today == @data[i] %>
+          <th class="warning">
+      <% else %>
+          <th>
+      <% end %>
+      <%= @header[i] %>
+      </th>
+    <% end %>
+  </tr>
+  <% @total = [] %>
+  <% for i in 0..@header.length-1 do %>
+    <% @total[i] = 0 %>
+  <% end %>
+  <% @workorders.each do |w| %>
+    <tr>
+      <td><%= w.name %></td>
+      <% for i in 0..@header.length-1 do %>
+        <% year = @data[i].strftime("%Y").to_i %>
+        <% month = @data[i].strftime("%m").to_i %>
+        <% week = @data[i].strftime("%V").to_i %>
+        <% day = @data[i].strftime("%d").to_i %>
+        <% @plans = Planning.where("workorder_id=? and year=? and month=? and week=? and day=?", w.id, year, month, week, day) %>
+        <% if @plans.count != 0 %>
+          <td class="info">
+          <% @plans.each do |p| %>
+            <% @total[i] = @total[i] + p.percentage %>
+            <% puts @total[i] %>
+            <%= p.percentage %>
+            <%= link_to planning_path(p.id) do %>
+              <i class="btn btn-default btn-xs glyphicon glyphicon-time pull-right"></i>
+            <% end %>
+          <% end %>
+        <% else %>
+          <td>          
+        <% end %>
+        <%= link_to new_planning_path(:workorder_id => w.id, :user_id => $logon_user_id, :date => @data[i]) do %>
+          <i class="btn btn-default btn-xs glyphicon glyphicon-plus pull-right"></i>
+        <% end %>
+        </td>
+      <% end %>
+    </tr>    
+  <% end %>
+  <tr>
+    <td>Total</td>
+    <% for i in 0..@header.length-1 do %>
+      <% if @total[i] >= 100 %>
+          <td class="danger">
+      <% else %>
+          <td>
+      <% end %>
+      <%= @total[i] %>
+      </td>
+    <% end %>
+  </tr>
+
+</table>
+</div>

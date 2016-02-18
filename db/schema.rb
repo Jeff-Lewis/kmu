@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160214133321) do
+ActiveRecord::Schema.define(version: 20160217071951) do
 
   create_table "accesses", force: :cascade do |t|
     t.integer  "user_id"
@@ -37,6 +37,19 @@ ActiveRecord::Schema.define(version: 20160214133321) do
     t.datetime "avatar_updated_at"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+  end
+
+  create_table "plannings", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "workorder_id"
+    t.string   "event"
+    t.integer  "year"
+    t.integer  "month"
+    t.integer  "week"
+    t.integer  "day"
+    t.integer  "percentage"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "rights", force: :cascade do |t|
