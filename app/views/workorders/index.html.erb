@@ -55,9 +55,9 @@
                 <tr>
                   <td>
                     <% if !wo.company.avatar_file_name %>
-                      <%= image_tag("p_anonym.png", :size => "50x50") %>
+                      <%= image_tag("p_anonym.png", :size => "50x50", class:"img-rounded" ) %>
                     <% else %>
-                      <%= image_tag wo.company.avatar(:small) %>
+                      <%= image_tag wo.company.avatar(:small), class:"img-rounded"  %>
                     <% end %>
                   </td>
                   <td>

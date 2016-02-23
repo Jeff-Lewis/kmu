@@ -33,6 +33,13 @@ class AccessesController < ApplicationController
           a = Access.new
           a.user_id = cu
           a.workorder_id = $workorder_id
+          tu = User.find(cu)
+          if tu != nil
+            cr = tu.costrate
+          else
+            cr = 0
+          end
+          a.costrate = cr
           a.created_at = Date.today
           a.updated_at = Date.today
           a.save

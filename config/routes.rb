@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
 
   root 'user_login#login'
-  
+
   get 'rights/index'
   post 'rights/add',  to: 'rights#add'
   post 'rights/remove', to: 'rights#remove'

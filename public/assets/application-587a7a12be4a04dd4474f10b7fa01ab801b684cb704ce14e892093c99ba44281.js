@@ -29420,6 +29420,22 @@ Licensed under the BSD-2-Clause License.
 
 }).call(this);
 (function() {
+
+
+}).call(this);
+(function() {
+
+
+}).call(this);
+(function() {
+
+
+}).call(this);
+(function() {
+
+
+}).call(this);
+(function() {
   jQuery(function() {
     $('#starting_date').datepicker({
       dateFormat: 'yy-mm-dd'
@@ -29430,18 +29446,47 @@ Licensed under the BSD-2-Clause License.
     $('#reporting_date').datepicker({
       dateFormat: 'yy-mm-dd'
     });
-    return Morris.Line({
+    Morris.Bar({
       element: 'reports_chart',
       data: $('#reports_chart').data('reports'),
       xkey: 'datum',
       ykeys: ['amount'],
       labels: ['hours reported']
     });
+    return Morris.Line({
+      element: 'lines',
+      data: [
+        {
+          y: '2006',
+          a: 100,
+          b: 90
+        }, {
+          y: '2007',
+          a: 75,
+          b: 65
+        }, {
+          y: '2008',
+          a: 50,
+          b: 40
+        }, {
+          y: '2009',
+          a: 75,
+          b: 65
+        }
+      ],
+      xkey: 'y',
+      ykeys: ['a', 'b'],
+      labels: ['Series A', 'Series B']
+    });
   });
 
 }).call(this);
 (function() {
-
+  jQuery(function() {
+    return $('#timetrack_datum').datepicker({
+      dateFormat: 'yy-mm-dd'
+    });
+  });
 
 }).call(this);
 (function() {

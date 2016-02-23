@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20160217071951) do
   create_table "accesses", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "workorder_id"
-    t.decimal  "costrate"
+    t.float  "costrate"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 20160217071951) do
     t.string   "tandm"
     t.boolean  "active"
     t.string   "activity"
-    t.decimal  "amount"
+    t.float    "amount"
     t.datetime "datum"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 20160217071951) do
     t.string   "phone2"
     t.string   "org"
     t.binary   "image"
-    t.decimal  "costrate"
+    t.float    "costrate"
     t.string   "costinfo1"
     t.string   "costinfo2"
     t.datetime "created_at",          null: false

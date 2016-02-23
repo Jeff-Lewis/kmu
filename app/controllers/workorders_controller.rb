@@ -29,7 +29,7 @@ class WorkordersController < ApplicationController
     init
     $bom = $def_date.to_date.beginning_of_month
     $eom = $def_date.to_date.end_of_month
-    @tt = Timetrack.where("user_id=? and datum >= ? and datum <= ?", $logon_user_id, $bom, $eom)
+    @tt = Timetrack.where("user_id=? and tandm=? and datum >= ? and datum <= ?", $logon_user_id, "TIME", $bom, $eom)
     $hours_reported = @tt.sum(:amount)
   end
   
