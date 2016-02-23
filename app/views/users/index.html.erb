@@ -29,9 +29,9 @@
               <tr>
                 <td>
                 <% if !user.avatar_file_name %>
-                  <%= image_tag("ma_anonym.png", :size => "50x50") %>
+                  <%= image_tag("ma_anonym.png", :size => "50x50", class:"img-circle") %>
                 <% else %>
-                  <%= image_tag user.avatar(:small) %>
+                  <%= image_tag user.avatar(:small), class:"img-circle" %>
                 <% end %>
                 </td>
                 <td><%= user.userid %></td>
@@ -54,7 +54,7 @@
                         <% end %>
         				    </li>
             	      <li>
-        				        <%= link_to user, method: :delete, data: { confirm: 'Are you sure?' } do %>
+        				        <%= link_to user, method: :destroy, data: { confirm: 'Are you sure?' } do %>
                           <i class="btn btn-danger glyphicon glyphicon-trash"></i>
                         <% end %>
         				    </li>

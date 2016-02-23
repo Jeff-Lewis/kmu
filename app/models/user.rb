@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
     has_many :accesses
     has_many :timetracks
     has_many :companies
+    has_many :plannnings
 
     validates :userid, presence: true, :uniqueness => true
     validates :lastname, presence: true    

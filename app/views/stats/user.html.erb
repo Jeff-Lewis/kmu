@@ -35,10 +35,10 @@
                           </div>
                       <% end %>
                       <div class="actions">
-                            <%= button_to "Update Chart", stats_user_path, class:"btn btn-primary" %>
+                            <%= button_to "Update Chart", stats_user_path(:data => "UpdateChart"), class:"btn btn-primary" %>
                       </div>
                       <div class="actions">
-                            <%= button_to "Export Excel", stats_user_path, class:"btn btn-default" %>
+                            <%= button_to "Export Excel", stats_user_path(:data => "WriteExcel"), class:"btn btn-default" %>
                       </div>
                     <% end %>
                     

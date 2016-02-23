@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+
+  root 'user_login#login'
+  
   get 'rights/index'
   post 'rights/add',  to: 'rights#add'
   post 'rights/remove', to: 'rights#remove'
@@ -7,8 +10,6 @@ Rails.application.routes.draw do
   get 'accesses/index'
   post 'accesses/add',  to: 'accesses#add'
   post 'accesses/remove', to: 'accesses#remove'
-
-  root 'user_login#login'
 
   get 'stats/user'
   post 'stats/user'

@@ -12,7 +12,7 @@
 
         <%= form_tag do %>
           <div class="col-md-8">
-              <%= select_tag "period", options_for_select($period_options, $period_options[3]), class:"form-control" %>
+              <%= select_tag "period", options_for_select($period_options, $period), class:"form-control" %>
           </div>
           <div class="col-md-2">
               <%= button_tag "Set", :formaction => plannings_prevp_path, class:"btn btn-warning" %>
@@ -25,78 +25,145 @@
           <% end %>
         </div>
       </div>
-
-      <br>
-      
-      <div class="row">
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-11">
-          <%= label_tag $c_label %>
-        </div>
-      </div>
-      
     </div>
   </div>
 
-<table class="table">
-  <tr>
-    <th>workorder</th>
-    <% for i in 0..@header.length-1 do %>
-      <% if Date.today == @data[i] %>
-          <th class="warning">
-      <% else %>
-          <th>
-      <% end %>
-      <%= @header[i] %>
-      </th>
-    <% end %>
-  </tr>
-  <% @total = [] %>
-  <% for i in 0..@header.length-1 do %>
-    <% @total[i] = 0 %>
-  <% end %>
-  <% @workorders.each do |w| %>
+  <table class="table">
     <tr>
-      <td><%= w.name %></td>
+      <td></td><td></td>
+      <td colspan= <%= @header.length %>><b><%= $c_label %></b></td> 
+    </tr>
+    <tr>
+      <th colspan="2">workorder</th>
+      
+      <% @total = [] %>
       <% for i in 0..@header.length-1 do %>
-        <% year = @data[i].strftime("%Y").to_i %>
-        <% month = @data[i].strftime("%m").to_i %>
-        <% week = @data[i].strftime("%V").to_i %>
-        <% day = @data[i].strftime("%d").to_i %>
-        <% @plans = Planning.where("workorder_id=? and year=? and month=? and week=? and day=?", w.id, year, month, week, day) %>
-        <% if @plans.count != 0 %>
-          <td class="info">
-          <% @plans.each do |p| %>
-            <% @total[i] = @total[i] + p.percentage %>
-            <% puts @total[i] %>
-            <%= p.percentage %>
-            <%= link_to planning_path(p.id) do %>
-              <i class="btn btn-default btn-xs glyphicon glyphicon-time pull-right"></i>
-            <% end %>
-          <% end %>
+        <!-- set initialize total per column -->
+        <% @total[i] = 0 %>
+        <!-- set color of header according to actual day, wekk or month -->
+        <% if current_period($period, @data[i]) %>
+              <th class="warning">
         <% else %>
-          <td>          
+              <th>
         <% end %>
-        <%= link_to new_planning_path(:workorder_id => w.id, :user_id => $logon_user_id, :date => @data[i]) do %>
-          <i class="btn btn-default btn-xs glyphicon glyphicon-plus pull-right"></i>
+          
+        <%= @header[i] %>
+        </th>
+      <% end %>
+    </tr>
+
+    <% @workorders.each do |w| %>
+    
+      <!-- generate Org Plan according to period -->
+      <%= plans($period, w) %>
+
+      <!-- generate overall plans  -->
+      <% case $period %>
+        <% when $period_options[0] %>
+
+        <% when $period_options[1] %>
+          <!-- integrate yearly & daily planning -->
+          <!-- integrate yearly planning -->
+          <% @yearplans = Planning.where("user_id=? and workorder_id=? and year=? and month=? and week=? and day=?", $logon_user_id, w.id, $c_year, $c_month, 0, 0) %>
+          <% @yearplans.each do |yp| %>
+            <tr>
+              <td></td>
+              <td>Monthly Planning</td>
+              <td class="warning" colspan="5"><%= yp.percentage %>
+                <% for i in 0..@header.length-1 %>
+                  <% @total[i] = @total[i] + yp.percentage %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+
+        <% when $period_options[2] %>
+          <!-- integrate weekly & monthly planning -->
+          <% @yearplans = Planning.where("user_id=? and workorder_id=? and year=? and month=? and week=? and day=?", $logon_user_id, w.id, $c_year, $c_month, 0, 0) %>
+          <% @yearplans.each do |yp| %>
+            <tr>
+              <td></td>
+              <td>Monthly Planning</td>
+              <td class="warning" colspan="7"><%= yp.percentage %>
+                <% for i in 0..@header.length-1 %>
+                  <% @total[i] = @total[i] + yp.percentage %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+          <% @weekplans = Planning.where("user_id=? and workorder_id=? and year=? and month=? and week=? and day=?", $logon_user_id, w.id, $c_year, $c_month, $c_week, 0) %>
+          <% @weekplans.each do |wp| %>
+            <tr>
+              <td></td>
+              <td>Weekly Planning</td>
+              <td class="warning" colspan="7"><%= wp.percentage %>
+                <% for i in 0..@header.length-1 %>
+                  <% @total[i] = @total[i] + wp.percentage %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+          
+      <% end %>
+
+    <% end %>
+    
+    <!-- finally add totals and progress bar-->
+    <tr>
+      <td>Total</td>
+      <td></td>
+      <% for i in 0..@header.length-1 do %>
+        <% if @total[i] > 100 %>
+            <td class="danger">
+        <% else %>
+            <td>
         <% end %>
+        <%= @total[i] %>
         </td>
       <% end %>
-    </tr>    
-  <% end %>
-  <tr>
-    <td>Total</td>
-    <% for i in 0..@header.length-1 do %>
-      <% if @total[i] >= 100 %>
-          <td class="danger">
-      <% else %>
-          <td>
+    </tr>
+  
+    <tr>
+      <td></td>
+      <td></td>
+      <% for i in 0..@header.length-1 do %>
+        <td>
+        <div class="progress">
+        <% if @total[i] <=40 %>
+          <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <%= @total[i] %>%" >
+        <% end %>
+        <% if @total[i] >40 and @total[i]<=60 %>
+          <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <%= @total[i] %>%" >
+        <% end %>
+        <% if @total[i] >60 and @total[i]<=100 %>
+          <div class="progress-bar progress-bar-success" role="progressbar" style="width: <%= @total[i] %>%" >
+        <% end %>
+        <% if @total[i] >100 and @total[i]<=125 %>
+          <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <%= @total[i] %>%" >
+        <% end %>
+        <% if @total[i] >125 %>
+          <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <%= @total[i] %>%" >
+        <% end %>
+        </div>
+        </td>
       <% end %>
-      <%= @total[i] %>
-      </td>
-    <% end %>
-  </tr>
+    </tr>
+  </table>
 
-</table>
+  <!--<div class="row">-->
+  <!--     <div class="col-md-12">-->
+  <!--        <div class="panel panel-default">-->
+  <!--            <div class="panel-heading">-->
+  <!--                <h1><%= $c_label %></h1>-->
+  <!--                <% @ressources = [] %>-->
+  <!--                <% for i in 0..@header.length-1 %>-->
+  <!--                  <% @ressources << {:period => @header[i], :percentage => @total[i]} %>-->
+  <!--                <% end %>-->
+  <!--                <% puts @ressources %>-->
+  <!--                <%= content_tag :div, "", id: "ressources_chart",  data: {ressources: @ressources} %>-->
+  <!--            </div>-->
+  <!--        </div>-->
+  <!--    </div>-->
+  <!--</div>-->
+
 </div>

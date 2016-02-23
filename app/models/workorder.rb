@@ -3,6 +3,7 @@ class Workorder < ActiveRecord::Base
     belongs_to :company
     has_many  :accesses
     has_many :timetracks
+    has_many :plannnings
     
     validates :company_id, presence: true
     validates :parent_id, presence: true

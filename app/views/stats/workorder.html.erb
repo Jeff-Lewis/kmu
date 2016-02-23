@@ -1,31 +1,13 @@
-<h1>Stats#workorder</h1>
+<h1>Testing...</h1>
 <p>Find me in app/views/stats/workorder.html.erb</p>
 
 <p id="notice"><%= notice %></p>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <%= form_tag (stats_workorder_path method: :POST) do %>
-                      <div class="form-group">
-                        <%= label_tag "reporting date" %>
-                        <%= text_field_tag :reporting_date, Date.today, class:"form-control"%>
-                      </div>
-                      <div class="actions">
-                            <%= button_to "Set", stats_workorder_path, class:"btn btn-primary" %>
-                      </div>
-                    <% end %>
-                    
-                </div>
-            </div>
+                <%= content_tag :div, "", id: "reports_chart", data: {reports: @js}  %>
+                <!--<%= content_tag :div, "", id: "lines", data: {lines: @js} %>-->
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-
-                <h1>test</h1>
-                <%= content_tag :div, "", id: "reports_chart", data: {reports: @timetracks} %>
-        </div>
+        
     </div>
 </div>

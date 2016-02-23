@@ -101,7 +101,7 @@ class WorkordersController < ApplicationController
     set_workorder
     respond_to do |format|
       if @workorder.update(workorder_params)
-        format.html { redirect_to redirect_to workorders_path(:parent_id => $current_parent_id, :company_id => $current_company_id), notice: 'Workorder was successfully updated.' }
+        format.html { redirect_to workorders_path(:parent_id => $current_parent_id, :company_id => $current_company_id), notice: 'Workorder was successfully updated.' }
         format.json { render :show, status: :ok, location: @workorder }
       else
         format.html { render :edit }

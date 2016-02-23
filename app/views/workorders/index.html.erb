@@ -8,7 +8,7 @@
         <div class="panel-heading">
 
           <%= link_to new_workorder_path(:parent_id => $current_parent_id, :company_id => $current_company_id) do %>
-            <i class="btn btn-primary glyphicon glyphicon-plus"></i>
+            <i class="btn btn-primary glyphicon glyphicon-plus"></i> <b>workorders</b>
           <% end %>
           
           <% pid = $current_parent_id.to_i %>
@@ -65,17 +65,17 @@
                   </td>
                   <td>
                   <% if !wo.avatar_file_name %>
-                    <%= image_tag("s_anonym.jpg", :size => "50x50") %>
+                    <%= image_tag("s_anonym.jpg", :size => "50x50", class:"img-rounded" ) %>
                   <% else %>
-                    <%= image_tag wo.avatar(:small) %>
+                    <%= image_tag wo.avatar(:small), class:"img-rounded"  %>
                   <% end %>
                   </td>
                   <td><%= wo.name %></td>
                   <td>
                   <% if !wo.user.avatar_file_name %>
-                    <%= image_tag("ma_anonym.png", :size => "50x50") %>
+                    <%= image_tag("ma_anonym.png", :size => "50x50", class:"img-circle") %>
                   <% else %>
-                    <%= image_tag wo.user.avatar(:small) %>
+                    <%= image_tag wo.user.avatar(:small), class:"img-circle" %>
                   <% end %>
                   </td>
                   <td><%= wo.user.userid %></td>

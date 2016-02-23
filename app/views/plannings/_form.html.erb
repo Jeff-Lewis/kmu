@@ -1,49 +1,49 @@
-<%= form_for(@planning) do |f| %>
-  <% if @planning.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@planning.errors.count, "error") %> prohibited this planning from being saved:</h2>
+<div class="container-fluid">
+    <%= form_for @planning do |f| %>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                  <%= link_to plannings_path do %>
+                    <i class="btn btn-primary glyphicon glyphicon-list"></i>
+                  <% end %>
+                  <b>Ressource Allocation</b>
+                 </div>
 
-      <ul>
-      <% @planning.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.number_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :workorder_id %><br>
-    <%= f.number_field :workorder_id %>
-  </div>
-  <div class="field">
-    <%= f.label :event %><br>
-    <%= f.number_field :event %>
-  </div>
-  <div class="field">
-    <%= f.label :year %><br>
-    <%= f.number_field :year %>
-  </div>
-  <div class="field">
-    <%= f.label :month %><br>
-    <%= f.number_field :month %>
-  </div>
-  <div class="field">
-    <%= f.label :week %><br>
-    <%= f.number_field :week %>
-  </div>
-  <div class="field">
-    <%= f.label :day %><br>
-    <%= f.number_field :day %>
-  </div>
-  <div class="field">
-    <%= f.label :percentage %><br>
-    <%= f.number_field :percentage %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+                <div class="panel-body">
+                  <%= form_for(@planning) do |f| %>
+                    <% if @planning.errors.any? %>
+                      <div id="error_explanation">
+                        <h2><%= pluralize(@planning.errors.count, "error") %> prohibited this planning from being saved:</h2>
+                  
+                        <ul>
+                        <% @planning.errors.full_messages.each do |message| %>
+                          <li><%= message %></li>
+                        <% end %>
+                        </ul>
+                      </div>
+                    <% end %>
+                  
+                    <div class="field">
+                      <%= f.label :event %><br>
+                      <%= f.text_field :event, class:"form-control" %>
+                    </div>
+                    <div class="field">
+                      <%= f.label :percentage %><br>
+                      <%= f.number_field :percentage, autofocus: true, class:"form-control" %>
+                    </div>
+                    <%= f.number_field :user_id, class:"form-control hidden"%>
+                    <%= f.number_field :workorder_id, class:"form-control hidden"%>
+                    <%= f.number_field :year, class:"form-control hidden"%>
+                    <%= f.number_field :month, class:"form-control hidden"%>
+                    <%= f.number_field :week, class:"form-control hidden"%>
+                    <%= f.number_field :day, class:"form-control hidden"%>
+                    <div class="actions">
+                      <%= f.submit "Save", class:"btn btn-primary btn-lg" %>
+                    </div>
+                  <% end %>
+              </div>
+          </div>
+      </div>
+    <% end %>
+</div>

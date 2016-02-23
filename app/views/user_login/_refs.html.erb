@@ -8,11 +8,14 @@
 					</div>
 					<div id="element01" class="panel-collapse collapse">
 						<div class="panel-body">
-              <% @companies.each do |c| %>
-                <% if !c.avatar_file_name %>
-                  <%= image_tag("p_anonym.png", :size => "50x50") %>
-                <% else %>
-                  <%= image_tag c.avatar(:small) %>
+						  <% @companies = Company.all %>
+              <% if @companies != nil %>
+                <% @companies.each do |c| %>
+                  <% if !c.avatar_file_name %>
+                    <%= image_tag("p_anonym.png", :size => "50x50") %>
+                  <% else %>
+                    <%= image_tag c.avatar(:small) %>
+                  <% end %>
                 <% end %>
               <% end %>
 						</div>

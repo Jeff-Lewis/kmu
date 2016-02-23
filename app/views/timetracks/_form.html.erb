@@ -71,7 +71,11 @@
           </div>
       </div>
       <div class="col-md-8">
-              <% anz = @tt.sum(:amount).to_s %>
+              <% if @tt != nil %>
+                <% anz = @tt.sum(:amount).to_s %>
+              <% else %>
+                <% anz = 0.to_s %>
+              <% end %>
              <h1><%= anz +" hours reported " + @timetrack.workorder.name + " month " + @timetrack.datum.to_date.strftime("%B-%Y").to_s %> 
              <%= content_tag :div, "", id: "reports_chart",  data: {reports: @tt} %>
       </div>
