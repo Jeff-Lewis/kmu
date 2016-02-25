@@ -1,27 +1,24 @@
 <p id="notice"><%= notice %></p>
 <div class="container-fluid">
-  <div class="panel panel-default">
+  <div class="panel panel-info">
     <div class="panel-heading">
 
       <div class="row">
         <div class="col-md-1">
-          <%= link_to plannings_path(:user_id => $logon_user_id, :dir => "<")  do %>
-            <i class="btn btn-primary glyphicon glyphicon-chevron-left"></i>
+          <%= link_to plannings_overview_path(:user_id => $logon_user_id, :dir => "<")  do %>
+            <i class="btn btn-primary btn-block glyphicon glyphicon-chevron-left"></i>
           <% end %>
         </div>
 
-        <%= form_tag do %>
-          <div class="col-md-8">
-              <%= select_tag "period", options_for_select($period_options, $period), class:"form-control" %>
-          </div>
-          <div class="col-md-2">
-              <%= button_tag "Set", :formaction => plannings_prevp_path, class:"btn btn-warning" %>
+        <%= form_tag (plannings_overview_path method: :POST) do %>
+          <div class="col-md-10">
+              <%= select_tag "period", options_for_select($period_options, $period), class:"form-control",:onchange => "this.form.submit();" %>
           </div>
         <% end %>
 
         <div class="col-md-1">
-          <%= link_to plannings_path(:user_id => $logon_user_id, :dir => ">") do %>
-            <i class="pull-right btn btn-primary btn glyphicon glyphicon-chevron-right"></i>
+          <%= link_to plannings_overview_path(:user_id => $logon_user_id, :dir => ">") do %>
+            <i class="pull-right btn btn-primary btn-block glyphicon glyphicon-chevron-right"></i>
           <% end %>
         </div>
       </div>

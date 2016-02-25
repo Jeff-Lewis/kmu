@@ -1,0 +1,169 @@
+<p id="notice"><%= notice %></p>
+<div class="container-fluid">
+  <div class="panel panel-info">
+    <div class="panel-heading">
+
+      <div class="row">
+        <div class="col-md-1">
+          <%= link_to plannings_path(:user_id => $logon_user_id, :dir => "<")  do %>
+            <i class="btn btn-primary glyphicon glyphicon-chevron-left"></i>
+          <% end %>
+        </div>
+
+        <%= form_tag (plannings_path method: :POST) do %>
+          <div class="col-md-10">
+              <%= select_tag "period", options_for_select($period_options, $period), class:"form-control",:onchange => "#this.form.submit();" %>
+          </div>
+          <!--<div class="col-md-2">-->
+          <!--    <%= button_tag "Set", :formaction => plannings_prevp_path, class:"btn btn-warning" %>-->
+          <!--</div>-->
+        <% end %>
+
+        <div class="col-md-1">
+          <%= link_to plannings_path(:user_id => $logon_user_id, :dir => ">") do %>
+            <i class="pull-right btn btn-primary btn glyphicon glyphicon-chevron-right"></i>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <table class="table">
+    <tr>
+      <td></td><td></td>
+      <td colspan= <%= @header.length %>><b><%= $c_label %></b></td> 
+    </tr>
+    <tr>
+      <th colspan="2">workorder</th>
+      
+      <% @total = [] %>
+      <% for i in 0..@header.length-1 do %>
+        <!-- set initialize total per column -->
+        <% @total[i] = 0 %>
+        <!-- set color of header according to actual day, wekk or month -->
+        <% if current_period($period, @data[i]) %>
+              <th class="warning">
+        <% else %>
+              <th>
+        <% end %>
+          
+        <%= @header[i] %>
+        </th>
+      <% end %>
+    </tr>
+
+    <% @workorders.each do |w| %>
+    
+      <!-- generate Org Plan according to period -->
+      <%= plans($period, w) %>
+
+      <!-- generate overall plans  -->
+      <% case $period %>
+        <% when $period_options[0] %>
+
+        <% when $period_options[1] %>
+          <!-- integrate yearly & daily planning -->
+          <!-- integrate yearly planning -->
+          <% @yearplans = Planning.where("user_id=? and workorder_id=? and year=? and month=? and week=? and day=?", $logon_user_id, w.id, $c_year, $c_month, 0, 0) %>
+          <% @yearplans.each do |yp| %>
+            <tr>
+              <td></td>
+              <td>Monthly Planning</td>
+              <td class="warning" colspan="5"><%= yp.percentage %>
+                <% for i in 0..@header.length-1 %>
+                  <% @total[i] = @total[i] + yp.percentage %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+
+        <% when $period_options[2] %>
+          <!-- integrate weekly & monthly planning -->
+          <% @yearplans = Planning.where("user_id=? and workorder_id=? and year=? and month=? and week=? and day=?", $logon_user_id, w.id, $c_year, $c_month, 0, 0) %>
+          <% @yearplans.each do |yp| %>
+            <tr>
+              <td></td>
+              <td>Monthly Planning</td>
+              <td class="warning" colspan="5"><%= yp.percentage %>
+                <% for i in 0..@header.length-1 %>
+                  <% @total[i] = @total[i] + yp.percentage %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+          <% @weekplans = Planning.where("user_id=? and workorder_id=? and year=? and month=? and week=? and day=?", $logon_user_id, w.id, $c_year, $c_month, $c_week, 0) %>
+          <% @weekplans.each do |wp| %>
+            <tr>
+              <td></td>
+              <td>Weekly Planning</td>
+              <td class="warning" colspan="5"><%= wp.percentage %>
+                <% for i in 0..@header.length-1 %>
+                  <% @total[i] = @total[i] + wp.percentage %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+          
+      <% end %>
+
+    <% end %>
+    
+    <!-- finally add totals and progress bar-->
+    <tr>
+      <td>Total</td>
+      <td></td>
+      <% for i in 0..@header.length-1 do %>
+        <% if @total[i] > 100 %>
+            <td class="danger">
+        <% else %>
+            <td>
+        <% end %>
+        <%= @total[i] %>
+        </td>
+      <% end %>
+    </tr>
+  
+    <tr>
+      <td></td>
+      <td></td>
+      <% for i in 0..@header.length-1 do %>
+        <td>
+        <div class="progress">
+        <% if @total[i] <=40 %>
+          <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <%= @total[i] %>%" >
+        <% end %>
+        <% if @total[i] >40 and @total[i]<=60 %>
+          <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <%= @total[i] %>%" >
+        <% end %>
+        <% if @total[i] >60 and @total[i]<=100 %>
+          <div class="progress-bar progress-bar-success" role="progressbar" style="width: <%= @total[i] %>%" >
+        <% end %>
+        <% if @total[i] >100 and @total[i]<=125 %>
+          <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <%= @total[i] %>%" >
+        <% end %>
+        <% if @total[i] >125 %>
+          <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <%= @total[i] %>%" >
+        <% end %>
+        </div>
+        </td>
+      <% end %>
+    </tr>
+  </table>
+
+  <!--<div class="row">-->
+  <!--     <div class="col-md-12">-->
+  <!--        <div class="panel panel-default">-->
+  <!--            <div class="panel-heading">-->
+  <!--                <h1><%= $c_label %></h1>-->
+  <!--                <% @ressources = [] %>-->
+  <!--                <% for i in 0..@header.length-1 %>-->
+  <!--                  <% @ressources << {:period => @header[i], :percentage => @total[i]} %>-->
+  <!--                <% end %>-->
+  <!--                <% puts @ressources %>-->
+  <!--                <%= content_tag :div, "", id: "ressources_chart",  data: {ressources: @ressources} %>-->
+  <!--            </div>-->
+  <!--        </div>-->
+  <!--    </div>-->
+  <!--</div>-->
+
+</div>

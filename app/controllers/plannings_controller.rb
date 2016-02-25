@@ -12,10 +12,10 @@ class PlanningsController < ApplicationController
   $period_options = ["Monthly", "Weekly", "Daily"]
   $period = $period_options[2]
 
-  def prevp
-    $period = params[:period]
-    redirect_to plannings_path
-  end
+  # def prevp
+  #   $period = params[:period]
+  #   redirect_to plannings_path
+  # end
 
   def header(period, act)
     case $period
@@ -108,6 +108,20 @@ class PlanningsController < ApplicationController
   end
   
   # GET /plannings
+  def overview
+    
+    if params[:period] != nil
+      $period = params[:period]
+      header($period, params[:period])
+    else
+      header($period, params[:dir])
+    end
+    @plannings = Planning.all
+    @workorders = Workorder.all
+
+  end
+
+  # GET /plannings
   def index
     
     if params[:dir] != nil
@@ -158,7 +172,7 @@ class PlanningsController < ApplicationController
     @planning = Planning.new(planning)
 
     if @planning.save
-      redirect_to plannings_path, notice: 'Planning was successfully created.'
+      redirect_to plannings_overview_path, notice: 'Planning was successfully created.'
     else
       render :new
     end
@@ -167,7 +181,7 @@ class PlanningsController < ApplicationController
   # PUT /plannings/1
   def update(planning)
     if @planning.update(planning)
-      redirect_to plannings_path, notice: 'Planning was successfully updated.'
+      redirect_to plannings_overview_path, notice: 'Planning was successfully updated.'
     else
       render :edit
     end
@@ -177,7 +191,7 @@ class PlanningsController < ApplicationController
   def destroy
     @planning.destroy
 
-    redirect_to plannings_url, notice: 'Planning was successfully destroyed.'
+    redirect_to plannings_overview_path, notice: 'Planning was successfully destroyed.'
   end
 
   private

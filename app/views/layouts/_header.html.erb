@@ -9,7 +9,7 @@
           <% if $logon_user_id > 0 %>
             <ul class="nav navbar-nav">
             <li><%= link_to "myTimeReport", workorders_report_path(:user_id => $logon_user_id, :parent_id => 0) %></li>
-            <li><%= link_to "myRessource", plannings_path %></li>
+            <li><%= link_to "myRessource", plannings_overview_path %></li>
             <li><%= link_to "myWorkorders", workorders_path(:parent_id => 0) %></li>
             <li><%= link_to "myUserData", users_path(:userid => $logon_user_id) %></li>
             <li><%= link_to "myComapnies", companies_path(:userid => $logon_user_id) %></li>

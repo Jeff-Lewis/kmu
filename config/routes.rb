@@ -35,8 +35,10 @@ Rails.application.routes.draw do
   get 'workorders/report', to: 'workorders#report'
   post 'workorders/report', to: 'workorders#set_booking_date'
 
-  post 'plannings/prevp', to: 'plannings#prevp'
-  post 'plannings/nextp', to: 'plannings#nextp'
+  # post 'plannings/prevp', to: 'plannings#prevp'
+  # post 'plannings/nextp', to: 'plannings#nextp'
+  get  'plannings/overview', to: 'plannings#overview'
+  post 'plannings/overview', to: 'plannings#overview'
   
   resources :companies
   resources :users

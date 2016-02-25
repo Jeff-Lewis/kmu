@@ -200,6 +200,8 @@ class StatsController < ApplicationController
       $period = params[:period]
     end
     $filename = ""
+    
+    puts "hello..."
 
     @companies = Company.where("user_id=?", $logon_user_id)
     
