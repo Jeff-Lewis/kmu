@@ -9,7 +9,7 @@ class PlanningsController < ApplicationController
 
   $c_label = ""
 
-  $period_options = ["Monthly Planning", "Weekly Planning", "Daily Planning"]
+  $period_options = ["Monthly", "Weekly", "Daily"]
   $period = $period_options[2]
 
   def prevp
@@ -94,6 +94,7 @@ class PlanningsController < ApplicationController
           end
           
           starting_date = Date.commercial($c_year,$c_week)
+          $c_month = starting_date.strftime("%m").to_i
           @header = []
           @data = []
           for i in 0..4

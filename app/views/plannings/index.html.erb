@@ -84,7 +84,7 @@
             <tr>
               <td></td>
               <td>Monthly Planning</td>
-              <td class="warning" colspan="7"><%= yp.percentage %>
+              <td class="warning" colspan="5"><%= yp.percentage %>
                 <% for i in 0..@header.length-1 %>
                   <% @total[i] = @total[i] + yp.percentage %>
                 <% end %>
@@ -96,7 +96,7 @@
             <tr>
               <td></td>
               <td>Weekly Planning</td>
-              <td class="warning" colspan="7"><%= wp.percentage %>
+              <td class="warning" colspan="5"><%= wp.percentage %>
                 <% for i in 0..@header.length-1 %>
                   <% @total[i] = @total[i] + wp.percentage %>
                 <% end %>

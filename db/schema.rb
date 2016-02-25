@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20160217071951) do
     t.boolean  "active"
     t.string   "activity"
     t.float    "amount"
-    t.datetime "datum"
+    t.date     "datum"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end

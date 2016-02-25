@@ -11,10 +11,11 @@ Rails.application.routes.draw do
   post 'accesses/add',  to: 'accesses#add'
   post 'accesses/remove', to: 'accesses#remove'
 
-  get 'stats/user'
-  post 'stats/user'
+  get 'stats/ressource'
+  post 'stats/ressource'
 
   get 'stats/workorder'
+  post 'stats/workorder'
 
   get 'home/index'
   
