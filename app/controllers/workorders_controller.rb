@@ -129,6 +129,6 @@ class WorkordersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def workorder_params
-      params.require(:workorder).permit(:company_id, :parent_id, :user_id, :active, :name, :description, :adress1, :adress2, :adress3, :phone1, :phone2, :costinfo1, :costinfo2, :avatar)
+      params.require(:workorder).permit(:company_id, :parent_id, :user_id, :active, :start_date, :end_date, :name, :description, :adress1, :adress2, :adress3, :phone1, :phone2, :costinfo1, :costinfo2, :budget, :avatar)
     end
 end

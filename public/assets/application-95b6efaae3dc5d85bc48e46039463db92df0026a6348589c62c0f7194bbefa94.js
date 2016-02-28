@@ -29415,6 +29415,20 @@ Licensed under the BSD-2-Clause License.
 
 
 }).call(this);
+// This is a manifest file that'll be compiled into application.js, which will include all the files
+// listed below.
+//
+// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
+// or vendor/assets/javascripts of plugins, if any, can be referenced here using a relative path.
+//
+// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
+// the compiled file.
+//
+// WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
+// GO AFTER THE REQUIRES BELOW.
+//
+
+;
 (function() {
 
 
@@ -29446,12 +29460,37 @@ Licensed under the BSD-2-Clause License.
     $('#reporting_date').datepicker({
       dateFormat: 'yy-mm-dd'
     });
-    return Morris.Bar({
+    Morris.Bar({
       element: 'reports_chart',
       data: $('#reports_chart').data('reports'),
       xkey: 'datum',
       ykeys: ['amount'],
       labels: ['hours reported']
+    });
+    return Morris.Line({
+      element: 'lines',
+      data: [
+        {
+          y: '2006',
+          a: 100,
+          b: 90
+        }, {
+          y: '2007',
+          a: 75,
+          b: 65
+        }, {
+          y: '2008',
+          a: 50,
+          b: 40
+        }, {
+          y: '2009',
+          a: 75,
+          b: 65
+        }
+      ],
+      xkey: 'y',
+      ykeys: ['a', 'b'],
+      labels: ['Series A', 'Series B']
     });
   });
 
@@ -29477,7 +29516,14 @@ Licensed under the BSD-2-Clause License.
 
 }).call(this);
 (function() {
-
+  jQuery(function() {
+    $('#start_date').datepicker({
+      dateFormat: 'yy-mm-dd'
+    });
+    return $('#end_date').datepicker({
+      dateFormat: 'yy-mm-dd'
+    });
+  });
 
 }).call(this);
 // This is a manifest file that'll be compiled into application.js, which will include all the files

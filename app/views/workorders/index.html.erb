@@ -6,11 +6,13 @@
       
       <div class="panel panel-info">
         <div class="panel-heading">
-
-          <%= link_to new_workorder_path(:parent_id => $current_parent_id, :company_id => $current_company_id) do %>
-            <i class="btn btn-primary glyphicon glyphicon-plus"></i> <b>workorders</b>
-          <% end %>
           
+          <% anz = Company.where("user_id=?", $logon_user_id).count %>
+          <% if anz > 0 %>
+            <%= link_to new_workorder_path(:parent_id => $current_parent_id, :company_id => $current_company_id) do %>
+              <i class="btn btn-primary glyphicon glyphicon-plus"></i> <b>workorders</b>
+            <% end %>
+          <% end %> 
           <% pid = $current_parent_id.to_i %>
           <% parents = true %>
           <% counter = 1 %>

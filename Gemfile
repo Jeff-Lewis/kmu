@@ -39,6 +39,9 @@ gem 'raphael-rails'
 
 gem 'writeexcel'
 
+gem 'dashing-rails'
+gem 'puma'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

@@ -69,7 +69,8 @@ class UserLoginController < ApplicationController
             end
             if login == true
               # startpage
-              redirect_to workorders_report_path(:user_id => $logon_user_id, :parent_id => 0)
+              redirect_to home_dashboard_path
+              # redirect_to workorders_report_path(:user_id => $logon_user_id, :parent_id => 0)
             end
 
           else

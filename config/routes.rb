@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
 
 
+  get 'home/index'
+
+  get 'home/dashboard'
+
+  get 'home/dashboard'
+
+  mount Dashing::Engine, at: Dashing.config.engine_path
   root 'user_login#login'
 
   get 'rights/index'

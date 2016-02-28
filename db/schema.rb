@@ -113,6 +113,9 @@ ActiveRecord::Schema.define(version: 20160217071951) do
     t.string   "responsibility"
     t.string   "costinfo1"
     t.string   "costinfo2"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.float    "budget"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.string   "avatar_file_name"

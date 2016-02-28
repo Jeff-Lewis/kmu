@@ -52,6 +52,14 @@
                      <%= f.file_field :avatar, class:"form-control" %>
                   </div>
                   <div class="form-group">
+                     <%= f.label "Start_date" %><br/>
+                     <%= f.text_field :start_date, class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                     <%= f.label "end_date" %><br/>
+                     <%= f.text_field :end_date, class:"form-control" %>
+                  </div>
+                  <div class="form-group">
                      <%= f.label "Adress" %><br/>
                      <%= f.text_field :adress1, class:"form-control" %>
                      <%= f.text_field :adress2, class:"form-control" %>
@@ -66,6 +74,10 @@
                      <%= f.label "Cost Information" %><br/>
                      <%= f.text_field :costinfo1, class:"form-control" %>
                      <%= f.text_field :costinfo2, class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                     <%= f.label "Budget" %><br/>
+                     <%= f.number_field :budget, class:"form-control" %>
                   </div>
                   <div>
                       <%= f.hidden_field :parent_id, class:"form-control" %>
