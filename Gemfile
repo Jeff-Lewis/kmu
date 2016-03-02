@@ -33,6 +33,8 @@ gem 'jquery-ui-rails'
 
 gem 'jquery-turbolinks'
 
+gem 'devise'
+
 gem 'morrisjs-rails'
 
 gem 'raphael-rails'

@@ -38,7 +38,7 @@
                 <td>
                   <ul class="nav nav-pills">
                     <li>
-        				        <%= link_to rights_path(:company_id => comp.id, :company_name => comp.name) do %>
+        				        <%= link_to rights_path(:company_id => comp.id) do %>
                           <i class="btn btn-default glyphicon glyphicon-user"></i><span class="badge pull-right"><%= comp.rights.where("company_id=?", comp.id).count %></span>
                         <% end %>
         				    </li>

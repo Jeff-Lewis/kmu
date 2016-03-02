@@ -1,58 +1,45 @@
-
 <div class="container-fluid">
-    
-    <ul class="nav nav-pills">
-        <li>
-            <%= link_to workorders_path do %>
-              <i class="glyphicon glyphicon-list"></i> List
-            <% end %>
-         </li>
-     </ul>                  
-
-    <%= form_for (accesses_path method: :POST) do |f| %>
-    
+    <%= form_for @access do |f| %>
     <div class="row">
-        <div class="col-md-8">
-            <div class="panel panel-primary">
+        <div class="col-md-6">
+            <div class="panel panel-default">
                 <div class="panel-heading">
-                  <h1>access rights for workorder <%= $workorder_name %></h1>
+                  <%= link_to accesses_path(:workorder_id => @access.workorder_id) do %>
+                    <i class="btn btn-primary glyphicon glyphicon-list"></i>
+                  <% end %>
+                  <b>acess data</b>
+                 </div>
+                <div class="panel-body">
+                  <% if @access.errors.any? %>
+                    <div id="error_explanation">
+                      <h2><%= pluralize(@access.errors.count, "error") %> prohibited this company from being saved:</h2>
+                
+                      <ul>
+                      <% @access.errors.full_messages.each do |message| %>
+                        <li><%= message %></li>
+                      <% end %>
+                      </ul>
+                    </div>
+                  <% end %>
+                  <div class="form-group">
+                    <%= f.label "cost rate" %><br/>
+                    <%= f.number_field :costrate, autofocus: true, class:"form-control"%>
+                  </div>
+                  <%= f.hidden_field :workorder_id %>
+                  <%= f.hidden_field :user_id %>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="row">
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="form-group">
-                          <%= label_tag "Users with access" %>
-                    </div>
-                    <div class="actions">
-                      <%= f.button "Remove >>", 	:formaction => accesses_remove_path, class:"btn btn-default btn-block" %>
-                    </div>
-                    <%= select_tag "workorder_user", options_from_collection_for_select(@w_user, "id", "userid"), {class: "form-control", multiple: true, size:24} %>
-                </div>
+        <div class="col-md-6">
+            <div class="actions">
+              <%= f.submit "Save",  class:"btn btn-primary btn-lg"%>
+            </div>
+            <div class="panel-footer">
+              <p id="notice"><%= notice %></p>
             </div>
         </div>
-        
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="form-group">
-                          <%= label_tag "ProMIS Users" %>
-                    </div>
-                    <div class="actions">
-                      <%= f.button "Add <<", 	:formaction => accesses_add_path, class:"btn btn-primary btn-block" %>
-                    </div>
-                    <%= select_tag "company_user", options_from_collection_for_select(@c_user, "id", "userid"), {class: "form-control", multiple: true, size:20} %>
-                    <!--<div class="form-group">-->
-                    <!--      <%= label_tag "superuser only " %>-->
-                    <!--      <%= check_box_tag :suser, "yes", false, class:"form-control" %>-->
-                    <!--</div>-->
-                </div>
-            </div>
-        </div>
-    </div>
-    <% end %>
+    </div>        
+    <% end %>                
 </div>

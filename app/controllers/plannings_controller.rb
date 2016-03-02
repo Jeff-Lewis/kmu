@@ -2,24 +2,41 @@ class PlanningsController < ApplicationController
   before_action :set_planning, only: [:show, :edit, :update, :destroy]
   permits :user_id, :workorder_id, :event, :year, :month, :week, :day, :percentage
   
-  $c_year = Date.today.year
-  $c_month = Date.today.month
-  $c_quarter = 1
-  $c_week = Date.today.strftime("%W").to_i
 
-  $c_label = ""
+  def overview
+    
+    @period_options = ["Monthly", "Weekly", "Daily"]
+    @period = @period_options[2]
+    @c_year = Date.today.strftime("%Y").to_i
+    @c_month = Date.today.strftime("%m").to_i
+    @c_week = Date.today.strftime("%W").to_i
 
-  $period_options = ["Monthly", "Weekly", "Daily"]
-  $period = $period_options[2]
+    if params[:period] != nil
+      @period = params[:period]
+    end
 
-  # def prevp
-  #   $period = params[:period]
-  #   redirect_to plannings_path
-  # end
+    if params[:year] != nil
+      @c_year = params[:year].to_i
+    end
 
-  def header(period, act)
-    case $period
-      when $period_options[0]
+    if params[:month] != nil
+      @c_month = params[:month].to_i
+    end
+
+    if params[:week] != nil
+      @c_week = params[:week].to_i
+    end
+
+    if params[:dir] != nil
+      act = params[:dir]
+    else
+      act = "="
+    end
+
+    @workorders = Workorder.all
+    
+    case @period
+      when @period_options[0]
           @header = %w[January February March April May June Juli August September Oktober November December]
           @data = []
           for i in 1..12
@@ -27,34 +44,33 @@ class PlanningsController < ApplicationController
           end
           case act
           when "<"
-            $c_year = $c_year - 1
+            @c_year = @c_year - 1
           when ">"
-            $c_year = $c_year + 1
+            @c_year = @c_year + 1
           end
-          $c_label = "Year " + $c_year.to_s
+          @c_label = "Year " + @c_year.to_s
 
-      when $period_options[1]
+      when @period_options[1]
           case act
           when "<"
-            if $c_month == 1
-              $c_year = $c_year - 1
-              $c_month = 12
+            if @c_month == 1
+              @c_year = @c_year - 1
+              @c_month = 12
             else
-              $c_month = $c_month - 1
+              @c_month = @c_month - 1
             end
         
           when ">"
-            if $c_month == 12
-              $c_year = $c_year + 1
-              $c_month = 1
+            if @c_month == 12
+              @c_year = @c_year + 1
+              @c_month = 1
             else
-              $c_month = $c_month + 1
+              @c_month = @c_month + 1
             end
           end
 
-          starting_date = Date.new($c_year,$c_month,1)
+          starting_date = Date.new(@c_year,@c_month,1)
           cw = starting_date.strftime("%W").to_i
-
           tcw = cw
           while cw == tcw
             tcw = starting_date.prev_day.strftime("%W").to_i
@@ -71,68 +87,47 @@ class PlanningsController < ApplicationController
             @header << "CW " + cw.to_s + " " + start_of_week.strftime("%d.%m") + "-" + end_of_week.strftime("%d.%m")
             @data << cw
           end
-          $c_label = "Calendar weeks "+ starting_date.strftime("%B") + "/" + $c_year.to_s
+          @c_label = "Calendar weeks "+ starting_date.strftime("%B") + "/" + @c_year.to_s
 
 # day based planning
-      when $period_options[2]
+      when @period_options[2]
           case act
           when "<"
-            if $c_week == 1
-              $c_year = $c_year - 1
-              $c_week = 53
+            if @c_week == 1
+              @c_year = @c_year - 1
+              @c_week = 53
             else
-              $c_week = $c_week - 1
+              @c_week = @c_week - 1
             end
         
           when ">"
-            if $c_week== 53
-              $c_year = $c_year + 1
-              $c_week = 1
+            if @c_week== 53
+              @c_year = @c_year + 1
+              @c_week = 1
             else
-              $c_week = $c_week + 1
+              @c_week = @c_week + 1
             end
           end
           
-          starting_date = Date.commercial($c_year,$c_week)
-          $c_month = starting_date.strftime("%m").to_i
+          starting_date = Date.commercial(@c_year,@c_week)
+          @c_month = starting_date.strftime("%m").to_i
           @header = []
           @data = []
           for i in 0..4
             @header << (starting_date+i).strftime("%a %d %B %Y")
-            @data << (starting_date + i).strftime("%d").to_i
+            @data << starting_date + i
           end
-          $c_label = "Week No. "+$c_week.to_s + "/" + $c_year.to_s
-
+          @c_label = "Week No. "+@c_week.to_s + "/" + @c_year.to_s
     end
     
+    puts @c_year
+    puts @c_month
+    puts @c_week
+
   end
   
   # GET /plannings
-  def overview
-    
-    if params[:period] != nil
-      $period = params[:period]
-      header($period, params[:period])
-    else
-      header($period, params[:dir])
-    end
-    @plannings = Planning.all
-    @workorders = Workorder.all
-
-  end
-
-  # GET /plannings
   def index
-    
-    if params[:dir] != nil
-      header($period, params[:dir])
-    else
-      header($period, "=")
-    end
-
-    @plannings = Planning.all
-    @workorders = Workorder.all
-
   end
 
   # GET /plannings/1
@@ -141,26 +136,36 @@ class PlanningsController < ApplicationController
 
   # GET /plannings/new
   def new
+
+    puts "add with " + params[:year].to_s + "/" + params[:month].to_s + "/" + params[:week].to_s + "/" + params[:date].to_s
+
     @planning = Planning.new
+
     @planning.workorder_id = params[:workorder_id]
     @planning.user_id = params[:user_id]
-    @planning.year = $c_year    
-    case $period
-    when $period_options[0]
+    @planning.year = params[:year]    
+
+    @period = params[:period]
+    @period_options = params[:period_options]
+    case @period
+
+    when @period_options[0]
       @planning.month = params[:date]
       @planning.week = 0
       @planning.day = 0
       
-    when $period_options[1]
-      @planning.month = $c_month
+    when @period_options[1]
+      @planning.month = params[:month]
       @planning.week = params[:date]
       @planning.day = 0
 
-    when $period_options[2]
-      @planning.month = $c_month
-      @planning.week = $c_week
-      @planning.day = params[:date]
+    when @period_options[2]
+      @planning.month = params[:month]
+      @planning.week = params[:week]
+      @planning.day = params[:date][9,2].to_i
     end
+    
+    session[:period] = @period
   end
 
   # GET /plannings/1/edit
@@ -170,9 +175,8 @@ class PlanningsController < ApplicationController
   # POST /plannings
   def create(planning)
     @planning = Planning.new(planning)
-
     if @planning.save
-      redirect_to plannings_overview_path, notice: 'Planning was successfully created.'
+      redirect_to plannings_overview_path(:period => session[:period]), notice: 'Planning was successfully created.'
     else
       render :new
     end

@@ -5,8 +5,5 @@ belongs_to :workorder
 
 validates :user_id, presence: true
 validates :workorder_id, presence: true
-    
-$userstring = ""
-$userarray = []
 
 end

@@ -1,23 +1,17 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   
-  def choose
-  if params[:searchstring] == nil or params[:searchstring] == ""
-     @users = User.all.order("lastname")
-  else
-    str = "name='"+params[:searchstring]+"' OR lastname='"+params[:searchstring]+"' OR userid ='"+params[:searchstring]+ "'"
-    @search = params[:searchstring]
-    @users = User.where(str).order("lastname")
-  end
-  @wo_name = params[:wo_name]
+  def workorder
+    array = []
+    accesses = Access.where("user_id=?", current_user.id)
+    accesses.each do |ac|
+      array << ac.workorder_id
+    end
+    @workorders = Workorder.where(:id => array)
   end
   
   def index
-    # if $logon_superuser
-    #     @users = User.all.order('lastname ASC')
-    # else
-        @users = User.where("id=?",$logon_user_id).order('lastname ASC')
-    # end
+    @users = User.where("id=?",current_user.id).order('lastname ASC')
   end
   
   # GET /users/1
@@ -27,12 +21,12 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    @user = User.new
-    @user.superuser = false
-    if params[:mode] = "signin"
-      @user.userid = params[:user_id]
-      @user.active = true
-    end
+    # @user = User.new
+    # @user.superuser = false
+    # if params[:mode] = "signin"
+    #   @user.userid = params[:user_id]
+    #   @user.active = true
+    # end
   end
 
   # GET /users/1/edit
@@ -87,7 +81,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:userid, :password, :lastname, :name, :adress1, :adress2, :adress3, :phone1, :phone2, :org, :title, :costrate, :costinfo1, :avatar )
+      params.require(:user).permit(:email, :userid, :lastname, :name, :adress1, :adress2, :adress3, :phone1, :phone2, :org, :title, :costrate, :costinfo1, :avatar )
     end
     
 end

@@ -4,8 +4,8 @@
 	<div class="row">
     <div class="col-md-12">
       <h1>Listing Timetrack entries</h1>
-      <%= link_to new_timetrack_path do %>
-        <i class="btn btn-primary glyphicon glyphicon-plus"></i>
+      <%= link_to timetracks_report_path(:user_id => session[:user_id], :reporting_date => session[:reporting_date]) do %>
+        <i class="btn btn-primary glyphicon glyphicon-list"></i>
       <% end %>
       <br>
 			<table class="table table-striped table-hover">

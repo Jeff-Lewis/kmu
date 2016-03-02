@@ -2,13 +2,13 @@ current_valuation = 0
 
 
 
-Dashing.scheduler.every '10s' do
+Dashing.scheduler.every '10m' do
   last_valuation = current_valuation
   current_valuation = rand(100)
 
   # Dashing.send_event('valuation', { current: current_valuation, last: last_valuation })
   
-  wo = Workorder.where("parent_id=? and user_id=?", 0, $logon_user_id)
+  wo = Workorder.where("parent_id=? and user_id=?", 0, current_user.id)
   wo.each do |w|
 
     id = w.id.to_s

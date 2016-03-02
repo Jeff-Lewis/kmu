@@ -5,19 +5,19 @@
 
       <div class="row">
         <div class="col-md-1">
-          <%= link_to plannings_overview_path(:user_id => $logon_user_id, :dir => "<")  do %>
+          <%= link_to plannings_overview_path(:user_id => current_user.id, :dir => "<", :year => @c_year, :month => @c_month, :week => @c_week)  do %>
             <i class="btn btn-primary btn-block glyphicon glyphicon-chevron-left"></i>
           <% end %>
         </div>
 
         <%= form_tag (plannings_overview_path method: :POST) do %>
           <div class="col-md-10">
-              <%= select_tag "period", options_for_select($period_options, $period), class:"form-control",:onchange => "this.form.submit();" %>
+              <%= select_tag "period", options_for_select(@period_options, @period), class:"form-control",:onchange => "this.form.submit();" %>
           </div>
         <% end %>
 
         <div class="col-md-1">
-          <%= link_to plannings_overview_path(:user_id => $logon_user_id, :dir => ">") do %>
+          <%= link_to plannings_overview_path(:user_id => current_user.id, :dir => ">", :year => @c_year, :month => @c_month, :week => @c_week) do %>
             <i class="pull-right btn btn-primary btn-block glyphicon glyphicon-chevron-right"></i>
           <% end %>
         </div>
@@ -28,7 +28,7 @@
   <table class="table">
     <tr>
       <td></td><td></td>
-      <td colspan= <%= @header.length %>><b><%= $c_label %></b></td> 
+      <td colspan= <%= @header.length %>><b><%= @c_label %></b></td> 
     </tr>
     <tr>
       <th colspan="2">workorder</th>
@@ -38,7 +38,7 @@
         <!-- set initialize total per column -->
         <% @total[i] = 0 %>
         <!-- set color of header according to actual day, wekk or month -->
-        <% if current_period($period, @data[i]) %>
+        <% if current_period(@period, @data[i]) %>
               <th class="warning">
         <% else %>
               <th>
@@ -52,16 +52,22 @@
     <% @workorders.each do |w| %>
     
       <!-- generate Org Plan according to period -->
-      <%= plans($period, w) %>
-
+      <% puts "generate plan with..." + @c_year.to_s + "/" + @c_month.to_s + "/" + @c_week.to_s %>
+      
+      <% hash = plans(@header, @period_options, @period, w, @data, @c_year, @c_month, @c_week) %>
+      <%= hash[:html] %>
+      <% t_total = hash[:total] %>
+      <% for i in 0..@header.length-1 %>
+        <%   @total[i] = @total[i] + t_total[i] %>
+      <% end %>
       <!-- generate overall plans  -->
-      <% case $period %>
-        <% when $period_options[0] %>
+      <% case @period %>
+        <% when @period_options[0] %>
 
-        <% when $period_options[1] %>
+        <% when @period_options[1] %>
           <!-- integrate yearly & daily planning -->
           <!-- integrate yearly planning -->
-          <% @yearplans = Planning.where("user_id=? and workorder_id=? and year=? and month=? and week=? and day=?", $logon_user_id, w.id, $c_year, $c_month, 0, 0) %>
+          <% @yearplans = Planning.where("user_id=? and workorder_id=? and year=? and month=? and week=? and day=?", current_user.id, w.id, @c_year, @c_month, 0, 0) %>
           <% @yearplans.each do |yp| %>
             <tr>
               <td></td>
@@ -74,9 +80,9 @@
             </tr>
           <% end %>
 
-        <% when $period_options[2] %>
+        <% when @period_options[2] %>
           <!-- integrate weekly & monthly planning -->
-          <% @yearplans = Planning.where("user_id=? and workorder_id=? and year=? and month=? and week=? and day=?", $logon_user_id, w.id, $c_year, $c_month, 0, 0) %>
+          <% @yearplans = Planning.where("user_id=? and workorder_id=? and year=? and month=? and week=? and day=?", current_user.id, w.id, @c_year, @c_month, 0, 0) %>
           <% @yearplans.each do |yp| %>
             <tr>
               <td></td>
@@ -88,7 +94,7 @@
               </td>
             </tr>
           <% end %>
-          <% @weekplans = Planning.where("user_id=? and workorder_id=? and year=? and month=? and week=? and day=?", $logon_user_id, w.id, $c_year, $c_month, $c_week, 0) %>
+          <% @weekplans = Planning.where("user_id=? and workorder_id=? and year=? and month=? and week=? and day=?", current_user.id, w.id, @c_year, @c_month, @c_week, 0) %>
           <% @weekplans.each do |wp| %>
             <tr>
               <td></td>
@@ -151,7 +157,7 @@
   <!--     <div class="col-md-12">-->
   <!--        <div class="panel panel-default">-->
   <!--            <div class="panel-heading">-->
-  <!--                <h1><%= $c_label %></h1>-->
+  <!--                <h1><%= @c_label %></h1>-->
   <!--                <% @ressources = [] %>-->
   <!--                <% for i in 0..@header.length-1 %>-->
   <!--                  <% @ressources << {:period => @header[i], :percentage => @total[i]} %>-->

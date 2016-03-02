@@ -1,0 +1,79 @@
+<p id="notice"><%= notice %></p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <%= form_tag (timetracks_report_path method: :POST) do %>
+                      <div class="form-group">
+                        <% label = "booking month " + @reporting_date.to_date.strftime("%B-%Y").to_s %> 
+                        <%= label_tag label %>
+                        <%= text_field_tag :reporting_date, @reporting_date, class:"form-control", :onchange => "this.form.submit();" %>
+                      </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+                    
+    <div class="row">
+        <% panel_id = 0 %>
+        <% @workorders.each do |wo| %>
+            <div class="col-md-3">
+			    <div class="thumbnail">
+			        
+			      <div class="caption">
+  			         <blockquote>
+			             <h3><%= link_to wo.name, wo %></h3>
+			             
+                        <% panel_id = panel_id + 1 %>
+                        <% panel = "#panel-" + panel_id.to_s %>
+                        <% panel_element = "#panel-element-" + panel_id.to_s %>
+                        
+                        <% puts panel.remove("#") %>
+                        <% puts panel_element.remove("#") %>
+                        <% puts panel %>
+                        <% puts panel_element %>
+            
+            			<div class="panel-group" id=<%= panel.remove("#") %>>
+            				<div class="panel panel-default">
+            					<div class="panel-heading">
+            						 <a class="panel-title" data-toggle="collapse" data-parent="<%= panel %>" href="<%= panel_element %>" >more...</a>
+            					</div>
+            					<div id=<%= panel_element.remove("#") %> class="panel-collapse collapse">
+            						<div class="panel-body">
+            							<%= wo.description %>
+            						</div>
+            					</div>
+            				</div>
+            			</div>
+    		             <% if !wo.avatar_file_name %>
+                                <%= link_to image_tag("s_anonym.jpg", :size => "300x300"), new_timetrack_path(:user_id => current_user.id, :workorder_id => wo.id) %>
+                        <% else %>
+                                <%= link_to (image_tag wo.avatar(:medium)), new_timetrack_path(:user_id => current_user.id, :workorder_id => wo.id) %>
+                      <% end %>
+
+                     </blockquote>
+                    <%= link_to new_timetrack_path(:user_id => current_user.id, :workorder_id => wo.id, :reporting_date => @reporting_date), class:"btn btn-primary btn-lg btn-block" do %>
+                       <i class="glyphicon glyphicon-pencil"></i> Report
+                    <% end %>
+                    <%= link_to timetracks_path(:user_id => current_user.id, :workorder_id => wo.id, :bom => @bom, :eom => @eom, :reporting_date => @reporting_date), class:"btn btn-default btn-lg btn-block" do %>
+                       <i class="glyphicon glyphicon-info-sign"></i><span class="badge pull-right"><%= anzahl(wo, @bom, @eom) %></span> Show
+                    <% end %>
+                </div>
+               </div>
+  	       </div>
+  	    <% end %>
+    </div>
+    
+    <div class="row">
+         <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1><%= @reporting_date.to_date.strftime("%B-%Y").to_s + " " + @hours_reported.to_s + " hours reported" %></h1>
+                    <%= content_tag :div, "", id: "reports_chart",  data: {reports: @tt} %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

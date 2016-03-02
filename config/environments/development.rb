@@ -40,5 +40,7 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
   
   config.allow_concurrency = true
+  
+  config.action_mailer.default_url_options = {host: 'promis.herokuapp.com'}
 
 end

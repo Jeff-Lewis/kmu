@@ -25,15 +25,12 @@
     
                       <div class="form-group">
                         <%= f.label "email" %><br/>
-                        <%= f.text_field :userid, autofocus: true, class:"form-control"%>
+                        <%= f.text_field :email, :readonly=> true, class:"form-control"%>
                       </div>
+                      <!--<%= f.hidden_field :password %>-->
                       <div class="form-group">
-                        <%= f.label "password" %><br/>
-                        <%= f.password_field :password, class:"form-control"%>
-                      </div>
-                          <div class="form-group">
                         <%= f.label "lastname" %><br/>
-                        <%= f.text_field :lastname, class:"form-control"%>
+                        <%= f.text_field :lastname, autofocus: true, class:"form-control"%>
                       </div>
                       <div class="form-group">
                         <%= f.label "name" %><br/>

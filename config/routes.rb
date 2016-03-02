@@ -1,22 +1,23 @@
 Rails.application.routes.draw do
 
+  root 'home#index'
+
+  devise_for :users, :controllers => {registrations: 'registrations'}
 
   get 'home/index'
 
   get 'home/dashboard'
-
-  get 'home/dashboard'
-
+  
   mount Dashing::Engine, at: Dashing.config.engine_path
-  root 'user_login#login'
 
   get 'rights/index'
-  post 'rights/add',  to: 'rights#add'
-  post 'rights/remove', to: 'rights#remove'
+  post 'rights/index'
+
+  # get 'right/user'
+  # post 'right/user'
   
   get 'accesses/index'
-  post 'accesses/add',  to: 'accesses#add'
-  post 'accesses/remove', to: 'accesses#remove'
+  post 'accesses/index'
 
   get 'stats/ressource'
   post 'stats/ressource'
@@ -24,26 +25,15 @@ Rails.application.routes.draw do
   get 'stats/workorder'
   post 'stats/workorder'
 
-  get 'home/index'
-  
-  get 'user_login/signin'
-  post 'user_login/signin', to: 'user_login#verify_signin'
-  get 'user_login/login'
-  post 'user_login/login', to: 'user_login#verify_login'
-  get 'user_login/logout'
   get 'users/index' 
-  get 'users/choose_a_user', to: 'users#choose'
-  post 'users/choose_a_user', to: 'users#choose'
+  get 'users/workorder'
 
   get 'workorders/index'
-  post 'workorders/index', to: 'workorders#set_company'
+  post 'workorders/index'
 
-  get 'workorders/show_user_workorders', to: 'workorders#show_user_workorders'
-  get 'workorders/report', to: 'workorders#report'
-  post 'workorders/report', to: 'workorders#set_booking_date'
+  get 'timetracks/report'
+  post 'timetracks/report'
 
-  # post 'plannings/prevp', to: 'plannings#prevp'
-  # post 'plannings/nextp', to: 'plannings#nextp'
   get  'plannings/overview', to: 'plannings#overview'
   post 'plannings/overview', to: 'plannings#overview'
   
@@ -54,17 +44,6 @@ Rails.application.routes.draw do
   resources :plannings
   resources :accesses
   resources :rights
-
-# user soutes
-#  post 'users/login', to: 'users#verify_login'
-#  get 'users/choose_a_user', to: 'users#choose'
-#  post 'users/choose_a_user', to: 'users#choose'
-#  post 'users/login', to: 'users#verify_login'
-
-#workorder routes  
-#  get 'workorders/report_workorders', to: 'workorders#report_workorders'
-
-
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

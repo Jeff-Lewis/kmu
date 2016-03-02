@@ -4,12 +4,12 @@
     <div class="col-md-12">
       <div class="panel panel-info">
         <div class="panel-heading">
-          <% if $logon_superuser %>
-            <%= link_to new_user_path do %>
-              <i class="btn btn-primary glyphicon glyphicon-plus"></i>
-            <% end %>
-            <b>users</b>
-          <% end %>
+          <!--<% if $logon_superuser %>-->
+          <!--  <%= link_to new_user_path do %>-->
+          <!--    <i class="btn btn-primary glyphicon glyphicon-plus"></i>-->
+          <!--  <% end %>-->
+          <!--<% end %>-->
+          <b>myUserData</b>
         </div>
       </div>
 
@@ -34,30 +34,25 @@
                   <%= image_tag user.avatar(:small), class:"img-circle" %>
                 <% end %>
                 </td>
-                <td><%= user.userid %></td>
+                <td><%= user.email %></td>
                 <td><%= user.lastname + " " + user.name %></td>             
                 <td>
                   <ul class="nav nav-pills">
                     <li>
-        				        <%= link_to workorders_show_user_workorders_path(:user_id => user.id, :user_name => user.lastname + " "+ user.name) do %>
+        				        <%= link_to users_workorder_path(:user_id => current_user.id) do %>
                           <i class="btn btn-default glyphicon glyphicon-user"></i><span class="badge pull-right"><%= user.accesses.where("user_id=?", user.id).count %></span>
                         <% end %>
         				    </li>
-        				    <!--<li>-->
-        				    <!--    <%= link_to user do %>-->
-                <!--          <i class="btn btn-info glyphicon glyphicon-info-sign"></i>-->
-                <!--        <% end %>-->
-        				    <!--</li>-->
         	          <li>
         				        <%= link_to edit_user_path(user) do %>
                           <i class="btn btn-default glyphicon glyphicon-wrench"></i>
                         <% end %>
         				    </li>
-            	      <li>
-        				        <%= link_to user, method: :destroy, data: { confirm: 'Are you sure?' } do %>
-                          <i class="btn btn-danger glyphicon glyphicon-trash"></i>
-                        <% end %>
-        				    </li>
+            	   <!--   <li>-->
+        				    <!--    <%= link_to user, method: :destroy, data: { confirm: 'Are you sure?' } do %>-->
+                <!--          <i class="btn btn-danger glyphicon glyphicon-trash"></i>-->
+                <!--        <% end %>-->
+        				    <!--</li>-->
         			    </ul>
                 </td>
               </tr>

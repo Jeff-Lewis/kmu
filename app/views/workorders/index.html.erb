@@ -3,30 +3,41 @@
 <div class="container-fluid">
 	<div class="row">
     <div class="col-md-12">
-      
       <div class="panel panel-info">
+
         <div class="panel-heading">
+
+          <div class="col-md-4">
+            <% if @companies.count > 0 %>
+              <%= link_to new_workorder_path(:parent_id => @pid, :company_id => @cid) do %>
+                <i class="btn btn-primary glyphicon glyphicon-plus"></i>
+              <% end %>
+              <b>workorders</b>
+           <% end %> 
+          </div>
+          <% if @pid == "0" %> 
+            <div class="col-md-8">
+              <%= form_tag (workorders_index_path method: :POST) do %>
+                  <%= select_tag "company_id", options_from_collection_for_select(@companies, "id", "name", @cid), class:"form-control",:onchange => "this.form.submit();" %>
+              <% end %>
+            </div>
+          <% end %>
+          <br><br>
           
-          <% anz = Company.where("user_id=?", $logon_user_id).count %>
-          <% if anz > 0 %>
-            <%= link_to new_workorder_path(:parent_id => $current_parent_id, :company_id => $current_company_id) do %>
-              <i class="btn btn-primary glyphicon glyphicon-plus"></i> <b>workorders</b>
-            <% end %>
-          <% end %> 
-          <% pid = $current_parent_id.to_i %>
+          <% pid = @pid.to_i %>
           <% parents = true %>
           <% counter = 1 %>
+          <% wo_id = [] %>
+          <% wo_name = [] %>
+          <% wo_parent = [] %>
           <% while parents == true do %>
              <% w = Workorder.where("id=?", pid).first %>
              <% if w != nil %>
 
-              <br>
-              <% str = "---" * counter + ">" %>
-              <%= str %>
-              <%= link_to workorders_path(:parent_id => w.parent_id) do %>
-                <i class="btn btn-default glyphicon glyphicon-collapse-up"></i>
-              <% end %>
-              <b><%= w.name %></b>              
+              <% wo_id << w.id %>
+              <% wo_name << w.name %>
+              <% wo_parent << w.parent_id %>
+
               <% pid = w.parent_id %>
               <% counter = counter + 1 %>
 
@@ -35,6 +46,14 @@
               <% parents = false %>
 
             <% end %>
+          <% end %>
+          
+          <% for i in (wo_id.length-1).downto(0) %>
+              <%= "-" * (wo_id.length - i) + ">" %>
+              <%= link_to workorders_path(:parent_id => wo_parent[i]) do %>
+                <i class="btn btn-default glyphicon glyphicon-collapse-up"></i>
+              <% end %>
+              <b><%= wo_name[i] %></b><br>
           <% end %>
 
         </div>
@@ -45,15 +64,14 @@
           <thead>
             <tr>
               <th colspan="2">company</th>
-              <th colspan="2">workorder</th>
-              <th colspan="2">responsibility</th>
+              <th colspan="4">workorder</th>
+              <th colspan="3">responsibility</th>
               <th colspan="4"></th>
             </tr>
           </thead>
         
           <tbody>
             <% @workorders.each do |wo| %>
-              <% if wo.company.user_id == $logon_user_id %>
                 <tr>
                   <td>
                     <% if !wo.company.avatar_file_name %>
@@ -73,6 +91,8 @@
                   <% end %>
                   </td>
                   <td><%= wo.name %></td>
+                  <td><%= wo.start_date.strftime("%d.%m.%Y") %></td>
+                  <td><%= wo.end_date.strftime("%d.%m.%Y") %></td>
                   <td>
                   <% if !wo.user.avatar_file_name %>
                     <%= image_tag("ma_anonym.png", :size => "50x50", class:"img-circle") %>
@@ -80,27 +100,20 @@
                     <%= image_tag wo.user.avatar(:small), class:"img-circle" %>
                   <% end %>
                   </td>
-                  <td><%= wo.user.userid %></td>
+                  <td><%= wo.user.lastname + " " + wo.user.name %></td>                  
+                  <td><%= wo.user.email %></td>
                   <td>
                     <ul class="nav nav-pills">
                       <li>
-          				        <%= link_to accesses_path(:user_id => $logon_user_id, :workorder_id => wo.id, :workorder_name => wo.name)  do %>
+          				        <%= link_to accesses_path(:workorder_id => wo.id)  do %>
                             <i class="btn btn-default glyphicon glyphicon-user"></i><span class="badge pull-right"><%= wo.accesses.count %></span>
                           <% end %>
           				    </li>
               	      <li>
-              	          <% if $current_parent_id == 0 %>
-              	            <% $current_company_id = wo.company_id %>
-               	         <% end %>
           				        <%= link_to workorders_path(:parent_id => wo.id, :company_id => wo.company_id) do %>
                             <i class="btn btn-default glyphicon glyphicon-list"></i><span class="badge pull-right"><%= Workorder.where("parent_id=?", wo.id).count %></span>
                           <% end %>
           				    </li>
-          				    <!--<li>-->
-          				    <!--    <%= link_to wo do %>-->
-                  <!--          <i class="btn btn-info glyphicon glyphicon-info-sign"></i>-->
-                  <!--        <% end %>-->
-          				    <!--</li>-->
           	          <li>
           				        <%= link_to edit_workorder_path(wo) do %>
                             <i class="btn btn-default glyphicon glyphicon-wrench"></i>
@@ -114,7 +127,6 @@
           			    </ul>
                   </td>
                 </tr>
-              <% end %>
             <% end %>
           </tbody>
         </table>

@@ -2,12 +2,9 @@ class CompaniesController < ApplicationController
   before_action :set_company, only: [:show, :edit, :update, :destroy]
   permits :active, :name, :user_id, :description, :adress1, :adress2, :adress3, :phone1, :phone2, :avatar, :avatar_file_name, :avatar_content_type, :avatar_file_size, :avatar_updated_at
 
-  def addUser
-  end
-
   # GET /companies
   def index
-    @companies = Company.where("user_id=?", $logon_user_id).order(:name)
+    @companies = Company.where("user_id=?", current_user.id).order(:name)
   end
 
   # GET /companies/1
@@ -17,7 +14,7 @@ class CompaniesController < ApplicationController
   # GET /companies/new
   def new
       @company = Company.new
-      @company.user_id = $logon_user_id
+      @company.user_id = current_user.id
   end
 
   # GET /companies/1/edit

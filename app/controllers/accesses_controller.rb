@@ -2,59 +2,80 @@ class AccessesController < ApplicationController
   before_action :set_access, only: [:show, :edit, :update, :destroy]
   permits :user_id, :workorder_id, :access, :costrate
 
-  $workorder_id =""
-  $workorder_name = ""
-  $array = []
-  $suser = false
-
-  def fill
-    accesses = Access.where("workorder_id=?", $workorder_id)
-    $array = []
-    accesses.each do |a|
-        $array << a.user_id.to_s
-    end
-    @w_user = User.where(:id => $array).order(:name)
-    @c_user = User.all.order(:name)
-  end
-
+  # GET /rights
   def index
-    @c_user = User.all.order(:name)
+    # @suchfeld = ""
+    puts params[:suchfeld]
+    if params[:suchfeld] != nil
+      @users = User.where('lastname LIKE ?', params[:suchfeld]).order(:name)
+      @suchfeld = params[:suchfeld]
+    else
+      @users = User.all.order(:name)
+    end
+
     if params[:workorder_id] != nil
-      $workorder_id = params[:workorder_id]
-      $workorder_name = params[:workorder_name]
+      @wid = params[:workorder_id]
+      session[:wid] = params[:workorder_id]
+    else
+      @wid = session[:wid]
     end
-    fill
+    
+    # to check whether user has access
+    accesses = Access.where("workorder_id=?", @wid)
+    @array = []
+    @array_id = []
+    accesses.each do |ac|
+        @array << ac.user_id
+        @array_id << ac.id
+    end
   end
 
-  def add
-    if params[:company_user] != nil
-      params[:company_user].each do |cu|
-        if $array.index(cu) == nil
-          a = Access.new
-          a.user_id = cu
-          a.workorder_id = $workorder_id
-          tu = User.find(cu)
-          if tu != nil
-            cr = tu.costrate
-          else
-            cr = 0
-          end
-          a.costrate = cr
-          a.created_at = Date.today
-          a.updated_at = Date.today
-          a.save
-        end
-      end
-    end
-    fill
+  # GET /rights/1
+  def show
   end
 
-  def remove
-    if params[:workorder_user] != nil
-      params[:workorder_user].each do |cu|
-        Access.where("workorder_id=? and user_id=?", $workorder_id, cu).destroy_all
-      end
-    end
-    fill
+  # GET /rights/new
+  def new
+    @access = Access.new
+    @access.user_id = params[:user_id].to_i
+    @access.workorder_id = params[:workorder_id].to_i
+    @access.costrate = User.find(params[:user_id]).costrate
   end
+
+  # GET /rights/1/edit
+  def edit
+  end
+
+  # POST /rights
+  def create(access)
+    @access = Access.new(access)
+
+    if @access.save
+      redirect_to accesses_path(:workorder_id => session[:wid]), notice: 'Right was successfully created.'
+    else
+      render :new
+    end
+  end
+
+  # PUT /rights/1
+  def update(access)
+    if @access.update(access)
+      redirect_to accesses_path(:workorder_id => session[:wid]), notice: 'Right was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
+  # DELETE /rights/1
+  def destroy
+    @access.destroy
+
+    redirect_to accesses_path(:workorder_id => session[:wid]), notice: 'Right was successfully destroyed.'
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_access(id)
+      @access = Access.find(id)
+    end
 end

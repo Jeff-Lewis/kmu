@@ -8,7 +8,7 @@
 <div class="gridster">
 <ul>
 <% row = 0 %>
-<% wo = Workorder.where("parent_id=? and user_id=?", 0, $logon_user_id) %>
+<% wo = Workorder.where("parent_id=? and user_id=?", 0, current_user.id) %>
 <% wo.each do |w| %>
   <% row = row + 1 %>
   <% id = w.id.to_s %>
