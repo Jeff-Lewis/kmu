@@ -36,7 +36,10 @@ class StatsController < ApplicationController
     @companies = Company.where("user_id=?", current_user.id)
     @workorders = Workorder.where("user_id=? and company_id=?", current_user.id, @company_id)
       
-    if @workorder_id.to_i > 0
+    if @workorders.count > 0
+      if @workorder_id == nil
+        @workorder_id = @workorders.first.id
+      end
       @enable = true      
 
       @tt1 = Timetrack.where("tandm=? and workorder_id=? and datum>=? and datum<=?", "TIME", params[:workorder_id], params[:starting_date], params[:ending_date]).order(:datum)
@@ -194,35 +197,38 @@ class StatsController < ApplicationController
       @period = @period_options[0]
     end
     if params[:starting_date] != nil
-      @start_date = params[:starting_date]
+      @starting_date = params[:starting_date]
     else
-      @start_date = Date.today.beginning_of_month
+      @starting_date = Date.today.beginning_of_month
     end
     if params[:ending_date] != nil
-      @end_date = params[:ending_date]
+      @ending_date = params[:ending_date]
     else
-      @end_date = Date.today.end_of_month
+      @ending_date = Date.today.end_of_month
     end
     if params[:company_id] != nil
       @company_id = params[:company_id]
+      session[:company_id] = @company_id
+    else
     end
     if params[:user_id] != nil
       @user_id = params[:user_id]
     end
-    @filename = ""
+    if session[:file] != nil
+      @filename = session[:file]
+    else
+      @filename = ""
+    end
 
     @companies = Company.where("user_id=?", current_user.id)
-    
-    array = []
-    rights = Right.where("company_id=?", params[:company_id])
-    rights.each do |ac|
-      array << ac.user_id
-    end
-    @users = User.where(:id => array)
+    # array = []
+    # rights = Right.where("company_id=?", @company_id)
+    # rights.each do |ac|
+    #   array << ac.user_id
+    # end
+    # @users = User.where(:id => array)
 
-    # @users = User.where("user_id=?", current_user.id)
-      
-    if @user_id.to_i > 0
+    # if @user_id.to_i > 0
       @enable = true      
 
       @tt1 = Timetrack.where("tandm=? and workorder_id=? and datum>=? and datum<=?", "TIME", params[:workorder_id], params[:starting_date], params[:ending_date]).order(:datum)
@@ -289,32 +295,25 @@ class StatsController < ApplicationController
         worksheet.write(row, col, "Parameters:", f_header1)
         row = row + 1
         worksheet.write(row, col, "Date start:")
-        worksheet.write(row, col+1, @start_date.to_date.strftime("%d.%m.%y"), f_param)
+        worksheet.write(row, col+1, @starting_date.to_date.strftime("%d.%m.%y"), f_param)
         row = row + 1
         worksheet.write(row, col, "Date end:")
-        worksheet.write(row, col+1, @end_date.to_date.strftime("%d.%m.%y"), f_param)
+        worksheet.write(row, col+1, @ending_date.to_date.strftime("%d.%m.%y"), f_param)
         row = row + 1
-        worksheet.write(row, col, "User:")
-        @u = User.find(params[:user_id])
-        if @u != nil
-          uname = @u.lastname + " " + @u.name
-        else
-          uname = "error ??"
-        end
-        worksheet.write(row, col+1, uname, f_param)
+        worksheet.write(row, col, "Company:")
+        @c = Company.find(@company_id)
+        worksheet.write(row, col+1, @c.name, f_param)
         row = row + 1
         worksheet.write(row, col, "Periodicity:")
         worksheet.write(row, col+1, @period, f_param)
 
         row = row + 2
-        worksheet.write(row, col, "Company", f_header1)
-        col = col + 1
         worksheet.write(row, col, "User", f_header1)
         col = col + 1
         worksheet.write(row, col, "Workorder", f_header1)
         col = col + 1
 
-        start = @start_date.to_date
+        start = @starting_date.to_date
         day_array_d = []
         day_array_w = []
         day_array_m = []
@@ -323,7 +322,7 @@ class StatsController < ApplicationController
         month_array = []
 
         # walk through all dates 
-        while start <= @end_date.to_date
+        while start <= @ending_date.to_date
 
           day_array_d << start
           day_array_w << start.strftime("%W").to_i
@@ -363,7 +362,7 @@ class StatsController < ApplicationController
         workbook.close
         
       end
-    end
+    # end
     
     
     # just to test morris working - ignore
@@ -427,8 +426,9 @@ class StatsController < ApplicationController
 
               # day planning
               plan_found = false
-              if p.day > 0  
-                compare_date = Date.new(p.year, p.month, p.day)
+              if p.period == @period_options[2] 
+                compare_date = p.day
+                
                 # wenn Tag und kein Wechenende
                 if compare_date == day_array_d[i] and day_array_d[i].strftime("%u").to_i <= 5
                   plan_found = true
@@ -436,7 +436,7 @@ class StatsController < ApplicationController
               end
   
               #week planning
-              if p.week > 0 and p.day == 0
+              if p.period == @period_options[1] 
                 # gleiche Woche & kein Wochenende
                 if p.week == day_array_w[i] and day_array_d[i].strftime("%u").to_i <= 5
                   plan_found = true
@@ -444,7 +444,7 @@ class StatsController < ApplicationController
               end
   
               #month planning
-              if p.month > 0 and p.week == 0 and p.day == 0
+              if p.period == @period_options[0] 
                 # gleicher Monat & kein Wochenende
                 if p.month == day_array_m[i] and day_array_d[i].strftime("%u").to_i <= 5
                   plan_found = true
@@ -460,22 +460,22 @@ class StatsController < ApplicationController
           
         # wenn Pläne für User/Workorder gefunden  
         if found == true
+          
           row = row + 1
-          worksheet.write(row, 0, "company")
-          worksheet.write(row, 1, u.lastname + " " + u.name)
-          worksheet.write(row, 2, wo.name)
+          worksheet.write(row, 0, u.lastname + " " + u.name)
+          worksheet.write(row, 1, wo.name)
           
           # day view
-          if @period == @period_options[2]
+          if period == period_options[2]
               for i in 0..day_array_d.length-1
                 # # weekend
                 if day_array_d[i].strftime("%u").to_i <= 5
                   if w_daysum[i] >0
-                    worksheet.write(row, i+3, w_daysum[i], f_active)
+                    worksheet.write(row, i+2, w_daysum[i], f_active)
                     u_daysum[i] = u_daysum[i] + w_daysum[i]
                   end
                 else
-                   worksheet.write(row, i+3, "",f_weekend)
+                   worksheet.write(row, i+2, "",f_weekend)
                 end
               end
           end
@@ -496,9 +496,9 @@ class StatsController < ApplicationController
               if w_weeksum[j] > 0
                 w_weeksum[j] = (w_weeksum[j]/count).to_i
                 u_weeksum[j] = u_weeksum[j] + w_weeksum[j]
-                worksheet.write(row, j+3, w_weeksum[j],f_active)
+                worksheet.write(row, j+2, w_weeksum[j],f_active)
               else
-                worksheet.write(row, j+3, "",f_active)
+                worksheet.write(row, j+2, "",f_active)
               end
             end
           end
@@ -519,9 +519,9 @@ class StatsController < ApplicationController
               if w_monthsum[j] > 0 
                 w_monthsum[j] = (w_monthsum[j]/count).to_i 
                 u_monthsum[j] = u_monthsum[j] + w_monthsum[j]
-                worksheet.write(row, j+3, w_monthsum[j], f_active)
+                worksheet.write(row, j+2, w_monthsum[j], f_active)
               else
-                worksheet.write(row, j+3, "",f_active)
+                worksheet.write(row, j+2, "",f_active)
               end
             end
           end
@@ -530,17 +530,16 @@ class StatsController < ApplicationController
 
       #finally write total lines
       row = row + 1
-      worksheet.write(row, 0, "company")
-      worksheet.write(row, 1, u.lastname + " " + u.name)
-      worksheet.write(row, 2, "Total")
+      worksheet.write(row, 0, u.lastname + " " + u.name)
+      worksheet.write(row, 1, "Total")
 
       # day view
       if period == period_options[2]
         for i in 0..day_array_d.length-1
           if day_array_d[i].strftime("%u").to_i <= 5
-            write_usertotal(worksheet,row, i+3,u_daysum[i],f_danger, f_warning, f_success)
+            write_usertotal(worksheet,row, i+2,u_daysum[i],f_danger, f_warning, f_success)
           else
-            worksheet.write(row, i+3, "",f_weekend)
+            worksheet.write(row, i+2, "",f_weekend)
           end
         end
       end
@@ -548,14 +547,14 @@ class StatsController < ApplicationController
       #week view
       if period == period_options[1]
         for j in 0..week_array.length-1
-            write_usertotal(worksheet,row, j+3,u_weeksum[j],f_danger, f_warning, f_success)
+            write_usertotal(worksheet,row, j+2,u_weeksum[j],f_danger, f_warning, f_success)
         end
       end
 
       #month view
       if period == period_options[0]
         for j in 0..month_array.length-1
-            write_usertotal(worksheet,row, j+3,u_monthsum[j].to_i,f_danger, f_warning, f_success)
+            write_usertotal(worksheet,row, j+2,u_monthsum[j].to_i,f_danger, f_warning, f_success)
         end
       end
     end

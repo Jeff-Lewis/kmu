@@ -16,20 +16,24 @@ class TimetracksController < ApplicationController
       array << ac.workorder_id
     end
     @workorders = Workorder.where(:id => array)
-
-    puts params[:reporting_date]
-
-    if params[:reporting_date] != nil
-      @reporting_date = params[:reporting_date]
-      @session[:reporting_date] = @reporting_date
-    else
-      @reporting_date = session[:reporting_date]
-    end
     
-    @bom = @reporting_date.to_date.beginning_of_month
-    @eom = @reporting_date.to_date.end_of_month
-    @tt = Timetrack.where("user_id=? and tandm=? and datum >= ? and datum <= ?", current_user.id, "TIME", @bom, @eom)
-    @hours_reported = @tt.sum(:amount)
+    if @workorders.count > 0
+
+      if params[:reporting_date] != nil
+        @reporting_date = params[:reporting_date]
+        @session[:reporting_date] = @reporting_date
+      else
+        @reporting_date = session[:reporting_date]
+      end
+      
+      @bom = @reporting_date.to_date.beginning_of_month
+      @eom = @reporting_date.to_date.end_of_month
+      @tt = Timetrack.where("user_id=? and tandm=? and datum >= ? and datum <= ?", current_user.id, "TIME", @bom, @eom)
+      @hours_reported = @tt.sum(:amount)
+      
+    else
+      redirect_to workorders_path(:parent_id => 0, :company_id => 0), notice: 'No workorders available!'
+    end 
   end
 
   # GET /timetracks

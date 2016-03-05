@@ -52,8 +52,7 @@
     <% @workorders.each do |w| %>
     
       <!-- generate Org Plan according to period -->
-      <% puts "generate plan with..." + @c_year.to_s + "/" + @c_month.to_s + "/" + @c_week.to_s %>
-      
+
       <% hash = plans(@header, @period_options, @period, w, @data, @c_year, @c_month, @c_week) %>
       <%= hash[:html] %>
       <% t_total = hash[:total] %>
@@ -61,49 +60,66 @@
         <%   @total[i] = @total[i] + t_total[i] %>
       <% end %>
       <!-- generate overall plans  -->
-      <% case @period %>
+       <% case @period %>
         <% when @period_options[0] %>
 
         <% when @period_options[1] %>
-          <!-- integrate yearly & daily planning -->
+        
           <!-- integrate yearly planning -->
-          <% @yearplans = Planning.where("user_id=? and workorder_id=? and year=? and month=? and week=? and day=?", current_user.id, w.id, @c_year, @c_month, 0, 0) %>
+          <% @yearplans = Planning.where("user_id=? and workorder_id=? and year=? and month=? and period=?", current_user.id, w.id, @c_year, @c_month, @period_options[0]) %>
           <% @yearplans.each do |yp| %>
             <tr>
               <td></td>
               <td>Monthly Planning</td>
-              <td class="warning" colspan="5"><%= yp.percentage %>
-                <% for i in 0..@header.length-1 %>
-                  <% @total[i] = @total[i] + yp.percentage %>
-                <% end %>
-              </td>
+              <% for i in 0..@header.length-1 %>
+                <td class="info"><%= yp.percentage %></td>
+                <% @total[i] = @total[i] + yp.percentage %>
+              <% end %>
             </tr>
           <% end %>
 
         <% when @period_options[2] %>
-          <!-- integrate weekly & monthly planning -->
-          <% @yearplans = Planning.where("user_id=? and workorder_id=? and year=? and month=? and week=? and day=?", current_user.id, w.id, @c_year, @c_month, 0, 0) %>
-          <% @yearplans.each do |yp| %>
-            <tr>
-              <td></td>
-              <td>Monthly Planning</td>
-              <td class="warning" colspan="5"><%= yp.percentage %>
-                <% for i in 0..@header.length-1 %>
+          <!-- integrate yearly planning -->
+          <% found = false %>
+          <% per = [] %>
+          <% for i in 0..@header.length-1 %>
+          <%   per[i] = 0 %>
+          <% end %>
+          <% for i in 0..@header.length-1 %>
+              <% year = @data[i].strftime("%Y").to_i %>
+              <% month = @data[i].strftime("%m").to_i %>
+              <% @yearplans = Planning.where("user_id=? and workorder_id=? and year=? and month=? and period=?", current_user.id, w.id, year, month, @period_options[0]) %>
+              <% if @yearplans.count > 0 %>
+              <%   found = true %>
+              <% end %>
+              <% @yearplans.each do |yp| %>
+                  <% per[i] = per[i] + yp.percentage %>
                   <% @total[i] = @total[i] + yp.percentage %>
-                <% end %>
-              </td>
+              <% end %>
+          <% end %>
+          <% if found %>
+            <tr>
+            <td></td>
+            <td>Monthly Planning</td>
+            <% for i in 0..@header.length-1 %>
+              <% if per[i] == 0 %>
+                <td></td>
+              <% else %>
+                <td class="info"><%= per[i] %></td>
+              <% end %>
+            <% end %>
             </tr>
           <% end %>
-          <% @weekplans = Planning.where("user_id=? and workorder_id=? and year=? and month=? and week=? and day=?", current_user.id, w.id, @c_year, @c_month, @c_week, 0) %>
+          <!-- integrate weekly  -->
+          <% @weekplans = Planning.where("user_id=? and workorder_id=? and year=? and week=? and period=?", current_user.id, w.id, @c_year, @c_week, @period_options[1]) %>
           <% @weekplans.each do |wp| %>
             <tr>
               <td></td>
               <td>Weekly Planning</td>
-              <td class="warning" colspan="5"><%= wp.percentage %>
-                <% for i in 0..@header.length-1 %>
-                  <% @total[i] = @total[i] + wp.percentage %>
-                <% end %>
-              </td>
+              <% for i in 0..@header.length-1 %>
+                <td class="info"><%= wp.percentage %></td>
+                <% @total[i] = @total[i] + wp.percentage %>
+              <% end %>
             </tr>
           <% end %>
           

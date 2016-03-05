@@ -7,17 +7,20 @@ Rails.application.routes.draw do
   get 'home/index'
 
   get 'home/dashboard'
+  post 'home/dashboard'
   
   mount Dashing::Engine, at: Dashing.config.engine_path
 
   get 'rights/index'
   post 'rights/index'
+  post 'rights/:id' , to: 'rights#destroy'
 
   # get 'right/user'
   # post 'right/user'
   
   get 'accesses/index'
   post 'accesses/index'
+  post 'accesses/:id' , to: 'accesses#destroy'
 
   get 'stats/ressource'
   post 'stats/ressource'

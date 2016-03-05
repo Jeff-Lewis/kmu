@@ -8,9 +8,9 @@
       </div>
           <% if user_signed_in? %>
             <ul class="nav navbar-nav">
-              <li><%= link_to "myDashboard", home_dashboard_path %></li>
+              <li><%= link_to "myDashboard", home_dashboard_path(:user_id => current_user.id) %></li>
               <li><%= link_to "myTimeReport", timetracks_report_path(:user_id => current_user.id, :reporting_date => Date.today) %></li>
-              <li><%= link_to "myRessource", plannings_overview_path(:user_id => current_user.id) %></li>
+              <li><%= link_to "myRessource", plannings_overview_path(:user_id => current_user.id, :period =>"Daily") %></li>
               <li><%= link_to "myWorkorders", workorders_path(:parent_id => 0, :company_id => 0) %></li>
               <li><%= link_to "myUserData", users_path(:userid => current_user.id) %></li>
               <li><%= link_to "myComapnies", companies_path(:userid => current_user.id) %></li>

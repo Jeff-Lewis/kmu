@@ -43,10 +43,11 @@ ActiveRecord::Schema.define(version: 20160229195408) do
     t.integer  "user_id"
     t.integer  "workorder_id"
     t.string   "event"
+    t.string   "period"
     t.integer  "year"
     t.integer  "month"
     t.integer  "week"
-    t.integer  "day"
+    t.date     "day"
     t.integer  "percentage"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false

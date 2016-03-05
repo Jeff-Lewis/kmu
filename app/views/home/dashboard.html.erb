@@ -1,37 +1,37 @@
-<h1>Home#dashboard</h1>
+<div class="container-fluid">
+	<div class="row">
+    <div class="col-md-12">
 
-<!--<p><%= $str %></p>-->
+      <%= javascript_include_tag 'dashing/application' %>
+      <%= stylesheet_link_tag 'dashing/application' %>
+      
+      <div class="gridster">
+        <ul>
+          <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+            <div data-id="show_companies" data-view="Number" data-title="myCompanies" data-prefix="#"></div>
+          </li>
+          <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+            <div data-id="show_workorders" data-view="Number" data-title="myWorkorders" data-prefix="#"></div>
+          </li>
+          <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+            <div data-id="show_acc_workorders" data-view="Number" data-title="Workorders accessible" data-prefix="#"></div>
+          </li>
+          <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+            <div data-id="hours_reported" data-view="Number" data-title="Hours reported this month" data-prefix="h"></div>
+          </li>
+          <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+           <div data-id="chargeability_p" data-view="Meter" data-title="Chargeability planned" data-min="0" data-max="100"></div>
+          </li>
+          <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+           <div data-id="chargeability_r" data-view="Meter" data-title="Chargeability reported" data-min="0" data-max="100"></div>
+          </li>
+          <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+           <div data-id="chargeability_r_m" data-view="Meter" data-title="Chargeability reported (DtM)" data-min="0" data-max="100"></div>
+          </li>
 
-<%= javascript_include_tag 'dashing/application' %>
-<%= stylesheet_link_tag 'dashing/application' %>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-<div class="gridster">
-<ul>
-<% row = 0 %>
-<% wo = Workorder.where("parent_id=? and user_id=?", 0, current_user.id) %>
-<% wo.each do |w| %>
-  <% row = row + 1 %>
-  <% id = w.id.to_s %>
-  <% title = w.name %>
-  <% info = "wo_info"+id %>
-  <li data-row=<%= row.to_s %> data-col="1" data-sizex="3" data-sizey="1">
-    <div data-id="<%= info %>" data-view="Text" data-title="Workorder" data-text="<%= title %>" data-moreinfo="<%= title %>" ></div>
-  </li>
-  <% row = row + 1 %>
-  <% reft = "wo_time"+id %>
-  <% refb = "wo_budget"+id %>
-  <li data-row=<%= row.to_s %> data-col="1" data-sizex="1" data-sizey="1">
-    <div data-id=<%= reft %> data-view="Meter" data-title="time" data-min="0" data-max="100"></div>
-  </li>
-  <li data-row=<%= row.to_s %> data-col="2" data-sizex="1" data-sizey="1">
-    <div data-id=<%= refb %> data-view="Meter" data-title="budget" data-min="0" data-max="100"></div>
-  </li>
-    <!--<li data-row=<%= row.to_s %> data-col="3" data-sizex="1" data-sizey="1">-->
-    <!--  <div data-id="company3" data-view="Meter" data-title="Test" data-min="0" data-max="100"></div>-->
-    <!--</li>-->
-
-<% end %>
-</ul>
 </div>
-
-<!--<%= r=dash %>-->

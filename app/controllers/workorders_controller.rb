@@ -24,30 +24,45 @@ class WorkordersController < ApplicationController
   end
   
   def index
-    @companies = Company.where("user_id=?", current_user.id)
-
-    if params[:company_id] != nil
-      if params[:company_id] == "0" #'call ohne Company'
-        @cid = @companies.first.id.to_s
-      else
-        @cid = params[:company_id]
-      end
-      session[:cid] = params[:company_id]
-    else
-      @cid = session[:cid]
-    end
-    if params[:parent_id] != nil
-      @pid = params[:parent_id]
-      session[:pid] = params[:parent_id]
-    else
-      @pid = session[:pid]
-    end
     
-    @workorders = Workorder.where("company_id=? and parent_id=?", @cid, @pid)
 
-    puts "CID " + @cid
-    puts "PID " + @pid
-    puts  "ANZ " + @workorders.count.to_s
+    @companies = Company.where("user_id=?", current_user.id)
+    
+    if @companies.count > 0
+
+      if params[:company_id] != nil
+        if params[:company_id] == "0" #'call ohne Company'
+          @cid = @companies.first.id.to_s
+        else
+          @cid = params[:company_id]
+        end
+        session[:cid] = params[:company_id]
+      else
+        @cid = session[:cid]
+      end
+      if params[:parent_id] != nil
+        @pid = params[:parent_id]
+        session[:pid] = params[:parent_id]
+      else
+        @pid = session[:pid]
+      end
+
+      array = []
+      rights = Right.where("company_id=?", @cid)
+      rights.each do |ri|
+        array << ri.user_id
+      end
+      @users = User.where(:id => array)
+      
+      puts "USER ANZ "+@users.count.to_s
+      
+      session[:users] = @users
+      
+      @workorders = Workorder.where("company_id=? and parent_id=?", @cid, @pid)
+    else
+      redirect_to companies_path(:userid => current_user.id), notice: 'You need to define a Company first!'
+    end
+
   end
 
   # GET /workorders/1
@@ -58,29 +73,21 @@ class WorkordersController < ApplicationController
 
   # GET /workorders/new
   def new
-    array = []
-    rights = Right.where("company_id=?", session[:cid])
-    rights.each do |ri|
-      array << ri.user_id
-    end
-    @users = User.where(:id => array)
-    @uid = current_user.id
+    @users = session[:users]
     
     @workorder = Workorder.new
     @workorder.company_id = params[:company_id]
     @workorder.parent_id = params[:parent_id]
     @workorder.user_id = current_user.id
     @workorder.active = true
-    
-    puts "UID " + @uid.to_s
-    puts "CID " + params[:company_id]
-    puts "PID " + params[:parent_id]
-
+    @workorder.start_date = Date.today
+    @workorder.end_date = Date.today.end_of_month
     
   end
 
   # GET /workorders/1/edit
   def edit
+    @users = session[:users]
     set_workorder
   end
 
@@ -88,6 +95,9 @@ class WorkordersController < ApplicationController
   # POST /workorders.json
   def create
     @workorder = Workorder.new(workorder_params)
+
+    # @users = session[:users]
+    # @user_id = session[:user_id]
 
     respond_to do |format|
       if @workorder.save

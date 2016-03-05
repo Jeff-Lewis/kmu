@@ -4,8 +4,6 @@ class AccessesController < ApplicationController
 
   # GET /rights
   def index
-    # @suchfeld = ""
-    puts params[:suchfeld]
     if params[:suchfeld] != nil
       @users = User.where('lastname LIKE ?', params[:suchfeld]).order(:name)
       @suchfeld = params[:suchfeld]

@@ -1,7 +1,11 @@
 class HomeController < ApplicationController
-  def index
-  end
 
-  def dashboard
-  end
+def index
+  @workorders=Workorder.all
+end
+
+def dashboard
+  @workorders=Workorder.all
+end
+
 end

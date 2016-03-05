@@ -37,7 +37,8 @@
                     <%= f.number_field :year, class:"form-control hidden"%>
                     <%= f.number_field :month, class:"form-control hidden"%>
                     <%= f.number_field :week, class:"form-control hidden"%>
-                    <%= f.number_field :day, class:"form-control hidden"%>
+                    <%= f.date_field :day, class:"form-control hidden"%>
+                    <%= f.text_field :period, class:"form-control hidden"%>
                     <div class="actions">
                       <%= f.submit "Save", class:"btn btn-primary btn-lg" %>
                     </div>

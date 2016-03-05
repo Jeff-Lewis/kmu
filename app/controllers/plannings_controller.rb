@@ -1,18 +1,20 @@
 class PlanningsController < ApplicationController
   before_action :set_planning, only: [:show, :edit, :update, :destroy]
-  permits :user_id, :workorder_id, :event, :year, :month, :week, :day, :percentage
+  permits :user_id, :workorder_id, :event, :year, :month, :week, :day, :percentage, :period
   
 
   def overview
     
     @period_options = ["Monthly", "Weekly", "Daily"]
-    @period = @period_options[2]
     @c_year = Date.today.strftime("%Y").to_i
     @c_month = Date.today.strftime("%m").to_i
     @c_week = Date.today.strftime("%W").to_i
 
     if params[:period] != nil
       @period = params[:period]
+      session[:period] = @period
+    else
+      @period = session[:period]
     end
 
     if params[:year] != nil
@@ -33,7 +35,14 @@ class PlanningsController < ApplicationController
       act = "="
     end
 
-    @workorders = Workorder.all
+    # all workorders of user
+    work = []
+    accesses = Access.where("user_id=?", current_user.id)
+    accesses.each do |ac|
+      work << ac.workorder_id
+    end
+    @workorders = Workorder.where(:id => work)
+    #@workorders = Workorder.all
     
     case @period
       when @period_options[0]
@@ -120,10 +129,6 @@ class PlanningsController < ApplicationController
           @c_label = "Week No. "+@c_week.to_s + "/" + @c_year.to_s
     end
     
-    puts @c_year
-    puts @c_month
-    puts @c_week
-
   end
   
   # GET /plannings
@@ -137,32 +142,31 @@ class PlanningsController < ApplicationController
   # GET /plannings/new
   def new
 
-    puts "add with " + params[:year].to_s + "/" + params[:month].to_s + "/" + params[:week].to_s + "/" + params[:date].to_s
+    @period = params[:period]
+    @period_options = params[:period_options]
 
     @planning = Planning.new
 
     @planning.workorder_id = params[:workorder_id]
     @planning.user_id = params[:user_id]
+    
+    @planning.period = @period
     @planning.year = params[:year]    
 
-    @period = params[:period]
-    @period_options = params[:period_options]
     case @period
 
     when @period_options[0]
       @planning.month = params[:date]
-      @planning.week = 0
-      @planning.day = 0
+      # @planning.week = 0
+      # @planning.day = 0
       
     when @period_options[1]
       @planning.month = params[:month]
       @planning.week = params[:date]
-      @planning.day = 0
+      # @planning.day = 0
 
     when @period_options[2]
-      @planning.month = params[:month]
-      @planning.week = params[:week]
-      @planning.day = params[:date][9,2].to_i
+      @planning.day = params[:date].to_date
     end
     
     session[:period] = @period
