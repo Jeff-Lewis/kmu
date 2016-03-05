@@ -1,5 +1,7 @@
 Dashing.scheduler.every '30s' do
 
+if 1>2
+
 id = 1
 id = rand(3)+1
 @user = User.find(id)
@@ -82,5 +84,7 @@ Dashing.send_event('chargeability_r_m', { value: @current_chargeability_f })
   # Dashing.send_event('wo_time'+id,   { value: diffi })
   # Dashing.send_event('wo_budget'+id,   { value: budget })
   # Dashing.send_event('wo_info'+id, { text: wo.name + Time.to_s })
+  
+end
 
 end
