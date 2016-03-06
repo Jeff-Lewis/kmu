@@ -92,4 +92,10 @@
       </div>
     </div>
   <% end %>
+  
+  <% @tt=Timetrack.where("workorder_id=?", @workorder.id) %>
+  <div class="panel-heading">
+    <%= content_tag :div, "", id: "reports_chart",  data: {reports: @tt} %>
+  </div>
+
 </div>

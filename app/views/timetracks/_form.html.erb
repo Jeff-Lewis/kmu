@@ -71,6 +71,7 @@
           </div>
       </div>
       <div class="col-md-8">
+              <% @tt = Timetrack.where("workorder_id=?", @timetrack.workorder_id) %>
               <% if @tt != nil %>
                 <% anz = @tt.sum(:amount).to_s %>
               <% else %>
