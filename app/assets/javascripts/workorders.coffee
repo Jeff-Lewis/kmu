@@ -3,5 +3,5 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 jQuery ->
-    $('#start_date').datepicker dateFormat: 'yy-mm-dd'
-    $('#end_date').datepicker dateFormat: 'yy-mm-dd'
+    $('#Workorder_start_date').datepicker dateFormat: 'yy-mm-dd'
+    $('#Workorder_end_date').datepicker dateFormat: 'yy-mm-dd'

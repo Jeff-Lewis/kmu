@@ -4,7 +4,6 @@
 jQuery ->
     $('#starting_date').datepicker dateFormat: 'yy-mm-dd'
     $('#ending_date').datepicker dateFormat: 'yy-mm-dd'
-    $('#reporting_date').datepicker dateFormat: 'yy-mm-dd'
       
     Morris.Bar
         element: 'reports_chart' 

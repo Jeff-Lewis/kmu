@@ -15,10 +15,12 @@ class TimetracksController < ApplicationController
     accesses.each do |ac|
       array << ac.workorder_id
     end
-    @workorders = Workorder.where(:id => array)
-    
-    if @workorders.count > 0
-
+    if array.length > 0
+      @workorders = Workorder.where(:id => array)
+    else
+      redirect_to workorders_path(:parent_id => 0, :company_id => 0), notice: 'No workorders available!'
+    end
+    if @workorders =! nil
       if params[:reporting_date] != nil
         @reporting_date = params[:reporting_date]
         @session[:reporting_date] = @reporting_date
@@ -61,6 +63,7 @@ class TimetracksController < ApplicationController
 
   # GET /timetracks/1/edit
   def edit
+    @tt = Timetrack.all
   end
 
   # POST /timetracks
