@@ -17,7 +17,7 @@ class TimetracksController < ApplicationController
     end
     if array.length > 0
       @workorders = Workorder.where(:id => array)
-      if @workorders =! nil
+      if @workorders != nil
         if params[:reporting_date] != nil
           @reporting_date = params[:reporting_date]
           @session[:reporting_date] = @reporting_date
