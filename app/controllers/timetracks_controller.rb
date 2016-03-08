@@ -20,7 +20,7 @@ class TimetracksController < ApplicationController
       if @workorders != nil
         if params[:reporting_date] != nil
           @reporting_date = params[:reporting_date]
-          @session[:reporting_date] = @reporting_date
+          session[:reporting_date] = @reporting_date
         else
           @reporting_date = session[:reporting_date]
         end
