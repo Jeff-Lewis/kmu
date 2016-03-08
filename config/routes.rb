@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => {registrations: 'registrations'}
 
   get 'home/index'
-
+  post 'home/index'
+  
   get 'home/dashboard'
   post 'home/dashboard'
   

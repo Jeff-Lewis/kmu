@@ -6,11 +6,11 @@ class UserMailer < ApplicationMailer
   #
   #   en.user_mailer.signup_confirmation.subject
   #
-  def signup_confirmation(user)
+  def signup_confirmation(user, message)
     puts "YES I try to send an email....to..."+user.email
     #necessary to access in view
     @user = user
     mail to: @user.email, 
-    subject: "Sign Up Confirmation"
+    subject: "Sign Up Confirmation" + message
   end
 end

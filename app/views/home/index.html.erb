@@ -1,8 +1,15 @@
 <h1>Home#index</h1>
 <p>Find me in app/views/home/index.html.erb</p>
 
-<% puts "ATTENTION ATTENTION here we go...." %>
-<% puts "trying to send eMail with  USERID:" + ENV["GMAIL_USERNAME"] + " PASSWORD:"+ ENV["GMAIL_PASSWORD"]%>
-<% puts "ATTENTION ATTENTION here we go...." %>
+<% if user_signed_in? %>
 
-<% UserMailer.signup_confirmation(User.find(current_user.id)).deliver_now %>
+    <%= form_tag(home_index_path method: :POST) do %>
+      <div class="form-group">
+        <%= text_field_tag :message, @message, class:"form-control" %>
+      </div>
+      <div class="actions">
+          <%= submit_tag "Submit", class:"btn btn-warning" %>
+      </div>
+    <% end %>
+    
+<% end %>
