@@ -40,6 +40,11 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        
+        # send eMail
+        puts "ATTENTION ATTENTION here we go...."
+        UserMailer.signup_confirmation(@user).deliver_now
+        
         format.html { redirect_to users_url, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else

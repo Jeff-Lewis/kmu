@@ -11,16 +11,25 @@
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 					    <% if user_signed_in? %>
-                <li class="active"><%= link_to "myTimeReport", timetracks_report_path(:user_id => current_user.id, :reporting_date => Date.today) %></li>
-                <li><%= link_to "myRessource", plannings_overview_path(:user_id => current_user.id, :period =>"Daily") %></li>
+			                <li class="active"><%= link_to "myTimeReport", timetracks_report_path(:user_id => current_user.id, :reporting_date => Date.today) %></li>
+			                <li><%= link_to "myRessource", plannings_overview_path(:user_id => current_user.id, :period =>"Daily") %></li>
     						<li class="dropdown">
     							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Management<strong class="caret"></strong></a>
     							<ul class="dropdown-menu">
-                      <li><%= link_to "myCompanies", companies_path(:userid => current_user.id) %></li>
-                      <li><%= link_to "myWorkorders", workorders_path(:parent_id => 0, :company_id => 0) %></li>
-                      <li><%= link_to "myUserData", users_path(:userid => current_user.id) %></li>
-      								<li class="divider"></li>
-                      <li><%= link_to "Edit Profile", edit_user_registration_path %></li>
+			                      <li><%= link_to "myCompanies", companies_path(:userid => current_user.id) %></li>
+			                      <li><%= link_to "myWorkorders", workorders_path(:parent_id => 0, :company_id => 0) %></li>
+			                      <li><%= link_to "myUserData", users_path(:userid => current_user.id) %></li>
+      							  <li class="divider"></li>
+			                      <li><%= link_to "Edit Profile", edit_user_registration_path %></li>
+      							  <li class="divider"></li>
+					              <li><%= link_to "myDashboard", home_dashboard_path(:user_id => current_user.id) %></li>    							
+					            </ul>
+    						</li>
+    						<li class="dropdown">
+    							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Controlling<strong class="caret"></strong></a>
+    							<ul class="dropdown-menu">
+    								<li><%= link_to "myWorkorderControlling", stats_workorder_path(:starting_date => Date.today.beginning_of_month, :ending_date => Date.today.end_of_month) %></li>
+              						<li><%= link_to "myRessourceControlling", stats_ressource_path %></li>
     							</ul>
     						</li>
   					  <% end %>
@@ -29,12 +38,12 @@
 						<li class="dropdown">
 							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">LogIn/LogOut<strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
-                <% if user_signed_in? %>
-                   <li><%= link_to "LogOut", destroy_user_session_path, method: :delete %></li>
-                <% else %>
-                   <li><%= link_to "LogIn", new_user_session_path %></li>
-                   <li><%= link_to "SignIn", new_user_registration_path %></li>
-                <% end %>
+				                <% if user_signed_in? %>
+				                   <li><%= link_to "LogOut", destroy_user_session_path, method: :delete %></li>
+				                <% else %>
+				                   <li><%= link_to "LogIn", new_user_session_path %></li>
+				                   <li><%= link_to "SignIn", new_user_registration_path %></li>
+				                <% end %>
 							</ul>
 						</li>
 					</ul>
