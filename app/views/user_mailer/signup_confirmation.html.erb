@@ -2,4 +2,5 @@
 
 <h2>Dear <%= @user.name + " " + @user.lastname %></h2>
 
-<p>Thank you for Signing up ProMIS with <%= @user.email %></p>
+<p>Thank you for Signing up <%= link_to "ProMIS", root_url %> with <%= @user.email %></p>
+<p><%= link_to "myAccount", @user %></p>

@@ -82,14 +82,14 @@ Rails.application.configure do
   config.paperclip_defaults = {
     :storage => :s3,
     :s3_credentials => {
-      :bucket => ENV['AWS_BUCKET'],
-      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
+      :bucket => ENV['promis'],
+      :access_key_id => ENV['AKIAIXK6LOYYPN6ZIO4A'],
+      :secret_access_key => ENV['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'],
     }
   }
 
   config.action_mailer.smtp_settings = {
-    :adress => "smtp.gmail.com",
+    :address => "smtp.gmail.com",
     :port => 587,
     :domain => "gmail.com",
     :authentification => "plain",
