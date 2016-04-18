@@ -16,6 +16,8 @@
 //= require jquery.turbolinks
 //= require raphael
 //= require morris
+//= require underscore
+//= require gmaps/google
 //= require bootstrap-sprockets
 //= require bootstrap
 //= require turbolinks

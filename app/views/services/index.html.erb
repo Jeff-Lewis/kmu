@@ -1,0 +1,88 @@
+<div class="container-fluid">
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          
+          <% if session[:mode] == "company" %>
+            <% @company = Company.find(@company_id) %>
+            <% if !@company.avatar_file_name %>
+              <%= image_tag("p_anonym.png", :size => "50x50", class:"img-rounded" ) %>
+            <% else %>
+              <%= image_tag @company.avatar(:medium), class:"img-rounded"  %>
+            <% end %>
+            <b><h1>Produkte & Services der Firma <%=@company.name %></h1></b>
+            <%= link_to companies_path do %>
+            <i class="btn btn-primary glyphicon glyphicon-list"></i>
+            <% end %>
+            <%= link_to new_service_path do %>
+              <i class="btn btn-default glyphicon glyphicon-plus"></i>
+            <% end %>
+          <% end %>
+          
+          <% if session[:mode] == "private" %>
+            <% @user = User.find(@user_id) %>
+            <% if !@user.avatar_file_name %>
+              <%= image_tag("p_anonym.png", :size => "50x50", class:"img-rounded" ) %>
+            <% else %>
+              <%= image_tag @user.avatar(:medium), class:"img-rounded"  %>
+            <% end %>
+            <b><h1>Angebote der Privatperson <%= @user.name + " " + @user.lastname %></h1></b>
+            <%= link_to users_path do %>
+            <i class="btn btn-primary glyphicon glyphicon-list"></i>
+            <% end %>
+            <%= link_to new_service_path do %>
+              <i class="btn btn-default glyphicon glyphicon-plus"></i>
+            <% end %>
+          <% end %>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+	<div class="row">
+    <% @services.each do |se| %>
+      <div class="col-md-3">
+    		<div class="thumbnail">
+          <% if !se.avatar_file_name %>
+            <%= image_tag("p_anonym.png", :size => "50x50", class:"img-rounded" ) %>
+          <% else %>
+            <%= image_tag se.avatar(:medium), class:"img-rounded"  %>
+          <% end %>
+					<div class="caption">
+						<h3>
+							<%= se.name %>
+    					<% if se.free %>
+                <%= image_tag("helpinghand.png", :size => "50x50" , class:"img-rounded") %>
+              <% end %>
+						</h3>
+						<p>
+						  <%= se.description %>
+						</p>
+						<p>
+						  <%= se.ansprechpartner %><br>
+						</p>
+						<p>
+						  <%= se.telefon %><br>
+						</p>
+						<p>
+						  <%= se.email %><br>
+						</p>
+					</div>
+          <ul class="nav nav-pills">
+	          <li>
+				        <%= link_to edit_service_path(se) do %>
+                  <i class="btn btn-default glyphicon glyphicon-wrench"></i>
+                <% end %>
+				    </li>
+    	      <li>
+				        <%= link_to se, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                  <i class="btn btn-danger glyphicon glyphicon-trash"></i>
+                <% end %>
+				    </li>
+			    </ul>
+			   </div>
+			 </div>
+    <% end %>
+  </div>
+</div>

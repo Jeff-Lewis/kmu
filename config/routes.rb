@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :searches
   root 'home#index'
 
   devise_for :users, :controllers => {registrations: 'registrations'}
@@ -41,6 +42,8 @@ Rails.application.routes.draw do
   get  'plannings/overview', to: 'plannings#overview'
   post 'plannings/overview', to: 'plannings#overview'
   
+  get 'companies/search'
+  
   resources :companies
   resources :users
   resources :workorders
@@ -48,6 +51,8 @@ Rails.application.routes.draw do
   resources :plannings
   resources :accesses
   resources :rights
+  resources :searches
+  resources :services
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

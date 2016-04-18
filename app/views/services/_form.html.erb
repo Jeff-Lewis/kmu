@@ -1,0 +1,74 @@
+<div class="container-fluid">
+  <%= form_for @service, html: {multipart: true}  do |f| %>
+     <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                  <b>Servicebeschreibung</b>
+                </div>
+                <div class="panel-body">
+                  <% if @service.errors.any? %>
+                    <div id="error_explanation">
+                      <h2><%= pluralize(@service.errors.count, "error") %> prohibited this workorder from being saved:</h2>
+                      <ul>
+                        <% @service.errors.full_messages.each do |message| %>
+                          <li><%= message %></li>
+                        <% end %>
+                      </ul>
+                    </div>
+                  <% end %>
+                  <div class="form-group">
+                    <%= f.label "Service" %><br/>
+                    <%= f.text_field :name, autofocus: true, class:"form-control"%>
+                  </div>
+                  <div class="form-group">
+                    <%= f.label "Description" %><br/>
+                    <%= f.text_area :description, rows: 5, class:"form-control"%>
+                  </div>
+                    <div class="form-group">
+                      <%= f.label "soziales Engagement" %>
+                      <%= f.check_box :free, class:"form-control"%>
+                    </div>
+                    <div class="form-group">
+                       <%= f.label "image" %><br/>
+                       <%= image_tag @service.avatar.url(:medium) %>
+                       <%= f.file_field :avatar, class:"form-control" %>
+                    </div>
+                  <div class="form-group">
+                     <%= f.label "Ansprechpartner" %><br/>
+                     <%= f.text_field :ansprechpartner, class:"form-control" %>
+                     <%= f.text_field :telefon, class:"form-control" %>
+                     <%= f.text_field :email, class:"form-control" %>
+                  </div>
+                  <div>
+                      <%= f.hidden_field :parent_id, class:"form-control" %>
+                      <%= f.hidden_field :company_id, class:"form-control" %>
+                      <%= f.hidden_field :user_id, class:"form-control" %>
+                  </div>
+                </div>
+            </div>
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-md-6">
+            <div class="actions">
+              <%= f.submit "Speichern", class:"btn btn-primary btn-lg"%>
+            </div>
+              <% if session[:mode] == "company" %>
+                <%= link_to services_path(:mode => "company", :company_id => @service.company_id) do %>
+                  <i class="btn btn-default btn-lg glyphicon glyphicon-list">Zurück</i>
+                <% end %>
+              <% end %>
+              <% if session[:mode] == "private" %>
+                <%= link_to services_path(:mode => "private", :user_id => @service.user_id) do %>
+                  <i class="btn btn-default btn-lg glyphicon glyphicon-list">Zurück</i>
+                <% end %>
+              <% end %>
+            <div class="panel-footer">
+              <p id="notice"><%= notice %></p>
+            </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

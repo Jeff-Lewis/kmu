@@ -48,6 +48,12 @@ gem 'aws-sdk', '~>1.60.2'
 
 gem 'figaro'
 
+gem 'geocoder'
+
+gem 'gmaps4rails'
+
+gem 'bootstrap_form'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

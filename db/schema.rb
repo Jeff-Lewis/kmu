@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160229195408) do
+ActiveRecord::Schema.define(version: 20160418115059) do
 
   create_table "accesses", force: :cascade do |t|
     t.integer  "user_id"
@@ -21,14 +21,26 @@ ActiveRecord::Schema.define(version: 20160229195408) do
     t.datetime "updated_at",   null: false
   end
 
+  create_table "branches", force: :cascade do |t|
+    t.integer  "code"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "companies", force: :cascade do |t|
     t.boolean  "active"
     t.string   "name"
+    t.integer  "branche_id"
+    t.string   "stichworte"
     t.integer  "user_id"
     t.text     "description"
-    t.string   "adress1"
-    t.string   "adress2"
-    t.string   "adress3"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "address3"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "geo_address"
     t.string   "phone1"
     t.string   "phone2"
     t.string   "avatar_file_name"
@@ -61,6 +73,36 @@ ActiveRecord::Schema.define(version: 20160229195408) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "searches", force: :cascade do |t|
+    t.string   "keywords"
+    t.integer  "noga"
+    t.integer  "distance"
+    t.float    "from_lat"
+    t.float    "from_lgt"
+    t.boolean  "special"
+    t.float    "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "services", force: :cascade do |t|
+    t.integer  "company_id"
+    t.integer  "parent_id"
+    t.string   "name"
+    t.text     "description"
+    t.string   "ansprechpartner"
+    t.string   "telefon"
+    t.string   "email"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_filesize"
+    t.datetime "avatar_updated_at"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "user_id"
+    t.boolean  "free"
+  end
+
   create_table "timetracks", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "workorder_id"
@@ -80,9 +122,12 @@ ActiveRecord::Schema.define(version: 20160229195408) do
     t.string   "name"
     t.boolean  "active"
     t.boolean  "superuser"
-    t.string   "adress1"
-    t.string   "adress2"
-    t.string   "adress3"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "address3"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "geo_address"
     t.string   "phone1"
     t.string   "phone2"
     t.string   "org"

@@ -1,45 +1,21 @@
-// .jumbotron {
-//     background-color: #000000!important;
-// }
-
-
-// body {
-//     background-color: #000000!important;
-// }
-
-// table {
-//     background-color: #000000!important;
-//     color: #85CDE6!important;
-//     border-color: #85CDE6!important;
-// }
-
-// .th {
-//     background-color: #B5FC00!important;
-// }
-
-// .panel-default > .panel-heading {
-//   color: #333!important;
-//   background-color: #000000!important;
-//   border-color: #ddd;
-// }
-
-// .btn-primary {
-//   color: #85CDE6!important;
-//   background-color: #000000!important;
-//   border-color: #000000!important;
-// }
-
-// .btn-default {
-//   color: #85CDE6!important;
-//   background-color: #000000!important;
-//   border-color: #000000!important;
-// }
-
-// .btn-danger {
-//   color: #FC8900!important;
-//   background-color: #000000!important;
-//   border-color: #000000!important;
-// }
+#map {
+   height: 600px;
+   border-radius: 16px 16px;
+   border-color: #fff;
+   border-style: solid;
+   box-shadow: 2px 2px 10px #B1B1B1;
+   margin-top: 25px;
+   border-width: 7px;
+ }
+ #map2 {
+   height: 600px;
+   border-radius: 16px 16px;
+   border-color: #fff;
+   border-style: solid;
+   box-shadow: 2px 2px 10px #B1B1B1;
+   margin-top: 25px;
+   border-width: 7px;
+ }
 
 @import "*";
 @import "bootstrap-sprockets";

@@ -1,70 +1,109 @@
 <div class="container-fluid">
     <%= form_for @company, html: {multipart: true}  do |f| %>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                  <%= link_to companies_path do %>
-                    <i class="btn btn-primary glyphicon glyphicon-list"></i>
+
+        <% if @company.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@company.errors.count, "error") %> prohibited this company from being saved:</h2>
+              <ul>
+                  <% @company.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
                   <% end %>
-                  <b>company data</b>
-                 </div>
-                <div class="panel-body">
-                      <% if @company.errors.any? %>
-                        <div id="error_explanation">
-                          <h2><%= pluralize(@company.errors.count, "error") %> prohibited this company from being saved:</h2>
-                    
-                          <ul>
-                          <% @company.errors.full_messages.each do |message| %>
-                            <li><%= message %></li>
-                          <% end %>
-                          </ul>
-                        </div>
+              </ul>
+            </div>
+        <% end %>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <%= link_to companies_path do %>
+                        <i class="btn btn-primary glyphicon glyphicon-list"></i>
                       <% end %>
-                        <div class="form-group">
-                          <%= f.label "Company" %><br/>
-                          <%= f.text_field :name, autofocus: true, class:"form-control"%>
-                        </div>
-                        <div class="form-group">
-                          <%= f.label "active" %>
-                          <%= f.check_box :active, class:"form-control"%>
-                        </div>
-                         <%= f.hidden_field :user_id %>
-                        <div class="form-group">
-                          <%= f.label "Description" %><br/>
-                          <%= f.text_area :description, rows: 5, class:"form-control"%>
-                        </div>
-                         <div class="form-group">
-                           <%= f.label "Logo" %><br/>
-                            <% if @company.avatar_file_name %>
-                                <%= image_tag @company.avatar(:medium) %>
-                            <% end %>
-                           <%= f.file_field :avatar, class:"form-control" %>
-                        </div>
-                        <div class="form-group">
-                           <%= f.label "Adress" %><br/>
-                           <%= f.text_field :adress1, class:"form-control" %>
-                           <%= f.text_field :adress2, class:"form-control" %>
-                           <%= f.text_field :adress3, class:"form-control" %>
-                        </div>
-                        <div class="form-group">
-                           <%= f.label "Phone" %><br/>
-                           <%= f.text_field :phone1, class:"form-control" %>
-                           <%= f.text_field :phone2, class:"form-control" %>
-                        </div>
+                      <b>company data</b>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="actions">
-              <%= f.submit "Save",  class:"btn btn-primary btn-lg"%>
-            </div>
-            <div class="panel-footer">
-              <p id="notice"><%= notice %></p>
+
+        <div class="row">
+            <div class="panel-body">
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <%= f.label "Company" %><br/>
+                      <%= f.text_field :name, autofocus: true, class:"form-control"%>
+                    </div>
+                    <div class="form-group">
+                      <%= f.label "Branchencode" %><br/>
+                        <%= f.collection_select :branche_id, Branche.all, :id, :name, class:"form-control" %>
+                    </div>
+                    <% if @company.created_at != nil %>
+                        <div class="form-group">
+                          <%= f.label "erstellt am" %><br/>
+                            <%= @company.created_at.strftime("%d %B %Y %H:%M Uhr durch ") + @company.user.name + " " + @company.user.lastname %>
+                        </div>
+                    <% end %>
+                    <div class="form-group">
+                      <%= f.label "Stichworte" %><br/>
+                      <%= f.text_field :stichworte, class:"form-control"%>
+                    </div>
+                    <div class="form-group">
+                      <%= f.label "active" %>
+                      <%= f.check_box :active, class:"form-control"%>
+                    </div>
+                     <%= f.hidden_field :user_id %>
+                    <div class="form-group">
+                      <%= f.label "Description" %><br/>
+                      <%= f.text_area :description, rows: 5, class:"form-control"%>
+                    </div>
+                     <div class="form-group">
+                       <%= f.label "Logo" %><br/>
+                        <% if @company.avatar_file_name %>
+                            <%= image_tag @company.avatar(:medium) %>
+                        <% end %>
+                       <%= f.file_field :avatar, class:"form-control" %>
+                    </div>
+                    <div class="form-group">
+                       <%= f.label "Adress" %><br/>
+                       <%= f.text_field :address1, class:"form-control" %>
+                       <%= f.text_field :address2, class:"form-control" %>
+                       <%= f.text_field :address3, class:"form-control" %>
+                    </div>
+                   <%= f.hidden_field :geo_address, class:"form-control" %>
+                   <%= f.hidden_field :longitude, class:"form-control" %>
+                   <%= f.hidden_field :latitude, class:"form-control" %>
+                    <div class="form-group">
+                       <%= f.label "Phone" %><br/>
+                       <%= f.text_field :phone1, class:"form-control" %>
+                       <%= f.text_field :phone2, class:"form-control" %>
+                    </div>
+                    <div class="actions">
+                       <%= f.submit "Save",  class:"btn btn-primary btn-lg"%>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div id="map">
+                      <div id="map-canvas"></div>
+                    </div>
+                </div>
+
             </div>
         </div>
-    </div>        
     <% end %>                
 </div>
+
+<script>
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers([
+        {
+          "lat": <%= @company.latitude %>,
+          "lng": <%= @company.longitude %>,
+          "infowindow": "text"
+        }
+      ]);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+      handler.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+});
+</script>

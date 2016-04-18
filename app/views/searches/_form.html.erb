@@ -1,0 +1,45 @@
+<%= form_for(@search) do |f| %>
+  <% if @search.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@search.errors.count, "error") %> prohibited this search from being saved:</h2>
+
+      <ul>
+      <% @search.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :keywords %><br>
+    <%= f.text_field :keywords %>
+  </div>
+  <div class="field">
+    <%= f.label :noga %><br>
+    <%= f.select :noga, options_for_select($branchen_codes), :include_blank => true %>
+  </div>
+  <div class="field">
+    <%= f.label :distance %><br>
+    <%= f.number_field :distance %>
+  </div>
+  <div class="field">
+    <%= f.label :from_lat %><br>
+    <%= f.text_field :from_lat %>
+  </div>
+  <div class="field">
+    <%= f.label :from_lgt %><br>
+    <%= f.text_field :from_lgt %>
+  </div>
+  <div class="field">
+    <%= f.label :special %><br>
+    <%= f.check_box :special %>
+  </div>
+  <div class="field">
+    <%= f.label :rating %><br>
+    <%= f.text_field :rating %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

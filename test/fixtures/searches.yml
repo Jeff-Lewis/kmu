@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  keywords: MyString
+  noga: 1
+  distance: 1
+  from_lat: 1.5
+  from_lgt: 1.5
+  special: false
+  rating: 1.5
+
+two:
+  keywords: MyString
+  noga: 1
+  distance: 1
+  from_lat: 1.5
+  from_lgt: 1.5
+  special: false
+  rating: 1.5

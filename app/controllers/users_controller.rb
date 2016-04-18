@@ -11,7 +11,20 @@ class UsersController < ApplicationController
   end
   
   def index
-    @users = User.where("id=?",current_user.id).order('lastname ASC')
+    if params[:result] != nil
+      @users = params[:result]
+    else
+      @users = User.search(params[:search])
+    end
+    
+    z = 0
+    @hash = Gmaps4rails.build_markers(@users) do |user, marker|
+      marker.lat user.latitude
+      marker.lng user.longitude
+      z=z+1
+      marker.infowindow z.to_s+ " " + user.name + " " + user.lastname
+#      marker.picture url: "http://images/ma_anonym.png"
+     end
   end
   
   # GET /users/1
@@ -86,7 +99,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :userid, :lastname, :name, :adress1, :adress2, :adress3, :phone1, :phone2, :org, :title, :costrate, :costinfo1, :avatar )
+      params.require(:user).permit(:email, :userid, :lastname, :name, :address1, :address2, :address3, :geo_address, :longitude, :latitude, :phone1, :phone2, :org, :title, :costrate, :costinfo1, :avatar )
     end
     
 end
