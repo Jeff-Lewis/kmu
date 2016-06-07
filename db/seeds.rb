@@ -81,6 +81,7 @@ appparams = Appparam.create({name:"Favoriten", description:"Personen & Instituti
 appparams = Appparam.create({name:"Sehenswürdigkeiten", description:"Lohnenswerte Ausflugsziele in der Region", active:true})
 
 path = Rails.root.to_s + "/app/assets/images/sample_pics/"
+path = ""
 #create some users...
 
 users = User.create({dateofbirth:"12.12.2003", anonymous:false, status:"ok", active:true, email:"horst.wurm@bluewin.ch", password:"password", name:"Horst", lastname:"Wurm", address1:"Hörnliblick 11", address2:"Zezikon", address3:"", superuser:true, avatar:File.open(path+'ma_1.jpg', 'rb')})
