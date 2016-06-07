@@ -1,0 +1,6 @@
+<h1>Ticker</h1>
+<% u = Request.last(3).each do |r| %>
+    <%= r.name %>
+    <br>
+<% end %>
+<p>Find me in app/views/ticker/index.html.erb</p>

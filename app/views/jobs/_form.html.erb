@@ -1,0 +1,98 @@
+<div class="container-fluid">
+    <%= form_for @job do |f| %>
+
+        <% if @job.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@job.errors.count, "error") %> prohibited this company from being saved:</h2>
+              <ul>
+                  <% @job.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-heading header">
+                  <h1>
+                  <%= link_to @job do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+                  <% end %>
+                  STELLENANZEIGE
+                  </h1>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel-body">
+
+                    <div class="form-group">
+                      <%= f.label "Institution" %><br/>
+                        <%= f.collection_select :company_id, Company.where('active=? and user_id=?',true,current_user.id), :id, :name, {}, class:"form-control" %>
+                    </div>
+                     <div class="form-group">
+                      <%= f.label "Bezeichnung" %><br/>
+                      <%= f.text_field :name, autofocus: true, class:"form-control"%>
+                    </div>
+                    <div class="form-group">
+                      <%= f.label "Stichworte" %><br/>
+                      <%= f.text_field :stichworte, class:"form-control"%>
+                    </div>
+                    <div class="form-group">
+                      <%= f.label "Aufgaben" %><br/>
+                      <%= f.text_area :tasks, rows: 5, class:"form-control"%>
+                    </div>
+                    <div class="form-group">
+                      <%= f.label "Qualifikationen/Fähigkeiten" %><br/>
+                      <%= f.text_area :skills, rows: 5, class:"form-control"%>
+                    </div>
+                    <div class="form-group">
+                      <%= f.label "Wir bieten" %><br/>
+                      <%= f.text_area :offers, rows: 5, class:"form-control"%>
+                    </div>
+                    <div class="form-group">
+                      <%= f.label "Kontakt" %><br/>
+                      <%= f.text_area :contacts, rows: 5, class:"form-control"%>
+                    </div>
+                    <div class="form-group">
+                      <%= f.label "active" %>
+                      <%= f.check_box :active, class:"form-control"%>
+                    </div>
+                    <div class="actions">
+                       <%= f.submit "Speichern",  class:"btn btn-primary btn-lg"%>
+                    </div>
+                </div>
+            </div>
+                
+            <div class="col-md-6">
+                <div class="panel-body">
+                    <div id="map">
+                      <div id="map-canvas"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    <% end %>                
+</div>
+
+<script>
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers([
+        {
+          <% if @job.company != nil %>
+          "lat": <%= @job.company.latitude %>,
+          "lng": <%= @job.company.longitude %>,
+          "infowindow": "text"
+          <% end %>
+        }
+      ]);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+      handler.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+});
+</script>

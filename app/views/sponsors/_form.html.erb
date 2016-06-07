@@ -1,0 +1,56 @@
+<div class="container-fluid">
+    <%= form_for @sponsor, html: {multipart: true}  do |f| %>
+
+        <% if @sponsor.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@sponsor.errors.count, "error") %> prohibited this company from being saved:</h2>
+              <ul>
+                  <% @sponsor.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading header">
+                      <h2>
+                      <%= link_to @sponsor.event do %>
+                        <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+                      <% end %>
+                      SPONSOR <%= @sponsor.event.name %>
+                      </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="panel-body">
+              <div class="form-group">
+                <%= f.label "Sponsor" %><br/>
+                  <%= f.collection_select :company_id, Company.where('active=? and user_id=?',true,current_user.id), :id, :name, {}, class:"form-control" %>
+              </div>
+              <div class="form-group">
+                  <%= f.label "Sponsorenkategorie" %><br/>
+                  <%= f.radio_button :slevel, "1" %><%= image_tag("Sponsor_gold.jpg", :size => "50x50" , class:"img-rounded") %>
+                  <%= f.radio_button :slevel, "2" %><%= image_tag("Sponsor_silver.jpg", :size => "50x50" , class:"img-rounded") %>
+                  <%= f.radio_button :slevel, "3" %><%= image_tag("Sponsor_bronze.jpg", :size => "50x50" , class:"img-rounded") %>
+              </div>  
+              <div class="form-group">
+                <%= f.label "Aktiv" %>
+                <%= f.check_box :active, class:"form-control"%>
+              </div>
+             <%= f.hidden_field :event_id %>
+              <div class="actions">
+                 <%= f.submit "Speichern",  class:"btn btn-primary btn-lg"%>
+              </div>
+          </div>
+        </div>
+      </div>
+                
+    <% end %>                
+</div>

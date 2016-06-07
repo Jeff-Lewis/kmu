@@ -1,0 +1,146 @@
+<div class="container-fluid">
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <% if !@vehicle.avatar_file_name %>
+          <%= image_tag("vehicle_a.png", :size => "400x400" , class:"img-rounded") %>
+        <% else %>
+          <%= image_tag @vehicle.avatar(:medium), class:"img-rounded" %>
+        <% end %>
+        <h1>
+        <%= link_to vehicles_path(:page => session[:page]) do %>
+          <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+        <% end %>
+        <% if user_signed_in? %>
+          <%= link_to new_calender_path(:user_id => current_user.id, :vehicle_id => session[:verhicle_id]) do %>
+            <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+          <% end %>
+        <% end %>
+        Kalender für <%= @vehicle.name %>
+        <span class="badge"><%= @calanz %></span>
+        <%= link_to calenders_path(:vehicle_id => @vehicle.id, :dir => "<")  do %>
+          <i class="btn btn-primary btn-lg glyphicon glyphicon-chevron-left"></i>
+        <% end %>
+        KW <%= session[:cw].to_s + " / " + session[:year].to_s %>
+        <%= link_to calenders_path(:vehicle_id => @vehicle.id, :dir => ">")  do %>
+          <i class="btn btn-primary btn-lg glyphicon glyphicon-chevron-right"></i>
+        <% end %>
+        </h1>
+
+      </div>
+    </div>
+  </div>
+	<div class="row">
+    <div class="col-md-12">
+  		<table class="table table-striped">
+        <thead>
+          <tr>
+            <td colspan="12">
+              <div class="digg_pagination">
+                  <%= will_paginate @calenders, :container => false, previous_label: "<", next_label: ">" %>
+              </div>	  
+            </td>
+          </tr>
+          <tr>
+            <th>Uhrzeit</th>
+            <% for i in 0..6 %>
+              <th>
+                <%= $wochentage[i] %><br>
+                <%= (@start+i).strftime("%d-%m-%y") %>
+              </th>
+            <% end %>
+          </tr>
+        </thead>
+        
+        <tbody>
+
+            <% @items = CalItem(@calenders,@start) %>
+            <% for hour in 0..@anz_stunden-1 %>
+              <tr>
+                <td><%= (@vehicle.time_from + hour).to_s + " Uhr" %></td>
+              <% for day in 0..@anz_tage-1 %>
+                  <% if @array[hour][day] != 0 %>
+                    <td class="blocked">
+                  <% else %>
+                    <td class="free">
+                  <% end %>
+                  <% @array[hour][day] %>
+                  </td>                
+              <% end %>
+              </tr>
+            <% end %>
+
+            <% if true == false %>
+            <% end %>
+              
+            <% if true == false %>
+              <td>
+    				    <% if user_signed_in? %>
+      				    <% if ca.user_id == current_user.id %>
+    				        <%= link_to edit_calender_path(ca) do %>
+                      <i class="btn btn-default glyphicon glyphicon-wrench"></i>
+                    <% end %>
+    				        <%= link_to ca, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                      <i class="btn btn-danger glyphicon glyphicon-trash"></i>
+                    <% end %>
+        				  <% end %>
+        				<% end %>
+              </td>
+            <% end %>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+	<div class="row">
+    <div class="col-md-12">
+    	<table class="table table-striped">
+        <thead>
+          <tr>
+            <td colspan="12">
+              <div class="digg_pagination">
+                  <%= will_paginate @calenders, :container => false, previous_label: "<", next_label: ">" %>
+              </div>	  
+            </td>
+          </tr>
+          <tr>
+            <th colspan=3>gemietet von</th>
+            <th>von</th>
+            <th>bis</th>
+            <th></th>
+          </tr>
+        </thead>
+        <body>
+          <% @calenders.each do |ca| %>
+            <tr>
+              <td>
+    				    <% if user_signed_in? %>
+      				    <% if ca.user_id == current_user.id %>
+    				        <%= link_to edit_calender_path(ca) do %>
+                      <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                    <% end %>
+    				        <%= link_to ca, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                      <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                    <% end %>
+        				  <% end %>
+        				<% end %>
+              </td>
+              <td>
+              <% if !ca.user.avatar_file_name %>
+                <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
+              <% else %>
+                <%= image_tag ca.user.avatar(:small), class:"img-rounded" %>
+              <% end %>
+              </td>
+              <td><%= ca.user.name + " " + ca.user.lastname %></td>
+              <td><%= ca.date_from.strftime("%d.%m.%Y")+"  "+ca.time_from.to_s+" Uhr"%></td>
+              <td><%= ca.date_to.strftime("%d.%m.%Y")+"  "+ca.time_to.to_s+" Uhr"%></td>
+            </tr>
+          <% end %>
+        </body>
+     	</table>
+    </div>
+  </div>
+
+</div>

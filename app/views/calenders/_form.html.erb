@@ -1,0 +1,55 @@
+<div class="container-fluid">
+
+    <%= form_for @calender do |f| %>
+
+        <% if @calender.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@calender.errors.count, "error") %> prohibited this calender from being saved:</h2>
+              <ul>
+                  <% @calender.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading header">
+                      <h2>
+                      <%= link_to calenders_path :vehicle_id => session[:vehicle_id], :page => session[:page] do %>
+                        <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+                      <% end %>
+                      RESERVATION <%= @calender.vehicle.name %>
+                      </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel-body">
+                    <div class="form-group">
+                      <%= f.label "Datum_von" %><br/>
+                      <%= f.text_field :date_from, class:"form-control"%>
+                      <%= f.number_field :time_from, class:"form-control"%>
+                    </div>
+                    <div class="form-group">
+                      <%= f.label "Datum_bis" %><br/>
+                      <%= f.text_field :date_to, class:"form-control"%>
+                      <%= f.number_field :time_to, class:"form-control"%>
+                    </div>
+                   <%= f.hidden_field :vehicle_id, class:"form-control" %>
+                   <%= f.hidden_field :user_id, class:"form-control" %>
+                   <%= f.hidden_field :active, class:"form-control" %>
+                    <div class="actions">
+                       <%= f.submit "Speichern",  class:"btn btn-primary btn-lg"%>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    <% end %>                
+</div>

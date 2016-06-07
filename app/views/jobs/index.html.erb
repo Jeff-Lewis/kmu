@@ -1,0 +1,72 @@
+<div class="container-fluid">
+
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <h1>
+        STELLENANZEIGEN
+        <span class="badge"><%= @jobanz %></span>
+        </h1>
+      </div>
+    </div>
+  </div>
+  <br>
+  
+  <div class="row">
+    <div class="col-md-12">
+      <div class="digg_pagination">
+          <%= will_paginate @requests, :container => false, previous_label: "<", next_label: ">" %>
+      </div>
+  </div>
+  
+  <% @jobs.each do |j| %>
+    <div class="col-md-4">
+      
+      <%= link_to job_path(:id => j.id, :job_id => j.id) do %>
+      
+        <div class="thumbnail" align="center">
+          
+          <p>
+  				<% if j.company.avatar_file_name == nil %>
+            <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
+          <% else %>
+            <%= image_tag j.company.avatar(:medium), class:"img-rounded"  %>
+          <% end %>
+    			</p>
+    	    
+          <div class="caption">
+    			  <div class="anzeigetext">
+    					<%= j.name %> 
+    				</div>
+            <p>
+    				  <%= j.company.name %>
+    				</p>
+            <p>
+    				  <%= j.company.category.name %>
+    				</p>
+    			</div>
+  
+          <p>
+    		  <%= j.created_at.strftime("%d.%b.%Y %H:%M Uhr") %>
+    		  
+    		  <% if j.created_at.to_date == Date.today %>
+    		    Heute
+    		  <% end %>
+    		  <% if (Date.today - j.created_at.to_date) == 1 %>
+    		    Gestern
+    		  <% end %>
+    		  <% if Date.today - j.created_at.to_date > 1 %>
+            <% anz = (Date.today.to_date - j.created_at.to_date).to_i %>
+            Vor <%= anz %> Tagen
+    		  <% end %>
+          </p>
+    
+    			<p>
+            <%= link_to job_path(:id => j.id, :job_id => j.id) do %>
+              <i class="btn btn-primary btn btn-lg glyphicon glyphicon-info-sign"></i>
+            <% end %>
+    		</div>
+    	<% end %>
+		</div>
+  <% end %>
+</div>

@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  active: false
+  user_id: 1
+  name: MyString
+  description: MyText
+  date_from: 
+  date_to: 
+  avatar_filename: MyString
+  avatar_content_type: MyString
+  avatar_file_size: 1
+  avatar_updated_at: 2016-04-30 05:15:37
+
+two:
+  active: false
+  user_id: 1
+  name: MyString
+  description: MyText
+  date_from: 
+  date_to: 
+  avatar_filename: MyString
+  avatar_content_type: MyString
+  avatar_file_size: 1
+  avatar_updated_at: 2016-04-30 05:15:37

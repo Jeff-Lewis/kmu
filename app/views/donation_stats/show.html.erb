@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Donation:</strong>
+  <%= @donation_stat.donation_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @donation_stat.user_id %>
+</p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @donation_stat.company_id %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @donation_stat.amount %>
+</p>
+
+<p>
+  <strong>Anonymous:</strong>
+  <%= @donation_stat.anonymous %>
+</p>
+
+<%= link_to 'Edit', edit_donation_stat_path(@donation_stat) %> |
+<%= link_to 'Back', donation_stats_path %>

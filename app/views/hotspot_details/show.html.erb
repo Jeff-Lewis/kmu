@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Hotspot:</strong>
+  <%= @hotspot_detail.hotspot_id %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @hotspot_detail.status %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @hotspot_detail.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @hotspot_detail.description %>
+</p>
+
+<p>
+  <strong>Avatar file name:</strong>
+  <%= @hotspot_detail.avatar_file_name %>
+</p>
+
+<p>
+  <strong>Avatar content type:</strong>
+  <%= @hotspot_detail.avatar_content_type %>
+</p>
+
+<p>
+  <strong>Avatar file size:</strong>
+  <%= @hotspot_detail.avatar_file_size %>
+</p>
+
+<p>
+  <strong>Avatar updated at:</strong>
+  <%= @hotspot_detail.avatar_updated_at %>
+</p>
+
+<%= link_to 'Edit', edit_hotspot_detail_path(@hotspot_detail) %> |
+<%= link_to 'Back', hotspot_details_path %>

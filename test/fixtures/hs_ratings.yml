@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: MyString
+  user_id: 1
+  hotspot_id: 1
+  user_comment: MyString
+  user_rating: 1
+
+two:
+  status: MyString
+  user_id: 1
+  hotspot_id: 1
+  user_comment: MyString
+  user_rating: 1

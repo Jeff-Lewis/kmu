@@ -1,0 +1,34 @@
+class Bid < ActiveRecord::Base
+    belongs_to :user
+    belongs_to :category
+    has_many :bid_details, dependent: :destroy 
+
+    validates :name, presence: true
+    
+    before_validation :update_geo_address
+    
+    validate :valid_dates?
+
+    geocoded_by :geo_address
+    after_validation :geocode
+    
+    def update_geo_address
+      self.geo_address = self.address1 + " " + address2 + " " + address3
+    end
+    
+  def self.search(cw, year, search)
+    start_date = Date.commercial(year,cw,1)
+    end_date = Date.commercial(year,cw,7)
+    where('name LIKE ? and active=? and ((date_from>=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', "%#{search}%", true, start_date, end_date, start_date, end_date, start_date, end_date)
+  end 
+
+  def valid_dates?
+    if date_from.is_a?(Date) and date_to.is_a?(Date)
+      if date_from <= date_to
+        return true
+      end
+    end
+    errors.add(:Date_from, "invalid date or time")
+  end
+
+end

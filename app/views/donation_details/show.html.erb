@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Donation:</strong>
+  <%= @donation_detail.donation_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @donation_detail.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @donation_detail.description %>
+</p>
+
+<p>
+  <strong>Avatar file name:</strong>
+  <%= @donation_detail.avatar_file_name %>
+</p>
+
+<p>
+  <strong>Avatar content type:</strong>
+  <%= @donation_detail.avatar_content_type %>
+</p>
+
+<p>
+  <strong>Avatar file size:</strong>
+  <%= @donation_detail.avatar_file_size %>
+</p>
+
+<p>
+  <strong>Avatar updated at:</strong>
+  <%= @donation_detail.avatar_updated_at %>
+</p>
+
+<%= link_to 'Edit', edit_donation_detail_path(@donation_detail) %> |
+<%= link_to 'Back', donation_details_path %>

@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  object_name: MyString
+  object_id: 1
+  category: 1
+  stichworte: MyString
+  email: false
+  ticker: false
+  active: false
+
+two:
+  user_id: 1
+  object_name: MyString
+  object_id: 1
+  category: 1
+  stichworte: MyString
+  email: false
+  ticker: false
+  active: false

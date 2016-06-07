@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Hs Ratings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>User</th>
+      <th>Hotspot</th>
+      <th>User comment</th>
+      <th>User rating</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @hs_ratings.each do |hs_rating| %>
+      <tr>
+        <td><%= hs_rating.status %></td>
+        <td><%= hs_rating.user_id %></td>
+        <td><%= hs_rating.hotspot_id %></td>
+        <td><%= hs_rating.user_comment %></td>
+        <td><%= hs_rating.user_rating %></td>
+        <td><%= link_to 'Show', hs_rating %></td>
+        <td><%= link_to 'Edit', edit_hs_rating_path(hs_rating) %></td>
+        <td><%= link_to 'Destroy', hs_rating, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Hs rating', new_hs_rating_path %>

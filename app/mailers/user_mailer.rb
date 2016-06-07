@@ -10,6 +10,6 @@ class UserMailer < ApplicationMailer
     @user = user
     @message = message
     mail to: @user.email, 
-    subject: "ProMIS Sign In Confirmation"
+    subject: "newKMU Sign In Confirmation"
   end
 end

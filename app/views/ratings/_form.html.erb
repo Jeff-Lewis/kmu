@@ -1,0 +1,83 @@
+<div class="container-fluid">
+    <%= form_for @rating do |f| %>
+
+        <% if @rating.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@rating.errors.count, "error") %> prohibited this rating from being saved:</h2>
+              <ul>
+                  <% @rating.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading header">
+                      <h2>
+                      <%= link_to @rating.service do %>
+                        <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+                      <% end %>
+                      BEWERTUNG <%= @rating.service.name %>
+                      </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+              <div class="col-md-6">
+                  <div class="panel-body">
+                    
+                    <% if !session[:anbieter_rating] %> 
+                        <div class="form-group">
+                          <%= f.label "Benutzerbewertung" %><br/>
+                          <% for i in 1..5 %>
+                              <%= f.radio_button :user_rating, i.to_i %>
+                              <% i.times do %>
+                                <%= image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                              <% end %><br>
+                          <% end %>
+                          <%= f.text_area :user_comment, rows: 3, class:"form-control"%>
+                        </div>
+                        <div class="form-group">
+                          <%= f.label "Anbieterbewertung" %><br/>
+                          <% if @rating.anbieter_rating != nil %>
+                            <% @rating.anbieter_rating.times do %>
+                              <%= image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                            <% end %><br>
+                          <% end %>
+                          <%= f.text_area :anbieter_comment, :readonly => true, rows: 3, class:"form-control"%>
+                        </div>
+                    <% else %>
+                        <div class="form-group">
+                          <%= f.label "Benutzerrating" %><br/>
+                          <% @rating.user_rating.times do %>
+                            <%= image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                          <% end %><br>
+                          <%= f.text_area :user_comment, :readonly => true, rows: 3, class:"form-control"%>
+                        </div>
+                        <div class="form-group">
+                          <%= f.label "Anbieterrating" %><br/>
+                          <% for i in 1..5 %>
+                              <%= f.radio_button :anbieter_rating, i.to_i %>
+                              <% i.times do %>
+                                <%= image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                              <% end %><br>
+                          <% end %>
+                          <%= f.text_field :anbieter_comment, rows: 3, class:"form-control"%>
+                        </div>
+                    <% end %>
+
+                     <%= f.hidden_field :user_id, class:"form-control" %>
+                     <%= f.hidden_field :service_id, class:"form-control" %>
+                     <%= f.hidden_field :created_at, class:"form-control" %>
+                    <div class="actions">
+                      <%= f.submit "Speichern",  class:"btn btn-primary btn-lg"%>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% end %>
+</div>

@@ -1,0 +1,100 @@
+<div class="container-fluid">
+  
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <h1>
+        KLEINANZEIGEN (<%= session[:rtype] %>)
+        <span class="badge"><%= @reqanz %></span>
+        </h1>
+      </div>
+    </div>
+  </div>
+  <br>
+  
+  <div class="row">
+    <div class="col-md-12">
+      <div class="digg_pagination">
+          <%= will_paginate @requests, :container => false, previous_label: "<", next_label: ">" %>
+      </div>
+  </div>
+  
+  <% @requests.each do |req| %>
+    <div class="col-md-4">
+      
+      <%= link_to request_path(:id => req.id, :request_id => req.id) do %>
+      
+        <div class="thumbnail" align="center">
+          
+          <p>
+          <% if req.request_details.count > 0 %>
+    				<% if req.request_details.first.avatar_file_name == nil %>
+              <%= image_tag("request_a.png", :size => "200x200", class:"img-rounded" ) %>
+            <% else %>
+              <%= image_tag req.request_details.first.avatar(:medium), class:"img-rounded"  %>
+            <% end %>
+            <% else %>
+              <%= image_tag("request_a.png", :size => "200x200", class:"img-rounded" ) %>
+    			<% end %>
+    			</p>
+    			<p>
+    			<% req.request_details.each do |rd| %>
+    				<% if rd.avatar_file_name == nil %>
+              <%= image_tag("request_a.png", :size => "50x50", class:"img-rounded" ) %>
+            <% else %>
+              <%= image_tag rd.avatar(:small), class:"img-rounded"  %>
+            <% end %>
+    			<% end %>
+    			</p>
+    	    
+          <div class="caption">
+    					<% if req.social %>
+                <%= image_tag("helpinghand.png", :size => "50x50" , class:"img-rounded") %>
+              <% end %>
+              <div class="anzeigetext">
+      					<%= session[:rtype] + " " +  req.name %>
+      				</div>
+  					<% if !req.social %>
+  					  <% if req.price %>
+    					  <div class="Preis">
+    					    <%= sprintf("%05.2f CHF",req.price) %>
+    					  </div>
+    					 <% end %>
+  					<% end %>
+            <p>
+    				  <%= req.description %>
+    				</p>
+    			</div>
+  
+          <p>
+          <% if !req.user.anonymous %>
+            <% if req.user.avatar_file_name == nil %>
+              <%= image_tag("user_a.png", :size => "50x50", class:"img-rounded" ) %>
+            <% else %>
+              <%= image_tag req.user.avatar(:small), class:"img-rounded"  %>
+            <% end %>
+          <% end %>
+  
+    		  <%= req.created_at.strftime("%d.%b.%Y %H:%M Uhr") %>
+    		  
+    		  <% if req.created_at.to_date == Date.today %>
+    		    Heute
+    		  <% end %>
+    		  <% if (Date.today - req.created_at.to_date) == 1 %>
+    		    Gestern
+    		  <% end %>
+    		  <% if Date.today - req.created_at.to_date > 1 %>
+            <% anz = (Date.today.to_date - req.created_at.to_date).to_i %>
+            Vor <%= anz %> Tagen
+    		  <% end %>
+          </p>
+    
+    			<p>
+            <%= link_to request_path(:id => req.id, :request_id => req.id) do %>
+              <i class="btn btn-primary btn btn-lg glyphicon glyphicon-info-sign"></i>
+            <% end %>
+    		</div>
+    	<% end %>
+		</div>
+  <% end %>
+</div>

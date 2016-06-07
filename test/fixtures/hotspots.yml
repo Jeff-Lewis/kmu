@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  status: MyString
+  active: false
+  hs_category_id: 1
+  name: MyString
+  description: MyText
+  geo_address: MyString
+  address1: MyString
+  address2: MyString
+  address3: MyString
+  latitude: 1.5
+  longitude: 1.5
+  stichworte: MyString
+
+two:
+  user_id: 1
+  status: MyString
+  active: false
+  hs_category_id: 1
+  name: MyString
+  description: MyText
+  geo_address: MyString
+  address1: MyString
+  address2: MyString
+  address3: MyString
+  latitude: 1.5
+  longitude: 1.5
+  stichworte: MyString

@@ -1,0 +1,101 @@
+<p id="notice"><%= notice %></p>
+<div class="container-fluid">
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <h1>
+        ANGEBOTE
+        <span class="badge"><%= @seranz %></span>
+        </h1>
+      </div>
+    </div>
+  </div>
+	<div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+    		<!--<table class="table table-striped table-hover-->
+    		<table class="table table-striped">
+          <thead>
+            
+            <tr>
+              <td colspan="5">
+                <div class="digg_pagination">
+                    <%= will_paginate @services, :container => false, previous_label: "<", next_label: ">" %>
+                </div>	  
+              </td>
+            </tr>
+            
+            <tr>
+              <th>Bewertung</th>
+              <th colspan="2">Service</th>
+              <th>Sozial</th>
+            </tr>
+
+          </thead>
+        
+          <tbody>
+            <% @services.each do |se| %>
+              <tr>
+                <td>
+          		    <% if avg_rating(se.id) == 0 %>
+                    <% image_tag("no_rating.jpg", :size => "50x50" , class:"img-rounded") %>
+          		    <% else %>
+                  <% avg_rating(se.id).times do %>
+                    <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                  <% end %>
+                  <% avg_rating(se.id).times do %>
+                    <i class="glyphicon glyphicon-star"></i>
+                  <% end %>
+                <% end %>
+                </td>
+                <td>
+                <%= link_to se do %>
+                  <% if !se.avatar_file_name %>
+                    <%= image_tag("service_a.png", :size => "50x50" , class:"img-rounded") %>
+                  <% else %>
+                    <%= image_tag se.avatar(:small), class:"img-rounded" %>
+                  <% end %>
+                <% end %>
+                </td>
+                <td>
+                <%= link_to se do %>
+                  <div class="anzeigetext">
+                    <%= se.name %>
+                  </div>
+                <% end %>
+                <% if se.company_id != nil %>
+                  <%= se.company.name %>
+                <% end %>
+                <% if se.user_id != nil %>
+                  <%= se.user.name + " " + se.user.lastname %>
+                <% end %>
+                </td>
+                <td>
+                  <% if se.social %>
+                      <% image_tag("heart.png", :size => "50x50" , class:"img-rounded") %>
+                      <i class="glyphicon glyphicon-heart"></i>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    <div class="col-md-6">
+      <div id="map">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers(<%=raw @hash.to_json %>);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+});
+</script>

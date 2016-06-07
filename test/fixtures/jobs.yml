@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  company_id: 1
+  name: MyString
+  active: false
+  branche_id: 1
+  stichworte: MyString
+  tasks: MyText
+  skills: MyText
+  offers: MyText
+  contacts: MyText
+
+two:
+  company_id: 1
+  name: MyString
+  active: false
+  branche_id: 1
+  stichworte: MyString
+  tasks: MyText
+  skills: MyText
+  offers: MyText
+  contacts: MyText

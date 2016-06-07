@@ -1,0 +1,60 @@
+<div class="container-fluid">
+  <%= form_for @request do |f| %>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-heading header">
+          <h1>
+            <%= link_to @request do %>
+              <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+            <% end %>
+            KLEINANZEIGE <%= @request.rtype %>
+          </h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel-body">
+          <% if @request.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@request.errors.count, "error") %> prohibited this workorder from being saved:</h2>
+              <ul>
+                <% @request.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <div class="form-group">
+            <%= f.label "Bezeichnung" %><br/>
+            <%= f.text_field :name, autofocus: true, class:"form-control"%>
+          </div>
+          <div class="form-group">
+            <%= f.label "Beschreibung" %><br/>
+            <%= f.text_area :description, rows: 5, class:"form-control"%>
+          </div>
+          <div class="field">
+            <%= f.label :Preis %><br>
+            <%= f.number_field :price , class:"form-control" %>
+          </div>
+          <div class="field">
+            <%= f.label :Aktiv %><br>
+            <%= f.check_box :active %>
+          </div>
+          <div class="field">
+            <%= f.label :Sozialengagement %><br>
+            <%= f.check_box :social %>
+          </div>
+          <div>
+              <%= f.hidden_field :user_id, class:"form-control" %>
+              <%= f.hidden_field :rtype, class:"form-control" %>
+          </div>
+          <div class="actions">
+            <%= f.submit "Speichern", class:"btn btn-primary btn-lg"%>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

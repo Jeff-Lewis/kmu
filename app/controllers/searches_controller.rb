@@ -1,24 +1,38 @@
 class SearchesController < ApplicationController
   before_action :set_search, only: [:show, :edit, :update, :destroy]
-  permits :keywords, :noga, :distance, :from_lat, :from_lgt, :special, :rating
+  permits :rtype, :date_from, :date_to, :search_domain, :controller, :user_id, :name, :description, :status, :category_id, :mob_category_id, :hs_category_id, :ev_category_id, :keywords, :age_from, :age_to, :distance, :geo_address, :address1, :address2, :address3, :date_created_at, :rating, :social, :amount_from, :amount_to, :amount_from_target, :amount_to_target, :special, :rating
 
   # GET /searches
   def index
-    @searches = Search.all
+    if params[:page]
+      session[:page] = params[:page]
+    end
+    $search_domain_ext = %w[Personen Institutionen Ausschreibungen Angebote Mobilien Kleinanzeigen Stellenanzeigen Veranstaltungen Sehenswuerdigkeiten Spendeninitiativen]
+    $search_domain_int = %w[users companies bids services vehicles requests jobs events hotspots donations]
+    $domain = [{"name" => "Personen", "id" => "users"}, {"name" => "Institutionen", "id" => "companies"}, {"name" => "Ausschreibungen", "id" => "bids"}, {"name" => "Angebote", "id"=> "services"}, {"name" => "Mobilien", "id" => "vehicles"}, {"name" => "Kleinanzeigen", "id" => "requests"}, {"name" => "Stellenanzeigen", "id" => "jobs"}, {"name" => "Veranstaltungen", "id" => "events"}, {"name" => "Sehenswuerdigkeiten", "id" => "hotspots"}, {"name" => "Spendeninitiativen", "id" => "donations"}]
+    if params[:page] != nil
+      session[:page] = params[:page]
+    end
+    @searches = Search.where('user_id=?',current_user.id).page(params[:page]).per_page(10)
+    @seranz = @searches.count
   end
 
   # GET /searches/1
   def show
-    if @search.search_companies.empty?
-      redirect_to new_search_path
-    else
-      redirect_to companies_path(:result => @search.search_companies)
-    end
+  end
+
+  #  # GET /searches/1/call
+  def call
+    redirect_to users_path
   end
 
   # GET /searches/new
   def new
     @search = Search.new
+    @search.search_domain = "Personen"
+    @search.user_id = params[:user_id]
+    @current_longitude = request.location.longitude
+    @current_latitude= request.location.latitude
   end
 
   # GET /searches/1/edit
@@ -28,9 +42,16 @@ class SearchesController < ApplicationController
   # POST /searches
   def create(search)
     @search = Search.new(search)
-
     if @search.save
-      redirect_to @search, notice: 'Search was successfully created.'
+      if params[:commit] == "Speichern"
+        redirect_to searches_path(:user_id => current_user.id, :page => session[:page]), notice: 'Search was successfully updated.'
+      end
+      if params[:commit] == "Test"
+        redirect_to edit_search_path(@search), notice: 'Search successfully tested.'
+      end
+      if params[:commit] == nil
+        redirect_to edit_search_path(@search), notice: 'Search successfully tested.'
+      end
     else
       render :new
     end
@@ -39,7 +60,15 @@ class SearchesController < ApplicationController
   # PUT /searches/1
   def update(search)
     if @search.update(search)
-      redirect_to @search, notice: 'Search was successfully updated.'
+      if params[:commit] == "Speichern"
+        redirect_to searches_path(:user_id => current_user.id, :page => session[:page]), notice: 'Search was successfully updated.'
+      end
+      if params[:commit] == "Test"
+        redirect_to edit_search_path(@search), notice: 'Search successfully tested.'
+      end
+      if params[:commit] == nil
+        redirect_to edit_search_path(@search), notice: 'Search successfully tested.'
+      end
     else
       render :edit
     end
@@ -56,5 +85,6 @@ class SearchesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_search(id)
       @search = Search.find(id)
+      @count = @search.build_sql
     end
 end

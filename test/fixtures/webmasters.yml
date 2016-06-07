@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  object_name: MyString
+  object_id: 1
+  user_id: 1
+  web_user_id: 1
+  user_comment: MyText
+  web_user_comment: MyText
+  status: MyString
+
+two:
+  object_name: MyString
+  object_id: 1
+  user_id: 1
+  web_user_id: 1
+  user_comment: MyText
+  web_user_comment: MyText
+  status: MyString

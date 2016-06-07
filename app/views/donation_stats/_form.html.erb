@@ -1,0 +1,58 @@
+<div class="container-fluid">
+  <%= form_for @donation_stat do |f| %>
+     <div class="row">
+        <div class="col-md-9">
+            <div class="panel panel-heading header">
+              <h1>
+              <%= link_to @donation_stat.donation do %>
+                <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+              <% end %>
+              SPENDER
+              <% if @donation_stat.company_id != nil %>
+                <%= @donation_stat.company.name %>
+              <% end %>
+              <% if @donation_stat.user_id != nil %>
+                <%= @donation_stat.user.name + " " + @donation_stat.user.lastname %>
+              <% end %>
+              </h1>
+            </div>
+        </div>
+     </div>
+
+     <div class="row">
+        <div class="col-md-9">
+          <div class="panel-body">
+            <% if @donation_stat.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@donation_stat.errors.count, "error") %> prohibited this workorder from being saved:</h2>
+                <ul>
+                  <% @donation_stat.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+            <% if @dontype == "Company" %>
+              <div class="form-group">
+                <%= f.label "Institution" %><br/>
+                  <%= f.collection_select :company_id, Company.where('active=? and user_id=?',true,current_user.id), :id, :name, {}, class:"form-control" %>
+              </div>
+            <% end %>
+            <%= f.hidden_field :donation_id, class:"form-control" %>
+            <%= f.hidden_field :user_id, class:"form-control" %>
+            <div class="form-group">
+              <%= f.label "Spendenbetrag" %><br/>
+              <%= f.number_field :amount, class:"form-control"%>
+            </div>
+            <div class="form-group">
+              <%= f.label "Anonym" %><br/>
+                <%= f.check_box :anonymous, class:"form-control"%>
+            </div>
+            <div class="actions">
+              <%= f.submit "Speichern", class:"btn btn-primary btn-lg"%>
+            </div>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</div>

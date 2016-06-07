@@ -1,0 +1,107 @@
+<div class="container-fluid">
+    <%= form_for @event, html: {multipart: true}  do |f| %>
+
+        <% if @event.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@event.errors.count, "error") %> prohibited this company from being saved:</h2>
+              <ul>
+                  <% @event.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <div class="row">
+            <div class="col-md-12">
+              <div class="panel panel-heading header">
+              <h2>
+                <%= link_to @event do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+                <% end %>
+                Veranstaltung
+                </h2>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+              <div class="panel-body">
+                 <div class="form-group">
+                   <%= f.label "Veranstaltungslogo" %><br/>
+                    <% if @event.avatar_file_name %>
+                        <%= image_tag @event.avatar(:medium) %>
+                    <% end %>
+                   <%= f.file_field :avatar, class:"form-control" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label "Bezeichnung" %><br/>
+                  <%= f.text_field :name, autofocus: true, class:"form-control"%>
+                </div>
+                <div class="form-group">
+                  <%= f.label "Beschreibung" %><br/>
+                  <%= f.text_area :description, rows: 5, class:"form-control"%>
+                </div>
+                <div class="form-group">
+                  <%= f.label "Kategorie" %><br/>
+                  <%= f.collection_select :ev_category_id, EvCategory.all.order(:name), :id, :name, {}, class:"form-control" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label "Aktiv" %>
+                  <%= f.check_box :active, class:"form-control"%>
+                </div>
+                <div class="form-group">
+                  <%= f.label "Homepage" %><br/>
+                  <%= f.text_field :homepage, class:"form-control"%>
+                </div>
+                <div class="form-group">
+                  <%= f.label "Datum von-bis:" %>
+                  <%= f.text_field :date_from, class:"form-control"%>
+                  <%= f.text_field :date_to, class:"form-control"%>
+                </div>
+                <div class="form-group">
+                   <%= f.label "Veranstaltungsadresse" %><br/>
+                   <%= f.text_field :address1, class:"form-control" %>
+                   <%= f.text_field :address2, class:"form-control" %>
+                   <%= f.text_field :address3, class:"form-control" %>
+                </div>
+                 <%= f.hidden_field :status, class:"form-control" %>
+                 <%= f.hidden_field :user_id %>
+                 <%= f.hidden_field :company_id %>
+                 <%= f.hidden_field :geo_address, class:"form-control" %>
+                 <%= f.hidden_field :longitude, class:"form-control" %>
+                 <%= f.hidden_field :latitude, class:"form-control" %>
+                <div class="actions">
+                   <%= f.submit "Speichern",  class:"btn btn-primary btn-lg"%>
+                </div>
+              </div>
+          </div>
+                
+          <div class="col-md-6">
+            <div class="panel-body">
+              <div id="map">
+                <div id="map-canvas"></div>
+              </div>
+          </div>
+
+        </div>
+    </div>
+<% end %>                
+</div>
+
+<script>
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers([
+        {
+          "lat": <%= @event.latitude %>,
+          "lng": <%= @event.longitude %>,
+          "infowindow": "text"
+        }
+      ]);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+      handler.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+});
+</script>

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @hs_rating.status %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @hs_rating.user_id %>
+</p>
+
+<p>
+  <strong>Hotspot:</strong>
+  <%= @hs_rating.hotspot_id %>
+</p>
+
+<p>
+  <strong>User comment:</strong>
+  <%= @hs_rating.user_comment %>
+</p>
+
+<p>
+  <strong>User rating:</strong>
+  <%= @hs_rating.user_rating %>
+</p>
+
+<%= link_to 'Edit', edit_hs_rating_path(@hs_rating) %> |
+<%= link_to 'Back', hs_ratings_path %>

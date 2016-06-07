@@ -1,28 +1,32 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   
-  def workorder
-    array = []
-    accesses = Access.where("user_id=?", current_user.id)
-    accesses.each do |ac|
-      array << ac.workorder_id
+  def webmaster
+    if @user.webmaster == true
+      @user.webmaster = false
+    else
+      @user.webmaster = true
     end
-    @workorders = Workorder.where(:id => array)
+    @user.save
+    redirect_to @user, notice: 'Webmaster '  
   end
   
   def index
-    if params[:result] != nil
-      @users = params[:result]
-    else
-      @users = User.search(params[:search])
-    end
     
+    if params[:page] != nil
+      session[:page] = params[:page]
+    end
+    @users = User.search(params[:search]).page(params[:page]).per_page(10)
+    @usanz = @users.count
+
     z = 0
     @hash = Gmaps4rails.build_markers(@users) do |user, marker|
-      marker.lat user.latitude
-      marker.lng user.longitude
-      z=z+1
-      marker.infowindow z.to_s+ " " + user.name + " " + user.lastname
+      if user.latitude != nil and user.longitude != nil
+        marker.lat user.latitude
+        marker.lng user.longitude
+        z=z+1
+        marker.infowindow z.to_s+ " " + user.name + " " + user.lastname
+      end 
 #      marker.picture url: "http://images/ma_anonym.png"
      end
   end
@@ -44,6 +48,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    @user.status = "changed"
   end
 
   # POST /users
@@ -56,7 +61,7 @@ class UsersController < ApplicationController
         
         # send eMail
         puts "ATTENTION ATTENTION here we go...."
-        UserMailer.signup_confirmation(@user, "ProMIS Sign In Confirmation").deliver_now
+        UserMailer.signup_confirmation(@user, "newKMU Sign In Confirmation").deliver_now
         
         format.html { redirect_to users_url, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
@@ -70,14 +75,8 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to users_url, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.update(user_params)
+        redirect_to @user, notice: 'User was successfully updated.'
     end
   end
 
@@ -85,10 +84,7 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to users_path, notice: 'User was successfully destroyed.'
   end
 
   private
@@ -99,7 +95,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :userid, :lastname, :name, :address1, :address2, :address3, :geo_address, :longitude, :latitude, :phone1, :phone2, :org, :title, :costrate, :costinfo1, :avatar )
+      params.require(:user).permit(:status, :dateofbirth, :email, :active, :anonymous, :webmaster, :userid, :lastname, :name, :address1, :address2, :address3, :geo_address, :longitude, :latitude, :phone1, :phone2, :org, :title, :costrate, :costinfo1, :avatar )
     end
     
 end

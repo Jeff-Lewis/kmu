@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Hotspot Details</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Hotspot</th>
+      <th>Status</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Avatar file name</th>
+      <th>Avatar content type</th>
+      <th>Avatar file size</th>
+      <th>Avatar updated at</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @hotspot_details.each do |hotspot_detail| %>
+      <tr>
+        <td><%= hotspot_detail.hotspot_id %></td>
+        <td><%= hotspot_detail.status %></td>
+        <td><%= hotspot_detail.name %></td>
+        <td><%= hotspot_detail.description %></td>
+        <td><%= hotspot_detail.avatar_file_name %></td>
+        <td><%= hotspot_detail.avatar_content_type %></td>
+        <td><%= hotspot_detail.avatar_file_size %></td>
+        <td><%= hotspot_detail.avatar_updated_at %></td>
+        <td><%= link_to 'Show', hotspot_detail %></td>
+        <td><%= link_to 'Edit', edit_hotspot_detail_path(hotspot_detail) %></td>
+        <td><%= link_to 'Destroy', hotspot_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Hotspot detail', new_hotspot_detail_path %>

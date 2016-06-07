@@ -1,0 +1,160 @@
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-md-12">
+        <div class="panel-heading header header">
+          <h2>
+              AUSSCHREIBUNG <%= @bid.name %>
+          </h2>
+        </div>
+        <div class="panel-body">
+          <%= link_to bids_path :page => session[:page] do %>
+            <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+          <% end %>
+          <% if user_signed_in? %>
+            <% if current_user.id == @bid.user.id %>
+    	        <%= link_to edit_bid_path(@bid) do %>
+                <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+              <% end %>
+    	        <%= link_to @bid, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                <i class="btn btn-danger btn-lg pull-right glyphicon glyphicon-trash"></i>
+              <% end %>
+            <% end %>
+  	        <%= link_to new_webmaster_path :object_name => "Bid", :object_id => @bid.id, :user_id => current_user.id do %>
+              <i class="btn btn-warning btn-lg pull-right glyphicon glyphicon-eye-open"></i>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="panel-body">
+    			<blockquote>
+    				<p><b>
+    					Ausschreibung
+    				</p></b>
+    				<small><%= @bid.description %></small>
+        	</blockquote>
+          <cite> <%= @bid.created_at.strftime("%d-%m-%Y") %></cite>        
+        </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <h2>
+          <% if user_signed_in? %>
+            <% if current_user.id == @bid.user_id %>
+              <%= link_to new_bid_detail_path :bid_id => @bid.id do %>
+                <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+              <% end %>
+            <% end %>
+          <% end %>
+            ZUSATZINFORMATIONEN
+        </h2>
+      </div>
+      <div class="panel-body">
+      		<% @bid.bid_details.each do |bd| %>
+    				<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-375571" href="#panel-element-<%= bd.id %>"><h3><%= bd.name %></h3></a>
+    				<div id="panel-element-<%= bd.id %>" class="panel-collapse collapse">
+      				<% if bd.avatar_file_name == nil %>
+                <%= image_tag("bid_a.png", :size => "200x200", class:"img-rounded" ) %>
+              <% else %>
+                <%= image_tag bd.avatar(:medium), class:"img-rounded"  %>
+              <% end %>
+              <p>
+  						<%= bd.description %>
+  						</p>
+              <% if user_signed_in? %>
+                <% if current_user.id == @bid.user_id %>
+        	        <%= link_to edit_bid_detail_path(bd) do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                  <% end %>
+        	        <%= link_to bd, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                    <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                  <% end %>
+                <% end %>
+              <% end %>
+      			</div>
+      		<% end %>
+    	</div>
+    </div>
+  </div>
+  <br>
+        
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <h2>
+            ORTSANGABE
+        </h2>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="panel-body">
+        <div id="map">
+          <div id="map-canvas"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <h2>
+            KONTAKT
+        </h2>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="panel-body">
+        <%= form_tag bid_path, :method => "get" do %>
+            <div class="form-group">
+              <% if !@bid.user.anonymous %>
+                  <% if @bid.user.phone1 == "" %>
+                    <i class="glyphicon glyphicon-phone"></i>
+                    <%= @bid.user.phone1 %><br>
+                  <% end %>
+                  <% if @bid.user.phone2 == "" %>
+                  <i class="glyphicon glyphicon-phone"></i>
+                    <%= @bid.user.phone2 %><br>
+                  <% end %>
+                  <i class="glyphicon glyphicon-envelope"></i>
+                  <%= @bid.user.email %><br>
+              <% else %>
+                ***
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= label_tag "Betreff" %>
+              <%= text_field_tag :header, @bid.name, class:"form-control" %>
+            </div>
+            <div class="form-group">
+              <%= label_tag "Nachricht" %>
+              <%= text_area_tag :body, params[:body], rows: 5, class:"form-control" %>
+            </div>
+            <div class="form-group">
+              <%= submit_tag "Senden", :name => nil, class:"btn btn-primary btn-lg" %>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers([
+        {
+          "lat": <%= @bid.latitude %>,
+          "lng": <%= @bid.longitude %>,
+          "infowindow": "<%= @bid.name %>"
+        }
+      ]);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+});
+</script>

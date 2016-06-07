@@ -1,0 +1,69 @@
+<div class="container-fluid">
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <h1>
+        <%= link_to new_appparam_path do %>
+          <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+        <% end %>
+        App Parameter
+        <span class="badge"><%= @appanz %></span>
+        </h1>
+      </div>
+    </div>
+  </div>
+	<div class="row">
+    <div class="col-md-12">
+  		<table class="table table-striped">
+        <thead>
+          <tr>
+            <td colspan="3">
+              <div class="digg_pagination">
+                  <%= will_paginate @appparams, :container => false, previous_label: "<", next_label: ">" %>
+              </div>	  
+            </td>
+          </tr>
+          <tr>
+            <th>Status</th>
+            <th></th>
+            <th>Modulname</th>
+            <th>Modulbeschreibung</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+
+            <% @appparams.each do |a| %>
+
+              <tr>
+    				    <td>
+                  <% if a.active %>
+                    <%= image_tag("icon_active.jpg", :size => "50x50" , class:"img-rounded") %>
+                  <% else %>
+                    <%= image_tag("icon_inactive.jpg",:size => "50x50", class:"img-rounded") %>
+                  <% end %>
+                </td>
+                <td>
+        	        <%= link_to edit_appparam_path(a) do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                  <% end %>
+        	        <%= link_to a, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                    <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                  <% end %>
+                </td>
+                <td>
+                  <div class="anzeigetext">
+                  <%= a.name %>
+                  </div>
+                </td>
+                <td>
+                  <%= a.description %>
+                </td>
+              </tr>
+            <% end %>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

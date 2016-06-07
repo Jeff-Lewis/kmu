@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  service_id: 1
+  user_comment: MyString
+  user_rating: 1
+  anbieter_comment: MyString
+  anbieter_rating: 1
+
+two:
+  user_id: 1
+  service_id: 1
+  user_comment: MyString
+  user_rating: 1
+  anbieter_comment: MyString
+  anbieter_rating: 1

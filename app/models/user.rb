@@ -3,12 +3,20 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-    has_many :workorders
-    has_many :services
-    has_many :accesses
-    has_many :timetracks
-    has_many :companies
-    has_many :plannnings
+
+    has_many :webmasters, dependent: :destroy 
+    has_many :services, dependent: :destroy 
+    has_many :companies, dependent: :destroy 
+    has_many :ratings, dependent: :destroy 
+    has_many :hs_ratings, dependent: :destroy 
+    has_many :requests, dependent: :destroy 
+    has_many :vehicles, dependent: :destroy 
+    has_many :donation_stats, dependent: :destroy 
+    has_many :bids, dependent: :destroy 
+    has_many :events, dependent: :destroy 
+    has_many :favourits, dependent: :destroy 
+    has_many :hotspots, dependent: :destroy
+    has_many :searches, dependent: :destroy
 
     # validates :userid, presence: true, :uniqueness => true
     validates :lastname, presence: true    
@@ -22,16 +30,16 @@ class User < ActiveRecord::Base
     has_attached_file :avatar, default_url: "/images/:style/missing.png", :styles => {:medium => "300x300", :thumb => "100x100", :small => "50x50" }
     validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
     
-      def update_geo_address
-        self.geo_address = self.address1 + " " + address2 + " " + address3
-      end
-      
-      def self.search(search)
-          if search
-              where('name LIKE ? OR lastname LIKE ?', "%#{search}%","%#{search}%")
-          else
-              all
-          end
-      end
+    def update_geo_address
+      self.geo_address = self.address1 + " " + address2 + " " + address3
+    end
+    
+    def self.search(search)
+        if search
+            where('anonymous=? and active=? and (name LIKE ? OR lastname LIKE ?)', false, true, "%#{search}%","%#{search}%")
+        else
+            where('anonymous=? and active=?',false, true)
+        end
+    end
 
 end

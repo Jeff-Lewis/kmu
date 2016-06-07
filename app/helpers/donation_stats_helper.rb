@@ -1,0 +1,2 @@
+module DonationStatsHelper
+end

@@ -1,0 +1,98 @@
+<div class="container-fluid">
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <h1>
+         SPENDENINITIATIVEN
+        <span class="badge"><%= @donanz %></span>
+        </h1>
+      </div>
+    </div>
+  </div>
+  <br>
+  
+  <div class="row">
+    <div class="col-md-12">
+      <div class="digg_pagination">
+          <%= will_paginate @donations, :container => false, previous_label: "<", next_label: ">" %>
+      </div>
+  </div>
+  
+  <% @donations.each do |don| %>
+    <div class="col-md-5">
+
+      <%= link_to don do %>
+
+        <div class="thumbnail" align="center">
+          
+          <div class="caption">
+    			  <div class="anzeigetext">
+    					<%= don.name %> 
+    				</div>
+    				<%= don.company.name %>
+    				<br>
+            <p>Aktueller Spendenstand:</p>
+            
+            <% soll = don.amount %>
+            <% if don.donation_stats != nil %>
+              <% ist  = don.donation_stats.sum(:amount) %>
+            <% else %>
+              <% ist = 0 %>
+            <% end %>
+            
+            <div class="progress">
+              <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="<%= ist %>" aria-valuemin="0" aria-valuemax="<%= soll %>" style="width: <%= ist/soll*100 %>%">
+                <span class="sr-only">40% Complete (success)</span>
+              </div>
+            </div>          
+            
+  				  <div class="Spendenbetrag_IST">
+  				    <%= sprintf("%05.2f CHF",ist) %>
+  				  </div>
+  				  <div class="Spendenbetrag_SOLL">
+  				    <%= sprintf("%05.2f CHF",soll) %>
+  				  </div>
+            <p>
+    				  <%= don.description %>
+    				</p>
+    			</div>
+
+          <p>
+          <% if don.donation_details.count > 0 %>
+    				<% if don.donation_details.first.avatar_file_name == nil %>
+              <%= image_tag("present.png", :size => "200x200", class:"img-rounded" ) %>
+            <% else %>
+              <%= image_tag don.donation_details.first.avatar(:medium), class:"img-rounded"  %>
+            <% end %>
+            <% else %>
+              <%= image_tag("present.png", :size => "200x200", class:"img-rounded" ) %>
+    			<% end %>
+    			</p>
+          <p>
+    			<% don.donation_details.each do |dd| %>
+    				<% if dd.avatar_file_name == nil %>
+              <%= image_tag("present.png", :size => "50x50", class:"img-rounded" ) %>
+            <% else %>
+              <%= image_tag dd.avatar(:small), class:"img-rounded"  %>
+            <% end %>
+    			<% end %>
+    			</p>
+  
+          <p>
+    		  <%= don.created_at.strftime("%d.%b.%Y-%H:%M Uhr") %>
+    		  
+    		  <% if don.created_at.to_date == Date.today %>
+    		    Heute
+    		  <% end %>
+    		  <% if (Date.today - don.created_at.to_date) == 1 %>
+    		    Gestern
+    		  <% end %>
+    		  <% if Date.today - don.created_at.to_date > 1 %>
+            <% anz = (Date.today.to_date - don.created_at.to_date).to_i %>
+            Vor <%= anz %> Tagen
+    		  <% end %>
+    		</div>
+  		<% end %>
+		</div>
+  <% end %>
+</div>

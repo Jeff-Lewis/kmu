@@ -1,39 +1,68 @@
-<p id="notice"><%= notice %></p>
+<div class="container-fluid">
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <h1>
+		    <%= link_to new_search_path(:user_id => current_user.id) do %>
+          <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+        <% end %>
+        SUCHEN
+        <span class="badge"><%= @seranz %></span>
+        </h1>
+      </div>
+    </div>
+  </div>
+  <br>
 
-<h1>Listing Searches</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Keywords</th>
-      <th>Noga</th>
-      <th>Distance</th>
-      <th>From lat</th>
-      <th>From lgt</th>
-      <th>Special</th>
-      <th>Rating</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @searches.each do |search| %>
-      <tr>
-        <td><%= search.keywords %></td>
-        <td><%= search.noga %></td>
-        <td><%= search.distance %></td>
-        <td><%= search.from_lat %></td>
-        <td><%= search.from_lgt %></td>
-        <td><%= search.special %></td>
-        <td><%= search.rating %></td>
-        <td><%= link_to 'Show', search %></td>
-        <td><%= link_to 'Edit', edit_search_path(search) %></td>
-        <td><%= link_to 'Destroy', search, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Search', new_search_path %>
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+    		<!--<table class="table table-striped table-hover-->
+    		<table class="table table-striped">
+          <thead>
+            <tr>
+              <td colspan="3">
+                <div class="digg_pagination">
+                    <%= will_paginate @searches, :container => false, previous_label: "<", next_label: ">" %>
+                </div>	  
+              </td>
+            </tr>
+            
+            <tr>
+              <th></th>
+              <th>Bezeichnung</th>
+              <th>Beschreibung</th>
+            </tr>
+          </thead>
+        
+          <tbody>
+            <% @searches.each do |s| %>
+              <tr>
+                <td>
+                <%= link_to users_path do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                <% end %>
+      	        <%= link_to edit_search_path(s) do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                <% end %>
+      	        <%= link_to s, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                  <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                <% end %>
+                </td>
+                <td>
+                  <%= link_to edit_search_path(s) do %>
+                      <div class="anzeigetext">
+                        <%= s.name %>
+                      </div>
+                  <% end %>
+                </td>
+                <td><%= s.description %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+  </div>
+</div>

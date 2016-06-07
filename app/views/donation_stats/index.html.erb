@@ -1,0 +1,112 @@
+<div class="container-fluid">
+	<div class="row">
+    <div class="col-md-8">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <%= link_to donations_path :page => session[:page] do %>
+            <i class="btn btn-primary glyphicon glyphicon-list"></i>
+          <% end %>
+          <% if user_signed_in? %>
+            <%= link_to new_donation_stat_path :donation_id => @donation.id, :don_type => "Company" do %>
+              <i class="btn btn-default glyphicon glyphicon-briefcase"> +</i>
+            <% end %>
+            <%= link_to new_donation_stat_path :donation_id => @donation.id, :don_type => "Private" do %>
+              <i class="btn btn-default glyphicon glyphicon-user"> +</i>
+            <% end %>
+          <% end %>
+          <h1>Spendeninitiative Spender <%= @donation.name %>
+            <span class="badge"><%= @donanz %></span>
+          </h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+	<div class="row">
+    <div class="col-md-8">
+      <div class="panel panel-default">
+  		<table class="table table-striped">
+        <thead>
+          
+          <tr>
+            <td colspan="4">
+              <div class="digg_pagination">
+                  <%= will_paginate @donation_stats, :container => false, previous_label: "<", next_label: ">" %>
+              </div>
+            </td>
+          </tr>
+          
+          <tr>
+            <th colspan="3">Spender</th>
+            <th></th>
+          </tr>
+
+        </thead>
+      
+        <tbody>
+          
+          <% @donation_stats.each do |dos| %>
+            <tr>
+              <% if dos.company_id != nil %>
+                <td>
+                  <% @company = Company.find(dos.company_id) %>
+                  <% if !dos.company.avatar_file_name %>
+                    <%= image_tag("company_a.png", :size => "200x200" , class:"img-rounded") %>
+                  <% else %>
+                    <%= image_tag dos.company.avatar(:medium), class:"img-rounded" %>
+                  <% end %>
+                </td>
+                <td><%= dos.company.name %></td>
+              <% end %>
+              <% if dos.user_id != nil %>
+                <td>
+                  <% @user = User.find(dos.user_id) %>
+                  <% if !dos.user.avatar_file_name %>
+                    <%= image_tag("user_a.png", :size => "200x200" , class:"img-rounded") %>
+                  <% else %>
+                    <%= image_tag dos.user.avatar(:medium), class:"img-rounded" %>
+                  <% end %>
+                </td>
+                <td><%= dos.user.name + " " + dos.user.lastname %></td>
+              <% end %>
+              <td>
+                <% if !dos.anonymous %>
+                    <%= sprintf("%05.2f CHF", dos.amount) %>
+                  <% else %>
+                    *****.** CHF
+                <% end %>
+              </td>
+              <td>
+                <% show_it = false %>
+    				    <% if user_signed_in? %>
+                  <% if dos.user_id != nil %>
+        				    <% if dos.user_id == current_user.id %>
+        				      <% show_it = true %>
+        				    <% end %>
+        				  <% end %>
+        				  <% if dos.company_id != nil %>
+        				    <% if dos.company.user_id == current_user.id %>
+        				      <% show_it = true %>
+        				    <% end %>
+        				  <% end %>
+                  <% if show_it %>
+    				        <%= link_to edit_donation_stat_path(dos) do %>
+                      <i class="btn btn-default glyphicon glyphicon-wrench"></i>
+                    <% end %>
+    				        <%= link_to dos, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                      <i class="btn btn-danger glyphicon glyphicon-trash"></i>
+                    <% end %>
+        				  <% end %>
+        				<% end %>
+              </td>
+            </tr>
+          <% end %>
+          
+        </tbody>
+      </table>
+      </div>
+
+    </div>
+  </div>
+  
+</div>

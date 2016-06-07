@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Event:</strong>
+  <%= @event_detail.event_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @event_detail.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @event_detail.description %>
+</p>
+
+<p>
+  <strong>Avatar file name:</strong>
+  <%= @event_detail.avatar_file_name %>
+</p>
+
+<p>
+  <strong>Avatar content type:</strong>
+  <%= @event_detail.avatar_content_type %>
+</p>
+
+<p>
+  <strong>Avatar file size:</strong>
+  <%= @event_detail.avatar_file_size %>
+</p>
+
+<p>
+  <strong>Avatar updated at:</strong>
+  <%= @event_detail.avatar_updated_at %>
+</p>
+
+<%= link_to 'Edit', edit_event_detail_path(@event_detail) %> |
+<%= link_to 'Back', event_details_path %>

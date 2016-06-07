@@ -1,3 +1,183 @@
+ $mandant: "TKB";
+ $color1: #ACC550;         /* hellgruen */
+ $color2: #2E6B33;         /* dunkelgruen */
+ $color3: white;
+ $color4: #F5F5F5;         /* hellgrau */
+ $color5: grey;
+ 
+ $blaugruen: #61A6A7;
+ $orange: #E0633B;
+ $gelb: #F2B857;
+ 
+ $color1: #58A5EF;
+ $color2: #14296C;
+ 
+ .dropdown {
+     font-size:180%!important;
+ }
+ .dropdown-menu {
+     font-size:100%!important;
+ } 
+marquee {
+    background: black;
+    color: $color1;
+    font-size:100%;
+    height:100%;
+}
+
+/* DB Fields */
+.form-control {
+    border-color: $color1!important;
+}
+.form-control :focus {
+    border-color:$color1!important;
+    box-shadow: 2px 2px 10px $color1!important;
+}
+
+.badge {
+    background: $color4!important;
+    color: $color5!important;
+}
+
+.anzeigetext {
+  font-size: 200%;
+  color: $color5;
+}
+footer {
+  background: $color1!important;
+  }
+
+body{
+  background-color: $color3!important;
+}
+
+.panel-heading {
+  background: $color1!important;
+  border-color: $color1!important;
+  box-shadow: 2px 2px 10px #B1B1B1;
+}
+.panel-body {
+  background: $color3!important;
+  border-color: $color1!important;
+  box-shadow: 2px 2px 10px #B1B1B1;
+}
+
+.panel-info {
+  background: $color3!important;
+  border-color: $color1!important;
+  box-shadow: 2px 2px 10px #B1B1B1;
+}
+.panel-text {
+  background: $color3!important;
+  border-color: $color1!important;
+  box-shadow: 2px 2px 10px #B1B1B1;
+}
+
+.panel-neutral {
+  background: $color3!important;
+  border-color: $color3!important;
+  box-shadow: 2px 2px 10px #B1B1B1;
+}
+
+.header {
+  background: $color1!important;
+  color: $color3;
+  border-color: $color3!important;
+  box-shadow: 2px 2px 10px #B1B1B1;
+}
+
+.panel-title {
+  color: $color5!important;
+}
+
+.panel-title:hover {
+  color: $color1!important;
+  background: $color1!important;
+}
+
+table {
+  box-shadow: 2px 2px 10px #B1B1B1;
+}
+
+.btn-primary {
+   background-color: $color3!important;
+   border-color: $color4!important;
+   color: $color5!important;
+   box-shadow: 2px 2px 10px #B1B1B1;
+}
+.btn-warning {
+   background-color: $color3!important;
+   border-color: $color4!important;
+   color: orange!important;
+   box-shadow: 2px 2px 10px #B1B1B1;
+}
+.btn-danger {
+   background-color: $color3!important;
+   border-color: $color4!important;
+   color: red!important;
+   box-shadow: 2px 2px 10px #B1B1B1;
+}
+
+h1 {
+   color: dunkelgruen!important;
+   border-color: dunkelgruen!important;
+}
+
+h2 {
+   color: $color3!important;
+}
+
+th {
+   color: $color2;
+ }
+tbody {
+   color: $color2;
+ }
+thead {
+   color: $color2!important;
+   border-color: $color2!important;
+}
+
+.blocked {
+  background: $color1;
+}
+
+.Preis {
+  color: red;
+}
+
+.Spendenbetrag_IST {
+  font-size: 200%;
+  color: $color2;
+}
+.Spendenbetrag_SOLL {
+  color: $color1;
+}
+
+input#email {
+    background-color: white!important;
+    color: $color1!important;
+    border-color: $color1!important;
+}
+input#email:focus {
+    border-color: $color1!important;
+}
+
+.jumbotron {
+   box-shadow: 2px 2px 10px #B1B1B1;
+   background: $color1!important;
+}
+
+.thumbnail {
+   box-shadow: 2px 2px 10px #B1B1B1;
+}
+.thumbnail:hover {
+    background: $color1!important;
+    .anzeigetext {
+        color: white!important;
+    };
+}
+
 #map {
    height: 600px;
    border-radius: 16px 16px;
@@ -7,15 +187,53 @@
    margin-top: 25px;
    border-width: 7px;
  }
- #map2 {
-   height: 600px;
-   border-radius: 16px 16px;
-   border-color: #fff;
-   border-style: solid;
-   box-shadow: 2px 2px 10px #B1B1B1;
-   margin-top: 25px;
-   border-width: 7px;
- }
+ 
+.digg_pagination {
+  background: white;
+  cursor: default;
+  /* self-clearing method: */ }
+  .digg_pagination a, .digg_pagination span, .digg_pagination em {
+    padding: 0.2em 0.5em;
+    display: block;
+    float: left;
+    margin-right: 1px; }
+  .digg_pagination .disabled {
+    color: #999999;
+    border: 1px solid #dddddd; }
+  .digg_pagination .current {
+    font-style: normal;
+    font-weight: bold;
+    background: #2e6ab1;
+    color: white;
+    border: 1px solid #2e6ab1; }
+  .digg_pagination a {
+    text-decoration: none;
+    color: #105cb6;
+    border: 1px solid #9aafe5; }
+    .digg_pagination a:hover, .digg_pagination a:focus {
+      color: #000033;
+      border-color: #000033; }
+  .digg_pagination .page_info {
+    background: #2e6ab1;
+    color: white;
+    padding: 0.4em 0.6em;
+    width: 22em;
+    margin-bottom: 0.3em;
+    text-align: center; }
+    .digg_pagination .page_info b {
+      color: #000033;
+      background: #6aa6ed;
+      padding: 0.1em 0.25em; }
+  .digg_pagination:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; }
+  * html .digg_pagination {
+    height: 1%; }
+  *:first-child + html .digg_pagination {
+    overflow: hidden; }
 
 @import "*";
 @import "bootstrap-sprockets";

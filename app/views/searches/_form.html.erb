@@ -1,45 +1,199 @@
-<%= form_for(@search) do |f| %>
-  <% if @search.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@search.errors.count, "error") %> prohibited this search from being saved:</h2>
+<div class="container-fluid">
+    <%= form_for @search do |f| %>
 
-      <ul>
-      <% @search.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+        <% if @search.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@search.errors.count, "error") %> prohibited this company from being saved:</h2>
+              <ul>
+                  <% @search.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+              </ul>
+            </div>
+        <% end %>
 
-  <div class="field">
-    <%= f.label :keywords %><br>
-    <%= f.text_field :keywords %>
-  </div>
-  <div class="field">
-    <%= f.label :noga %><br>
-    <%= f.select :noga, options_for_select($branchen_codes), :include_blank => true %>
-  </div>
-  <div class="field">
-    <%= f.label :distance %><br>
-    <%= f.number_field :distance %>
-  </div>
-  <div class="field">
-    <%= f.label :from_lat %><br>
-    <%= f.text_field :from_lat %>
-  </div>
-  <div class="field">
-    <%= f.label :from_lgt %><br>
-    <%= f.text_field :from_lgt %>
-  </div>
-  <div class="field">
-    <%= f.label :special %><br>
-    <%= f.check_box :special %>
-  </div>
-  <div class="field">
-    <%= f.label :rating %><br>
-    <%= f.text_field :rating %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading header">
+                      <h2>
+                      <%= link_to searches_path :page => session[:page] do %>
+                        <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+                      <% end %>
+                      ABFRAGEN <%= @count.to_s + " " + @search.sql_string.to_s + " " + @current_latitude.to_s + "/" + @current_longitude.to_s %>
+                      </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel-body">
+                      <%= f.hidden_field :user_id %>
+                      <div class="form-group">
+                          <%= f.select :search_domain, options_for_select($search_domain_ext, @search.search_domain), {}, :onchange => "this.form.submit();" ,class:"form-control" %>
+                      </div>
+                      <div class="form-group">
+                        <%= f.label "Bezeichnung" %><br/>
+                        <%= f.text_field :name, autofocus: true, class:"form-control"%>
+                      </div>
+                      <div class="form-group">
+                        <%= f.label "Beschreibung" %><br/>
+                        <%= f.text_area :description, class:"form-control"%>
+                      </div>
+                     <% case @search.search_domain %>
+                     <% when "Personen" %>
+                        <div class="form-group">
+                          <%= f.label "Alter von-bis:" %><br/>
+                          <%= f.number_field :age_from, class:"form-control"%>
+                          <%= f.number_field :age_to, class:"form-control"%>
+                        </div>
+                        <div class="form-group">
+                          <%= f.label "Sozialengagement" %>
+                          <%= f.check_box :social, class:"form-control"%>
+                        </div>
+
+                     <% when "Institutionen" %>
+                        <div class="form-group">
+                          <%= f.label "Branche" %><br/>
+                          <%= f.collection_select :category_id, Category.all.order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                        </div>
+                        <div class="form-group">
+                          <%= f.label "gemeinnützig" %>
+                          <%= f.check_box :social, class:"form-control"%>
+                        </div>
+                        <div class="form-group">
+                          <%= f.label "Aktionen" %>
+                          <%= f.check_box :special, class:"form-control"%>
+                        </div>
+
+                     <% when "Ausschreibungen" %>
+                        <div class="form-group">
+                          <%= f.label "Branche" %><br/>
+                          <%= f.collection_select :category_id, Category.all.order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                        </div>
+                        <div class="form-group">
+                          <%= f.label "Datum von-bis:" %>
+                          <%= f.text_field :date_from, class:"form-control"%>
+                          <%= f.text_field :date_to, class:"form-control"%>
+                        </div>
+
+                     <% when "Angebote" %>
+                          <%= f.label "Bewertung mindestens" %><br/>
+                          <% for i in 1..5 %>
+                              <%= f.radio_button :rating.to_i, i.to_i %>
+                              <% i.times do %>
+                                <%= image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                              <% end %><br>
+                          <% end %>
+                        
+                     <% when "Mobilien" %>
+                        <div class="form-group">
+                          <%= f.label "Kategorie" %><br/>
+                          <%= f.collection_select :mob_category_id, MobCategory.all.order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                        </div>
+
+                     <% when "Kleinanzeigen" %>
+                        <div class="form-group">
+                          <%= f.label "Sozialengagement" %>
+                          <%= f.check_box :social, class:"form-control"%>
+                        </div>
+                        <div class="form-group">
+                              <%= f.label "Anzeigetyp" %><br>
+                              <%= f.radio_button :rtype, "suche", :value => "suche" %> Suchen<br>
+                              <%= f.radio_button :rtype, "biete", :value => "biete" %> Bieten
+                        </div>
+
+                     <% when "Stellenanzeigen" %>
+                        <div class="form-group">
+                          <%= f.label "Branche" %><br/>
+                          <%= f.collection_select :category_id, Category.all.order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                        </div>
+
+                     <% when "Veranstaltungen" %>
+                        <div class="form-group">
+                          <%= f.label "Kategorie" %><br/>
+                          <%= f.collection_select :ev_category_id, EvCategory.all.order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                        </div>
+                        <div class="form-group">
+                          <%= f.label "Datum von-bis:" %>
+                          <%= f.text_field :date_from, class:"form-control"%>
+                          <%= f.text_field :date_to, class:"form-control"%>
+                        </div>
+
+                     <% when "Sehenswuerdigkeiten" %>
+                        <div class="form-group">
+                          <%= f.label "Kategorie" %><br/>
+                          <%= f.collection_select :hs_category_id, HsCategory.all.order(:name), :id, :name, {}, class:"form-control" %>
+                        </div>
+
+                     <% when "Spendeninitiativen" %>
+                        <div class="form-group">
+                          <%= f.label "Spendenbetrag (Ziel) von-bis:" %><br/>
+                          <%= f.number_field :amount_from_target, class:"form-control"%>
+                          <%= f.number_field :amount_to_target, class:"form-control"%>
+                        </div>
+                        <div class="form-group">
+                          <%= f.label "Spendenbetrag (IST) von-bis:" %><br/>
+                          <%= f.number_field :amount_from, class:"form-control"%>
+                          <%= f.number_field :amount_to, class:"form-control"%>
+                        </div>
+
+                     <% when "Reserve" %>
+                        <div class="form-group">
+                          <%= f.label "Branche" %><br/>
+                          <%= f.collection_select :category_id, Category.all.order(:name), :id, :name, {}, class:"form-control" %>
+                        </div>
+                        <div class="form-group">
+                          <%= f.label "active" %>
+                          <%= f.check_box :active, class:"form-control"%>
+                        </div>
+                     <% end %>
+                      <div class="form-group">
+                        <%= f.label "Umkreis von (km)" %><br/>
+                        <%= f.number_field :distance, class:"form-control"%>
+                      </div>
+                      <div class="form-group">
+                         <%= f.label "Adresse" %><br/>
+                         <%= f.text_field :address1, class:"form-control" %>
+                         <%= f.text_field :address2, class:"form-control" %>
+                         <%= f.text_field :address3, class:"form-control" %>
+                      </div>
+                      <div class="form-group">
+                        <%= f.label "Stichworte" %><br/>
+                        <%= f.text_field :keywords, class:"form-control"%>
+                      </div>
+                      <div class="actions">
+                         <%= f.submit "Test",  class:"btn btn-primary btn-lg pull-right"%>
+                         <%= f.submit "Speichern",  class:"btn btn-primary btn-lg"%>
+                      </div>
+                </div>
+            </div>
+                
+            <div class="col-md-6">
+                <div class="panel-body">
+                    <div id="map">
+                      <div id="map-canvas"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    <% end %>                
+</div>
+
+<script>
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers([
+        {
+          "lat": <%= @current_latitude %>,
+          "lng": <%= @current_longitude %>,
+          "infowindow": "aktuelle Position"
+        }
+      ]);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+});
+</script>

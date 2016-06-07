@@ -1,59 +1,51 @@
 Rails.application.routes.draw do
 
-  resources :searches
-  root 'home#index'
+  resources :hs_ratings
+  resources :hotspot_details
+  resources :hotspots
+  resources :favourits
+  get 'ticker/index'
 
+  resources :appparams
+  get 'offer/index2'
+  get 'offer/index'
+
+  resources :webmasters
+  resources :bid_details
+  resources :bids
+  resources :jobs
+  resources :donation_stats
+  resources :donation_details
+  resources :donations
+  resources :sponsors
+  resources :event_details
+  resources :events
   devise_for :users, :controllers => {registrations: 'registrations'}
 
-  get 'home/index'
-  post 'home/index'
-  
-  get 'home/dashboard'
-  post 'home/dashboard'
-  
-  mount Dashing::Engine, at: Dashing.config.engine_path
-
-  get 'rights/index'
-  post 'rights/index'
-  post 'rights/:id' , to: 'rights#destroy'
-
-  # get 'right/user'
-  # post 'right/user'
-  
-  get 'accesses/index'
-  post 'accesses/index'
-  post 'accesses/:id' , to: 'accesses#destroy'
-
-  get 'stats/ressource'
-  post 'stats/ressource'
-
-  get 'stats/workorder'
-  post 'stats/workorder'
-
-  get 'users/index' 
-  get 'users/workorder'
-
-  get 'workorders/index'
-  post 'workorders/index'
-
-  get 'timetracks/report'
-  post 'timetracks/report'
-
-  get  'plannings/overview', to: 'plannings#overview'
-  post 'plannings/overview', to: 'plannings#overview'
-  
-  get 'companies/search'
-  
   resources :companies
   resources :users
-  resources :workorders
-  resources :timetracks
-  resources :plannings
-  resources :accesses
-  resources :rights
   resources :searches
   resources :services
+  resources :calenders
+  resources :vehicles
+  resources :request_details
+  resources :requests
+  resources :ratings
+  resources :searches
 
+  mount Dashing::Engine, at: Dashing.config.engine_path
+
+  root 'home#index'
+  get 'admin/sendmail'
+  get 'admin/showmap'
+  get 'home/index'
+  post 'home/index'
+  get 'home/dashboard'
+  post 'home/dashboard'
+  get 'users/index' 
+  get 'users/workorder'
+  get 'companies/search'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

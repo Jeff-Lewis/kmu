@@ -1,0 +1,57 @@
+<div class="container-fluid">
+	
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+            <h1>Ausschreibungsdetails <%= @bid.name %></h1>
+            <%= link_to bids_path :page => session[:page] do %>
+              <i class="btn btn-primary glyphicon glyphicon-list"></i>
+            <% end %>
+            <%= link_to new_bid_detail_path do %>
+              <i class="btn btn-default glyphicon glyphicon-plus"></i>
+            <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-12">
+      <h3><%= @bid.name %></h3>
+      <%= @bid.description %><br><br>
+      <b>Weitere Details</b><br><br>
+    </div>
+  </div>
+
+	<div class="row">
+    <% if @bid_details.count > 0 %>
+      <% @bid_details.each do |bd| %>
+        <div class="col-md-3">
+      		<div class="thumbnail" align="center">
+            <% if !bd.avatar_file_name %>
+              <%= image_tag("bid_a.png", :size => "500x500", class:"img-rounded" ) %>
+            <% else %>
+              <%= image_tag bd.avatar(:big), class:"img-rounded"  %>
+            <% end %>
+  					<div class="caption">
+  						<h3>
+  							<%= bd.name %>
+  						</h3>
+  						<p>
+                <b>Beschreibung</b>
+  						  <%= bd.description %>
+  						</p>
+  					</div>
+  	        <%= link_to edit_bid_detail_path(bd) do %>
+              <i class="btn btn-default glyphicon glyphicon-wrench"></i>
+            <% end %>
+  	        <%= link_to bd, method: :delete, data: { confirm: 'Are you sure?' } do %>
+              <i class="btn btn-danger glyphicon glyphicon-trash"></i>
+            <% end %>
+  			   </div>
+  			 </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

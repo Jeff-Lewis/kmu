@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @rating.user_id %>
+</p>
+
+<p>
+  <strong>Service:</strong>
+  <%= @rating.service_id %>
+</p>
+
+<p>
+  <strong>User comment:</strong>
+  <%= @rating.user_comment %>
+</p>
+
+<p>
+  <strong>User rating:</strong>
+  <%= @rating.user_rating %>
+</p>
+
+<p>
+  <strong>Anbieter comment:</strong>
+  <%= @rating.anbieter_comment %>
+</p>
+
+<p>
+  <strong>Anbieter rating:</strong>
+  <%= @rating.anbieter_rating %>
+</p>
+
+<%= link_to 'Edit', edit_rating_path(@rating) %> |
+<%= link_to 'Back', ratings_path %>

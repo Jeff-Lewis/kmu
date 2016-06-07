@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Bid:</strong>
+  <%= @bid_detail.bid_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @bid_detail.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @bid_detail.description %>
+</p>
+
+<p>
+  <strong>Avatar file name:</strong>
+  <%= @bid_detail.avatar_file_name %>
+</p>
+
+<p>
+  <strong>Avatar content type:</strong>
+  <%= @bid_detail.avatar_content_type %>
+</p>
+
+<p>
+  <strong>Avatar file size:</strong>
+  <%= @bid_detail.avatar_file_size %>
+</p>
+
+<p>
+  <strong>Avatar updated at:</strong>
+  <%= @bid_detail.avatar_updated_at %>
+</p>
+
+<%= link_to 'Edit', edit_bid_detail_path(@bid_detail) %> |
+<%= link_to 'Back', bid_details_path %>

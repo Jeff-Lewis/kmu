@@ -5,11 +5,15 @@ class Company < ActiveRecord::Base
     geocoded_by :geo_address
     after_validation :geocode
     
-    has_many :workorders
-    has_many :services
-    has_many  :rights
+    has_many :services, dependent: :destroy 
+    has_many :donations, dependent: :destroy 
+    has_many :donation_stats, dependent: :destroy 
+    has_many :jobs, dependent: :destroy 
+    has_many :sponsors, dependent: :destroy 
+    has_many :vehicles, dependent: :destroy 
+    has_many :events, dependent: :destroy 
     belongs_to :user
-    belongs_to :branche
+    belongs_to :category
     
     validates :name, presence: true
     validates :user_id, presence: true
@@ -21,11 +25,19 @@ class Company < ActiveRecord::Base
         self.geo_address = self.address1 + " " + address2 + " " + address3
       end
       
-      def self.search(search)
+      def self.search(search, user)
           if search
-              where('stichworte LIKE ? OR name LIKE ?', "%#{search}%", "%#{search}%")
+              if user != nil
+                where('user_id=? and active=? and stichworte LIKE ? OR name LIKE ?', user, true, "%#{search}%", "%#{search}%")
+              else
+                where('active=? and stichworte LIKE ? OR name LIKE ?', true, "%#{search}%", "%#{search}%")
+              end
           else
-              all
+              if user != nil
+                where('user_id=? and active=?',user, true)
+              else
+                where('active=?', true)
+              end
           end
       end
       

@@ -1,0 +1,87 @@
+<div class="container-fluid">
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <h1>
+        SEHENSWÜRDIGKEITEN
+        <span class="badge"><%= @hsanz %></span>
+        </h1>
+      </div>
+    </div>
+  </div>
+  <br>
+
+	<div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+    		<!--<table class="table table-striped table-hover-->
+    		<table class="table table-striped">
+          <thead>
+            <tr>
+              <td colspan="3">
+                <div class="digg_pagination">
+                    <%= will_paginate @hotspots, :container => false, previous_label: "<", next_label: ">" %>
+                </div>	  
+              </td>
+            </tr>
+            
+            <tr>
+              <th>Bewertung</th>
+              <th colspan="3">Sehenswürdigkeit/Ausflugsziel</th>
+            </tr>
+          </thead>
+        
+          <tbody>
+            <% @hotspots.each do |h| %>
+              <tr>
+                <td>
+                  <% HsRating.avg_rating(h).to_i.times do %>
+                    <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                    <i class="glyphicon glyphicon-star"></i>
+                  <% end %><br>
+                </td>
+                <td>
+                  <% hd = h.hotspot_details.first %>
+                  <% if hd %>
+                    <%= link_to h do %>
+                      <% if !hd.avatar_file_name %>
+                        <%= image_tag("target_a.png", :size => "50x50" , class:"img-rounded") %>
+                      <% else %>
+                        <%= image_tag hd.avatar(:small), class:"img-rounded"%>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                </td>
+                <td>
+                  <%= link_to h do %>
+                    <div class="anzeigetext">
+                      <%= h.name %>
+                    </div>
+                  <% end %>
+                    <% if h.user_id != nil %>
+                      <%= h.user.name + " " + h.user.lastname %>
+                    <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    <div class="col-md-6">
+      <div id="map">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers(<%=raw @hash.to_json %>);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+});
+</script>

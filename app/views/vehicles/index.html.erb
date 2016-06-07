@@ -1,0 +1,87 @@
+<p id="notice"><%= notice %></p>
+<div class="container-fluid">
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <h1>
+        MOBILIEN
+        <span class="badge"><%= @vehanz %></span>
+        </h1>
+      </div>
+    </div>
+  </div>
+	<div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+    		<!--<table class="table table-striped table-hover-->
+    		<table class="table table-striped">
+          <thead>
+            
+            <tr>
+              <td colspan="7">
+                <div class="digg_pagination">
+                    <%= will_paginate @vehicles, :container => false, previous_label: "<", next_label: ">" %>
+                </div>	  
+              </td>
+            </tr>
+            
+            <tr>
+              <th colspan="3">Leihobjekte</th>
+              <th colspan="2"></th>
+            </tr>
+
+          </thead>
+        
+          <tbody>
+            <% @vehicles.each do |ve| %>
+              <tr>
+                <td>
+  				        <%= link_to calenders_path(:vehicle_id => ve.id) do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-calendar"></i>
+                  <% end %>
+                </td>
+                <td>
+                <%= link_to ve do %>
+                  <% if !ve.avatar_file_name %>
+                    <%= image_tag("vehicle_a.png", :size => "50x50" , class:"img-rounded") %>
+                  <% else %>
+                    <%= image_tag ve.avatar(:small), class:"img-rounded" %>
+                  <% end %>
+                <% end %>
+                </td>
+                <td>
+                <div class="anzeigetext">
+                  <%= link_to ve do %>
+                    <%= ve.name %>
+                  <% end %>
+                </div>
+                  <% if ve.company_id != nil %>
+                    <%= ve.company.name %>
+                  <% end %>
+                  <% if ve.user_id != nil %>
+                    <%= ve.user.name + " " + ve.user.lastname %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    <div class="col-md-6">
+      <div id="map">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers(<%=raw @hash.to_json %>);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+});
+</script>
