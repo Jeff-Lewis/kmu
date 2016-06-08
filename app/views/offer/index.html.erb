@@ -3,7 +3,12 @@
     <div class="col-md-12">
       <div class="panel-heading header">
         <h1>
-        SONDERAKTIONEN
+		    <% if user_signed_in? %>
+		        <%= link_to searches_path :search_domain => "Aktionen", :controller_name => controller_name do %>
+		          <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+		        <% end %>
+		    <% end %>
+        AKTIONEN
         <span class="badge"><%= @seranz %></span>
         <%= link_to offer_index_path(:page => session[:page], :dir => "<")  do %>
           <i class="btn btn-primary btn-lg glyphicon glyphicon-chevron-left"></i>

@@ -37,6 +37,8 @@
             <% end %>
       			<small><%= @hotspot.description %></small>
       			<br>
+      			<%= @hotspot.hs_category.name %><br>
+      			<br>
             <cite> <%= @hotspot.created_at.strftime("%d.%m.%Y") %></cite>        
         	</blockquote>
           <% if !@hotspot.user.avatar_file_name %>

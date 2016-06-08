@@ -35,8 +35,6 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     if params[:header] != nil and params[:body] != nil
-      puts ENV["GMAIL_USERNAME"]
-      puts ENV["GMAIL_PASSWORD"]
       UserMailer.send_message(params[:id], params[:header], params[:body]).deliver_now
     end
   end

@@ -17,7 +17,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading header">
                       <h2>
-                      <%= link_to searches_path :page => session[:page] do %>
+                      <%= link_to searches_path :page => session[:page], :search_domain => @search.search_domain, :controller_name => @search.controller do %>
                         <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
                       <% end %>
                       ABFRAGEN <%= @count.to_s + " " + @search.sql_string.to_s + " " + @current_latitude.to_s + "/" + @current_longitude.to_s %>
@@ -31,9 +31,8 @@
             <div class="col-md-6">
                 <div class="panel-body">
                       <%= f.hidden_field :user_id %>
-                      <div class="form-group">
-                          <%= f.select :search_domain, options_for_select($search_domain_ext, @search.search_domain), {}, :onchange => "this.form.submit();" ,class:"form-control" %>
-                      </div>
+                      <%= f.hidden_field :search_domain %>
+                      <%= f.hidden_field :controller %>
                       <div class="form-group">
                         <%= f.label "Bezeichnung" %><br/>
                         <%= f.text_field :name, autofocus: true, class:"form-control"%>
@@ -42,8 +41,9 @@
                         <%= f.label "Beschreibung" %><br/>
                         <%= f.text_area :description, class:"form-control"%>
                       </div>
+                     
                      <% case @search.search_domain %>
-                     <% when "Personen" %>
+                     <% when "Privatpersonen" %>
                         <div class="form-group">
                           <%= f.label "Alter von-bis:" %><br/>
                           <%= f.number_field :age_from, class:"form-control"%>
@@ -82,12 +82,26 @@
                      <% when "Angebote" %>
                           <%= f.label "Bewertung mindestens" %><br/>
                           <% for i in 1..5 %>
-                              <%= f.radio_button :rating.to_i, i.to_i %>
+                              <%= f.radio_button :rating, i.to_i %>
                               <% i.times do %>
                                 <%= image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
                               <% end %><br>
                           <% end %>
                         
+                     <% when "Aktionen" %>
+                          <%= f.label "Bewertung mindestens" %><br/>
+                          <% for i in 1..5 %>
+                              <%= f.radio_button :rating, i.to_i %>
+                              <% i.times do %>
+                                <%= image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                              <% end %><br>
+                          <% end %>
+                        <div class="form-group">
+                          <%= f.label "Datum von-bis:" %>
+                          <%= f.text_field :date_from, class:"form-control"%>
+                          <%= f.text_field :date_to, class:"form-control"%>
+                        </div>
+
                      <% when "Mobilien" %>
                         <div class="form-group">
                           <%= f.label "Kategorie" %><br/>

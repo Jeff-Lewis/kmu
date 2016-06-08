@@ -4,16 +4,19 @@ class SearchesController < ApplicationController
 
   # GET /searches
   def index
+    if params[:search_domain]
+      @search_domain = params[:search_domain]
+    end
+    if params[:controller_name]
+      @controller_name = params[:controller_name]
+    end
     if params[:page]
       session[:page] = params[:page]
     end
-    $search_domain_ext = %w[Personen Institutionen Ausschreibungen Angebote Mobilien Kleinanzeigen Stellenanzeigen Veranstaltungen Sehenswuerdigkeiten Spendeninitiativen]
+    $search_domain_ext = %w[Privatpersonen Institutionen Ausschreibungen Angebote Mobilien Kleinanzeigen Stellenanzeigen Veranstaltungen Sehenswuerdigkeiten Spendeninitiativen]
     $search_domain_int = %w[users companies bids services vehicles requests jobs events hotspots donations]
-    $domain = [{"name" => "Personen", "id" => "users"}, {"name" => "Institutionen", "id" => "companies"}, {"name" => "Ausschreibungen", "id" => "bids"}, {"name" => "Angebote", "id"=> "services"}, {"name" => "Mobilien", "id" => "vehicles"}, {"name" => "Kleinanzeigen", "id" => "requests"}, {"name" => "Stellenanzeigen", "id" => "jobs"}, {"name" => "Veranstaltungen", "id" => "events"}, {"name" => "Sehenswuerdigkeiten", "id" => "hotspots"}, {"name" => "Spendeninitiativen", "id" => "donations"}]
-    if params[:page] != nil
-      session[:page] = params[:page]
-    end
-    @searches = Search.where('user_id=?',current_user.id).page(params[:page]).per_page(10)
+    $domain = [{"name" => "Privatpersonen", "id" => "users"}, {"name" => "Institutionen", "id" => "companies"}, {"name" => "Ausschreibungen", "id" => "bids"}, {"name" => "Angebote", "id"=> "services"}, {"name" => "Mobilien", "id" => "vehicles"}, {"name" => "Kleinanzeigen", "id" => "requests"}, {"name" => "Stellenanzeigen", "id" => "jobs"}, {"name" => "Veranstaltungen", "id" => "events"}, {"name" => "Sehenswuerdigkeiten", "id" => "hotspots"}, {"name" => "Spendeninitiativen", "id" => "donations"}]
+    @searches = Search.where('search_domain=? and user_id=?', params[:search_domain], current_user.id).page(params[:page]).per_page(10)
     @seranz = @searches.count
   end
 
@@ -29,8 +32,9 @@ class SearchesController < ApplicationController
   # GET /searches/new
   def new
     @search = Search.new
-    @search.search_domain = "Personen"
+    @search.search_domain = params[:search_domain]
     @search.user_id = params[:user_id]
+    @search.controller = params[:controller_name]
     @current_longitude = request.location.longitude
     @current_latitude= request.location.latitude
   end
@@ -44,7 +48,7 @@ class SearchesController < ApplicationController
     @search = Search.new(search)
     if @search.save
       if params[:commit] == "Speichern"
-        redirect_to searches_path(:user_id => current_user.id, :page => session[:page]), notice: 'Search was successfully updated.'
+        redirect_to searches_path(:user_id => current_user.id, :page => session[:page], :search_domain => @search.search_domain, :controller_name => @search.controller), notice: 'Search was successfully updated.'
       end
       if params[:commit] == "Test"
         redirect_to edit_search_path(@search), notice: 'Search successfully tested.'
@@ -61,7 +65,7 @@ class SearchesController < ApplicationController
   def update(search)
     if @search.update(search)
       if params[:commit] == "Speichern"
-        redirect_to searches_path(:user_id => current_user.id, :page => session[:page]), notice: 'Search was successfully updated.'
+        redirect_to searches_path(:user_id => current_user.id, :page => session[:page], :search_domain => @search.search_domain, :controller_name => @search.controller), notice: 'Search was successfully updated.'
       end
       if params[:commit] == "Test"
         redirect_to edit_search_path(@search), notice: 'Search successfully tested.'

@@ -163,6 +163,47 @@ class Search < ActiveRecord::Base
                 end
                 sql_string = sql_string + " id IN (select service_id from ratings WHERE user_rating >= " + self.rating.to_s + ")"
             end 
+
+        when "Aktionen"
+            sql_string = "SELECT * FROM services "
+
+            if self.keywords != nil and self.keywords != ""
+                if first
+                    sql_string = sql_string + " WHERE "
+                    first = false
+                else
+                    sql_string = sql_string + " AND "
+                end
+                sql_string = sql_string + " (name LIKE '%"+self.keywords+"%')"
+            end
+            if self.rating > 0
+                if first
+                    sql_string = sql_string + " WHERE "
+                    first = false
+                else
+                    sql_string = sql_string + " AND "
+                end
+                sql_string = sql_string + " id IN (select service_id from ratings WHERE user_rating >= " + self.rating.to_s + ")"
+            end 
+            if self.date_from != nil
+                if first
+                    sql_string = sql_string + " WHERE "
+                    first = false
+                else
+                    sql_string = sql_string + " AND "
+                end
+                sql_string = sql_string + "datum_von >= '" + self.date_from.to_s + "'"
+            end
+            if self.date_to != nil 
+                if first
+                    sql_string = sql_string + " WHERE "
+                    first = false
+                else
+                    sql_string = sql_string + " AND "
+                end
+                sql_string = sql_string + "datum_bis <= '" + self.date_to.to_s + "'"
+            end
+
             
         when "Mobilien"
             sql_string = "SELECT * FROM vehicles "
@@ -278,6 +319,29 @@ class Search < ActiveRecord::Base
                 end
                 sql_string = sql_string + "date_to <= '" + self.date_to.to_s + "'"
             end
+            
+        when "Sehenswuerdigkeiten"
+            sql_string = "SELECT * FROM hotspots "
+
+            if self.hs_category_id != "" and self.hs_category_id != nil and self.hs_category_id.to_s.length != 0
+                if first
+                    sql_string = sql_string + " WHERE "
+                    first = false
+                else
+                    sql_string = sql_string + " AND "
+                end
+                sql_string = sql_string + " hs_category_id = "+ self.hs_category_id.to_s
+            end
+            if self.keywords != nil and self.keywords != ""
+                if first
+                    sql_string = sql_string + " WHERE "
+                    first = false
+                else
+                    sql_string = sql_string + " AND "
+                end
+                sql_string = sql_string + " (name LIKE '%"+self.keywords+"%')"
+            end
+            
 
         when "Spendeninitiativen"
             sql_string = "SELECT * FROM donations "

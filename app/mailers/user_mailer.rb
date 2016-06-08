@@ -8,7 +8,6 @@ class UserMailer < ApplicationMailer
   #
   def send_message(user, subject, message)
     @user = User.find(user)
-    #@from_user = from_user
     @subject = subject
     @message = message
     mail to: @user.email, subject: @subject

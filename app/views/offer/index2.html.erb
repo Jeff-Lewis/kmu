@@ -4,6 +4,11 @@
     <div class="col-md-12">
       <div class="panel-heading header">
         <h1>
+		    <% if user_signed_in? %>
+		        <%= link_to searches_path :search_domain => "Angebote", :controller_name => controller_name do %>
+		          <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+		        <% end %>
+		    <% end %>
         ANGEBOTE
         <span class="badge"><%= @seranz %></span>
         </h1>

@@ -51,11 +51,6 @@
 				<%= form_tag(@items, method: 'get', class: 'navbar-form navbar-left') do %>
 				  <%= search_field_tag 'search', nil, class: 'form-control', placeholder: 'Search'  %>
 				  <%= submit_tag "Suchen", class: 'btn btn-default', :name => nil %>
-				    <% if user_signed_in? %>
-				        <%= link_to searches_path :action_name => action_name, :controller_name => controller_name do %>
-				          <i class="btn btn-primary glyphicon glyphicon-filter"></i>
-				        <% end %>
-				    <% end %>
 				<% end %>
 			<% end %>
 		</ul>

@@ -3,10 +3,10 @@
     <div class="col-md-12">
       <div class="panel-heading header">
         <h1>
-		    <%= link_to new_search_path(:user_id => current_user.id) do %>
+		    <%= link_to new_search_path(:user_id => current_user.id, :search_domain => @search_domain, :controller_name => @controller_name) do %>
           <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
         <% end %>
-        SUCHEN
+        SUCHEN <%= @search_domain %>
         <span class="badge"><%= @seranz %></span>
         </h1>
       </div>

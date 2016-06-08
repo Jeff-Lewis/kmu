@@ -1,9 +1,13 @@
-<p id="notice"><%= notice %></p>
 <div class="container-fluid">
 	<div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
         <h1>
+		    <% if user_signed_in? %>
+		        <%= link_to searches_path :search_domain => "Privatpersonen", :controller_name => controller_name do %>
+		          <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+		        <% end %>
+		    <% end %>
         PRIVATPERSONEN
         <span class="badge"><%= @usanz %></span>
         </h1>

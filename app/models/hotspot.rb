@@ -1,6 +1,7 @@
 class Hotspot < ActiveRecord::Base
     
     belongs_to :user
+    belongs_to :hs_category
     has_many :hotspot_details
     has_many :hs_ratings
     
