@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  mount Dashing::Engine, at: Dashing.config.engine_path
   resources :hs_ratings
   resources :hotspot_details
   resources :hotspots
@@ -32,8 +33,6 @@ Rails.application.routes.draw do
   resources :requests
   resources :ratings
   resources :searches
-
-  mount Dashing::Engine, at: Dashing.config.engine_path
 
   root 'home#index'
   get 'admin/sendmail'

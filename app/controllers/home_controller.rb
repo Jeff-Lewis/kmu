@@ -12,7 +12,7 @@ def index
 end
 
 def dashboard
-  @workorders=Workorder.all
+  @events=Event.all
 end
 
 end
