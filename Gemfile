@@ -41,9 +41,6 @@ gem 'raphael-rails'
 
 gem 'writeexcel'
 
-gem 'dashing-rails'
-gem 'puma'
-
 gem 'aws-sdk', '~>1.60.2'
 
 gem 'figaro'
