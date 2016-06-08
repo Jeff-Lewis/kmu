@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  mount Dashing::Engine, at: Dashing.config.engine_path
   resources :hs_ratings
   resources :hotspot_details
   resources :hotspots
