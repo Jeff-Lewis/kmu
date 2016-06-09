@@ -36,7 +36,8 @@
                           <% for i in 1..5 %>
                               <%= f.radio_button :user_rating, i.to_i %>
                               <% i.times do %>
-                                <%= image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                                <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                                <i class="glyphicon glyphicon-star"></i>
                               <% end %><br>
                           <% end %>
                           <%= f.text_area :user_comment, rows: 3, class:"form-control"%>
@@ -45,7 +46,8 @@
                           <%= f.label "Anbieterbewertung" %><br/>
                           <% if @rating.anbieter_rating != nil %>
                             <% @rating.anbieter_rating.times do %>
-                              <%= image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                              <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                              <i class="glyphicon glyphicon-star"></i>
                             <% end %><br>
                           <% end %>
                           <%= f.text_area :anbieter_comment, :readonly => true, rows: 3, class:"form-control"%>
@@ -54,8 +56,9 @@
                         <div class="form-group">
                           <%= f.label "Benutzerrating" %><br/>
                           <% @rating.user_rating.times do %>
-                            <%= image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
-                          <% end %><br>
+                            <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                              <i class="glyphicon glyphicon-star"></i>
+                            <% end %><br>
                           <%= f.text_area :user_comment, :readonly => true, rows: 3, class:"form-control"%>
                         </div>
                         <div class="form-group">
@@ -63,7 +66,8 @@
                           <% for i in 1..5 %>
                               <%= f.radio_button :anbieter_rating, i.to_i %>
                               <% i.times do %>
-                                <%= image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                                <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                                <i class="glyphicon glyphicon-star"></i>
                               <% end %><br>
                           <% end %>
                           <%= f.text_field :anbieter_comment, rows: 3, class:"form-control"%>

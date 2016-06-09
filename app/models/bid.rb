@@ -15,7 +15,13 @@ class Bid < ActiveRecord::Base
     def update_geo_address
       self.geo_address = self.address1 + " " + address2 + " " + address3
     end
-    
+  
+  def self.ext_sql (cw, year, sql)
+    start_date = Date.commercial(year,cw,1)
+    end_date = Date.commercial(year,cw,7)
+    sql = sql + " AND ((date_from >= '" + start_date.to_s + "' AND date_from <= '" + end_date.to_s + "') OR (date_to >= '" + start_date.to_s + "' AND date_to <= '" + end_date.to_s + "') OR (date_from <= '" + start_date.to_s + "' AND date_to >= '" + end_date.to_s + "'))"
+  end
+  
   def self.search(cw, year, search)
     start_date = Date.commercial(year,cw,1)
     end_date = Date.commercial(year,cw,7)

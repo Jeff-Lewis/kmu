@@ -14,6 +14,12 @@ class Service < ActiveRecord::Base
         where("service_id=?", service).average(:user_rating) 
     end
 
+      def self.ext_sql (cw, year, sql)
+        start_date = Date.commercial(year,cw,1)
+        end_date = Date.commercial(year,cw,7)
+        sql = sql + " AND ((datum_von >= '" + start_date.to_s + "' AND datum_von <= '" + end_date.to_s + "') OR (datum_bis >= '" + start_date.to_s + "' AND datum_bis <= '" + end_date.to_s + "') OR (datum_von <= '" + start_date.to_s + "' AND datum_bis >= '" + end_date.to_s + "'))"
+      end
+
       def self.actionsearch(cw, year, search)
         start_date = Date.commercial(year,cw,1)
         end_date = Date.commercial(year,cw,7)

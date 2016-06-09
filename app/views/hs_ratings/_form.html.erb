@@ -34,7 +34,8 @@
                       <% for i in 1..5 %>
                           <%= f.radio_button :user_rating, i.to_i %>
                           <% i.times do %>
-                            <%= image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                            <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                            <i class="glyphicon glyphicon-star"></i>
                           <% end %><br>
                       <% end %><br>
                       <%= f.label "Kommentar" %><br/>

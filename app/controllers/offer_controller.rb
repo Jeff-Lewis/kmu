@@ -32,7 +32,11 @@ class OfferController < ApplicationController
 
     end
     @start = Date.commercial(session[:year],session[:cw],1)
-    @services = Service.actionsearch(session[:cw], session[:year], session[:search]).order(datum_von: :asc).page(params[:page]).per_page(10)
+    if params[:sql_string] != nil
+      @services = Service.paginate_by_sql(Service.ext_sql(session[:cw], session[:year], params[:sql_string]), :page => params[:page], :per_page => 10)
+    else
+      @services = Service.actionsearch(session[:cw], session[:year], session[:search]).order(datum_von: :asc).page(params[:page]).per_page(10)
+    end
     @seranz = @services.count
     
     z = 0
@@ -52,7 +56,11 @@ class OfferController < ApplicationController
     if params[:search]
       session[:search] = params[:search]
     end
-    @services = Service.search(session[:search]).order(created_at: :desc).page(params[:page]).per_page(10)
+    if params[:sql_string] != nil
+      @services = Service.paginate_by_sql((params[:sql_string]), :page => params[:page], :per_page => 10)
+    else
+      @services = Service.search(session[:search]).order(created_at: :desc).page(params[:page]).per_page(10)
+    end
     @seranz = @services.count
     z = 0
     @hash = Gmaps4rails.build_markers(@services) do |service, marker|

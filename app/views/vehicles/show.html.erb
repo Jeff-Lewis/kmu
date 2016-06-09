@@ -41,14 +41,25 @@
           <% end %>
         </div>
         <div class="panel-body">
-    			<blockquote>
-    				<% if @vehicle.avatar_file_name == nil %>
-              <%= image_tag("vehicle_a.png", :size => "200x200", class:"img-rounded" ) %>
-            <% else %>
-              <%= image_tag @vehicle.avatar(:medium), class:"img-rounded"  %>
-            <% end %>
-      			<small><%= @vehicle.description %></small>
-        	</blockquote>
+  				<% if @vehicle.avatar_file_name == nil %>
+            <%= image_tag("vehicle_a.png", :size => "200x200", class:"img-rounded" ) %>
+          <% else %>
+            <%= image_tag @vehicle.avatar(:medium), class:"img-rounded"  %>
+          <% end %>
+      		<%= @vehicle.description %>
+      		<br><br>
+          <b>Mobilienkategorie</b><br>
+          <%= @vehicle.mob_category.name %>
+          <br><br>
+          <b>Mietzeiten</b><br>
+          <%= @vehicle.time_from %> - 
+          <%= @vehicle.time_to %> Uhr
+          <br><br>
+          <b>Standort</b><br>
+          <%= @vehicle.address1 %><br>
+          <%= @vehicle.address2 %><br>
+          <%= @vehicle.address3 %><br>
+          <br>
           <b>vermietet von</b><br>
           <% if @vehicle.user_id != nil %>
     				<% if @vehicle.user.avatar_file_name == nil %>
@@ -67,18 +78,6 @@
             <%= @vehicle.company.name %>
           <% end %>
           <br><br>
-          <b>Mobilienkategorie</b><br>
-          <%= @vehicle.mob_category.name %>
-          <br><br>
-          <b>Mietzeiten</b><br>
-          <%= @vehicle.time_from %> - 
-          <%= @vehicle.time_to %> Uhr
-          <br><br>
-          <b>Standort</b><br>
-          <%= @vehicle.address1 %><br>
-          <%= @vehicle.address2 %><br>
-          <%= @vehicle.address3 %><br>
-          <br>
           <cite> <%= @vehicle.created_at.strftime("%d.%m.%Y") %></cite>        
         </div>
     </div>

@@ -29,25 +29,24 @@
           <% end %>
         </div>
         <div class="panel-body">
-    			<blockquote>
-  	        <%= link_to @donation.company do %>
-              <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-            <% end %>
-    				<b>
-    					<%= @donation.company.name %>
-    				</b><br>
-    				<% if @donation.company.avatar_file_name == nil %>
-              <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
-            <% else %>
-              <%= image_tag @donation.company.avatar(:medium), class:"img-rounded"  %>
-            <% end %>
-    				<b><br>
-    					Beschreibung
-    				</b><br>
-    				<small><%= @donation.description %></small>
-    				<br>
-        	</blockquote>
-          <cite><%= @donation.created_at.strftime("%d.%m.%Y") %></cite>        
+  				<% if @donation.donation_details.first.avatar_file_name == nil %>
+            <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
+          <% else %>
+            <%= image_tag @donation.donation_details.first.avatar, :size => "200x200", class:"img-rounded"  %>
+          <% end %>
+          <br><br>
+          <b>Beschreibung</b><br>
+    			<%= @donation.description %>
+          <br><br>
+          <b>initialisiert von:</b><br>
+          <% if !@donation.company.avatar_file_name %>
+            <%= image_tag("company_a.png", :size => "50x50" , class:"img-rounded") %>
+          <% else %>
+            <%= image_tag @donation.company.avatar(:small), class:"img-rounded" %>
+          <% end %>
+          <%= @donation.company.name %>
+    			<br><br>
+          <%= @donation.created_at.strftime("%d.%m.%Y") %>
         </div>
     </div>
   </div>
@@ -68,29 +67,34 @@
         </h2>
       </div>
       <div class="panel-body">
-      		<% @donation.donation_details.each do |dd| %>
-    				<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-375571" href="#panel-element-<%= dd.id %>"><h3><%= dd.name %></h3></a>
-    				<div id="panel-element-<%= dd.id %>" class="panel-collapse collapse">
-      				<% if dd.avatar_file_name == nil %>
-                <%= image_tag("present.png", :size => "200x200", class:"img-rounded" ) %>
+    		<% @donation.donation_details.each do |bd| %>
+          <div class="col-md-4">
+            <div class="thumbnail" align="center">
+              <div class="anzeigetext">
+    						<%= bd.name %>
+              </div>
+      				<% if bd.avatar_file_name == nil %>
+                <%= image_tag("donation_a.png", :size => "500x500", class:"img-rounded" ) %>
               <% else %>
-                <%= image_tag dd.avatar(:medium), class:"img-rounded"  %>
+                <%= image_tag bd.avatar, :size => "500x500", class:"img-rounded"  %>
               <% end %>
               <p>
-  						<%= dd.description %>
+  						<%= bd.description %>
   						</p>
               <% if user_signed_in? %>
                 <% if current_user.id == @donation.company.user_id %>
-        	        <%= link_to edit_donation_detail_path(dd) do %>
+        	        <%= link_to edit_donation_detail_path(bd) do %>
                     <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
                   <% end %>
-        	        <%= link_to dd, method: :delete, data: { confirm: 'Are you sure?' } do %>
+        	        <%= link_to bd, method: :delete, data: { confirm: 'Are you sure?' } do %>
                     <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
                   <% end %>
                 <% end %>
               <% end %>
-      			</div>
-      		<% end %>
+              <br><br>
+    			  </div>
+    			</div>
+    		<% end %>
     	</div>
     </div>
   </div>
@@ -102,92 +106,70 @@
         <h2>
           <% if user_signed_in? %>
             <%= link_to new_donation_stat_path :donation_id => @donation.id, :dontype => "User" do %>
-              <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+              <i class="btn btn-primary btn-lg glyphicon glyphicon-user">+</i>
             <% end %>
             <% if Company.where('active=? and user_id=?',true,current_user.id).count > 0 %>
               <%= link_to new_donation_stat_path :donation_id => @donation.id, :dontype => "Company" do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+                <i class="btn btn-primary btn-lg glyphicon glyphicon-briefcase">+</i>
               <% end %>
             <% end %>
           <% end %>
-            SPENDER
+            SPENDER <%= sprintf("%05.2f CHF", @donation.donation_stats.sum(:amount)) %>
         </h2>
       </div>
       <div class="panel-body">
-				<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-375572" href="#panel-spender"><h3>Spendenliste (aktueller Stand: <%= sprintf("%05.2f CHF", @donation.donation_stats.sum(:amount)) %>)</h3></a>
-				<div id="panel-spender" class="panel-collapse collapse">
-          <% if @donation.donation_stats.count > 0 %>
-						<table class="table table striped">
-						  <thead>
-						    <tr>
-    						  <th "colspan=3">
-    						    Spender
-    						  </th>
-    						  <th>
-    						    Betrag
-    						  </th>
-    						  <th>
-    						    Datum
-    						  </th>
-                </tr>
-              </thead>
-              <tbody>
-              <% @donation.donation_stats.order(amount: :desc).each do |ds| %>
-                <tr>
-                  <td>
-                  <% if ds.user_id != nil %>
-          	        <%= link_to ds.user do %>
-                      <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-                    <% end %>
-                  <% end %>
-                  <% if ds.company_id != nil %>
-          	        <%= link_to ds.company do %>
-                      <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-                    <% end %>
-                  <% end %>
-                  <% if user_signed_in? %>
-                    <% if (ds.user_id != nil and current_user.id == ds.user_id) or (ds.company_id != nil and current_user.id == ds.company.user_id) %>
-            	        <%= link_to edit_donation_stat_path(ds) do %>
-                        <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                      <% end %>
-            	        <%= link_to ds, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                        <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
-                      <% end %>
-                    <% end %>
-                  <% end %>
-                  </td>
-                  <td>
-        				  <% if ds.company_id != nil %>
-            				<% if ds.company.avatar_file_name == nil %>
-                      <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
-                    <% else %>
-                      <%= image_tag ds.company.avatar(:medium), class:"img-rounded"  %>
-                    <% end %>
-          				  <%= ds.company.name %>
-          				<% end %>
-          				<% if ds.user_id != nil %>
-            				<% if ds.user.avatar_file_name == nil %>
-                      <%= image_tag("user_a.png", :size => "200x200", class:"img-rounded" ) %>
-                    <% else %>
-                      <%= image_tag ds.user.avatar(:medium), class:"img-rounded"  %>
-                    <% end %>
-          				  <%= ds.user.name + " " + ds.user.lastname  %>
-          				<% end %>
-          				</td>
-          				<td>
-                  <% if !ds.anonymous %>
-                      <%= sprintf("%05.2f CHF", ds.amount) %>
-                    <% else %>
-                      *****.** CHF
-                  <% end %>
-                  </td>
-                  <td><%= ds.created_at.strftime("%d.%m.%Y")%></td>
-                </tr>
+        <% @donation.donation_stats.order(amount: :desc).each do |ds| %>
+          <div class="col-md-4">
+            <div class="thumbnail" align="center">
+    				  <% if ds.company_id != nil %>
+        				<% if ds.company.avatar_file_name == nil %>
+                  <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
+                <% else %>
+                  <%= image_tag ds.company.avatar(:medium), class:"img-rounded"  %>
+                <% end %>
+      				  <%= ds.company.name %>
+      				<% end %>
+      				<% if ds.user_id != nil %>
+        				<% if ds.user.avatar_file_name == nil %>
+                  <%= image_tag("user_a.png", :size => "200x200", class:"img-rounded" ) %>
+                <% else %>
+                  <%= image_tag ds.user.avatar, :size => "200x200", class:"img-rounded"  %>
+                <% end %>
+      				  <%= ds.user.name + " " + ds.user.lastname  %>
+      				<% end %>
+      				<br><br>
+      				Spendenbetrag
+              <% if !ds.anonymous %>
+                  <%= sprintf("%05.2f CHF", ds.amount) %>
+                <% else %>
+                  *****.** CHF
               <% end %>
-              </tbody>
-						</table>
-  				<% end %>
-  			</div>
+              <br>
+              <%= ds.created_at.strftime("%d.%m.%Y") %>
+              <br><br>
+              <% if ds.user_id != nil %>
+      	        <%= link_to ds.user do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
+                <% end %>
+              <% end %>
+              <% if ds.company_id != nil %>
+      	        <%= link_to ds.company do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
+                <% end %>
+              <% end %>
+              <% if user_signed_in? %>
+                <% if (ds.user_id != nil and current_user.id == ds.user_id) or (ds.company_id != nil and current_user.id == ds.company.user_id) %>
+        	        <%= link_to edit_donation_stat_path(ds) do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                  <% end %>
+        	        <%= link_to ds, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                    <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

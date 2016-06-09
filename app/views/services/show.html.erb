@@ -43,32 +43,42 @@
           <% end %>
         </div>
         <div class="panel-body">
-    			<blockquote>
-    				<% if @service.avatar_file_name == nil %>
-              <%= image_tag("service_a.png", :size => "200x200", class:"img-rounded" ) %>
-            <% else %>
-              <%= image_tag @service.avatar(:medium), class:"img-rounded"  %>
-            <% end %>
-      			<small><%= @service.description %></small>
-      			<br>
-            <cite> <%= @service.created_at.strftime("%d.%m.%Y") %></cite>        
-        	</blockquote>
-          <% if @service.social %>
-              <%= image_tag("heart.png", :size => "50x50", class:"img-rounded" ) %>
+  				<% if @service.avatar_file_name == nil %>
+            <%= image_tag("service_a.png", :size => "200x200", class:"img-rounded" ) %>
+          <% else %>
+            <%= image_tag @service.avatar(:medium), class:"img-rounded"  %>
+          <% end %>
+          <br><br>
+          <b>Bewertung</b><br>
+          <% avg_rating(@service.id).times do %>
+            <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+            <i class="glyphicon glyphicon-star"></i>
           <% end %>
           <br>
+          <% if @service.social %>
+              <% image_tag("heart.png", :size => "50x50", class:"img-rounded" ) %>
+              <i class="glyphicon glyphicon-heart"></i> soziales Engagement
+          <% end %>
+          <br>
+          <% if @service.stype == "action" %>
+            <b>Angebot gültig von-bis:</b><br>
+            <%= @service.datum_von.strftime("%d.%m.%Y") %> - <%= @service.datum_bis.strftime("%d.%m.%Y") %>
+            <br><br>
+            <b>Preisinformation</b><br>
+            Preis <%= sprintf("%05.2f CHF", @service.price_new) if @service.price_new != nil %> statt <%= sprintf("%05.2f CHF", @service.price_reg) if @service.price_reg != nil %>            
+            <br><br>
+          <% end %>
+          <b>Beschreibung</b><br>
+    			<%= @service.description %>
+          <br><br>
+          <b>angeboten von:</b><br>
           <% if @service.company_id != nil %>
             <% if !@service.company.avatar_file_name %>
               <%= image_tag("company_a.png", :size => "50x50" , class:"img-rounded") %>
             <% else %>
               <%= image_tag @service.company.avatar(:small), class:"img-rounded" %>
             <% end %>
-            <div class="anzeigetext">
-              <%= @service.company.name %>
-            </div><br>
-            <%= link_to @service.company do %>
-              <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-            <% end %>
+            <%= @service.company.name %>
           <% end %>
           <% if @service.user_id != nil %>
             <% if !@service.user.avatar_file_name %>
@@ -76,13 +86,10 @@
             <% else %>
               <%= image_tag @service.user.avatar(:small), class:"img-rounded" %>
             <% end %>
-            <div class="anzeigetext">
-              <%= @service.user.name + " " + @service.user.lastname %>
-            </div><br>
-            <%= link_to @service.user do %>
-              <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-            <% end %>
+            <%= @service.user.name + " " + @service.user.lastname %>
           <% end %>
+    			<br><br>
+          <%= @service.created_at.strftime("%d.%m.%Y") %>
         </div>
       </div>
     </div>
@@ -102,58 +109,41 @@
           </h2>
         </div>
         <div class="panel-body">
-            <% if @service.ratings.count > 0 %>
-  						<table class="table table striped">
-  						  <thead>
-  						    <tr>
-      						  <th colspan="2">
-      						    Bewertung
-      						  </th>
-      						  <th>
-      						    Kommentar
-      						  </th>
-      						  <th>
-      						    Benutzer
-      						  </th>
-      						  <th>
-      						    Datum
-      						  </th>
-                  </tr>
-                </thead>
-                <tbody>
-                <% @service.ratings.each do |usr| %>
-                  <tr>
-                    <td>
-                    <% if user_signed_in? %>
-                      <% if (usr.user_id == current_user.id) %>
-              	        <%= link_to edit_rating_path(usr) do %>
-                          <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                        <% end %>
-              	        <%= link_to usr, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
-                        <% end %>
-                      <% end %>
-                    <% end %>
-                    </td>
-                    <td>
-                      <% usr.user_rating.times do %>
-                        <%= image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
-                      <% end %><br>
-                    </td>
-                    <td>
-                      <%= usr.user_comment %>
-                    </td>
-                    <td>
-                      <%= usr.user.name + " " + usr.user.lastname %>
-                    </td>
-                    <td>
-                      <%= usr.created_at.strftime("%d.%m.%Y") %>
-                    </td>
-                  </tr>
+          <% @service.ratings.each do |sr| %>
+            <div class="col-md-4">
+              <div class="thumbnail" align="center">
+                <% if sr.user.avatar == nil or sr.user.anonymous %>
+                  <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
+                <% else %>
+                  <%= image_tag sr.user.avatar, :size => 200, class:"img-rounded" %>
                 <% end %>
-                </tbody>
-  						</table>
-  					<% end %>
+                <br>
+                <% sr.user_rating.times do %>
+                  <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                  <i class="glyphicon glyphicon-star"></i>
+                <% end %>
+                <br>
+                <br>
+                <%= sr.user.name + " " + sr.user.lastname %>
+                <br><br>
+                <%= sr.user_comment %>
+                <br><br>
+                <%= sr.created_at.strftime("%d.%m.%Y") %>
+                <br><br>
+                <% if user_signed_in? %>
+                  <% if current_user.id == sr.user_id %>
+          	        <%= link_to edit_rating_path(sr) do %>
+                      <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                    <% end %>
+          	        <%= link_to sr, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                      <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                    <% end %>
+                  <% end %>
+                <% end %>
+                <br><br>
+              </div>
+            </div>
+  				<% end %>
         </div>
     </div>
   </div>

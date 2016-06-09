@@ -3,6 +3,9 @@
     <div class="col-md-12">
       <div class="panel-heading header">
         <h1>
+		    <%= link_to url_for(@controller_name), :search_domain => @search_domain, :page => session[:page] do %>
+          <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+        <% end %>
 		    <%= link_to new_search_path(:user_id => current_user.id, :search_domain => @search_domain, :controller_name => @controller_name) do %>
           <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
         <% end %>
@@ -39,8 +42,51 @@
             <% @searches.each do |s| %>
               <tr>
                 <td>
-                <%= link_to users_path do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                <% case s.search_domain %>
+                <% when "Privatpersonen" %>
+                  <%= link_to users_path :sql_string => s.sql_string do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                  <% end %>
+                <% when "Institutionen" %>
+                  <%= link_to companies_path :sql_string => s.sql_string do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                  <% end %>
+                <% when "Angebote" %>
+                  <%= link_to offer_index2_path :sql_string => s.sql_string do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                  <% end %>
+                <% when "Mobilien" %>
+                  <%= link_to vehicles_path :sql_string => s.sql_string do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                  <% end %>
+                <% when "Aktionen" %>
+                  <%= link_to offer_index_path :sql_string => s.sql_string do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                  <% end %>
+                <% when "Ausschreibungen" %>
+                  <%= link_to bids_path :sql_string => s.sql_string do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                  <% end %>
+                <% when "Kleinanzeigen" %>
+                  <%= link_to requests_path :sql_string => s.sql_string do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                  <% end %>
+                <% when "Stellenanzeigen" %>
+                  <%= link_to jobs_path :sql_string => s.sql_string do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                  <% end %>
+                <% when "Veranstaltungen" %>
+                  <%= link_to events_path :sql_string => s.sql_string do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                  <% end %>
+                <% when "Sehenswuerdigkeiten" %>
+                  <%= link_to hotspots_path :sql_string => s.sql_string do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                  <% end %>
+                <% when "Spendeninitiativen" %>
+                  <%= link_to donations_path :sql_string => s.sql_string do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                  <% end %>
                 <% end %>
       	        <%= link_to edit_search_path(s) do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>

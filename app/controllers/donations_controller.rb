@@ -1,11 +1,15 @@
 class DonationsController < ApplicationController
   before_action :set_donation, only: [:show, :edit, :update, :destroy]
-  permits :status, :name, :description, :company_id, :amount, :active, :stichworte
+  permits :days,:status, :name, :description, :company_id, :amount, :active, :stichworte
 
   # GET /donations
   def index
     session[:page] = params[:page]
-    @donations = Donation.search(params[:search]).order(created_at: :desc).page(params[:page]).per_page(10)
+    if params[:sql_string] != nil
+      @donations = Donation.paginate_by_sql(params[:sql_string], :page => params[:page], :per_page => 10)
+    else
+      @donations = Donation.search(params[:search]).order(created_at: :desc).page(params[:page]).per_page(10)
+    end
     @donanz = @donations.count
   end
 

@@ -35,7 +35,11 @@ class BidsController < ApplicationController
 
     end
     @start = Date.commercial(session[:year],session[:cw],1)
-    @bids = Bid.search(session[:cw], session[:year], session[:search]).order(date_from: :asc).page(params[:page]).per_page(10)
+    if params[:sql_string] != nil
+      @bids = Bid.paginate_by_sql(Bid.ext_sql(session[:cw], session[:year], params[:sql_string]), :page => params[:page], :per_page => 10)
+    else
+      @bids = Bid.search(session[:cw], session[:year], session[:search]).order(date_from: :asc).page(params[:page]).per_page(10)
+    end
     @bidanz = @bids.count
     
     puts "YEAR" + session[:year].to_s
@@ -81,9 +85,8 @@ class BidsController < ApplicationController
   # POST /bids
   def create(bid)
     @bid = Bid.new(bid)
-
     if @bid.save
-      redirect_to @bid.user, notice: 'Bid was successfully created.'
+      redirect_to @bid, notice: 'Bid was successfully created.'
     else
       render :new
     end
@@ -92,7 +95,7 @@ class BidsController < ApplicationController
   # PUT /bids/1
   def update(bid)
     if @bid.update(bid)
-      redirect_to @bid.user, notice: 'Bid was successfully updated.'
+      redirect_to @bid, notice: 'Bid was successfully updated.'
     else
       render :edit
     end
@@ -100,9 +103,9 @@ class BidsController < ApplicationController
 
   # DELETE /bids/1
   def destroy
+    @user = @bid.user
     @bid.destroy
-
-    redirect_to @bid.user, notice: 'Bid was successfully destroyed.'
+    redirect_to @user, notice: 'Bid was successfully destroyed.'
   end
 
   private

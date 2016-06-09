@@ -7,7 +7,11 @@ class CompaniesController < ApplicationController
   # GET /companies
   def index
     
-    @companies = Company.search(params[:search],params[:user_id]).page(params[:page]).per_page(10)
+    if params[:sql_string] != nil
+      @companies = Company.paginate_by_sql(params[:sql_string], :page => params[:page], :per_page => 10)
+    else
+      @companies = Company.search(params[:search],params[:user_id]).page(params[:page]).per_page(10)
+    end
     @companz = @companies.count
 
     z = 0

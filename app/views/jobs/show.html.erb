@@ -26,24 +26,22 @@
           <% end %>
         </div>
         <div class="panel-body">
-	        <%= link_to @job.company do %>
-            <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
+  				<% if @job.company.avatar_file_name == nil %>
+            <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
+          <% else %>
+            <%= image_tag @job.company.avatar, :size => "200x200", class:"img-rounded"  %>
           <% end %>
-          <b><%= @job.company.name %></b>
           <br><br>
-          <blockquote>
-    				<% if @job.company.avatar_file_name == nil %>
-              <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
-            <% else %>
-              <%= image_tag @job.company.avatar(:medium), class:"img-rounded"  %>
-            <% end %>
-    				<p><b>
-    					Anzeigentext
-    				</p></b>
-    				<small><%= @job.tasks %></small>
-    				<small><%= @job.company.category.name %></small>
-        	</blockquote>
-          <cite> <%= @job.company.name + " am " + @job.created_at.strftime("%d.%m.%Y") %></cite>        
+          <b>aufgegeben von:</b><br>
+          <%= @job.company.name %><br>
+          <%= @job.company.category.name %><br>
+          <% if @job.company.homepage != nil %>
+              <%= link_to url_with_protocol(@job.company.homepage), :target => '_blank' do %>
+                <i class="glyphicon glyphicon-home"></i> <%= url_with_protocol(@job.company.homepage) %>
+              <% end %>
+          <% end %>
+          <br><br>
+          <%= @job.created_at.strftime("%d.%m.%Y") %>
         </div>
     </div>
   </div>
@@ -53,38 +51,55 @@
     <div class="col-md-12">
       <div class="panel-heading header">
         <h2>
-            DETAILS
+            ZUSATZINFORMATIONEN
         </h2>
       </div>
       <div class="panel-body">
-				<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-skills" href="#panel-element-skills"><h3>Wir erwarten</h3></a>
-				<div id="panel-element-skills" class="panel-collapse collapse">
-          <p>
-						<%= @job.skills %>
-					</p>
-  			</div>
-				<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-offers" href="#panel-element-offers"><h3>Wir bieten</h3></a>
-				<div id="panel-element-offers" class="panel-collapse collapse">
-          <p>
-						<%= @job.offers %>
-					</p>
-  			</div>
-				<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-contacts" href="#panel-element-contacts"><h3>Ihr Kontakt</h3></a>
-				<div id="panel-element-contacts" class="panel-collapse collapse">
-          <p>
-						<%= @job.contacts %>
-					</p>
-  			</div>
-				<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-company" href="#panel-element-company"><h3>Weitere Informationen</h3></a>
-				<div id="panel-element-company" class="panel-collapse collapse">
-          <p>
-            <% if @job.company.homepage != nil %>
-              <%= link_to url_with_protocol(@job.company.homepage), :target => '_blank' do %>
-                <i class="glyphicon glyphicon-home"></i> <%= url_with_protocol(@job.company.homepage) %>
-              <% end %>
-            <% end %>
-					</p>
-  			</div>
+        
+        <div class="col-md-4">
+          <div class="thumbnail" align="center">
+            <div class="anzeigetext">
+  						Ihre Aufgaben
+            </div>
+            <p>
+  						<%= @job.tasks %>
+  					</p>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="thumbnail" align="center">
+            <div class="anzeigetext">
+  						wir erwarten
+            </div>
+            <p>
+  						<%= @job.skills %>
+  					</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="thumbnail" align="center">
+            <div class="anzeigetext">
+  						wir bieten
+            </div>
+            <p>
+  						<%= @job.offers %>
+  					</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="thumbnail" align="center">
+            <div class="anzeigetext">
+  						Ihr Kontakt
+            </div>
+            <p>
+  						<%= @job.contacts %>
+  					</p>
+          </div>
+        </div>
+
     	</div>
     </div>
   </div>

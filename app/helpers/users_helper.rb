@@ -1,19 +1,17 @@
 module UsersHelper
 
-def wo_hierachy(workorder)
-    items = []
-    parent_id = workorder.parent_id
-    found = true
-    while found == true
-        @work = Workorder.where("id=?", parent_id)
-        if @work.count > 0
-            items << @work.first.name
-            parent_id = @work.first.parent_id
+def align_text(txt)
+    len = 30
+    if txt == nil
+        text = ""
+    else
+        if txt.length >= len
+          text = txt[0,len]
         else
-            found = false
+          text = txt
         end
     end
-    return items
+    return text + "..."
 end
 
 end    

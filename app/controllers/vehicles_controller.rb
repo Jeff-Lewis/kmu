@@ -4,7 +4,11 @@ class VehiclesController < ApplicationController
 
   # GET /vehicles
   def index
-    @vehicles = Vehicle.search(params[:search]).page(params[:page]).per_page(10)
+    if params[:sql_string] != nil
+      @vehicles = Vehicle.paginate_by_sql(params[:sql_string], :page => params[:page], :per_page => 10)
+    else
+      @vehicles = Vehicle.search(params[:search]).page(params[:page]).per_page(10)
+    end
     @vehanz = @vehicles.count
 
     z = 0

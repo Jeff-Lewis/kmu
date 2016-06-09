@@ -7,7 +7,11 @@ class RequestsController < ApplicationController
     if params[:rtype]
       session[:rtype] = params[:rtype]
     end 
-    @requests = Request.search(params[:search],session[:rtype]).order(created_at: :desc).page(params[:page]).per_page(10)
+    if params[:sql_string] != nil
+      @requests = Request.paginate_by_sql(params[:sql_string], :page => params[:page], :per_page => 10)
+    else
+      @requests = Request.search(params[:search],session[:rtype]).order(created_at: :desc).page(params[:page]).per_page(10)
+    end
     @reqanz = @requests.count
   end
   

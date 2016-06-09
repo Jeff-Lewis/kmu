@@ -47,8 +47,6 @@
           		    <% else %>
                   <% avg_rating(se.id).times do %>
                     <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
-                  <% end %>
-                  <% avg_rating(se.id).times do %>
                     <i class="glyphicon glyphicon-star"></i>
                   <% end %>
                 <% end %>

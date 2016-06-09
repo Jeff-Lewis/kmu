@@ -7,7 +7,11 @@ class HotspotsController < ApplicationController
     if params[:page] != nil
       session[:page] = params[:page]
     end
-    @hotspots = Hotspot.search(params[:search]).page(params[:page]).per_page(10)
+    if params[:sql_string] != nil
+      @hotspots = Hotspot.paginate_by_sql(params[:sql_string], :page => params[:page], :per_page => 10)
+    else
+      @hotspots = Hotspot.search(params[:search]).page(params[:page]).per_page(10)
+    end
     @hsanz = @hotspots.count
 
     z = 0

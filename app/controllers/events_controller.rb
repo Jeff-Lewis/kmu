@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
-  permits :ev_category, :status, :active, :user_id, :company_id, :name, :description, :homepage, :geoaddress, :address1, :address2, :address3, :date_from, :date_to, :avatar
+  permits :ev_category_id, :status, :active, :user_id, :company_id, :name, :description, :homepage, :geoaddress, :address1, :address2, :address3, :date_from, :date_to, :avatar
 
   $wochentage = %w[Montag Dienstag Mittwoch Donnerstag Freitag Samstag Sonntag]
 
@@ -35,7 +35,11 @@ class EventsController < ApplicationController
 
     end
     @start = Date.commercial(session[:year],session[:cw],1)
-    @events = Event.search(session[:cw], session[:year],session[:search]).order(date_from: :asc).page(params[:page]).per_page(10)
+    if params[:sql_string] != nil
+      @events = Event.paginate_by_sql(Bid.ext_sql(session[:cw], session[:year], params[:sql_string]), :page => params[:page], :per_page => 10)
+    else
+      @events = Event.search(session[:cw], session[:year],session[:search]).order(date_from: :asc).page(params[:page]).per_page(10)
+    end
     @eveanz = @events.count
     
     z = 0

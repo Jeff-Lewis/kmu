@@ -126,6 +126,7 @@ ActiveRecord::Schema.define(version: 20160607052658) do
   create_table "donations", force: :cascade do |t|
     t.string   "status"
     t.string   "name"
+    t.integer  "days"
     t.text     "description"
     t.integer  "company_id"
     t.float    "amount"

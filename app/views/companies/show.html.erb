@@ -61,30 +61,25 @@
       </div>
       <div class="panel-body">
     		<% @company.services.where("stype=?","regular").each do |cs| %>
-  				<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-375571" href="#panel-element-service<%= cs.id %>"><h3><%= cs.name %></h3></a>
-  				<div id="panel-element-service<%= cs.id %>" class="panel-collapse collapse">
-    				<% if cs.avatar_file_name == nil %>
-              <%= image_tag("service_a.png", :size => "200x200", class:"img-rounded" ) %>
-            <% else %>
-              <%= image_tag cs.avatar(:medium), class:"img-rounded"  %>
-            <% end %>
-            <p>
-						<%= cs.description %>
-            </p>
-  	        <%= link_to cs do %>
-              <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-            <% end %>
-            <% if user_signed_in? %>
-              <% if current_user.id == @company.user.id %>
-      	        <%= link_to edit_service_path(cs) do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+            <div class="col-md-4">
+              <div class="thumbnail" align="center">
+                <div class="anzeigetext">
+      						<%= cs.name %>
+                </div>
+      				  <%= align_text(cs.description) %>
+      				  <br>
+        				<% if cs.avatar_file_name == nil %>
+                  <%= image_tag("service_a.png", :size => "200x200", class:"img-rounded" ) %>
+                <% else %>
+                  <%= image_tag cs.avatar, :size => "200x200", class:"img-rounded"  %>
                 <% end %>
-      	        <%= link_to cs, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                  <i class="btn btn-danger btn-lg pull-right glyphicon glyphicon-trash"></i>
+                <br>
+      	        <%= link_to cs do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
                 <% end %>
-              <% end %>
-            <% end %>
-    			</div>
+                <br><br>
+    			    </div>
+    			   </div>
     		<% end %>
     	</div>
     </div>
@@ -108,61 +103,32 @@
         </h2>
       </div>
       <div class="panel-body">
-        <% if @company.services.where("stype=?","action").count > 0 %>
-  				<table class="table table striped">
-  				  <thead>
-  				    <tr>
-  						  <th colspan="3">
-  						    Aktion
-  						  </th>
-  						  <th colspan="2">
-  						    Preis alt-neu
-  						  </th>
-  						  <th colspan="2">
-  						    gültig von-bis
-  						  </th>
-  						  <th>
-  						    Datum
-  						  </th>
-              </tr>
-            </thead>
-            <body>
-            <% @company.services.where("stype=?","action").each do |cs| %>
-              <tr>
-                <td>
-                  <% if user_signed_in? %>
-                    <% if (cs.company.user_id == current_user.id) %>
-            	        <%= link_to edit_service_path(cs), :stype => "action" do %>
-                        <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                      <% end %>
-            	        <%= link_to cs, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                        <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
-                      <% end %>
-                    <% end %>
-                  <% end %>
-                </td>
-                <td>
+        <% @company.services.where("stype=?","action").each do |cs| %>
+            <div class="col-md-4">
+              <div class="thumbnail" align="center">
+                <div class="anzeigetext">
+      						<%= cs.name %>
+                </div>
+      				  <%= align_text(cs.description) %>
+      				  <br>
         				<% if cs.avatar_file_name == nil %>
                   <%= image_tag("money.png", :size => "200x200", class:"img-rounded" ) %>
                 <% else %>
-                  <%= image_tag cs.avatar(:medium), class:"img-rounded"  %>
+                  <%= image_tag cs.avatar, :size => "200x200", class:"img-rounded"  %>
                 <% end %>
-                </td>
-                <td>
-                  <b><%= cs.name %></b><br>
-      						<%= cs.description %>
-                </td>
-                <td><%= sprintf("%05.2f CHF", cs.price_reg) if cs.price_reg != nil %></td>
-                <td><%= sprintf("%05.2f CHF", cs.price_new) if cs.price_new != nil %></td>
-                <td><%= cs.datum_von.strftime("%d.%m.%Y") %></td>
-                <td><%= cs.datum_bis.strftime("%d.%m.%Y") %></td>
-                <td><%= cs.created_at.strftime("%d.%m.%Y") %></td>
-              </tr>
-              <% end %>
-            </tbody>
-					</table>
-      	<% end %>
-    	</div>
+                <br>
+                Preis <%= sprintf("%05.2f CHF", cs.price_new) if cs.price_new != nil %> statt <%= sprintf("%05.2f CHF", cs.price_reg) if cs.price_reg != nil %>
+                <br>
+                Aktion befristed vom <%= cs.datum_von.strftime("%d.%m.%Y") %> bis <%= cs.datum_bis.strftime("%d.%m.%Y") %>
+                <br><br>
+      	        <%= link_to cs do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
+                <% end %>
+                <br><br>
+              </div>
+            </div>
+        <% end %>
+      </div>
     </div>
   </div>
   <br>
@@ -185,19 +151,26 @@
       </div>
       <div class="panel-body">
       		<% @company.vehicles.each do |cv| %>
-    				<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-375573" href="#panel-element-vehicle<%= cv.id %>"><h3><%= cv.name %></h3></a>
-    				<div id="panel-element-vehicle<%= cv.id %>" class="panel-collapse collapse">
-      				<% if cv.avatar_file_name == nil %>
-                <%= image_tag("vehicle_a.png", :size => "200x200", class:"img-rounded" ) %>
-              <% else %>
-                <%= image_tag cv.avatar(:medium), class:"img-rounded"  %>
-              <% end %>
-              <p>
-  						<%= cv.description %>
-  						</p>
-    	        <%= link_to cv do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-              <% end %>
+            <div class="col-md-4">
+              <div class="thumbnail" align="center">
+                <div class="anzeigetext">
+      						<%= cv.name %>
+                </div>
+      				  <%= align_text(cv.description) %>
+      				  <br>
+        				<% if cv.avatar_file_name == nil %>
+                  <%= image_tag("vehicle_a.png", :size => "200x200", class:"img-rounded" ) %>
+                <% else %>
+                  <%= image_tag cv.avatar, :size => "200x200", class:"img-rounded"  %>
+                <% end %>
+                <br>
+      				  <%= cv.mob_category.name %>
+      				  <br><br>
+      	        <%= link_to cv do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
+                <% end %>
+                <br><br>
+      			  </div>
       			</div>
       		<% end %>
     	</div>
@@ -223,15 +196,25 @@
       </div>
       <div class="panel-body">
       		<% @company.jobs.each do |cj| %>
-    				<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-375574" href="#panel-element-job<%= cj.id %>"><h3><%= cj.name %></h3></a>
-    				<div id="panel-element-job<%= cj.id %>" class="panel-collapse collapse">
-              <p>
-                <b>Anzeigetext vom <%= cj.created_at.strftime("%d.%m.%Y") %></b><br>
-    						<%= cj.tasks %>
-  						</p>
-    	        <%= link_to cj do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-              <% end %>
+            <div class="col-md-4">
+              <div class="thumbnail" align="center">
+                <div class="anzeigetext">
+      						<%= cj.name %>
+                </div>
+                <p>
+      						<%= align_text(cj.tasks) %>
+    						</p>
+        				<% if cj.company.avatar_file_name == nil %>
+                  <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
+                <% else %>
+                  <%= image_tag cj.company.avatar, :size => "200x200", class:"img-rounded"  %>
+                <% end %>
+    						<br>
+      	        <%= link_to cj do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
+                <% end %>
+                <br><br>
+      			  </div>
       			</div>
       		<% end %>
     	</div>
@@ -257,21 +240,33 @@
       </div>
       <div class="panel-body">
       		<% @company.events.each do |ce| %>
-    				<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-375584" href="#panel-element-event<%= ce.id %>"><h3><%= ce.name %></h3></a>
-    				<div id="panel-element-event<%= ce.id %>" class="panel-collapse collapse">
-      				<% if ce.avatar_file_name == nil %>
-                <%= image_tag("vehicle_a.png", :size => "200x200", class:"img-rounded" ) %>
-              <% else %>
-                <%= image_tag ce.avatar(:medium), class:"img-rounded"  %>
-              <% end %>
-              <p>
-  						<%= ce.description %>
-  						</p>
-  						<br>
-    	        <%= link_to ce do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-              <% end %>
-      			</div>
+            <div class="col-md-4">
+              <div class="thumbnail" align="center">
+                <div class="anzeigetext">
+      						<%= ce.name %>
+                </div>
+                <p>
+    						<%= align_text(ce.description) %>
+    						</p>
+        				<% if ce.avatar_file_name == nil %>
+                  <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
+                <% else %>
+                  <%= image_tag ce.avatar, :size => "200x200", class:"img-rounded"  %>
+                <% end %>
+                <br>
+                <p>
+      						<%= ce.ev_category.name %>
+    						</p>
+    						<br>
+                <br>
+                vom <%= ce.date_from.strftime("%d.%m.%Y") %> bis <%= ce.date_to.strftime("%d.%m.%Y") %>
+                <br><br>
+      	        <%= link_to ce do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
+                <% end %>
+                <br><br>
+      			  </div>
+      			 </div>
       		<% end %>
     	</div>
     </div>
@@ -288,55 +283,41 @@
         </h2>
       </div>
       <div class="panel-body">
-        <% if @company.sponsors.count > 0 %>
-  				<table class="table table striped">
-  				  <thead>
-  				    <tr>
-  						  <th colspan="4">
-  						    Veranstaltung
-  						  </th>
-  						  <th>
-  						    Sponsoren Kategorie
-  						  </th>
-              </tr>
-            </thead>
-            <tbody>
-            <% @company.sponsors.each do |cs| %>
-              <tr>
-                <td>
-        	        <%= link_to cs.event do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-                  <% end %>
-                </td>
-                <td>
-          				<% if cs.event.avatar_file_name == nil %>
-                    <%= image_tag("event_a.png", :size => "50x50", class:"img-rounded" ) %>
-                  <% else %>
-                    <%= image_tag cs.event.avatar(:small), class:"img-rounded"  %>
-                  <% end %>
-                  <%= cs.event.name %>
-                </td>
-                <td>
-                  <%= cs.event.date_from.strftime("%d.%m.%Y") %>
-                </td>
-                <td>
-                  <%= cs.event.date_to.strftime("%d.%m.%Y") %>
-                </td>
-                <td>
-          				<% case cs.slevel %>
-          				  <% when "1" %>
-                      <%= image_tag("Sponsor_gold.jpg", :size => "50x50", class:"img-rounded" ) %>
-          				  <% when "2" %>
-                      <%= image_tag("Sponsor_silver.jpg", :size => "50x50", class:"img-rounded" ) %>
-          				  <% when "3" %>
-                      <%= image_tag("Sponsor_bronze.jpg", :size => "50x50", class:"img-rounded" ) %>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-            </tbody>
-  				</table>
-  			<% end %>
+          <% @company.sponsors.each do |cs| %>
+            <div class="col-md-4">
+              <div class="thumbnail" align="center">
+                <div class="anzeigetext">
+      						<%= cs.event.name %>
+                </div>
+                <p>
+    						<%= align_text(cs.event.description) %>
+    						</p>
+        				<% if cs.event.avatar_file_name == nil %>
+                  <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
+                <% else %>
+                  <%= image_tag cs.event.avatar, :size => "200x200", class:"img-rounded"  %>
+                <% end %>
+                <br>
+                <%= cs.event.ev_category.name %>
+                <br>
+        				<% case cs.slevel %>
+        				  <% when "1" %>
+                    <%= image_tag("Sponsor_gold.jpg", :size => "200x200", class:"img-rounded" ) %>
+        				  <% when "2" %>
+                    <%= image_tag("Sponsor_silver.jpg", :size => "200x200", class:"img-rounded" ) %>
+        				  <% when "3" %>
+                    <%= image_tag("Sponsor_bronze.jpg", :size => "200x200", class:"img-rounded" ) %>
+                <% end %>
+                <br>
+                vom <%= cs.event.date_from.strftime("%d.%m.%Y") %> bis <%= cs.event.date_to.strftime("%d.%m.%Y") %>
+    						<br><br>
+      	        <%= link_to cs.event do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
+                <% end %>
+                <br><br>
+              </div>
+            </div>
+          <% end %>
       </div>
     </div>
   </div>
@@ -361,56 +342,32 @@
         </h2>
       </div>
       <div class="panel-body">
-  	    <% if @company.donations.count > 0 %>
-  				<table class="table table striped">
-  				  <thead>
-  				    <tr>
-  						  <th colspan="4">
-  						    Spendeninitiative
-  						  </th>
-  						  <th>
-  						    Aktueller Spendenbetrag
-  						  </th>
-  						  <th>
-  						    Datum
-  						  </th>
-              </tr>
-            </thead>
-            <tbody>
-            <% @company.donations.each do |cds| %>
-              <tr>
-                <td>
-        	        <%= link_to cds do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-                  <% end %>
-                </td>
-                <td>
-                  <%= cds.name %>
-                </td>
-                <td>
-                  <%= cds.description %>
-                </td>
-                <td>
-                  <% cds.donation_details.each do |cdd| %>
-            				<% if cdd.avatar_file_name == nil %>
-                      <%= image_tag("donation_a.jpg", :size => "50x50", class:"img-rounded" ) %>
-                    <% else %>
-                      <%= image_tag cdd.avatar(:small), class:"img-rounded"  %>
-                    <% end %>
-                    <%= cdd.name %>
-                  <% end %>
-                </td>
-                <td>
-                  <%= sprintf("%05.2f CHF", cds.donation_stats.sum(:amount)) %>
-                </td>
-                <td>
-                  <%= cds.created_at.strftime("%d.%m.%Y") %>
-                </td>
-              </tr>
-            <% end %>
-            </tbody>
-  				</table>
-  			<% end %>
+        <% @company.donations.each do |cds| %>
+          <div class="col-md-4">
+            <div class="thumbnail" align="center">
+              <div class="anzeigetext">
+    						<%= cds.name %>
+              </div>
+              <p>
+  						<%= align_text(cds.description) %>
+  						</p>
+              <% cds.donation_details.limit(1).each do |cdd| %>
+        				<% if cdd.avatar_file_name == nil %>
+                  <%= image_tag("donation_a.jpg", :size => "200x200", class:"img-rounded" ) %>
+                <% else %>
+                  <%= image_tag cdd.avatar, :size => "200x200", class:"img-rounded"  %>
+                <% end %>
+              <% end %>
+              <br>
+              Spendenbetrag <%= sprintf("%05.2f CHF", cds.donation_stats.sum(:amount)) %>
+              <br><br>
+    	        <%= link_to cds do %>
+                <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
+              <% end %>
+              <br><br>
+            </div>
+          </div>
+        <% end %>
     	</div>
     </div>
   </div>
@@ -426,59 +383,34 @@
         </h2>
       </div>
       <div class="panel-body">
-  	    <% if @company.donation_stats.count > 0 %>
-    			<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-spenden" href="#panel-element-spenden"><h3>Spenden (<%= sprintf("%05.2f CHF", @company.donation_stats.sum(:amount)) + " / " + @company.donation_stats.count.to_s %>)</h3></a>
-    			<div id="panel-element-spenden" class="panel-collapse collapse">
-  				<table class="table table striped">
-  				  <thead>
-  				    <tr>
-  						  <th colspan="4">
-  						    Spendeninitiative
-  						  </th>
-  						  <th>
-  						    Betrag
-  						  </th>
-  						  <th>
-  						    Datum
-  						  </th>
-              </tr>
-            </thead>
-            <tbody>
-            <% @company.donation_stats.each do |cds| %>
-              <tr>
-                <td>
-        	        <%= link_to cds.donation do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-                  <% end %>
-                </td>
-                <td>
-                  <%= cds.donation.name %>
-                </td>
-                <td>
-                  <%= cds.donation.description %>
-                </td>
-                <td>
-                  <br>
-                  <% cds.donation.donation_details.each do |cdd| %>
-            				<% if cdd.avatar_file_name == nil %>
-                      <%= image_tag("donation_a.jpg", :size => "50x50", class:"img-rounded" ) %>
-                    <% else %>
-                      <%= image_tag cdd.avatar(:small), class:"img-rounded"  %>
-                    <% end %>
-                  <% end %>
-                </td>
-                <td>
-                  <%= sprintf("%05.2f CHF", cds.amount) %>
-                </td>
-                <td>
-                  <%= cds.created_at.strftime("%d.%m.%Y") %>
-                </td>
-              </tr>
-            <% end %>
-            </tbody>
-  				</table>
-  				</div>
-  			<% end %>
+  	    <% @company.donation_stats.each do |cds| %>
+          <div class="col-md-4">
+            <div class="thumbnail" align="center">
+    					<%= cds.donation.company.name %>
+              <div class="anzeigetext">
+    						<%= cds.donation.name %>
+              </div>
+              <p>
+  						<%= align_text(cds.donation.description) %>
+  						</p>
+              <% cds.donation.donation_details.limit(1).each do |cdd| %>
+        				<% if cdd.avatar_file_name == nil %>
+                  <%= image_tag("donation_a.jpg", :size => "200x200", class:"img-rounded" ) %>
+                <% else %>
+                  <%= image_tag cdd.avatar, :size => "200x200", class:"img-rounded"  %>
+                <% end %>
+              <% end %>
+              <br>
+              Spendenbetrag <%= sprintf("%05.2f CHF", cds.amount) %> am <%= cds.created_at.strftime("%d.%m.%Y") %>
+              <br><br>
+    	        <%= link_to cds.donation do %>
+                <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
+              <% end %>
+              <br>
+              <br>
+            </div>
+          </div>
+        <% end %>
   	  </div>
     </div>
   </div>
@@ -498,76 +430,65 @@
         </h1>
       </div>
       <div class="panel-body">
-  			<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-favourit" href="#panel-element-favourit"><h3>Favoriten (<%= @company.user.favourits.count.to_s %>)</h3></a>
-  			<div id="panel-element-favourit" class="panel-collapse collapse">
-      		<table class="table table-striped">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Status</th>
-                <th>Favorit</th>
-                <th>eMail</th>
-                <th>Ticker</th>
-              </tr>
-            </thead>
-            <tbody>
-                <% @company.user.favourits.each do |f| %>
-                  <tr>
-                    <td>
-                      <% if user_signed_in? %>
-                        <% if @company.user.id == current_user.id %>
-                	        <%= link_to edit_favourit_path(f) do %>
-                            <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                          <% end %>
-                	        <%= link_to f, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                            <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
-                          <% end %>
-                        <% end %>
-                      <% end %>
-                    </td>
-        				    <td>
-                      <% if f.active %>
-                        <% image_tag("icon_active.jpg", :size => "50x50" , class:"img-rounded") %>
-                         <i class="glyphicon glyphicon-ok-sign"></i>
-                      <% else %>
-                        <% image_tag("icon_inactive.jpg",:size => "50x50", class:"img-rounded") %>
-                         <i class="glyphicon lg glyphicon-remove-sign"></i>
-                      <% end %>
-                    </td>
-                    <td>
-                      <div class="anzeigetext">
-                        <% @item = Object.const_get(f.object_name).find(f.object_id) %>
-                        <% if @item != nil %>
-                          <%= f.object_name + ": " + @item.name %>
-                        <% else %>
-                          <%= f.object_name %><br>
-                          <%= f.object_id %>
-                        <% end %>
-                      </div>
-                    </td>
-                    <td>
-                      <% if f.email %>
-                        <% image_tag("icon_active.jpg", :size => "50x50" , class:"img-rounded") %>
-                         <i class="glyphicon glyphicon-ok-sign"></i>
-                      <% else %>
-                        <% image_tag("icon_inactive.jpg",:size => "50x50", class:"img-rounded") %>
-                         <i class="glyphicon lg glyphicon-remove-sign"></i>
-                      <% end %>
-                    </td>
-                    <td>
-                      <% if f.ticker %>
-                        <% image_tag("icon_active.jpg", :size => "50x50" , class:"img-rounded") %>
-                         <i class="glyphicon glyphicon-ok-sign"></i>
-                      <% else %>
-                        <% image_tag("icon_inactive.jpg",:size => "50x50", class:"img-rounded") %>
-                         <i class="glyphicon lg glyphicon-remove-sign"></i>
-                      <% end %>
-                    </td>
-                  </tr>
+        <% @company.user.favourits.each do |f| %>
+          <div class="col-md-4">
+            <div class="thumbnail" align="center">
+              <div class="anzeigetext">
+                <% @item = Object.const_get(f.object_name).find(f.object_id) %>
+                <% if @item != nil %>
+                  <% if f.object_name == "User" %>
+                    <%= @item.name + " " + @item.lastname %>
+                  <% else %>
+                    <%= @item.name %>
+                  <% end %>
+                <% else %>
+                  <%= f.object_name %><br>
+                  <%= f.object_id %>
                 <% end %>
-            </tbody>
-          </table>
-        </div>
+              </div>
+
+              <% if f.object_name == "User" or f.object_name == "Company" %>
+                <% if @item.avatar != nil %>
+                  <%= image_tag @item.avatar, :size => 200, class:"img-rounded" %>
+                <% end %>
+              <% end %>
+              <% if f.object_name == "Donation" %>
+                <% if @item.donation_details.first.avatar != nil %>
+                  <%= image_tag @item.donation_details.first.avatar, :size => 200, class:"img-rounded" %>
+                <% end %>
+              <% end %>
+
+              <br>
+              <% if f.active %>
+                <% image_tag("icon_active.jpg", :size => "50x50" , class:"img-rounded") %>
+                 <i class="glyphicon glyphicon-ok-sign"></i> aktiv
+              <% else %>
+                <% image_tag("icon_inactive.jpg",:size => "50x50", class:"img-rounded") %>
+                 <i class="glyphicon lg glyphicon-remove-sign"></i> inaktiv
+              <% end %>
+              <% if f.email %>
+                <% image_tag("icon_active.jpg", :size => "50x50" , class:"img-rounded") %>
+                 <i class="glyphicon glyphicon-ok-sign"></i> eMail
+              <% end %>
+              <% if f.ticker %>
+                <% image_tag("icon_active.jpg", :size => "50x50" , class:"img-rounded") %>
+                 <i class="glyphicon glyphicon-ok-sign"></i> Ticker
+              <% end %>
+              <br><br>
+              <% if user_signed_in? %>
+                <% if @company.user.id == current_user.id %>
+        	        <%= link_to edit_favourit_path(f) do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                  <% end %>
+        	        <%= link_to f, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                    <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                  <% end %>
+                <% end %>
+              <% end %>
+              <br><br>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

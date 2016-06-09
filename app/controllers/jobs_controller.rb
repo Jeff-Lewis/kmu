@@ -11,7 +11,11 @@ class JobsController < ApplicationController
       session[:company_id] = params[:company_id]
     end
     
-    @jobs = Job.search(params[:search]).page(params[:page]).per_page(10)
+    if params[:sql_string] != nil
+      @jobs = Job.paginate_by_sql(params[:sql_string], :page => params[:page], :per_page => 10)
+    else
+      @jobs = Job.search(params[:search]).page(params[:page]).per_page(10)
+    end
     @jobanz = @jobs.count
 
     z = 0

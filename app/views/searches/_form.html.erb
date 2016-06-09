@@ -20,7 +20,7 @@
                       <%= link_to searches_path :page => session[:page], :search_domain => @search.search_domain, :controller_name => @search.controller do %>
                         <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
                       <% end %>
-                      ABFRAGEN <%= @count.to_s + " " + @search.sql_string.to_s + " " + @current_latitude.to_s + "/" + @current_longitude.to_s %>
+                      ABFRAGEN <%= @count.to_s %> Einträge gefunden!
                       </h2>
                     </div>
                 </div>
