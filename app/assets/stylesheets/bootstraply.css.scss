@@ -178,6 +178,14 @@ input#email:focus {
     };
 }
 
+.carousel-caption {
+    backgroud-color: transparent!important;
+    position: relative!important;
+    text-align: center!important;
+    left: auto;
+    right: auto;
+}
+
 #map {
    height: 600px;
    border-radius: 16px 16px;

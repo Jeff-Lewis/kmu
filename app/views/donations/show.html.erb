@@ -12,9 +12,6 @@
             <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
           <% end %>
           <% if user_signed_in? %>
-  	        <%= link_to new_favourit_path :object_name => "Donation", :object_id => @donation.id, :user_id => current_user.id do %>
-              <i class="btn btn-primary btn-lg glyphicon glyphicon-star"></i>
-            <% end %>
             <% if (@donation.company_id != nil and current_user.id == @donation.company.user_id) %>
       	        <%= link_to edit_donation_path(@donation) do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
@@ -29,20 +26,21 @@
           <% end %>
         </div>
         <div class="panel-body">
-  				<% if @donation.donation_details.first.avatar_file_name == nil %>
-            <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
-          <% else %>
-            <%= image_tag @donation.donation_details.first.avatar, :size => "200x200", class:"img-rounded"  %>
-          <% end %>
-          <br><br>
+          <p>
+          <% if @donation.donation_details.count > 0 %>
+              <%= carousel(@donation.donation_details, "big") %>
+            <% else %>
+              <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
+    			<% end %>
+    			</p>
           <b>Beschreibung</b><br>
     			<%= @donation.description %>
           <br><br>
           <b>initialisiert von:</b><br>
           <% if !@donation.company.avatar_file_name %>
-            <%= image_tag("company_a.png", :size => "50x50" , class:"img-rounded") %>
+            <%= image_tag("company_a.png", :size => "100x100" , class:"img-rounded") %>
           <% else %>
-            <%= image_tag @donation.company.avatar(:small), class:"img-rounded" %>
+            <%= image_tag @donation.company.avatar(:thumb), class:"img-rounded" %>
           <% end %>
           <%= @donation.company.name %>
     			<br><br>

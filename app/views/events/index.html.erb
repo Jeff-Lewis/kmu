@@ -50,11 +50,11 @@
               <tr>
     				    <td>
     				    <%= link_to e do %>
-                  <% if !e.avatar_file_name %>
-                    <%= image_tag("event_a.png", :size => "50x50" , class:"img-rounded") %>
-                  <% else %>
-                    <%= image_tag e.avatar(:small), class:"img-rounded" %>
-                  <% end %>
+                  <% if e.event_details != nil %>
+                        <%= carousel(e.event_details, "thumb") %>
+                      <% else %>
+                        <%= image_tag("event_a.png", :size => "100x100", class:"img-rounded" ) %>
+              		<% end %>
                 <% end %>
                 </td>
                 <td>

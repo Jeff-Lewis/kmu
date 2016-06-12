@@ -33,25 +33,11 @@
           
           <p>
           <% if req.request_details.count > 0 %>
-    				<% if req.request_details.first.avatar_file_name == nil %>
-              <%= image_tag("request_a.png", :size => "200x200", class:"img-rounded" ) %>
-            <% else %>
-              <%= image_tag req.request_details.first.avatar(:medium), class:"img-rounded"  %>
-            <% end %>
+              <%= carousel(req.request_details, "medium") %>
             <% else %>
               <%= image_tag("request_a.png", :size => "200x200", class:"img-rounded" ) %>
     			<% end %>
     			</p>
-    			<p>
-    			<% req.request_details.each do |rd| %>
-    				<% if rd.avatar_file_name == nil %>
-              <%= image_tag("request_a.png", :size => "50x50", class:"img-rounded" ) %>
-            <% else %>
-              <%= image_tag rd.avatar(:small), class:"img-rounded"  %>
-            <% end %>
-    			<% end %>
-    			</p>
-    	    
           <div class="caption">
     					<% if req.social %>
                 <%= image_tag("helpinghand.png", :size => "50x50" , class:"img-rounded") %>

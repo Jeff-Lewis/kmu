@@ -201,16 +201,11 @@
                 <p>
     						<%= ur.description %>
     						</p>
-    						<% ur.request_details.limit(1).each do |urd| %>
-    						  <p>
-                  <b><%= urd.name %><br></b>
-          				<% if urd.avatar_file_name == nil %>
-                    <%= image_tag("request_a.jpg", :size => "200x200", class:"img-rounded" ) %>
-                  <% else %>
-                    <%= image_tag urd.avatar, :size => "200x200", class:"img-rounded"  %>
-                  <% end %>
-                  </p>
-    						<% end %>
+                <% if ur.request_details != nil %>
+                      <%= carousel(ur.request_details, "medium") %>
+                    <% else %>
+                      <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
+            		<% end %>
     						<br>
       	        <%= link_to ur do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
@@ -294,11 +289,11 @@
                 <div class="anzeigetext">
       						<%= ue.name %>
                 </div>
-        				<% if ue.avatar_file_name == nil %>
-                  <%= image_tag("vehicle_a.png", :size => "200x200", class:"img-rounded" ) %>
+                <% if ue.event_details.count > 0 %>
+                  <%= carousel(ue.event_details, "medium") %>
                 <% else %>
-                  <%= image_tag ue.avatar, :size => "200x200", class:"img-rounded"  %>
-                <% end %>
+                  <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
+          			<% end %>
                 <p>
       						<%= ue.ev_category.name %>
     						</p>
@@ -341,13 +336,11 @@
                 <div class="anzeigetext">
       						<%= uh.name %>
                 </div>
-                <% uh.hotspot_details.limit(1).each do |uhd| %>
-          				<% if uhd.avatar_file_name == nil %>
-                    <%= image_tag("target_a.png", :size => "200x200", class:"img-rounded" ) %>
-                  <% else %>
-                    <%= image_tag uhd.avatar, :size => "200x200", class:"img-rounded"  %>
-                  <% end %>
-                <% end %>
+                <% if uh.hotspot_details != nil %>
+                      <%= carousel(uh.hotspot_details, "medium") %>
+                    <% else %>
+                      <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
+            		<% end %>
                 <p>
     						<%= align_text(uh.description) %>
     						</p>
@@ -387,14 +380,14 @@
                 <div class="anzeigetext">
       						<%= ub.name %>
                 </div>
+                <p>
       				  <%= align_text(ub.description) %>
-      				  <% ub.bid_details.limit(1).each do |ubd| %>
-          				<% if ubd.avatar_file_name == nil %>
-                    <%= image_tag("bid_a.png", :size => "200x200", class:"img-rounded" ) %>
-                  <% else %>
-                    <%= image_tag ubd.avatar, :size => "200x200", class:"img-rounded"  %>
-                  <% end %>
-    						<% end %>
+      				  </p>
+                <% if ub.bid_details != nil %>
+                      <%= carousel(ub.bid_details, "medium") %>
+                    <% else %>
+                      <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
+            		<% end %>
     						<br>
       	        <%= link_to ub do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
@@ -428,13 +421,11 @@
               <p>
   						<%= align_text(uds.donation.description) %>
   						</p>
-              <% uds.donation.donation_details.limit(1).each do |udd| %>
-        				<% if udd.avatar_file_name == nil %>
-                  <%= image_tag("donation_a.jpg", :size => "200x200", class:"img-rounded" ) %>
-                <% else %>
-                  <%= image_tag udd.avatar, :size => "200x200", class:"img-rounded"  %>
-                <% end %>
-              <% end %>
+              <% if uds.donation.donation_details != nil %>
+                    <%= carousel(uds.donation.donation_details, "medium") %>
+                  <% else %>
+                    <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
+          		<% end %>
               <br>
               Spendenbetrag <%= sprintf("%05.2f CHF", uds.amount) %> am <%= uds.created_at.strftime("%d.%m.%Y") %>
               <br><br>
@@ -476,9 +467,9 @@
               <p>
   						<%= align_text(ur.service.description) %>
               <% if ur.service.avatar == nil %>
-                <%= image_tag("service_a.png", :size => "50x50" , class:"img-rounded") %>
+                <%= image_tag("service_a.png", :size => "200x200" , class:"img-rounded") %>
               <% else %>
-                <%= image_tag ur.service.avatar, :size => 200, class:"img-rounded" %>
+                <%= image_tag ur.service.avatar(:medium), class:"img-rounded" %>
               <% end %>
               <br><br>
               <% ur.user_rating.times do %>
@@ -505,9 +496,6 @@
     <div class="col-md-12">
       <div class="panel-heading header">
         <h1>
-        <%= link_to new_favourit_path do %>
-          <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
-        <% end %>
         Favoriten
         <span class="badge"><%= @favanz %></span>
         </h1>
@@ -529,15 +517,9 @@
                   <%= f.object_id %>
                 <% end %>
               </div>
-
               <% if f.object_name == "User" or f.object_name == "Company" %>
                 <% if @item.avatar != nil %>
-                  <%= image_tag @item.avatar, :size => 200, class:"img-rounded" %>
-                <% end %>
-              <% end %>
-              <% if f.object_name == "Donation" %>
-                <% if @item.donation_details.first.avatar != nil %>
-                  <%= image_tag @item.donation_details.first.avatar, :size => 200, class:"img-rounded" %>
+                  <%= image_tag @item.avatar(:medium), class:"img-rounded" %>
                 <% end %>
               <% end %>
 

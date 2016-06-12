@@ -22,7 +22,7 @@
           <%= will_paginate @donations, :container => false, previous_label: "<", next_label: ">" %>
       </div>
   </div>
-  
+
   <% @donations.each do |don| %>
     <div class="col-md-5">
 
@@ -61,28 +61,13 @@
     				  <%= don.description %>
     				</p>
     			</div>
-
           <p>
           <% if don.donation_details.count > 0 %>
-    				<% if don.donation_details.first.avatar_file_name == nil %>
-              <%= image_tag("present.png", :size => "200x200", class:"img-rounded" ) %>
+              <%= carousel(don.donation_details, "medium") %>
             <% else %>
-              <%= image_tag don.donation_details.first.avatar(:medium), class:"img-rounded"  %>
-            <% end %>
-            <% else %>
-              <%= image_tag("present.png", :size => "200x200", class:"img-rounded" ) %>
+              <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
     			<% end %>
     			</p>
-          <p>
-    			<% don.donation_details.each do |dd| %>
-    				<% if dd.avatar_file_name == nil %>
-              <%= image_tag("present.png", :size => "50x50", class:"img-rounded" ) %>
-            <% else %>
-              <%= image_tag dd.avatar(:small), class:"img-rounded"  %>
-            <% end %>
-    			<% end %>
-    			</p>
-  
           <p>
     		  <%= don.created_at.strftime("%d.%b.%Y-%H:%M Uhr") %>
     		  

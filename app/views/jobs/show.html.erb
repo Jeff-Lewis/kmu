@@ -29,7 +29,7 @@
   				<% if @job.company.avatar_file_name == nil %>
             <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
           <% else %>
-            <%= image_tag @job.company.avatar, :size => "200x200", class:"img-rounded"  %>
+            <%= image_tag @job.company.avatar(:medium), class:"img-rounded"  %>
           <% end %>
           <br><br>
           <b>aufgegeben von:</b><br>

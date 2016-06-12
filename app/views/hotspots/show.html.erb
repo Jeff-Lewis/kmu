@@ -27,13 +27,13 @@
             <% end %>
         </div>
         <div class="panel-body">
-  				<% if @hotspot.hotspot_details.first != nil %>
-    				<% if @hotspot.hotspot_details.first.avatar_file_name == nil %>
-              <%= image_tag("hotspot_a.png", :size => "200x200", class:"img-rounded" ) %>
+          <p>
+          <% if @hotspot.hotspot_details.count > 0 %>
+              <%= carousel(@hotspot.hotspot_details, "big") %>
             <% else %>
-              <%= image_tag @hotspot.hotspot_details.first.avatar, :size => "200x200", class:"img-rounded"  %>
-            <% end %>
-          <% end %>
+              <%= image_tag("hotspot_a.png", :size => "200x200", class:"img-rounded" ) %>
+    			<% end %>
+    			</p>
           <br><br>
           <b>Bewertung</b><br>
           <% HsRating.avg_rating(@hotspot.id).to_i.times do %>
@@ -56,9 +56,9 @@
           <% end %>
           <b>aufgenommen von:</b><br>
           <% if !@hotspot.user.avatar_file_name %>
-            <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
+            <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
           <% else %>
-            <%= image_tag @hotspot.user.avatar(:small), class:"img-rounded" %>
+            <%= image_tag @hotspot.user.avatar(:thumb), class:"img-rounded" %>
           <% end %>
           <%= @hotspot.user.name + " " + @hotspot.user.lastname %>
     			<br><br>

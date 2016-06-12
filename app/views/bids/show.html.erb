@@ -26,12 +26,10 @@
           <% end %>
         </div>
         <div class="panel-body">
-  				<% if @bid.bid_details.first.avatar_file_name == nil %>
-            <%= image_tag("bid_a.png", :size => "200x200", class:"img-rounded" ) %>
-          <% else %>
-            <%= image_tag @bid.bid_details.first.avatar, :size => "200x200", class:"img-rounded"  %>
+          <% if @bid.bid_details.first != nil %>
+            <%= carousel(@bid.bid_details, "big") %>
+            <br><br>
           <% end %>
-          <br><br>
           <b>Ausführungsdatum von-bis:</b><br>
           <%= @bid.date_from.strftime("%d.%m.%Y") %> - <%= @bid.date_to.strftime("%d.%m.%Y") %>
           <br><br>
@@ -40,9 +38,9 @@
           <br><br>
           <b>ausgeschrieben von:</b><br>
           <% if !@bid.user.avatar_file_name %>
-            <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
+            <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
           <% else %>
-            <%= image_tag @bid.user.avatar(:small), class:"img-rounded" %>
+            <%= image_tag @bid.user.avatar(:thumb), class:"img-rounded" %>
           <% end %>
           <%= @bid.user.name + " " + @bid.user.lastname %>
     			<br><br>
@@ -76,7 +74,7 @@
         				<% if bd.avatar_file_name == nil %>
                   <%= image_tag("bid_a.png", :size => "500x500", class:"img-rounded" ) %>
                 <% else %>
-                  <%= image_tag bd.avatar, :size => "500x500", class:"img-rounded"  %>
+                  <%= image_tag bd.avatar(:big), class:"img-rounded"  %>
                 <% end %>
                 <p>
     						<%= bd.description %>

@@ -46,16 +46,11 @@
                   <% end %><br>
                 </td>
                 <td>
-                  <% hd = h.hotspot_details.first %>
-                  <% if hd %>
-                    <%= link_to h do %>
-                      <% if !hd.avatar_file_name %>
-                        <%= image_tag("target_a.png", :size => "50x50" , class:"img-rounded") %>
+                  <% if h.hotspot_details != nil %>
+                        <%= carousel(h.hotspot_details, "thumb") %>
                       <% else %>
-                        <%= image_tag hd.avatar(:small), class:"img-rounded"%>
-                      <% end %>
-                    <% end %>
-                  <% end %>
+                        <%= image_tag("hotspot_a.png", :size => "100x100", class:"img-rounded" ) %>
+              		<% end %>
                 </td>
                 <td>
                   <%= link_to h do %>

@@ -26,20 +26,22 @@
           <% end %>
         </div>
         <div class="panel-body">
-  				<% if @request.request_details.first.avatar_file_name == nil %>
-            <%= image_tag("request_a.png", :size => "200x200", class:"img-rounded" ) %>
-          <% else %>
-            <%= image_tag @request.request_details.first.avatar, :size => "200x200", class:"img-rounded"  %>
+          <% if @request.request_details.first != nil %>
+    				<% if @request.request_details.first.avatar_file_name == nil %>
+              <%= image_tag("request_a.png", :size => "200x200", class:"img-rounded" ) %>
+            <% else %>
+              <%= image_tag @request.request_details.first.avatar, :size => "200x200", class:"img-rounded"  %>
+            <% end %>
+            <br><br>
           <% end %>
-          <br><br>
           <b>Beschreibung</b><br>
     			<%= @request.description %>
           <br><br>
           <b>aufgegeben von:</b><br>
           <% if !@request.user.avatar_file_name %>
-            <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
+            <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
           <% else %>
-            <%= image_tag @request.user.avatar(:small), class:"img-rounded" %>
+            <%= image_tag @request.user.avatar(:thumb), class:"img-rounded" %>
           <% end %>
           <%= @request.user.name + " " + @request.user.lastname %>
     			<br><br>

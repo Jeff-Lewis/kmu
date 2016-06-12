@@ -56,7 +56,7 @@
               <% end %>
             <% end %>
           <% end %>
-            ANGEBOT
+            ANGEBOTE
         </h2>
       </div>
       <div class="panel-body">
@@ -71,7 +71,7 @@
         				<% if cs.avatar_file_name == nil %>
                   <%= image_tag("service_a.png", :size => "200x200", class:"img-rounded" ) %>
                 <% else %>
-                  <%= image_tag cs.avatar, :size => "200x200", class:"img-rounded"  %>
+                  <%= image_tag cs.avatar(:medium), class:"img-rounded"  %>
                 <% end %>
                 <br>
       	        <%= link_to cs do %>
@@ -114,7 +114,7 @@
         				<% if cs.avatar_file_name == nil %>
                   <%= image_tag("money.png", :size => "200x200", class:"img-rounded" ) %>
                 <% else %>
-                  <%= image_tag cs.avatar, :size => "200x200", class:"img-rounded"  %>
+                  <%= image_tag cs.avatar(:medium), class:"img-rounded"  %>
                 <% end %>
                 <br>
                 Preis <%= sprintf("%05.2f CHF", cs.price_new) if cs.price_new != nil %> statt <%= sprintf("%05.2f CHF", cs.price_reg) if cs.price_reg != nil %>
@@ -161,7 +161,7 @@
         				<% if cv.avatar_file_name == nil %>
                   <%= image_tag("vehicle_a.png", :size => "200x200", class:"img-rounded" ) %>
                 <% else %>
-                  <%= image_tag cv.avatar, :size => "200x200", class:"img-rounded"  %>
+                  <%= image_tag cv.avatar(:medium), class:"img-rounded"  %>
                 <% end %>
                 <br>
       				  <%= cv.mob_category.name %>
@@ -207,7 +207,7 @@
         				<% if cj.company.avatar_file_name == nil %>
                   <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
                 <% else %>
-                  <%= image_tag cj.company.avatar, :size => "200x200", class:"img-rounded"  %>
+                  <%= image_tag cj.company.avatar(:medium), class:"img-rounded"  %>
                 <% end %>
     						<br>
       	        <%= link_to cj do %>
@@ -248,11 +248,11 @@
                 <p>
     						<%= align_text(ce.description) %>
     						</p>
-        				<% if ce.avatar_file_name == nil %>
-                  <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
-                <% else %>
-                  <%= image_tag ce.avatar, :size => "200x200", class:"img-rounded"  %>
-                <% end %>
+                <% if ce.event_details.count > 0 %>
+                    <%= carousel(ce.event_details, "medium") %>
+                  <% else %>
+                    <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
+          			<% end %>
                 <br>
                 <p>
       						<%= ce.ev_category.name %>
@@ -292,11 +292,11 @@
                 <p>
     						<%= align_text(cs.event.description) %>
     						</p>
-        				<% if cs.event.avatar_file_name == nil %>
-                  <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
-                <% else %>
-                  <%= image_tag cs.event.avatar, :size => "200x200", class:"img-rounded"  %>
-                <% end %>
+                <% if cs.event.event_details.count > 0 %>
+                    <%= carousel(cs.event.event_details, "medium") %>
+                  <% else %>
+                    <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
+          			<% end %>
                 <br>
                 <%= cs.event.ev_category.name %>
                 <br>
@@ -351,13 +351,11 @@
               <p>
   						<%= align_text(cds.description) %>
   						</p>
-              <% cds.donation_details.limit(1).each do |cdd| %>
-        				<% if cdd.avatar_file_name == nil %>
-                  <%= image_tag("donation_a.jpg", :size => "200x200", class:"img-rounded" ) %>
-                <% else %>
-                  <%= image_tag cdd.avatar, :size => "200x200", class:"img-rounded"  %>
-                <% end %>
-              <% end %>
+              <% if cds.donation_details != nil %>
+                    <%= carousel(cds.donation_details, "medium") %>
+                  <% else %>
+                    <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
+          		<% end %>
               <br>
               Spendenbetrag <%= sprintf("%05.2f CHF", cds.donation_stats.sum(:amount)) %>
               <br><br>
@@ -393,13 +391,11 @@
               <p>
   						<%= align_text(cds.donation.description) %>
   						</p>
-              <% cds.donation.donation_details.limit(1).each do |cdd| %>
-        				<% if cdd.avatar_file_name == nil %>
-                  <%= image_tag("donation_a.jpg", :size => "200x200", class:"img-rounded" ) %>
-                <% else %>
-                  <%= image_tag cdd.avatar, :size => "200x200", class:"img-rounded"  %>
-                <% end %>
-              <% end %>
+              <% if cds.donation.donation_details != nil %>
+                    <%= carousel(cds.donation.donation_details, "medium") %>
+                  <% else %>
+                    <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
+          		<% end %>
               <br>
               Spendenbetrag <%= sprintf("%05.2f CHF", cds.amount) %> am <%= cds.created_at.strftime("%d.%m.%Y") %>
               <br><br>
@@ -422,9 +418,6 @@
     <div class="col-md-12">
       <div class="panel-heading header">
         <h1>
-        <%= link_to new_favourit_path do %>
-          <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
-        <% end %>
         Favoriten
         <span class="badge"><%= @favanz %></span>
         </h1>
@@ -449,29 +442,24 @@
 
               <% if f.object_name == "User" or f.object_name == "Company" %>
                 <% if @item.avatar != nil %>
-                  <%= image_tag @item.avatar, :size => 200, class:"img-rounded" %>
-                <% end %>
-              <% end %>
-              <% if f.object_name == "Donation" %>
-                <% if @item.donation_details.first.avatar != nil %>
-                  <%= image_tag @item.donation_details.first.avatar, :size => 200, class:"img-rounded" %>
+                  <%= image_tag @item.avatar(:medium), class:"img-rounded" %>
                 <% end %>
               <% end %>
 
               <br>
               <% if f.active %>
-                <% image_tag("icon_active.jpg", :size => "50x50" , class:"img-rounded") %>
+                <% image_tag("icon_active.jpg", :size => "100x100" , class:"img-rounded") %>
                  <i class="glyphicon glyphicon-ok-sign"></i> aktiv
               <% else %>
-                <% image_tag("icon_inactive.jpg",:size => "50x50", class:"img-rounded") %>
+                <% image_tag("icon_inactive.jpg",:size => "100x100", class:"img-rounded") %>
                  <i class="glyphicon lg glyphicon-remove-sign"></i> inaktiv
               <% end %>
               <% if f.email %>
-                <% image_tag("icon_active.jpg", :size => "50x50" , class:"img-rounded") %>
+                <% image_tag("icon_active.jpg", :size => "100x100" , class:"img-rounded") %>
                  <i class="glyphicon glyphicon-ok-sign"></i> eMail
               <% end %>
               <% if f.ticker %>
-                <% image_tag("icon_active.jpg", :size => "50x50" , class:"img-rounded") %>
+                <% image_tag("icon_active.jpg", :size => "100x100" , class:"img-rounded") %>
                  <i class="glyphicon glyphicon-ok-sign"></i> Ticker
               <% end %>
               <br><br>
