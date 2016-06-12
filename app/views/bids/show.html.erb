@@ -155,8 +155,10 @@
         <h2>
           <% if user_signed_in? %>
             <% if current_user.id == @bid.user_id %>
-              <%= link_to new_bid_document_path :bid_id => @bid.id, :mode => "company" do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+              <% if current_user.companies != nil %>
+                <%= link_to new_bid_document_path :bid_id => @bid.id, :mode => "company" do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+                <% end %>
               <% end %>
             <% end %>
           <% end %>
@@ -173,29 +175,24 @@
                   </div>
                   <%= bd.name %>
                   <br>
-          				<% if bd.document_file_name != nil %>
-                    <%= bd.document_file_name %>
-                  <% end %>
                   <p>
       						<%= bd.description %>
       						</p>
                   <% if user_signed_in? %>
+                    <% download = false %>
                     <% if current_user.id == @bid.user_id %>
             	        <%= link_to bd.document.url, target: "_blank" do %>
                         <i class="btn btn-primary btn-lg glyphicon glyphicon-cloud-download"></i>
                       <% end %>
-                    <% else %>
-                      <% if @bd.company_id != nil %>
-                        <% if current_user.id == @bd.company.user_id %>
-                	        <%= link_to bd.document.url, target: "_blank" do %>
-                            <i class="btn btn-primary btn-lg glyphicon glyphicon-cloud-download"></i>
-                          <% end %>
-                	        <%= link_to edit_bid_document_path(bd) do %>
-                            <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                          <% end %>
-                	        <%= link_to bd, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                            <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
-                          <% end %>
+                      <% download = true %>
+                    <% end %>
+                    <% if bd.company_id != nil %>
+                      <% if current_user.id == bd.company.user_id %>
+              	        <%= link_to edit_bid_document_path(bd) do %>
+                          <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                        <% end %>
+              	        <%= link_to bd, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
                         <% end %>
                       <% end %>
                     <% end %>
