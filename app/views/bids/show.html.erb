@@ -120,9 +120,6 @@
                   <div class="anzeigetext">
         						<%= bd.name %>
                   </div>
-          				<% if bd.document_file_name != nil %>
-                    <%= bd.document_file_name %>
-                  <% end %>
                   <p>
       						<%= bd.description %>
       						</p>
@@ -172,7 +169,12 @@
                 <div class="thumbnail" align="center">
                   <div class="anzeigetext">
         						<%= bd.company.name %>
-                  </div>
+                  </div><br>
+                    <% if !bd.company.avatar_file_name %>
+                      <%= image_tag("company_a.png", :size => "200x200" , class:"img-rounded") %>
+                    <% else %>
+                      <%= image_tag bd.company.avatar(:medium), class:"img-rounded" %>
+                    <% end %>
                   <%= bd.name %>
                   <br>
                   <p>

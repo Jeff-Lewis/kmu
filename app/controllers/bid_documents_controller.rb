@@ -15,8 +15,10 @@ class BidDocumentsController < ApplicationController
   def new
     @bid_document = BidDocument.new
     @bid_document.bid_id = params[:bid_id]
-    if params[:mode] != nil
+    if params[:mode] == "company"
       @bid_document.company_id = 0
+    else
+      @bid_document.company_id = nil
     end
   end
 
