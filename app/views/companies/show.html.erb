@@ -178,6 +178,43 @@
   </div>
   <br>
   <% end %>
+
+<% if $activeapps.include?("Ausschreibungen") %>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <h2>
+            AUSSCHREIBUNGEN
+        </h2>
+      </div>
+      <div class="panel-body">
+      		<% @company.bid_documents each do |cbd| %>
+            <div class="col-md-4">
+              <div class="thumbnail" align="center">
+                <div class="anzeigetext">
+      						<%= cbd.bid.name %>
+                </div>
+                <p>
+      				  <%= align_text(cbd.bid.description) %>
+      				  </p>
+                <% if cbd.bid.bid_details != nil %>
+                      <%= carousel(cbd.bid.bid_details, "medium") %>
+                    <% else %>
+                      <%= image_tag("bid_a.png", :size => "200x200", class:"img-rounded" ) %>
+            		<% end %>
+    						<br>
+      	        <%= link_to cbd.bid do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
+                <% end %>
+                <br><br>
+      			  </div>
+      			 </div>
+      		<% end %>
+    	</div>
+    </div>
+  </div>
+  <br>
+  <% end %>
   
   <% if $activeapps.include?("Stellenanzeigen") %>
   <div class="row">

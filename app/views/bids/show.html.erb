@@ -102,6 +102,118 @@
     <div class="col-md-12">
       <div class="panel-heading header">
         <h2>
+          <% if user_signed_in? %>
+            <% if current_user.id == @bid.user_id %>
+              <%= link_to new_bid_document_path :bid_id => @bid.id, :mode => "user" do %>
+                <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+              <% end %>
+            <% end %>
+          <% end %>
+            AUSSCHREIBUNGSDOKUMENTE
+        </h2>
+      </div>
+      <div class="panel-body">
+      		<% @bid.bid_documents.each do |bd| %>
+            <% if bd.company_id == nil %>
+              <div class="col-md-4">
+                <div class="thumbnail" align="center">
+                  <div class="anzeigetext">
+        						<%= bd.name %>
+                  </div>
+          				<% if bd.document_file_name != nil %>
+                    <%= bd.document_file_name %>
+                  <% end %>
+                  <p>
+      						<%= bd.description %>
+      						</p>
+                  <% if user_signed_in? %>
+                    <% if current_user.id == @bid.user_id %>
+            	        <%= link_to bd.document.url, target: "_blank" do %>
+                        <i class="btn btn-primary btn-lg glyphicon glyphicon-cloud-download"></i>
+                      <% end %>
+            	        <%= link_to edit_bid_document_path(bd) do %>
+                        <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                      <% end %>
+            	        <%= link_to bd, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                        <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <br><br>
+        			  </div>
+        			</div>
+        		<% end %>
+      		<% end %>
+    	</div>
+    </div>
+  </div>
+  <br>
+        
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <h2>
+          <% if user_signed_in? %>
+            <% if current_user.id == @bid.user_id %>
+              <%= link_to new_bid_document_path :bid_id => @bid.id, :mode => "company" do %>
+                <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+              <% end %>
+            <% end %>
+          <% end %>
+            ANGEBOTSDOKUMENTE
+        </h2>
+      </div>
+      <div class="panel-body">
+      		<% @bid.bid_documents.each do |bd| %>
+            <% if bd.company_id != nil %>
+              <div class="col-md-4">
+                <div class="thumbnail" align="center">
+                  <div class="anzeigetext">
+        						<%= bd.company.name %>
+                  </div>
+                  <%= bd.name %>
+                  <br>
+          				<% if bd.document_file_name != nil %>
+                    <%= bd.document_file_name %>
+                  <% end %>
+                  <p>
+      						<%= bd.description %>
+      						</p>
+                  <% if user_signed_in? %>
+                    <% if current_user.id == @bid.user_id %>
+            	        <%= link_to bd.document.url, target: "_blank" do %>
+                        <i class="btn btn-primary btn-lg glyphicon glyphicon-cloud-download"></i>
+                      <% end %>
+                    <% else %>
+                      <% if @bd.company_id != nil %>
+                        <% if current_user.id == @bd.company.user_id %>
+                	        <%= link_to bd.document.url, target: "_blank" do %>
+                            <i class="btn btn-primary btn-lg glyphicon glyphicon-cloud-download"></i>
+                          <% end %>
+                	        <%= link_to edit_bid_document_path(bd) do %>
+                            <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                          <% end %>
+                	        <%= link_to bd, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                            <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <br><br>
+        			  </div>
+        			</div>
+        		<% end %>
+      		<% end %>
+    	</div>
+    </div>
+  </div>
+  <br>
+        
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <h2>
             ORTSANGABE
         </h2>
       </div>

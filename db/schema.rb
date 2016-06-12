@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160607052658) do
+ActiveRecord::Schema.define(version: 20160612104244) do
 
   create_table "appparams", force: :cascade do |t|
     t.string   "name"
@@ -32,6 +32,20 @@ ActiveRecord::Schema.define(version: 20160607052658) do
     t.datetime "avatar_updated_at"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+  end
+
+  create_table "bid_documents", force: :cascade do |t|
+    t.integer  "bid_id"
+    t.integer  "company_id"
+    t.string   "name"
+    t.text     "description"
+    t.string   "status"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
   end
 
   create_table "bids", force: :cascade do |t|
@@ -172,8 +186,8 @@ ActiveRecord::Schema.define(version: 20160607052658) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "geo_address"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "favourits", force: :cascade do |t|
@@ -331,8 +345,8 @@ ActiveRecord::Schema.define(version: 20160607052658) do
     t.float    "from_lgt"
     t.boolean  "special"
     t.string   "rtype"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   create_table "services", force: :cascade do |t|

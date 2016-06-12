@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :bid_documents
   resources :hs_ratings
   resources :hotspot_details
   resources :hotspots

@@ -2,6 +2,7 @@ class Bid < ActiveRecord::Base
     belongs_to :user
     belongs_to :category
     has_many :bid_details, dependent: :destroy 
+    has_many :bid_documents, dependent: :destroy 
 
     validates :name, presence: true
     
