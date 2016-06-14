@@ -91,16 +91,18 @@
       		<% @user.services.each do |us| %>
             <div class="col-md-4">
               <div class="thumbnail" align="center">
-                <div class="anzeigetext">
+                <anzeigetext>
       						<%= us.name %>
-                </div>
+                </anzeigetext>
                 <% if us.avatar_file_name == nil %>
                   <%= image_tag("service_a.png", :size => "200x200", class:"img-rounded" ) %>
                 <% else %>
                   <%= image_tag us.avatar, :size => "200x200", class:"img-rounded"  %>
                 <% end %>
                 <p>
+                <ntext>
     						<%= align_text(us.description) %>
+                </ntext>
     						</p>
                 <br><br>
       	        <%= link_to service_path(us) do %>
@@ -145,20 +147,22 @@
       		<% @user.companies.each do |uc| %>
             <div class="col-md-4">
               <div class="thumbnail" align="center">
-                <div class="anzeigetext">
+                <anzeigetext>
       						<%= uc.name %>
-                </div>
+                </anzeigetext>
         				<% if uc.avatar_file_name == nil %>
                   <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
                 <% else %>
                   <%= image_tag uc.avatar, :size => "200x200", class:"img-rounded"  %>
                 <% end %>
                 <p>
+                <ntext>
     						<%= uc.category.name %>
     						</p>
                 <p>
     						<%= align_text(uc.description) %>
     						</p>
+    						</ntext>
     						<br>
       	        <%= link_to uc do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
@@ -195,11 +199,13 @@
       		<% @user.requests.order(created_at: :desc).each do |ur| %>
             <div class="col-md-4">
               <div class="thumbnail" align="center">
-                <div class="anzeigetext">
+                <anzeigetext>
       						<%= ur.rtype + " " + ur.name %>
-                </div>
+                </anzeigetext>
                 <p>
+                <ntext>
     						<%= ur.description %>
+    						</ntext>
     						</p>
                 <% if ur.request_details != nil %>
                       <%= carousel(ur.request_details, "medium") %>
@@ -239,14 +245,15 @@
       		<% @user.vehicles.each do |uv| %>
             <div class="col-md-4">
               <div class="thumbnail" align="center">
-                <div class="anzeigetext">
-      						<%= uv.name %>
-                </div>
+                <anzeigetext>
+      						<%= uv.name %><br>
+                </anzeigetext>
         				<% if uv.avatar_file_name == nil %>
                   <%= image_tag("vehicle_a.png", :size => "200x200", class:"img-rounded" ) %>
                 <% else %>
                   <%= image_tag uv.avatar(:medium), class:"img-rounded"  %>
                 <% end %>
+                <ntext>
                 <p>
       						<%= uv.mob_category.name %>
     						</p>
@@ -254,6 +261,7 @@
       						<%= align_text(uv.description) %>
     						</p>
     						<br>
+    						</ntext>
       	        <%= link_to uv do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
                 <% end %>
@@ -286,20 +294,22 @@
       		<% @user.events.each do |ue| %>
             <div class="col-md-4">
               <div class="thumbnail" align="center">
-                <div class="anzeigetext">
-      						<%= ue.name %>
-                </div>
+                <anzeigetext>
+      						<%= ue.name %><br>
+                </anzeigetext>
                 <% if ue.event_details.count > 0 %>
                   <%= carousel(ue.event_details, "medium") %>
                 <% else %>
                   <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
           			<% end %>
+                <ntext>
                 <p>
       						<%= ue.ev_category.name %>
     						</p>
                 <p>
     						<%= align_text(ue.description) %>
     						</p>
+                </ntext>
     						<br>
       	        <%= link_to ue do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
@@ -333,17 +343,19 @@
       		<% @user.hotspots.each do |uh| %>
             <div class="col-md-4">
               <div class="thumbnail" align="center">
-                <div class="anzeigetext">
-      						<%= uh.name %>
-                </div>
+                <anzeigetext>
+      						<%= uh.name %><br>
+                </anzeigetext>
                 <% if uh.hotspot_details != nil %>
                       <%= carousel(uh.hotspot_details, "medium") %>
                     <% else %>
                       <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
             		<% end %>
+            		<ntext>
                 <p>
     						<%= align_text(uh.description) %>
     						</p>
+                </ntext>
     						<br>
       	        <%= link_to uh do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
@@ -377,10 +389,12 @@
       		<% @user.bids.each do |ub| %>
             <div class="col-md-4">
               <div class="thumbnail" align="center">
-                <div class="anzeigetext">
-                  <%= ub.name %>
-                </div>
+                <anzeigetext>
+                  <%= ub.name %><br>
+                </anzeigetext>
+                <ntext>
       				  <%= align_text(ub.description) %>
+                </ntext>
       				  </p>
                 <% if ub.bid_details != nil %>
                       <%= carousel(ub.bid_details, "medium") %>
@@ -413,20 +427,22 @@
   	    <% @user.donation_stats.each do |uds| %>
           <div class="col-md-4">
             <div class="thumbnail" align="center">
-    					<%= uds.donation.company.name %>
-              <div class="anzeigetext">
-    						<%= uds.donation.name %>
-              </div>
+              <anzeigetext>
+    						<%= uds.donation.name %><br>
+              </anzeigetext>
+              <ntext>
+    					<%= uds.donation.company.name %><br>
               <p>
   						<%= align_text(uds.donation.description) %>
   						</p>
+              </ntext>
               <% if uds.donation.donation_details != nil %>
                     <%= carousel(uds.donation.donation_details, "medium") %>
                   <% else %>
                     <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
           		<% end %>
               <br>
-              Spendenbetrag <%= sprintf("%05.2f CHF", uds.amount) %> am <%= uds.created_at.strftime("%d.%m.%Y") %>
+              <ntext>Spendenbetrag</ntext><br><preis><%= sprintf("%05.2f CHF", uds.amount) %></preis><ntext><br> am <%= uds.created_at.strftime("%d.%m.%Y") %></ntext>
               <br><br>
     	        <%= link_to uds.donation do %>
                 <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
@@ -454,17 +470,20 @@
         <% @user.ratings.each do |ur| %>
           <div class="col-md-4">
             <div class="thumbnail" align="center">
+              <anzeigetext>
+    						<%= ur.service.name %><br>
+              </anzeigetext>
+              <ntext>
               <% if ur.service.company_id != nil %>
       					<%= ur.service.company.name %>
               <% end %>
               <% if ur.service.user_id != nil %>
       					<%= ur.service.user.name + " " + ur.service.user.lastname %>
               <% end %>
-              <div class="anzeigetext">
-    						<%= ur.service.name %>
-              </div>
               <p>
   						<%= align_text(ur.service.description) %>
+  						</p>
+  						</ntext>
               <% if ur.service.avatar == nil %>
                 <%= image_tag("service_a.png", :size => "200x200" , class:"img-rounded") %>
               <% else %>
@@ -476,7 +495,9 @@
                 <i class="glyphicon glyphicon-star"></i>
               <% end %>
               <br>
+              <ntext>
               <%= ur.user_comment %>
+              </ntext>
               <br><br>
     	        <%= link_to ur.service do %>
                 <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
@@ -503,7 +524,7 @@
         <% @user.favourits.each do |f| %>
           <div class="col-md-4">
             <div class="thumbnail" align="center">
-              <div class="anzeigetext">
+              <anzeigetext>
                 <% @item = Object.const_get(f.object_name).find(f.object_id) %>
                 <% if @item != nil %>
                   <% if f.object_name == "User" %>
@@ -515,7 +536,7 @@
                   <%= f.object_name %><br>
                   <%= f.object_id %>
                 <% end %>
-              </div>
+              </anzeigetext>
               <% if f.object_name == "User" or f.object_name == "Company" %>
                 <% if @item.avatar != nil %>
                   <%= image_tag @item.avatar(:medium), class:"img-rounded" %>

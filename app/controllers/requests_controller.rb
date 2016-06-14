@@ -1,6 +1,6 @@
 class RequestsController < ApplicationController
   before_action :set_request, only: [:show, :edit, :update, :destroy]
-  permits :status, :rtype, :active, :price, :user_id, :name, :description, :social
+  permits :status, :rtype, :active, :price, :user_id, :name, :description, :social, :date_from, :date_to
 
   # GET /requests
   def index
@@ -29,6 +29,8 @@ class RequestsController < ApplicationController
     @request.user_id = current_user.id
     @request.active = true
     @request.status = "new"
+    @request.date_from = Date.today
+    @request.date_to = Date.today + 10
   end
 
   # GET /requests/1/edit

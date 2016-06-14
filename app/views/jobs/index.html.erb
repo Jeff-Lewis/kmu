@@ -27,8 +27,6 @@
   <% @jobs.each do |j| %>
     <div class="col-md-4">
       
-      <%= link_to job_path(:id => j.id, :job_id => j.id) do %>
-      
         <div class="thumbnail" align="center">
           
           <p>
@@ -40,17 +38,20 @@
     			</p>
     	    
           <div class="caption">
-    			  <div class="anzeigetext">
+    			  <anzeigetext>
     					<%= j.name %> 
-    				</div>
+    				</anzeigetext>
+            <ntext>
             <p>
     				  <%= j.company.name %>
     				</p>
             <p>
     				  <%= j.company.category.name %>
     				</p>
+    				</ntext>
     			</div>
   
+          <ntext>
           <p>
     		  <%= j.created_at.strftime("%d.%b.%Y %H:%M Uhr") %>
     		  
@@ -65,13 +66,12 @@
             Vor <%= anz %> Tagen
     		  <% end %>
           </p>
-    
+          </ntext>    
     			<p>
             <%= link_to job_path(:id => j.id, :job_id => j.id) do %>
               <i class="btn btn-primary btn btn-lg glyphicon glyphicon-info-sign"></i>
             <% end %>
     		</div>
-    	<% end %>
 		</div>
   <% end %>
 </div>

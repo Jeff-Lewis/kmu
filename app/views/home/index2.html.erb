@@ -1,0 +1,130 @@
+<div class="container-fluid">
+  
+  <div class="row">
+    <div class="col-md-12">
+    <%= image_tag ('bg.jpg'), :size => "400x800" %> 
+  </div>
+  
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-1" href="#xTG"><h2><b>xConnect</b> - das regionale Portal</h2></a>
+    	<div id="xConnect" class="panel-collapse collapse">
+            dsjhgfjdhg jdfhgjdfhgjdfhgjdfhj
+    	</div>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel-heading header">
+        <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-1" href="#uns"><h2>über uns</h2></a>
+    	<div id="uns" class="panel-collapse collapse">
+        Unser Angebot 
+        xTG.ch bietet Ihnen alles, was Sie von einem führenden Marktplatz erwarten. Das gesamte Basisangebot ist kostenlos; einzelne Services können gegen geringe Gebühr hinzugebucht werdeb. 
+      </div>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="panel-heading header">
+        <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-1" href="#biz"><h2>Geschäftsbedingungen</h2></a>
+    	<div id="biz" class="panel-collapse collapse">
+        Allgemeine Geschäftsbedingungen
+        Die Gesellschaft xTG repräsentiert eine Kooperation zwischen xxx mit dem Ziel des Betriebs und der Weiterentwicklung des Marktplatzes xTG. Auf dieser Plattform können Privat- & Firmenkunden Ihre Angebote präsentieren. Ziel ist die Schaffung von Markttransparenz bzgl. des Dienstleistungsangebots in dieser Region. 
+        Die nachfolgenden Allgemeinen Geschäftsbedingungen (AGB) regeln die rechtlichen Beziehungen zwischen dem Nutzer der Plattform. Sie gelten für jede Art von Nutzung dieser Plattform. Sämtliche Angaben erfolgen ohne Gewähr.
+    	</div>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel-heading header">
+        <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-1" href="#legal"><h2>Rechtliches</h2></a>
+    	<div id="legal" class="panel-collapse collapse">
+            dsjhgfjdhg jdfhgjdfhgjdfhgjdfhj
+    	</div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel-heading header">
+        <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-1" href="#imp"><h2>Impressum</h2></a>
+    	<div id="imp" class="panel-collapse collapse">
+        Impressum
+        Die Gesellschaft xTG als Betreiberin des Marktplatzes repräsentiert eine Kooperation folgender Partner.
+    	</div>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel-heading header">
+        <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-1" href="#sec"><h2>Sicherheit</h2></a>
+    	<div id="sec" class="panel-collapse collapse">
+      Sicherheit
+      Verhalten Sie sich bei äusserst attraktiven Angeboten vorsichtig. Wenn Sie nicht sicher sind, ob es sich beim Angebot um ein betrügerisches Inserat handelt, lassen Sie das Angebot von uns überprüfen indem Sie betrügerische Inserate melden
+      </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel-heading header">
+        <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-1" href="#con"><h2>Partner</h2></a>
+    	<div id="con" class="panel-collapse collapse">
+      Partner werden
+      xTG bietet eine offene Schnittstelle für Partner.
+    	</div>
+      </div>
+    </div>
+  </div>
+  <br>
+  
+  <% if 1 > 2 %>
+  <div class="row">
+    <div class="col-md-4">
+
+      <% @users = User.last(2) %>
+      <div class="thumbnail" align="center">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+
+          <ol class="carousel-indicators">
+          <% @users.each do |p| %>
+            <li data-target="#carousel-example-generic" data-slide-to="'"<%= p.id.to_s %>"'" class="active"></li>
+          <% end %>
+          </ol>
+          
+          <div class="carousel-inner" role="listbox">
+            <% first = true %>
+            <% @users.each do |p| %>
+              <% if first %>
+                  <div class="item active">
+                  <% first = false %>
+              <% else %>
+                  <div class="item">
+              <% end %>
+          	    <% if p.avatar_file_name == nil %>
+                      <%= image_tag("user_a.png", class:"img-responsive img-rounded") %>
+                <% else %>
+                      <%= image_tag p.avatar(:medium), class:"img-rounded"  %>
+                <% end %>
+                <div class="carousel-caption">
+                  <p>
+                    <h1>
+                      <%= p.name + " " + p.lastname %> </em>
+                    </h1>
+                  </p>
+                </div>
+              </div>
+            <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+
+</div>

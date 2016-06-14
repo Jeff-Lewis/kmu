@@ -24,19 +24,16 @@ class SearchesController < ApplicationController
   def show
   end
 
-  #  # GET /searches/1/call
-  def call
-    redirect_to users_path
-  end
-
   # GET /searches/new
   def new
     @search = Search.new
     @search.search_domain = params[:search_domain]
     @search.user_id = params[:user_id]
     @search.controller = params[:controller_name]
-    @current_longitude = request.location.longitude
-    @current_latitude= request.location.latitude
+    @search.distance = 0
+    @search.longitude = request.location.longitude
+    @search.latitude= request.location.latitude
+    
   end
 
   # GET /searches/1/edit
@@ -89,6 +86,6 @@ class SearchesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_search(id)
       @search = Search.find(id)
-      @count = @search.build_sql
+      @count = @search.build_sql if (action_name != "destroy")
     end
 end

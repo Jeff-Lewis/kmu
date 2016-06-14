@@ -68,7 +68,7 @@
                     <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% when "Kleinanzeigen" %>
-                  <%= link_to requests_path :sql_string => s.sql_string do %>
+                  <%= link_to requests_path :sql_string => s.sql_string, :rtype => s.rtype do %>
                     <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% when "Stellenanzeigen" %>
@@ -97,13 +97,15 @@
                 </td>
                 <td>
                   <%= link_to edit_search_path(s) do %>
-                      <div class="anzeigetext">
-                        <%= s.name %>
-                      </div>
+                      <anzeigetext>
+                        <%= s.name %><br>
+                      </anzeigetext>
                   <% end %>
                 </td>
+                <ntext>
                 <td><%= s.description %></td>
-              </tr>
+                </ntext>
+                </tr>
             <% end %>
           </tbody>
         </table>

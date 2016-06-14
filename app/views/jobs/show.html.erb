@@ -32,6 +32,12 @@
             <%= image_tag @job.company.avatar(:medium), class:"img-rounded"  %>
           <% end %>
           <br><br>
+          <% if @job.date_from != nil or @job.date_to != nil %>
+            <b>Datum von-bis:</b><br>
+            <%= @job.date_from if @job.date_from != nil %>
+            <%= @job.date_to if @job.date_to != nil %>
+            <br><br>
+          <% end %>
           <b>aufgegeben von:</b><br>
           <%= @job.company.name %><br>
           <%= @job.company.category.name %><br>
@@ -58,44 +64,52 @@
         
         <div class="col-md-4">
           <div class="thumbnail" align="center">
-            <div class="anzeigetext">
+            <anzeigetext>
   						Ihre Aufgaben
-            </div>
+            </anzeigetext>
             <p>
+              <ntext>
   						<%= @job.tasks %>
+  						</ntext>
   					</p>
           </div>
         </div>
         
         <div class="col-md-4">
           <div class="thumbnail" align="center">
-            <div class="anzeigetext">
+            <anzeigetext>
   						wir erwarten
-            </div>
+            </anzeigetext>
             <p>
+              <ntext>
   						<%= @job.skills %>
+  						</ntext>
   					</p>
           </div>
         </div>
 
         <div class="col-md-4">
           <div class="thumbnail" align="center">
-            <div class="anzeigetext">
+            <anzeigetext>
   						wir bieten
-            </div>
+            </anzeigetext>
             <p>
+              <ntext>
   						<%= @job.offers %>
+  						</ntext>
   					</p>
           </div>
         </div>
 
         <div class="col-md-4">
           <div class="thumbnail" align="center">
-            <div class="anzeigetext">
+            <anzeigetext>
   						Ihr Kontakt
-            </div>
+            </anzeigetext>
             <p>
+              <ntext>
   						<%= @job.contacts %>
+  						</ntext>
   					</p>
           </div>
         </div>

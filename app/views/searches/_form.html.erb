@@ -20,7 +20,10 @@
                       <%= link_to searches_path :page => session[:page], :search_domain => @search.search_domain, :controller_name => @search.controller do %>
                         <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
                       <% end %>
-                      ABFRAGEN <%= @count.to_s %> Einträge gefunden!
+                      ABFRAGEN 
+                      <% if @count != nil %>
+                        Einträge gefunden: <%= @count.to_s %>
+                      <% end %>
                       </h2>
                     </div>
                 </div>
@@ -84,7 +87,8 @@
                           <% for i in 1..5 %>
                               <%= f.radio_button :rating, i.to_i %>
                               <% i.times do %>
-                                <%= image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                                <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                                <i class="glyphicon glyphicon-star"></i>
                               <% end %><br>
                           <% end %>
                         
@@ -93,7 +97,8 @@
                           <% for i in 1..5 %>
                               <%= f.radio_button :rating, i.to_i %>
                               <% i.times do %>
-                                <%= image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                                <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                                <i class="glyphicon glyphicon-star"></i>
                               <% end %><br>
                           <% end %>
                         <div class="form-group">
@@ -139,7 +144,7 @@
                      <% when "Sehenswuerdigkeiten" %>
                         <div class="form-group">
                           <%= f.label "Kategorie" %><br/>
-                          <%= f.collection_select :hs_category_id, HsCategory.all.order(:name), :id, :name, {}, class:"form-control" %>
+                          <%= f.collection_select :hs_category_id, HsCategory.all.order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
                         </div>
 
                      <% when "Spendeninitiativen" %>
@@ -202,12 +207,20 @@
     handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
       markers = handler.addMarkers([
         {
-          "lat": <%= @current_latitude %>,
-          "lng": <%= @current_longitude %>,
-          "infowindow": "aktuelle Position"
+          "zoom": 5,
+          "lat": <%= @search.latitude %>,
+          "lng": <%= @search.longitude %>,
+          "infowindow": "<%= @search.geo_address %>"
         }
       ]);
       handler.bounds.extendWith(markers);
       handler.fitMapToBounds();
-});
+      handler.getMap().setZoom(9);
+    });
+
+   circles = handler.addCircles(
+    [{ lat: <%= @search.latitude %>, lng: <%= @search.longitude %>, radius: <%= @search.distance * 1000 %> }],
+    { strokeColor: '#FF0000'}
+  );
+
 </script>

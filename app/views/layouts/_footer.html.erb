@@ -1,12 +1,74 @@
 <br>
-<div class="container-fluid">
-	<div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <footer>
-            powered by..., (c)opyright 2016, all rights reserved
-        </footer>
-      </div>
+<footer>
+    <div class="panel-body">
+        <div class="col-md-3">
+            <footer_header>
+                XCONNECT
+            </footer_header>
+            <br><br>
+            <footer_text>
+                <%= link_to "Über uns", home_index_path %>
+            </footer_text>
+            <br>
+            <footer_text>
+                <%= link_to "Offene Stellen", home_index_path %>
+            </footer_text>
+            <br>
+            <footer_text>
+                <%= link_to "Rechtliches", home_index_path %>
+            </footer_text>
+            <br>
+            <footer_text>
+                <%= link_to "Impressum", home_index_path %>
+            </footer_text>
+            <br>
+            <footer_text>
+                <%= link_to "Kontakt", home_index_path %>
+            </footer_text>
+        </div>
+        <div class="col-md-3">
+            <footer_header>
+                PARTNER
+            </footer_header>
+            <br><br>
+            <footer_text>
+                <%= link_to "Partner werden", home_index_path %>
+            </footer_text>
+            <br>
+            <footer_text>
+                <%= link_to "Netzwerk", home_index_path %>
+            </footer_text>
+            <br>
+            <footer_text>
+                <%= link_to "Werbung", home_index_path %>
+            </footer_text>
+        </div>
+        <div class="col-md-3">
+            <footer_header>
+                HILFE/FAQ
+            </footer_header>
+            <br><br>
+            <footer_text>
+                <%= link_to "Allgemein", home_index_path %>
+            </footer_text>
+            <br>
+            <footer_text>
+                <%= link_to "Login", home_index_path %>
+            </footer_text>
+            <br>
+            <footer_text>
+                <%= link_to "Registrieren", home_index_path %>
+            </footer_text>
+        </div>
+        <div class="col-md-3">
+            <%= image_tag ('connect.jpg'), :size => "250x140" %>
+        </div>
+        <div class="col-md-12">
+            <br>
+            <% flash.each do |name, msg| %>
+              <% content_tag(:div, msg, class:"alert alert-warning") %>
+              <message><%= msg %></message> 
+            <% end %>
+        </div>
     </div>
-  </div>
-</div>
+</footer>

@@ -50,11 +50,10 @@
               <%= f.label :Betrag %><br>
               <%= f.number_field :amount %>
             </div>
-            <div class="field">
-              <%= f.label "Laufzeit (in Tagen)" %><br>
- 
-            </div>
-            <div>
+            <div class="form-group">
+              <%= f.label "Laufzeit" %><br/>
+              <%= f.text_field :date_from, class:"form-control"%>
+              <%= f.text_field :date_to, class:"form-control"%>
             </div>
             <div class="actions">
               <%= f.submit "Speichern", class:"btn btn-primary btn-lg"%>

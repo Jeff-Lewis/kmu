@@ -1,6 +1,6 @@
 class JobsController < ApplicationController
   before_action :set_job, only: [:show, :edit, :update, :destroy]
-  permits :status, :company_id, :name, :active, :category_id, :stichworte, :tasks, :skills, :offers, :contacts
+  permits :date_from, :date_to, :status, :company_id, :name, :active, :category_id, :stichworte, :tasks, :skills, :offers, :contacts
 
   $branchen_codes = []
 

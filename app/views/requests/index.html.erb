@@ -27,10 +27,13 @@
   <% @requests.each do |req| %>
     <div class="col-md-4">
       
-      <%= link_to request_path(:id => req.id, :request_id => req.id) do %>
-      
         <div class="thumbnail" align="center">
-          
+          <br>
+          <% if req.date_to != nil %>
+            <p>
+              <b><ntext>noch </ntext></b><restlaufzeit><%= (req.date_to - Date.today).to_i.to_s %></restlaufzeit> <b><ntext> Tage</ntext></b>
+            </p>
+          <% end %>
           <p>
           <% if req.request_details.count > 0 %>
               <%= carousel(req.request_details, "medium") %>
@@ -39,22 +42,26 @@
     			<% end %>
     			</p>
           <div class="caption">
-    					<% if req.social %>
-                <%= image_tag("helpinghand.png", :size => "50x50" , class:"img-rounded") %>
-              <% end %>
-              <div class="anzeigetext">
+              <anzeigetext>
       					<%= session[:rtype] + " " +  req.name %>
-      				</div>
+      				</anzeigetext><br>
   					<% if !req.social %>
   					  <% if req.price %>
-    					  <div class="Preis">
+    					  <preis>
     					    <%= sprintf("%05.2f CHF",req.price) %>
-    					  </div>
+    					  </preis>
     					 <% end %>
-  					<% end %>
+    				<% else %>
+                <% image_tag("helpinghand.png", :size => "50x50" , class:"img-rounded") %>
+                <preis>
+                  <i class="glyphicon glyphicon-heart"></i>
+                </preis>
+            <% end %>
             <p>
+              <ntext>
     				  <%= req.description %>
-    				</p>
+              </ntext>
+            </p>
     			</div>
   
           <p>
@@ -66,8 +73,8 @@
             <% end %>
           <% end %>
   
+          <ntext>
     		  <%= req.created_at.strftime("%d.%b.%Y %H:%M Uhr") %>
-    		  
     		  <% if req.created_at.to_date == Date.today %>
     		    Heute
     		  <% end %>
@@ -78,6 +85,7 @@
             <% anz = (Date.today.to_date - req.created_at.to_date).to_i %>
             Vor <%= anz %> Tagen
     		  <% end %>
+          </ntext>    		  
           </p>
     
     			<p>
@@ -85,7 +93,7 @@
               <i class="btn btn-primary btn btn-lg glyphicon glyphicon-info-sign"></i>
             <% end %>
     		</div>
-    	<% end %>
+
 		</div>
   <% end %>
 </div>

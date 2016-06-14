@@ -1,6 +1,6 @@
 class DonationsController < ApplicationController
   before_action :set_donation, only: [:show, :edit, :update, :destroy]
-  permits :days,:status, :name, :description, :company_id, :amount, :active, :stichworte
+  permits :date_from, :date_to, :days,:status, :name, :description, :company_id, :amount, :active, :stichworte
 
   # GET /donations
   def index

@@ -21,14 +21,14 @@
   <%   $activeapps << a.name if a.active %>
 <% end %>
 
-<%= render 'layouts/test' %>
-<%= render 'layouts/header' %>
-<div class='container'></div>
+  <%= render 'layouts/header' %>
+  <div class='container-fluid'>
     <% flash.each do |name, msg| %>
-      <%= content_tag(:div, msg, class:"alert alert-warning") %>
+      <% content_tag(:div, msg, class:"alert alert-warning") %>
     <% end %>
     <%= yield %>
-</div>
-<%= render 'layouts/footer' %>
+  </div>
+  <%= render 'layouts/footer' %>
+
 </body>
 </html>

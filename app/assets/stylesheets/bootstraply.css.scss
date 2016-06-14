@@ -1,9 +1,12 @@
+/* render html5 elements as block */
+
  $mandant: "TKB";
  $color1: #ACC550;         /* hellgruen */
  $color2: #2E6B33;         /* dunkelgruen */
  $color3: white;
  $color4: #F5F5F5;         /* hellgrau */
  $color5: grey;
+ $blocked: #EF8B8B;
  
  $blaugruen: #61A6A7;
  $orange: #E0633B;
@@ -11,7 +14,17 @@
  
  $color1: #58A5EF;
  $color2: #14296C;
- 
+
+.container-fluid {
+    background: $color4!important;
+}
+
+#picture{
+  background: url(asset-path('bluestreaks.jpg')) no-repeat;
+  width: auto;
+  background-size: 100% 100%;
+}
+
  .dropdown {
      font-size:180%!important;
  }
@@ -39,16 +52,45 @@ marquee {
     color: $color5!important;
 }
 
-.anzeigetext {
+restlaufzeit, preis {
+  font-size: 300%;
+  color: red;
+}
+
+anzeigetext {
   font-size: 200%;
   color: $color5;
 }
+ntext {
+  color: $color5;
+}
+
 footer {
-  background: $color1!important;
-  }
+    font-size:100%!important;
+    background: black!important;
+    color: $color5!important;
+    padding: 1.2em 0.5em;
+    .panel-body {
+        background: black!important;
+        border-color: black!important;
+        box-shadow: 0px 0px 0px black!important;    
+        
+    }
+ }
+ 
+footer_header {
+    font-size:180%!important;
+    background: black!important;
+    color: white!important;
+ }
+ 
+message {
+    background: black!important;
+    color: $color1!important;
+ }
 
 body{
-  background-color: $color3!important;
+  background-color: white!important;
 }
 
 .panel-heading {
@@ -139,11 +181,7 @@ thead {
 }
 
 .blocked {
-  background: $color1;
-}
-
-.Preis {
-  color: red;
+  background: $blocked!important;
 }
 
 .Spendenbetrag_IST {
@@ -173,13 +211,20 @@ input#email:focus {
 }
 .thumbnail:hover {
     background: $color1!important;
-    .anzeigetext {
-        color: white!important;
-    };
+    .text-color: white!important;
+    anzeigetext, ntext {
+     color: white!important;
+    }
+    restlaufzeit {
+     color: $color2!important;
+    }
+    preis {
+     color: $color2!important;
+    }
 }
 
 .carousel-caption {
-    backgroud-color: transparent!important;
+    background-color: transparent!important;
     position: relative!important;
     text-align: center!important;
     left: auto;
@@ -187,7 +232,7 @@ input#email:focus {
 }
 
 #map {
-   height: 600px;
+   height: 750px;
    border-radius: 16px 16px;
    border-color: #fff;
    border-style: solid;

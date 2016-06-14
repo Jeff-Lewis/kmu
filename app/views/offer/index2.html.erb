@@ -15,6 +15,7 @@
       </div>
     </div>
   </div>
+  <br>
 	<div class="row">
     <div class="col-md-6">
       <div class="panel panel-default">
@@ -61,22 +62,24 @@
                 <% end %>
                 </td>
                 <td>
-                <%= link_to se do %>
-                  <div class="anzeigetext">
+                  <anzeigetext>
                     <%= se.name %>
-                  </div>
-                <% end %>
+                  </anzeigetext><br>
+                  <ntext>
                 <% if se.company_id != nil %>
                   <%= se.company.name %>
                 <% end %>
                 <% if se.user_id != nil %>
                   <%= se.user.name + " " + se.user.lastname %>
                 <% end %>
+                </ntext>
                 </td>
                 <td>
                   <% if se.social %>
                       <% image_tag("heart.png", :size => "50x50" , class:"img-rounded") %>
+                      <preis>
                       <i class="glyphicon glyphicon-heart"></i>
+                      </preis>
                   <% end %>
                 </td>
               </tr>

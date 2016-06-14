@@ -26,40 +26,46 @@
   <% @donations.each do |don| %>
     <div class="col-md-5">
 
-      <%= link_to don do %>
 
         <div class="thumbnail" align="center">
           
           <div class="caption">
-    			  <div class="anzeigetext">
-    					<%= don.name %> 
-    				</div>
+            <br>
+            <% if don.date_to != nil %>
+              <p>
+                <b><ntext>noch </ntext></b><restlaufzeit><%= (don.date_to - Date.today).to_i.to_s %></restlaufzeit> <b><ntext> Tage</ntext></b>
+              </p>
+            <% end %>
+    			  <anzeigetext>
+    					<%= don.name %><br>
+    				</anzeigetext>
+            <ntext>
     				<%= don.company.name %>
-    				<br>
+            <br><br>
             <p>Aktueller Spendenstand:</p>
-            
+            </ntext>
             <% soll = don.amount %>
             <% if don.donation_stats != nil %>
               <% ist  = don.donation_stats.sum(:amount) %>
             <% else %>
               <% ist = 0 %>
             <% end %>
-            
             <div class="progress">
               <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="<%= ist %>" aria-valuemin="0" aria-valuemax="<%= soll %>" style="width: <%= ist/soll*100 %>%">
                 <span class="sr-only">40% Complete (success)</span>
               </div>
             </div>          
             
-  				  <div class="Spendenbetrag_IST">
+  				  <preis>
   				    <%= sprintf("%05.2f CHF",ist) %>
-  				  </div>
-  				  <div class="Spendenbetrag_SOLL">
+  				  </preis>
+  				  <br>
+  				  <ntext>
   				    <%= sprintf("%05.2f CHF",soll) %>
-  				  </div>
             <p>
     				  <%= don.description %>
     				</p>
+  				  </ntext>
     			</div>
           <p>
           <% if don.donation_details.count > 0 %>
@@ -69,8 +75,8 @@
     			<% end %>
     			</p>
           <p>
+  				<ntext>
     		  <%= don.created_at.strftime("%d.%b.%Y-%H:%M Uhr") %>
-    		  
     		  <% if don.created_at.to_date == Date.today %>
     		    Heute
     		  <% end %>
@@ -81,8 +87,11 @@
             <% anz = (Date.today.to_date - don.created_at.to_date).to_i %>
             Vor <%= anz %> Tagen
     		  <% end %>
+  				</ntext><br><br>
+          <%= link_to don do %>
+            <i class="btn btn-primary btn btn-lg glyphicon glyphicon-info-sign"></i>
+          <% end %>
     		</div>
-  		<% end %>
 		</div>
   <% end %>
 </div>

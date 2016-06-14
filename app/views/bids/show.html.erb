@@ -30,6 +30,11 @@
             <%= carousel(@bid.bid_details, "big") %>
             <br><br>
           <% end %>
+          <b>Ausführungsort</b><br>
+          <%= @bid.address1 if @bid.address1 != nil %>
+          <%= @bid.address2 if @bid.address2 != nil %>
+          <%= @bid.address3 if @bid.address3 != nil %>
+          <br><br>
           <b>Ausführungsdatum von-bis:</b><br>
           <%= @bid.date_from.strftime("%d.%m.%Y") %> - <%= @bid.date_to.strftime("%d.%m.%Y") %>
           <br><br>
@@ -68,9 +73,9 @@
       		<% @bid.bid_details.each do |bd| %>
             <div class="col-md-4">
               <div class="thumbnail" align="center">
-                <div class="anzeigetext">
+                <anzeigetext>
       						<%= bd.name %>
-                </div>
+                </anzeigetext><br>
         				<% if bd.avatar_file_name == nil %>
                   <%= image_tag("bid_a.png", :size => "500x500", class:"img-rounded" ) %>
                 <% else %>
@@ -117,9 +122,9 @@
             <% if bd.company_id == nil %>
               <div class="col-md-4">
                 <div class="thumbnail" align="center">
-                  <div class="anzeigetext">
-        						<%= bd.name %>
-                  </div>
+                  <anzeigetext>
+        						<%= bd.name %><br>
+                  </anzeigetext>
                   <p>
       						<%= bd.description %>
       						</p>
@@ -167,9 +172,9 @@
             <% if bd.company_id != nil %>
               <div class="col-md-4">
                 <div class="thumbnail" align="center">
-                  <div class="anzeigetext">
+                  <anzeigetext>
         						<%= bd.company.name %>
-                  </div><br>
+                  </anzeigetext><br>
                     <% if !bd.company.avatar_file_name %>
                       <%= image_tag("company_a.png", :size => "200x200" , class:"img-rounded") %>
                     <% else %>

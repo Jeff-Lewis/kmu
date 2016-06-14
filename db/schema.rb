@@ -145,6 +145,8 @@ ActiveRecord::Schema.define(version: 20160612104244) do
     t.integer  "company_id"
     t.float    "amount"
     t.boolean  "active"
+    t.date     "date_from"
+    t.date     "date_to"
     t.string   "stichworte"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -261,6 +263,8 @@ ActiveRecord::Schema.define(version: 20160612104244) do
     t.text     "skills"
     t.text     "offers"
     t.text     "contacts"
+    t.date     "date_from"
+    t.date     "date_to"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -306,6 +310,8 @@ ActiveRecord::Schema.define(version: 20160612104244) do
     t.string   "name"
     t.text     "description"
     t.boolean  "social"
+    t.date     "date_from"
+    t.date     "date_to"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -335,7 +341,7 @@ ActiveRecord::Schema.define(version: 20160612104244) do
     t.float    "latitude"
     t.float    "longitude"
     t.datetime "date_created_at"
-    t.float    "rating"
+    t.integer  "rating"
     t.boolean  "social"
     t.integer  "amount_from_target"
     t.integer  "amount_to_target"

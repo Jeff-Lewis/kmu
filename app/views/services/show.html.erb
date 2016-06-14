@@ -54,12 +54,13 @@
             <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
             <i class="glyphicon glyphicon-star"></i>
           <% end %>
-          <br>
+          <br><br>
           <% if @service.social %>
               <% image_tag("heart.png", :size => "50x50", class:"img-rounded" ) %>
               <i class="glyphicon glyphicon-heart"></i> soziales Engagement
+              <br>
           <% end %>
-          <br>
+          <br><br>
           <% if @service.stype == "action" %>
             <b>Angebot gültig von-bis:</b><br>
             <%= @service.datum_von.strftime("%d.%m.%Y") %> - <%= @service.datum_bis.strftime("%d.%m.%Y") %>
@@ -118,18 +119,23 @@
                   <%= image_tag sr.user.avatar, :size => 200, class:"img-rounded" %>
                 <% end %>
                 <br>
+                <ntext>
                 <% sr.user_rating.times do %>
                   <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
                   <i class="glyphicon glyphicon-star"></i>
                 <% end %>
+                </ntext>
                 <br>
                 <br>
-                <%= sr.user.name + " " + sr.user.lastname %>
-                <br><br>
+                <anzeigetext>
+                <%= sr.user.name + " " + sr.user.lastname %><br>
+                </anzeigetext>
+                <ntext>
                 <%= sr.user_comment %>
                 <br><br>
                 <%= sr.created_at.strftime("%d.%m.%Y") %>
                 <br><br>
+                </ntext>
                 <% if user_signed_in? %>
                   <% if current_user.id == sr.user_id %>
           	        <%= link_to edit_rating_path(sr) do %>

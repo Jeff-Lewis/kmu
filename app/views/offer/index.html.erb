@@ -21,6 +21,7 @@
       </div>
     </div>
   </div>
+  <br>
 	<div class="row">
     <div class="col-md-12">
   		<table class="table table-striped">
@@ -34,7 +35,7 @@
           </tr>
           <tr>
             <th>Bewertung</th>
-            <th colspan="2">Sonderaktion</th>
+            <th colspan="3">Sonderaktion</th>
             <% for i in 0..6 %>
               <th>
                 <%= $wochentage[i] %><br>
@@ -45,34 +46,39 @@
         </thead>
         
         <tbody>
-
-            <% @services.each do |e| %>
-              <tr>
-                <td>
-          		    <% if avg_rating(e.id) == 0 %>
-                    <% image_tag("no_rating.jpg", :size => "50x50" , class:"img-rounded") %>
-          		    <% else %>
+          <% @services.each do |e| %>
+            <tr>
+              <td>
+        		    <% if avg_rating(e.id) == 0 %>
+                  <% image_tag("no_rating.jpg", :size => "50x50" , class:"img-rounded") %>
+        		    <% else %>
                   <% avg_rating(e.id).times do %>
                     <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
-                  <% end %>
-                  <% avg_rating(e.id).times do %>
                     <i class="glyphicon glyphicon-star"></i>
                   <% end %>
                 <% end %>
-                </td>
-        			 <td>
-                <% if !e.avatar_file_name %>
-                  <%= image_tag("money.png", :size => "50x50" , class:"img-rounded") %>
-                <% else %>
-                  <%= image_tag e.avatar(:small), class:"img-rounded" %>
+              </td>
+              <td>
+                <% if e.datum_bis != nil %>
+                  <p>
+                    <b><ntext>noch </ntext></b><restlaufzeit><%= (e.datum_bis - Date.today).to_i.to_s %></restlaufzeit> <b><ntext> Tage</ntext></b>
+                  </p>
                 <% end %>
-                </td>
-                <td>
-        	        <%= link_to e do %>
-                    <div class="anzeigetext">
-                      <%= e.name %><br>
-                    </div>
-                  <% end %>
+            </td>
+      			 <td>
+              <%= link_to e do %>
+                <% if !e.avatar_file_name %>
+                  <%= image_tag("action_a.png", :size => "50x50" , class:"img-rounded") %>
+                <% else %>
+                  <%= image_tag e.avatar(:thumb), class:"img-rounded" %>
+                <% end %>
+              <% end %>
+              </td>
+              <td>
+                <anzeigetext>
+                  <%= e.name %><br>
+                </anzeigetext>
+                <ntext>
                   <% if e.company_id != nil %>
                     <%= e.company.name %>
                   <% end %>
@@ -80,17 +86,18 @@
                     <%= e.user.name + " " + e.user.lastname %>
                   <% end %>
                   <%= e.datum_von.strftime("%d.%m") %>-<%= e.datum_bis.strftime("%d.%m") %>
-                </td>
-                <% for i in 0..6 %>
-                    <% if AktionDatum(@start+i,e) %>
-                      <td class="blocked">
-                    <% else %>
-                      <td class="free">
-                    <% end %>
-                    </th>
-                <% end %>
-              </tr>
-            <% end %>
+                </ntext>
+              </td>
+              <% for i in 0..6 %>
+                  <% if AktionDatum(@start+i,e) %>
+                    <td class="blocked">
+                  <% else %>
+                    <td class="free">
+                  <% end %>
+                  </td>
+              <% end %>
+            </tr>
+          <% end %>
         </tbody>
       </table>
     </div>

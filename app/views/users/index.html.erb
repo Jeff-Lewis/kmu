@@ -50,23 +50,25 @@
                 </td>
                 <td>
                   <% if u.anonymous %>
-                    <div class="anzeigetext">
+                    <anzeigetext>
                       ********
-                    </div>
+                    </anzeigetext>
                   <% else %>
-                    <%= link_to u do %>
-                      <div class="anzeigetext">
-                        <%= u.name + " " + u.lastname %><br>
-                      </div>
-                    <% end %><br>
+                    <anzeigetext>
+                    <%= u.name + " " + u.lastname %><br>
+                    </anzeigetext>
+                    <ntext>
                     <%= u.address2 %>
+                    </ntext>
                   <% end %>
                 </td>
                 <td align="center">
                 <% if u.services.where("social=?",true).count > 0 %>
                   <% image_tag("heart.png", :size => "50x50" , class:"img-rounded") %>
+                  <preis>
                   <i class="glyphicon glyphicon-heart"></i>
-                <% end %>
+                  </preis>
+                  <% end %>
                 </td>
               </tr>
             <% end %>

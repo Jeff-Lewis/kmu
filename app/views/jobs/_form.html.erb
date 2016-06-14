@@ -38,6 +38,11 @@
                       <%= f.text_field :name, autofocus: true, class:"form-control"%>
                     </div>
                     <div class="form-group">
+                      <%= f.label "wenn temporär von-bis" %><br/>
+                      <%= f.text_field :date_from, class:"form-control"%>
+                      <%= f.text_field :date_to, class:"form-control"%>
+                    </div>
+                    <div class="form-group">
                       <%= f.label "Stichworte" %><br/>
                       <%= f.text_field :stichworte, class:"form-control"%>
                     </div>

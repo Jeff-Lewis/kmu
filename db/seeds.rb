@@ -183,13 +183,13 @@ calenders = Calender.create({status:"ok", active:true, vehicle_id:2, user_id:6, 
 calenders = Calender.create({status:"ok", active:true, vehicle_id:4, user_id:7, date_from:Date.today, date_to:Date.today+3, time_from:10, time_to:16})
 
 #create some bids..
-bids = Bid.create({status:"ok", category_id:8, active:true, user_id:1, date_from:Date.today, date_to:Date.today+30, name:"Umbau Keller", address1:"", address2:"", address3:"", description:"baue meinen keller um. Ca. 80qm"})
+bids = Bid.create({status:"ok", category_id:8, active:true, user_id:1, date_from:Date.today, date_to:Date.today+30, name:"Umbau Keller", address1:"Zezikon", address2:"Hörnliblick", address3:"", description:"baue meinen keller um. Ca. 80qm"})
 biddetails = BidDetail.create({status:"ok", bid_id:1, name:"Bild 1", avatar:File.open(path+'keller.jpg', 'rb')})
 biddetails = BidDetail.create({status:"ok", bid_id:1, name:"Bild 2", avatar:File.open(path+'keller1.jpg', 'rb')})
-bids = Bid.create({status:"ok", category_id:8, active:true, user_id:2, date_from:Date.today, date_to:Date.today+5, name:"Ausbau Dachboden", address1:"", address2:"", address3:"", description:"baue meinen Dachboden um. Ca. 80qm"})
+bids = Bid.create({status:"ok", category_id:8, active:true, user_id:2, date_from:Date.today, date_to:Date.today+5, name:"Ausbau Dachboden", address1:"Amriswil", address2:"Hauptstrasse", address3:"", description:"baue meinen Dachboden um. Ca. 80qm"})
 biddetails = BidDetail.create({status:"ok", bid_id:2, name:"Bild 1", avatar:File.open(path+'dach.jpg', 'rb')})
 biddetails = BidDetail.create({status:"ok", bid_id:2, name:"Bild 2", avatar:File.open(path+'dach1.jpg', 'rb')})
-bids = Bid.create({status:"ok", category_id:24, active:true, user_id:4, date_from:Date.today, date_to:Date.today+1, name:"Catering für 50igsten Geburtstag", address1:"", address2:"", address3:"", description:"Zelt, Grill & Party für 150 Personen"})
+bids = Bid.create({status:"ok", category_id:24, active:true, user_id:4, date_from:Date.today, date_to:Date.today+1, name:"Catering für 50igsten Geburtstag", address1:"Lommis", address2:"Hauptstrasse", address3:"", description:"Zelt, Grill & Party für 150 Personen"})
 biddetails = BidDetail.create({status:"ok", bid_id:3, name:"Bild 1", avatar:File.open(path+'zelt150.jpg', 'rb')})
 biddetails = BidDetail.create({status:"ok", bid_id:3, name:"Bild 2", avatar:File.open(path+'grossgrill.jpg', 'rb')})
 biddetails = BidDetail.create({status:"ok", bid_id:3, name:"Bild 3", avatar:File.open(path+'catering.jpg', 'rb')})
@@ -258,56 +258,56 @@ jobs = Job.create({status:"ok", active:true, company_id:4, name:"Kundenberater (
 jobs = Job.create({status:"ok", active:true, company_id:4, name:"Kundenberater (Anlegen)", stichworte:"Bank Finanz"})
 
 #create some kleinanzeigen..
-requests = Request.create({status:"ok", active:true, user_id:1, rtype:"suche", price: 75.00, name:"Aquarium", social:false})
+requests = Request.create({status:"ok", active:true, user_id:1, rtype:"suche", price: 75.00, name:"Aquarium", social:false, date_from:Date.today, date_to:Date.today+10})
 rds = RequestDetail.create({status:"ok", request_id:1, name:"Bild 1", avatar:File.open(path+'aquarium1.jpg', 'rb')})
 rds = RequestDetail.create({status:"ok", request_id:1, name:"Bild 1", avatar:File.open(path+'aquarium2.jpg', 'rb')})
 rds = RequestDetail.create({status:"ok", request_id:1, name:"Bild 1", avatar:File.open(path+'aquarium3.jpg', 'rb')})
 
-requests = Request.create({status:"ok", active:true, user_id:2, rtype:"suche", price: 20.00, name:"Nachhilfe in Mathe", social:false})
+requests = Request.create({status:"ok", active:true, user_id:2, rtype:"suche", price: 20.00, name:"Nachhilfe in Mathe", social:false, date_from:Date.today, date_to:Date.today+10})
 rds = RequestDetail.create({status:"ok", request_id:2, name:"Bild 1", avatar:File.open(path+'mathe1.jpg', 'rb')})
 
-requests = Request.create({status:"ok", active:true, user_id:2, rtype:"suche", price: 15.00, name:"Tennisunterricht", social:false})
+requests = Request.create({status:"ok", active:true, user_id:2, rtype:"suche", price: 15.00, name:"Tennisunterricht", social:false, date_from:Date.today, date_to:Date.today+10})
 rds = RequestDetail.create({status:"ok", request_id:3, name:"Bild 1", avatar:File.open(path+'tennis.jpg', 'rb')})
 
-requests = Request.create({status:"ok", active:true, user_id:3, rtype:"suche", price: 0.00, name:"Schachpartner", social:true})
+requests = Request.create({status:"ok", active:true, user_id:3, rtype:"suche", price: 0.00, name:"Schachpartner", social:true, date_from:Date.today, date_to:Date.today+10})
 rds = RequestDetail.create({status:"ok", request_id:4, name:"Bild 1", avatar:File.open(path+'schach1.jpg', 'rb')})
 
-requests = Request.create({status:"ok", active:true, user_id:4, rtype:"suche", price: 50000.00, name:"Oldtimer", social:false})
+requests = Request.create({status:"ok", active:true, user_id:4, rtype:"suche", price: 50000.00, name:"Oldtimer", social:false, date_from:Date.today, date_to:Date.today+10})
 rds = RequestDetail.create({status:"ok", request_id:5, name:"Bild 1", avatar:File.open(path+'fiat1.jpg', 'rb')})
 rds = RequestDetail.create({status:"ok", request_id:5, name:"Bild 1", avatar:File.open(path+'fiat2.jpg', 'rb')})
 rds = RequestDetail.create({status:"ok", request_id:5, name:"Bild 1", avatar:File.open(path+'fiat3.jpg', 'rb')})
 
-requests = Request.create({status:"ok", active:true, user_id:4, rtype:"biete", price: 5000.00, name:"Alte Briefmarken", social:false})
+requests = Request.create({status:"ok", active:true, user_id:4, rtype:"biete", price: 5000.00, name:"Alte Briefmarken", social:false, date_from:Date.today, date_to:Date.today+10})
 rds = RequestDetail.create({status:"ok", request_id:6, name:"Bild 1", avatar:File.open(path+'stamp1.jpg', 'rb')})
 rds = RequestDetail.create({status:"ok", request_id:6, name:"Bild 1", avatar:File.open(path+'stamp2.jpg', 'rb')})
 rds = RequestDetail.create({status:"ok", request_id:6, name:"Bild 1", avatar:File.open(path+'stamp3.jpg', 'rb')})
 rds = RequestDetail.create({status:"ok", request_id:6, name:"Bild 1", avatar:File.open(path+'stamp4.jpg', 'rb')})
 
-requests = Request.create({status:"ok", active:true, user_id:5, rtype:"suche", price: 1500.00, name:"Gartenlounge in gutem Zustand", social:false})
-requests = Request.create({status:"ok", active:true, user_id:1, rtype:"suche", price: 150.00, name:"gebrauchten Computer bis max 100 CHF", social:false})
+requests = Request.create({status:"ok", active:true, user_id:5, rtype:"suche", price: 1500.00, name:"Gartenlounge in gutem Zustand", social:false, date_from:Date.today, date_to:Date.today+10})
+requests = Request.create({status:"ok", active:true, user_id:1, rtype:"suche", price: 150.00, name:"gebrauchten Computer bis max 100 CHF", social:false, date_from:Date.today, date_to:Date.today+10})
 
-requests = Request.create({status:"ok", active:true, user_id:6, rtype:"biete", price: 25.00, name:"Meerschweichen Käfig", social:false})
+requests = Request.create({status:"ok", active:true, user_id:6, rtype:"biete", price: 25.00, name:"Meerschweichen Käfig", social:false, date_from:Date.today, date_to:Date.today+10})
 rds = RequestDetail.create({status:"ok", request_id:9, name:"Bild 1", avatar:File.open(path+'kaefig1.jpg', 'rb')})
 rds = RequestDetail.create({status:"ok", request_id:9, name:"Bild 2", avatar:File.open(path+'kaefig2.jpg', 'rb')})
 
-requests = Request.create({status:"ok", active:true, user_id:3, rtype:"biete", price: 750.00, name:"Mountainbike", social:false})
+requests = Request.create({status:"ok", active:true, user_id:3, rtype:"biete", price: 750.00, name:"Mountainbike", social:false, date_from:Date.today, date_to:Date.today+10})
 rds = RequestDetail.create({status:"ok", request_id:10, name:"Bild 1", avatar:File.open(path+'bike1.jpg', 'rb')})
 rds = RequestDetail.create({status:"ok", request_id:10, name:"Bild 2", avatar:File.open(path+'bike2.jpg', 'rb')})
 
-requests = Request.create({status:"ok", active:true, user_id:2, rtype:"biete", price: 150.00, name:"Carver Ski", social:false})
+requests = Request.create({status:"ok", active:true, user_id:2, rtype:"biete", price: 150.00, name:"Carver Ski", social:false, date_from:Date.today, date_to:Date.today+10})
 rds = RequestDetail.create({status:"ok", request_id:11, name:"Bild 1", avatar:File.open(path+'ski1.jpg', 'rb')})
 
-requests = Request.create({status:"ok", active:true, user_id:1, rtype:"biete", price: 150.00, name:"Spanisch Lehrbücher", social:false})
+requests = Request.create({status:"ok", active:true, user_id:1, rtype:"biete", price: 150.00, name:"Spanisch Lehrbücher", social:false, date_from:Date.today, date_to:Date.today+10})
 rds = RequestDetail.create({status:"ok", request_id:12, name:"Bild 1", avatar:File.open(path+'spanisch1.jpg', 'rb')})
 rds = RequestDetail.create({status:"ok", request_id:12, name:"Bild 2", avatar:File.open(path+'spanisch2.jpg', 'rb')})
 rds = RequestDetail.create({status:"ok", request_id:12, name:"Bild 3", avatar:File.open(path+'spanisch3.jpg', 'rb')})
 rds = RequestDetail.create({status:"ok", request_id:12, name:"Bild 4", avatar:File.open(path+'spanisch4.jpg', 'rb')})
 
-requests = Request.create({status:"ok", active:true, user_id:1, rtype:"biete", price: 20.00, name:"Nachhilfe in Englisch", social:false})
+requests = Request.create({status:"ok", active:true, user_id:1, rtype:"biete", price: 20.00, name:"Nachhilfe in Englisch", social:false, date_from:Date.today, date_to:Date.today+10})
 rds = RequestDetail.create({status:"ok", request_id:13, name:"Bild 1", avatar:File.open(path+'englisch1.jpg', 'rb')})
 rds = RequestDetail.create({status:"ok", request_id:13, name:"Bild 2", avatar:File.open(path+'englisch2.jpg', 'rb')})
 
-requests = Request.create({status:"ok", active:true, user_id:1, rtype:"biete", price: 200.00, name:"Commodore VC 20 nur für Liebhaber", social:false})
+requests = Request.create({status:"ok", active:true, user_id:1, rtype:"biete", price: 200.00, name:"Commodore VC 20 nur für Liebhaber", social:false, date_from:Date.today, date_to:Date.today+10})
 rds = RequestDetail.create({status:"ok", request_id:14, name:"Bild 1", avatar:File.open(path+'computer1.jpg', 'rb')})
 rds = RequestDetail.create({status:"ok", request_id:14, name:"Bild 2", avatar:File.open(path+'computer2.jpg', 'rb')})
 rds = RequestDetail.create({status:"ok", request_id:14, name:"Bild 3", avatar:File.open(path+'computer3.jpg', 'rb')})

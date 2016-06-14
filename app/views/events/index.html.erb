@@ -33,7 +33,7 @@
             </td>
           </tr>
           <tr>
-            <th colspan="2">Veranstaltung</th>
+            <th colspan="3">Veranstaltung</th>
             <% for i in 0..6 %>
               <th>
                 <%= $wochentage[i] %><br>
@@ -49,6 +49,11 @@
 
               <tr>
     				    <td>
+                <% if e.date_to != nil %>
+                    <b><ntext>noch </ntext></b><restlaufzeit><%= (e.date_to - Date.today).to_i.to_s %></restlaufzeit> <b><ntext> Tage</ntext></b>
+                <% end %>
+    				    </td>
+    				    <td>
     				    <%= link_to e do %>
                   <% if e.event_details != nil %>
                         <%= carousel(e.event_details, "thumb") %>
@@ -58,10 +63,10 @@
                 <% end %>
                 </td>
                 <td>
-                    <%= link_to e do %>
-              	      <div class="anzeigetext">
+              	      <anzeigetext>
                         <%= e.name %></br>
-                      </div>
+                      </anzeigetext>
+                      <ntext>
                       <% if e.company_id != nil %>
                         <%= e.company.name %>
                       <% end %>
@@ -69,7 +74,7 @@
                         <%= e.user.name + " " + e.user.lastname %>
                       <% end %>
                       <%= e.date_from.strftime("%d.%m") %>-<%= e.date_to.strftime("%d.%m") %>
-                    <% end %>
+                      </ntext>
         				</td>
                 <% for i in 0..6 %>
                     <% if EventDatum(@start+i,e) %>

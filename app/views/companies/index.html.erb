@@ -1,4 +1,3 @@
-<p id="notice"><%= notice %></p>
 <div class="container-fluid">
 	<div class="row">
     <div class="col-md-12">
@@ -15,6 +14,7 @@
       </div>
     </div>
   </div>
+  <br>
 	<div class="row">
     <div class="col-md-6">
       <div class="panel panel-default">
@@ -40,11 +40,6 @@
             <% @companies.each do |comp| %>
               <tr>
                 <td>
-                <% if comp.services.where("social=?",true).count > 0 %>
-                  <%= image_tag("helpinghand.png", :size => "50x50" , class:"img-rounded") %>
-                <% end %>
-                </td>
-                <td>
                   <%= link_to comp do %>
                     <% if !comp.avatar_file_name %>
                       <%= image_tag("company_a.png", :size => "50x50" , class:"img-rounded") %>
@@ -54,12 +49,20 @@
                   <% end %>
                 </td>
                 <td>
-                  <%= link_to comp do %>
-                    <div class="anzeigetext">
+                    <anzeigetext>
                       <%= comp.name %><br>
-                    </div>
+                    </anzeigetext>
+                    <ntext>
                     <%= comp.address2 %>
-                  <% end %>
+                    </ntext>
+                </td>
+                <td>
+                <% if comp.services.where("social=?",true).count > 0 %>
+                  <% image_tag("helpinghand.png", :size => "50x50" , class:"img-rounded") %>
+                  <preis>
+                  <i class="glyphicon glyphicon-heart"></i>
+                  </preis>
+                <% end %>
                 </td>
               </tr>
             <% end %>

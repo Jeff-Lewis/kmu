@@ -15,6 +15,7 @@
       </div>
     </div>
   </div>
+  <br>
 	<div class="row">
     <div class="col-md-6">
       <div class="panel panel-default">
@@ -55,17 +56,17 @@
                 <% end %>
                 </td>
                 <td>
-                <div class="anzeigetext">
-                  <%= link_to ve do %>
+                <anzeigetext>
                     <%= ve.name %>
-                  <% end %>
-                </div>
+                </anzeigetext><br>
+                <ntext>
                   <% if ve.company_id != nil %>
                     <%= ve.company.name %>
                   <% end %>
                   <% if ve.user_id != nil %>
                     <%= ve.user.name + " " + ve.user.lastname %>
                   <% end %>
+                </ntext>
                 </td>
               </tr>
             <% end %>

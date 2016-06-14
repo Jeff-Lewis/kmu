@@ -68,16 +68,18 @@
     		<% @donation.donation_details.each do |bd| %>
           <div class="col-md-4">
             <div class="thumbnail" align="center">
-              <div class="anzeigetext">
-    						<%= bd.name %>
-              </div>
+              <anzeigetext>
+    						<%= bd.name %><br>
+              </anzeigetext>
       				<% if bd.avatar_file_name == nil %>
                 <%= image_tag("donation_a.png", :size => "500x500", class:"img-rounded" ) %>
               <% else %>
                 <%= image_tag bd.avatar, :size => "500x500", class:"img-rounded"  %>
               <% end %>
               <p>
+              <ntext>
   						<%= bd.description %>
+              </ntext>
   						</p>
               <% if user_signed_in? %>
                 <% if current_user.id == @donation.company.user_id %>
