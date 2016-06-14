@@ -130,8 +130,8 @@ services = Service.create({status:"ok", active:true, company_id:4, parent_id:0, 
 services = Service.create({status:"ok", active:true, company_id:4, parent_id:0, stype:"regular", name:"Vorsorgen", social:false,avatar:File.open(path+'vorsorgen.jpg', 'rb')})
 services = Service.create({status:"ok", active:true, company_id:5, parent_id:0, stype:"regular", name:"Maschinen Luftdruck", social:false, avatar:File.open(path+'luftdruck.jpg', 'rb')})
 
-services = Service.create({status:"ok", active:true, company_id:1, parent_id:0, stype:"action", name:"Fischbuffet zum halben Preis", datum_von:DateTime.now, datum_bis:DateTime.now, avatar:File.open(path+'fischbuffet.jpg', 'rb')})
-services = Service.create({status:"ok", active:true, company_id:11, parent_id:0, stype:"action", name:"Gesichtsbehandlung 50% Rabatt", datum_von:DateTime.now, datum_bis:DateTime.now, avatar:File.open(path+'gesicht.jpg', 'rb')})
+services = Service.create({status:"ok", active:true, company_id:1, parent_id:0, stype:"action", name:"Fischbuffet zum halben Preis", date_from:DateTime.now, date_to:DateTime.now, avatar:File.open(path+'fischbuffet.jpg', 'rb')})
+services = Service.create({status:"ok", active:true, company_id:11, parent_id:0, stype:"action", name:"Gesichtsbehandlung 50% Rabatt", date_from:DateTime.now, date_to:DateTime.now, avatar:File.open(path+'gesicht.jpg', 'rb')})
 rats = Rating.create({status:"ok", service_id:12, user_id:1, user_rating:4, user_comment:"Wahnsinn für den Preis" })
 rats = Rating.create({status:"ok", service_id:12, user_id:2, user_rating:5, user_comment:"absolut Super" })
 rats = Rating.create({status:"ok", service_id:12, user_id:4, user_rating:5, user_comment:"absolut empfehlenswert" })
@@ -139,7 +139,7 @@ rats = Rating.create({status:"ok", service_id:12, user_id:5, user_rating:4, user
 rats = Rating.create({status:"ok", service_id:12, user_id:6, user_rating:5, user_comment:"prima immer wieder" })
 rats = Rating.create({status:"ok", service_id:12, user_id:8, user_rating:6, user_comment:"total empfehlenswert" })
 
-services = Service.create({status:"ok", active:true, company_id:12, parent_id:0, stype:"action", name:"Superrabatt Golf!!!", datum_von:DateTime.now, datum_bis:DateTime.now, avatar:File.open(path+'vwgolf.jpg', 'rb')})
+services = Service.create({status:"ok", active:true, company_id:12, parent_id:0, stype:"action", name:"Superrabatt Golf!!!", date_from:DateTime.now, date_to:DateTime.now, avatar:File.open(path+'vwgolf.jpg', 'rb')})
 rats = Rating.create({status:"ok", service_id:13, user_id:1, user_rating:1, user_comment:"Lockangebot - Fahrzeug gibt es gar nicht" })
 rats = Rating.create({status:"ok", service_id:13, user_id:2, user_rating:2, user_comment:"Fahrzeug war dann plötzlich verkauft" })
 rats = Rating.create({status:"ok", service_id:13, user_id:7, user_rating:1, user_comment:"Fahrzeuig konnte nicht bsichtigt werden und man wollte uns einen anderen viel teueren Wagen andrehen" })

@@ -52,8 +52,8 @@ ActiveRecord::Schema.define(version: 20160612104244) do
     t.integer  "user_id"
     t.string   "status"
     t.integer  "category_id"
-    t.date     "date_from"
-    t.date     "date_to"
+    t.datetime "date_from"
+    t.datetime "date_to"
     t.string   "name"
     t.text     "description"
     t.boolean  "active"
@@ -145,8 +145,8 @@ ActiveRecord::Schema.define(version: 20160612104244) do
     t.integer  "company_id"
     t.float    "amount"
     t.boolean  "active"
-    t.date     "date_from"
-    t.date     "date_to"
+    t.datetime "date_from"
+    t.datetime "date_to"
     t.string   "stichworte"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -179,8 +179,8 @@ ActiveRecord::Schema.define(version: 20160612104244) do
     t.integer  "ev_category_id"
     t.string   "name"
     t.text     "description"
-    t.date     "date_from"
-    t.date     "date_to"
+    t.datetime "date_from"
+    t.datetime "date_to"
     t.string   "homepage"
     t.string   "address1"
     t.string   "address2"
@@ -263,8 +263,8 @@ ActiveRecord::Schema.define(version: 20160612104244) do
     t.text     "skills"
     t.text     "offers"
     t.text     "contacts"
-    t.date     "date_from"
-    t.date     "date_to"
+    t.datetime  "date_from"
+    t.datetime  "date_to"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -310,8 +310,8 @@ ActiveRecord::Schema.define(version: 20160612104244) do
     t.string   "name"
     t.text     "description"
     t.boolean  "social"
-    t.date     "date_from"
-    t.date     "date_to"
+    t.datetime  "date_from"
+    t.datetime  "date_to"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -331,8 +331,8 @@ ActiveRecord::Schema.define(version: 20160612104244) do
     t.integer  "ev_category_id"
     t.integer  "age_from"
     t.integer  "age_to"
-    t.date     "date_from"
-    t.date     "date_to"
+    t.datetime  "date_from"
+    t.datetime  "date_to"
     t.integer  "distance"
     t.string   "geo_address"
     t.string   "address1"
@@ -362,8 +362,8 @@ ActiveRecord::Schema.define(version: 20160612104244) do
     t.string   "stichworte"
     t.decimal  "price_reg"
     t.decimal  "price_new"
-    t.date     "datum_von"
-    t.date     "datum_bis"
+    t.datetime  "date_from"
+    t.datetime "date_to"
     t.integer  "company_id"
     t.integer  "user_id"
     t.integer  "parent_id"

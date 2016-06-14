@@ -1,6 +1,6 @@
 class ServicesController < ApplicationController
       before_action :set_service, only: [:show, :edit, :update, :destroy]
-      permits :stichworte, :status, :company_id, :parent_id, :user_id, :active, :stype, :datum_von, :datum_bis, :price_reg, :price_new, :name, :description, :social, :ansprechpartner, :telefon, :email, :avatar
+      permits :stichworte, :status, :company_id, :parent_id, :user_id, :active, :stype, :date_from, :date_to, :price_reg, :price_new, :name, :description, :social, :ansprechpartner, :telefon, :email, :avatar
 
   def index
       if params[:page] != nil
@@ -38,8 +38,8 @@ class ServicesController < ApplicationController
     end
     if params[:company_id] != nil
       @service.company_id = params[:company_id]
-      @service.datum_von = Date.today
-      @service.datum_bis = Date.today.end_of_month
+      @service.date_from = Date.today
+      @service.date_to = Date.today.end_of_month
     end
     @service.parent_id = 0
     @service.social = false

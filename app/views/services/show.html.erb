@@ -63,7 +63,7 @@
           <br><br>
           <% if @service.stype == "action" %>
             <b>Angebot gültig von-bis:</b><br>
-            <%= @service.datum_von.strftime("%d.%m.%Y") %> - <%= @service.datum_bis.strftime("%d.%m.%Y") %>
+            <%= @service.date_from.strftime("%d.%m.%Y") %> - <%= @service.date_to.strftime("%d.%m.%Y") %>
             <br><br>
             <b>Preisinformation</b><br>
             Preis <%= sprintf("%05.2f CHF", @service.price_new) if @service.price_new != nil %> statt <%= sprintf("%05.2f CHF", @service.price_reg) if @service.price_reg != nil %>            

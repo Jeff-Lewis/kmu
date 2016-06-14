@@ -61,8 +61,8 @@
             <% if @service.stype == "action" %>
               <div class="form-group">
                 <%= f.label "gültig von-bis:" %>
-                <%= f.date_field :datum_von, class:"form-control"%>
-                <%= f.date_field :datum_bis, class:"form-control"%>
+                <%= f.date_field :date_from, class:"form-control"%>
+                <%= f.date_field :date_to, class:"form-control"%>
               </div>
               <div class="form-group">
                 <%= f.label "Preis regulär-befristed:" %>

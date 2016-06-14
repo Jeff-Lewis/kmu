@@ -155,10 +155,10 @@ class Search < ActiveRecord::Base
                 sql_string = sql_string + " AND id IN (select service_id from ratings WHERE user_rating >= " + self.rating.to_s + ")"
             end 
             if self.date_from != nil
-                sql_string = sql_string + " AND datum_von >= '" + self.date_from.to_s + "'"
+                sql_string = sql_string + " AND date_from >= '" + self.date_from.to_s + "'"
             end
             if self.date_to != nil 
-                sql_string = sql_string + " AND datum_bis <= '" + self.date_to.to_s + "'"
+                sql_string = sql_string + " AND date_to <= '" + self.date_to.to_s + "'"
             end
             if self.distance > 0 and self.longitude != nil and self.latitude != nil
                 @users = User.near(self.geo_address, self.distance)

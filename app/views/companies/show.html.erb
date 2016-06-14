@@ -124,7 +124,7 @@
                 <preis><%= sprintf("%05.2f CHF", cs.price_new) if cs.price_new != nil %></preis><ntext><br> statt <%= sprintf("%05.2f CHF", cs.price_reg) if cs.price_reg != nil %></ntext><br>
                 <br>
                 <ntext>
-                Aktion befristed vom <%= cs.datum_von.strftime("%d.%m.%Y") %> bis <%= cs.datum_bis.strftime("%d.%m.%Y") %>
+                Aktion befristed vom <%= cs.date_from.strftime("%d.%m.%Y") %> bis <%= cs.date_to.strftime("%d.%m.%Y") %>
                 </ntext>
                 <br><br>
       	        <%= link_to cs do %>

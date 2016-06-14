@@ -35,7 +35,7 @@ class OfferController < ApplicationController
     if params[:sql_string] != nil
       @services = Service.paginate_by_sql(Service.ext_sql(session[:cw], session[:year], params[:sql_string]), :page => params[:page], :per_page => 10)
     else
-      @services = Service.actionsearch(session[:cw], session[:year], session[:search]).order(datum_von: :asc).page(params[:page]).per_page(10)
+      @services = Service.actionsearch(session[:cw], session[:year], session[:search]).order(date_from: :asc).page(params[:page]).per_page(10)
     end
     @seranz = @services.count
     
