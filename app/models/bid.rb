@@ -30,7 +30,7 @@ class Bid < ActiveRecord::Base
   end 
 
   def valid_dates?
-    if date_from.is_a?(Date) and date_to.is_a?(Date)
+    if date_from.to_date.is_a?(Date) and date_to.to_date.is_a?(Date)
       if date_from <= date_to
         return true
       end

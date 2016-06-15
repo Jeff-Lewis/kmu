@@ -31,7 +31,7 @@
           <br>
           <% if req.date_to != nil %>
             <p>
-              <b><ntext>noch </ntext></b><restlaufzeit><%= (req.date_to - Date.today).to_i.to_s %></restlaufzeit> <b><ntext> Tage</ntext></b>
+              <b><ntext>noch </ntext></b><restlaufzeit><%= (req.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeit> <b><ntext> Tage</ntext></b>
             </p>
           <% end %>
           <p>

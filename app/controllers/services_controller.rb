@@ -38,8 +38,8 @@ class ServicesController < ApplicationController
     end
     if params[:company_id] != nil
       @service.company_id = params[:company_id]
-      @service.date_from = Date.today
-      @service.date_to = Date.today.end_of_month
+      @service.date_from = DateTime.now
+      @service.date_to = DateTime.now.to_date.end_of_month
     end
     @service.parent_id = 0
     @service.social = false

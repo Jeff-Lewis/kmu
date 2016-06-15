@@ -36,12 +36,16 @@ class Service < ActiveRecord::Base
 
     def valid_dates?
       if stype == "action"
-        if date_from.is_a?(Date) and date_to.is_a?(Date)
-          if date_from <= date_to
+        if date_from.to_date.is_a?(Date) and date_to.to_date.is_a?(Date)
+          if self.date_from <= self.date_to
             return true
+          else
+            errors.add(:Date_from, "not lower ")
+            puts "Erros" + date_from.to_s + date_to.to_s
           end
         end
         errors.add(:Date_from, "invalid date or time")
+        puts "no DateTimes" + date_from.to_s + date_to.to_s
       end
     end
 
