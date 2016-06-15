@@ -33,9 +33,9 @@ class OfferController < ApplicationController
     end
     @start = Date.commercial(session[:year],session[:cw],1)
     if params[:sql_string] != nil
-      @services = Service.paginate_by_sql(Service.ext_sql(session[:cw], session[:year], params[:sql_string]), :page => params[:page], :per_page => 10)
+      @services = Service.paginate_by_sql(Service.ext_sql(session[:cw], session[:year], params[:sql_string]), :page => params[:page], :per_page => 16)
     else
-      @services = Service.actionsearch(session[:cw], session[:year], session[:search]).order(date_from: :asc).page(params[:page]).per_page(10)
+      @services = Service.actionsearch(session[:cw], session[:year], session[:search]).order(date_from: :asc).page(params[:page]).per_page(16)
     end
     @seranz = @services.count
     
@@ -57,9 +57,9 @@ class OfferController < ApplicationController
       session[:search] = params[:search]
     end
     if params[:sql_string] != nil
-      @services = Service.paginate_by_sql((params[:sql_string]), :page => params[:page], :per_page => 10)
+      @services = Service.paginate_by_sql((params[:sql_string]), :page => params[:page], :per_page => 16)
     else
-      @services = Service.search(session[:search]).order(created_at: :desc).page(params[:page]).per_page(10)
+      @services = Service.search(session[:search]).order(created_at: :desc).page(params[:page]).per_page(16)
     end
     @seranz = @services.count
     z = 0

@@ -5,7 +5,7 @@ class VehiclesController < ApplicationController
   # GET /vehicles
   def index
     if params[:sql_string] != nil
-      @vehicles = Vehicle.paginate_by_sql(params[:sql_string], :page => params[:page], :per_page => 10)
+      @vehicles = Vehicle.paginate_by_sql(params[:sql_string], :page => params[:page], :per_page => 16)
     else
       @vehicles = Vehicle.search(params[:search]).page(params[:page]).per_page(10)
     end
