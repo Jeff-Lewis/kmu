@@ -10,7 +10,7 @@ class CompaniesController < ApplicationController
     if params[:sql_string] != nil
       @companies = Company.paginate_by_sql(params[:sql_string], :page => params[:page], :per_page => 16)
     else
-      @companies = Company.search(params[:search],params[:user_id]).page(params[:page]).per_page(10)
+      @companies = Company.search(params[:search],params[:user_id]).page(params[:page]).per_page(16)
     end
     @companz = @companies.count
 

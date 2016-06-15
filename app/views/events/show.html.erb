@@ -164,7 +164,7 @@
         <h2>
           <% if user_signed_in? %>
             <% if @event.user_id != nil %>
-              <% if current_user.id == @event.user_id %>
+              <% if current_user.companies != nil %>
                 <%= link_to new_sponsor_path :event_id => @event.id do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
                 <% end %>
