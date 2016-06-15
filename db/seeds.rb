@@ -195,13 +195,13 @@ biddetails = BidDetail.create({status:"ok", bid_id:3, name:"Bild 2", avatar:File
 biddetails = BidDetail.create({status:"ok", bid_id:3, name:"Bild 3", avatar:File.open(path+'catering.jpg', 'rb')})
 
 #create some events..
-events = Event.create({ev_category_id:1, status:"ok", active:true, user_id:nil, company_id:1, date_from:DateTime.now, date_to:DateTime.now+30, name:"Einweihung neue Frischetheke", address1:"", address2:"", address3:"", description:"Neue Theke 100m"})
+events = Event.create({ev_category_id:1, status:"ok", active:true, user_id:nil, company_id:1, date_from:DateTime.now, date_to:DateTime.now+30, name:"Einweihung neue Frischetheke", address1:"Lommis", address2:"", address3:"", description:"Neue Theke 100m"})
 eventdetails = EventDetail.create({status:"ok", event_id:1, name:"Bild 1", avatar:File.open(path+'superfisch.jpg', 'rb')})
 eventdetails = EventDetail.create({status:"ok", event_id:1, name:"Bild 2", avatar:File.open(path+'tigerprawns.jpg', 'rb')})
-events = Event.create({ev_category_id:2, status:"ok", active:true, user_id:1, company_id:nil, date_from:DateTime.now, date_to:DateTime.now+30, name:"Grümpelturnier Münsterlingen", address1:"", address2:"", address3:"", description:"Grümpelturnier"})
+events = Event.create({ev_category_id:2, status:"ok", active:true, user_id:1, company_id:nil, date_from:DateTime.now, date_to:DateTime.now+30, name:"Grümpelturnier Münsterlingen", address1:"Münsterlingen", address2:"Sportheim", address3:"", description:"Grümpelturnier"})
 eventdetails = EventDetail.create({status:"ok", event_id:2, name:"Bild 1", avatar:File.open(path+'spielbetrieb.jpg', 'rb')})
 eventdetails = EventDetail.create({status:"ok", event_id:2, name:"Bild 2", avatar:File.open(path+'abendunterhaltung.jpg', 'rb')})
-events = Event.create({ev_category_id:1, status:"ok", active:true, user_id:1, company_id:nil, date_from:DateTime.now, date_to:DateTime.now+30, name:"Bandabend Affeltrangen", address1:"", address2:"", address3:"", description:"Grümpelturnier"})
+events = Event.create({ev_category_id:1, status:"ok", active:true, user_id:1, company_id:nil, date_from:DateTime.now, date_to:DateTime.now+30, name:"Bandabend Affeltrangen", address1:"Affeltrangen", address2:"Turnhalle", address3:"", description:"Grümpelturnier"})
 eventdetails = EventDetail.create({status:"ok", event_id:3, name:"Bild 1", avatar:File.open(path+'band1.jpg', 'rb')})
 eventdetails = EventDetail.create({status:"ok", event_id:3, name:"Bild 2", avatar:File.open(path+'band2.jpg', 'rb')})
 eventdetails = EventDetail.create({status:"ok", event_id:3, name:"Bild 2", avatar:File.open(path+'band3.jpg', 'rb')})
