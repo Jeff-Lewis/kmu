@@ -3,4 +3,4 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 jQuery ->
     $('#service_date_from').datepicker dateFormat: 'yy-mm-dd'
-    $('#service_date_to').datepicker dateFormat: 'yy-mm-dd'
+    $('#service_dater_to').datepicker dateFormat: 'yy-mm-dd'

@@ -16,6 +16,27 @@
   </div>
   <br>
 
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="digg_pagination">
+            <%= will_paginate @users, :container => false, previous_label: "<", next_label: ">" %>
+        </div>
+      </div>
+    </div>
+  </div>
+        
+  <%= build_medialist(4,@users,"users") %>
+  <br>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12">
+          <div id="map"></div>
+      </div>
+    </div>
+  </div>
+
+  <% if 1>2 %>
 	<div class="row">
     <div class="col-md-6">
       <div class="panel panel-default">
@@ -84,6 +105,7 @@
     </div>
 
   </div>
+  <% end %>
 </div>
 
 <script>

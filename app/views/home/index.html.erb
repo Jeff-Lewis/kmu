@@ -7,7 +7,10 @@
           xConnect - DAS regionale Portal<br>
           </anzeigetext>
         </div>
-        <br><br><br>
+      </div>
+      <br>
+
+      <div class="row">
         <div class="col-md-3">
           <div class="media">
             <div class="media-left">
@@ -30,7 +33,7 @@
             </div>
             <div class="media-body">
               <h4 class="media-heading">Institutionen</h4>
-                Suchen und Finden Sie Institutionen in Ihrer Umgebung...
+                Suchen und Finden Sie Firmen, Vereine, Institutionen, etc. in Ihrer Umgebung...
             </div>
           </div>
         </div>
@@ -81,7 +84,7 @@
         <div class="col-md-3">
           <div class="media">
             <div class="media-left">
-              <%= link_to requests_path, :rtype=>"biete" do %>
+              <%= link_to requests_path :rtype => "biete" do %>
                 <%= image_tag('request_a.png', :size => "50x50") %>
               <% end %>
             </div>
