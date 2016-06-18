@@ -63,6 +63,14 @@
                             <%= @company.created_at.strftime("%d %B %Y %H:%M Uhr durch ") + @company.user.name + " " + @company.user.lastname %>
                         </div>
                     <% end %>
+                    <% if user_signed_in? %>
+                        <% if current_user.superuser %>
+                            <div class="form-group">
+                              <%= f.label "Partner" %>
+                              <%= f.check_box :partner, class:"form-control" %>
+                            </div>
+                        <% end %>
+                    <% end %>
                     <div class="form-group">
                       <%= f.label "active" %>
                       <%= f.check_box :active, class:"form-control"%>

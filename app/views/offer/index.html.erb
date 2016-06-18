@@ -10,107 +10,50 @@
 		    <% end %>
         AKTIONEN
         <span class="badge"><%= @seranz %></span>
-        <%= link_to offer_index_path(:page => session[:page], :dir => "<")  do %>
-          <i class="btn btn-primary btn-lg glyphicon glyphicon-chevron-left"></i>
-        <% end %>
-        KW <%= session[:cw].to_s + " / " + session[:year].to_s %>
-        <%= link_to offer_index_path(:page => session[:page], :dir => ">")  do %>
-          <i class="btn btn-primary btn-lg glyphicon glyphicon-chevron-right"></i>
-        <% end %>
         </h1>
       </div>
     </div>
   </div>
   <br>
-	<div class="row">
-    <div class="col-md-12">
-  		<table class="table table-striped">
-        <thead>
-          <tr>
-            <td colspan="12">
-              <div class="digg_pagination">
-                  <%= will_paginate @services, :container => false, previous_label: "<", next_label: ">" %>
-              </div>	  
-            </td>
-          </tr>
-          <tr>
-            <th>Bewertung</th>
-            <th colspan="3">Sonderaktion</th>
-            <% for i in 0..6 %>
-              <th>
-                <%= $wochentage[i] %><br>
-                <%= (@start+i).strftime("%d-%m-%y") %>
-              </th>
-            <% end %>
-          </tr>
-        </thead>
+
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="digg_pagination">
+            <%= will_paginate @services, :container => false, previous_label: "<", next_label: ">" %>
+        </div>
+      </div>
+    </div>
+  </div>
         
-        <tbody>
-          <% @services.each do |e| %>
-            <tr>
-              <td>
-        		    <% if avg_rating(e.id) == 0 %>
-                  <% image_tag("no_rating.jpg", :size => "50x50" , class:"img-rounded") %>
-        		    <% else %>
-                  <% avg_rating(e.id).times do %>
-                    <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
-                    <i class="glyphicon glyphicon-star"></i>
-                  <% end %>
+  <%= build_medialist("col-sm-6 col-md-4 col-lg-3", @services, "services", true) %>
+  <br>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12">
+          <div id="map"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if 1>2 %>
+                <% avg_rating(e.id).times do %>
+                  <i class="glyphicon glyphicon-star"></i>
                 <% end %>
-              </td>
-              <td>
                 <% if e.date_to != nil %>
                   <p>
                     <b><ntext>noch </ntext></b><restlaufzeit><%= (e.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeit> <b><ntext> Tage</ntext></b>
                   </p>
                 <% end %>
-            </td>
-      			 <td>
-              <%= link_to e do %>
-                <% if !e.avatar_file_name %>
-                  <%= image_tag("action_a.png", :size => "50x50" , class:"img-rounded") %>
-                <% else %>
-                  <%= image_tag e.avatar(:thumb), class:"img-rounded" %>
+                <% if e.company_id != nil %>
+                  <%= e.company.name %>
                 <% end %>
-              <% end %>
-              </td>
-              <td>
-                <anzeigetext>
-                  <%= e.name %><br>
-                </anzeigetext>
-                <ntext>
-                  <% if e.company_id != nil %>
-                    <%= e.company.name %>
-                  <% end %>
-                  <% if e.user_id != nil %>
-                    <%= e.user.name + " " + e.user.lastname %>
-                  <% end %>
-                  <%= e.date_from.strftime("%d.%m") %>-<%= e.date_to.strftime("%d.%m") %>
-                </ntext>
-              </td>
-              <% for i in 0..6 %>
-                  <% if AktionDatum(@start+i,e) %>
-                    <td class="blocked">
-                  <% else %>
-                    <td class="free">
-                  <% end %>
-                  </td>
-              <% end %>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  
-	<div class="row">
-    <div class="col-md-12">
-      <div id="map">
-      </div>
-    </div>
-  </div>
-    
-</div>
+                <% if e.user_id != nil %>
+                  <%= e.user.name + " " + e.user.lastname %>
+                <% end %>
+                <%= e.date_from.strftime("%d.%m") %>-<%= e.date_to.strftime("%d.%m") %>
+<% end %>
 
 <script>
     handler = Gmaps.build('Google');

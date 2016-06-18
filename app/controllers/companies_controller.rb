@@ -1,6 +1,6 @@
 class CompaniesController < ApplicationController
   before_action :set_company, only: [:show, :edit, :update, :destroy]
-  permits :status, :active, :name, :homepage, :category_id, :social, :stichworte, :user_id, :description, :address1, :address2, :address3, :geo_address, :longitude, :latitude, :phone1, :phone2, :avatar, :avatar_file_name, :avatar_content_type, :avatar_file_size, :avatar_updated_at
+  permits :partner, :status, :active, :name, :homepage, :category_id, :social, :stichworte, :user_id, :description, :address1, :address2, :address3, :geo_address, :longitude, :latitude, :phone1, :phone2, :avatar, :avatar_file_name, :avatar_content_type, :avatar_file_size, :avatar_updated_at
 
   $branchen_codes = []
 
@@ -37,6 +37,7 @@ class CompaniesController < ApplicationController
       @company.user_id = current_user.id
       @company.active = true
       @company.status = "new"
+      @company.partner = false
   end
 
   # GET /companies/1/edit

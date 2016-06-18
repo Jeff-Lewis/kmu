@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+  resources :customers
+  get 'showcal/action'
+
+  get 'showcal/bid'
+
+  get 'showcal/event'
+
   resources :bid_documents
   resources :hs_ratings
   resources :hotspot_details
@@ -10,7 +17,8 @@ Rails.application.routes.draw do
   resources :appparams
   get 'offer/index2'
   get 'offer/index'
-
+  get 'home/index3'
+  
   resources :webmasters
   resources :bid_details
   resources :bids

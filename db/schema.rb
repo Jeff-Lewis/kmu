@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160612104244) do
+ActiveRecord::Schema.define(version: 20160618061019) do
 
   create_table "appparams", force: :cascade do |t|
     t.string   "name"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 20160612104244) do
     t.string   "status"
     t.boolean  "active"
     t.boolean  "social"
+    t.boolean  "partner"
     t.string   "name"
     t.integer  "category_id"
     t.string   "stichworte"
@@ -111,6 +112,13 @@ ActiveRecord::Schema.define(version: 20160612104244) do
     t.datetime "avatar_updated_at"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+  end
+
+  create_table "customers", force: :cascade do |t|
+    t.string   "user_id"
+    t.string   "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "donation_details", force: :cascade do |t|
@@ -263,8 +271,8 @@ ActiveRecord::Schema.define(version: 20160612104244) do
     t.text     "skills"
     t.text     "offers"
     t.text     "contacts"
-    t.datetime  "date_from"
-    t.datetime  "date_to"
+    t.datetime "date_from"
+    t.datetime "date_to"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -310,8 +318,8 @@ ActiveRecord::Schema.define(version: 20160612104244) do
     t.string   "name"
     t.text     "description"
     t.boolean  "social"
-    t.datetime  "date_from"
-    t.datetime  "date_to"
+    t.datetime "date_from"
+    t.datetime "date_to"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -331,8 +339,8 @@ ActiveRecord::Schema.define(version: 20160612104244) do
     t.integer  "ev_category_id"
     t.integer  "age_from"
     t.integer  "age_to"
-    t.datetime  "date_from"
-    t.datetime  "date_to"
+    t.datetime "date_from"
+    t.datetime "date_to"
     t.integer  "distance"
     t.string   "geo_address"
     t.string   "address1"
@@ -362,7 +370,7 @@ ActiveRecord::Schema.define(version: 20160612104244) do
     t.string   "stichworte"
     t.decimal  "price_reg"
     t.decimal  "price_new"
-    t.datetime  "date_from"
+    t.datetime "date_from"
     t.datetime "date_to"
     t.integer  "company_id"
     t.integer  "user_id"

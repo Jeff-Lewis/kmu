@@ -2,7 +2,7 @@ class CalendersController < ApplicationController
   before_action :set_calender, only: [:show, :edit, :update, :destroy]
   permits :status, :vehicle_id, :user_id, :date_from, :date_to, :time_from, :time_to, :active
 
-  $wochentage = %w[Montag Dienstag Mittwoch Donnerstag Freitag Samstag Sonntag]
+#  $wochentage = %w[Montag Dienstag Mittwoch Donnerstag Freitag Samstag Sonntag]
   
   # GET /calenders
   def index

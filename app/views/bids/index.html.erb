@@ -9,95 +9,30 @@
 		        <% end %>
 		    <% end %>
         AUSSCHREIBUNGEN
-        <span class="badge"><%= @bidanz %></span>
-        <%= link_to bids_path(:page => session[:page], :dir => "<")  do %>
-          <i class="btn btn-primary btn-lg glyphicon glyphicon-chevron-left"></i>
-        <% end %>
-        KW <%= session[:cw].to_s + " / " + session[:year].to_s %>
-        <%= link_to bids_path(:page => session[:page], :dir => ">")  do %>
-          <i class="btn btn-primary btn-lg glyphicon glyphicon-chevron-right"></i>
-        <% end %>
         </h1>
       </div>
     </div>
   </div>
-	<div class="row">
-    <div class="col-md-12">
-  		<table class="table table-striped">
-        <thead>
-          <tr>
-            <td colspan="13">
-              <div class="digg_pagination">
-                  <%= will_paginate @bids, :container => false, previous_label: "<", next_label: ">" %>
-              </div>	  
-            </td>
-          </tr>
-          <tr>
-            <th colspan="3">Ausschreibung</th>
-            <% for i in 0..6 %>
-              <th>
-                <%= $wochentage[i] %><br>
-                <%= (@start+i).strftime("%d-%m-%y") %>
-              </th>
-            <% end %>
-          </tr>
-        </thead>
-        
-        <tbody>
 
-            <% @bids.each do |b| %>
-
-              <tr>
-                <td>
-                <% if b.date_to != nil %>
-                  <p>
-                    <b><ntext>noch </ntext></b><restlaufzeit><%= (b.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeit> <b><ntext> Tage</ntext></b>
-                  </p>
-                <% end %>
-                </td>
-    				    <td>
-    				    <%= link_to b do %>
-    				      <% if b.bid_details != nil %>
-    				        <%= carousel(b.bid_details,"thumb") %>
-                  <% else %>
-                    <%= image_tag("bid_a.png", :size => "50x50" , class:"img-rounded") %>
-                  <% end %>
-                <% end %>
-                </td>
-                <td>
-                    <anzeigetext>
-                      <%= b.name %><br>
-                    </anzeigetext>
-                    <ntext>
-                    <% if b.user_id != nil %>
-                      <%= b.user.name + " " + b.user.lastname %>
-                    <% end %>
-                    <%= b.date_from.strftime("%d.%m") %>-<%= b.date_to.strftime("%d.%m") %>
-                    </ntext
-                </td>
-                <% for i in 0..6 %>
-                    <% if BidDatum(@start+i,b) %>
-                      <td class="blocked">
-                    <% else %>
-                      <td class="free">
-                    <% end %>
-                    </th>
-                <% end %>
-              </tr>
-            <% end %>
-
-        </tbody>
-      </table>
-    </div>
-  </div>
-  
-	<div class="row">
-    <div class="col-md-12">
-      <div id="map">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="digg_pagination">
+            <%= will_paginate @bids, :container => false, previous_label: "<", next_label: ">" %>
+        </div>
       </div>
     </div>
   </div>
-    
+        
+  <%= build_medialist("col-sm-6 col-md-4 col-lg-3", @bids, "bids", true) %>
+  <br>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12">
+          <div id="map"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>

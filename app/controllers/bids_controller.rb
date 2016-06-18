@@ -2,39 +2,13 @@ class BidsController < ApplicationController
   before_action :set_bid, only: [:show, :edit, :update, :destroy]
   permits :status, :user_id, :category_id, :name, :date_from, :date_to, :description, :active, :asap, :geo_address, :address1, :address2, :address3, :latitude, :longitude
 
-  $wochentage = %w[Montag Dienstag Mittwoch Donnerstag Freitag Samstag Sonntag]
+#  $wochentage = %w[Montag Dienstag Mittwoch Donnerstag Freitag Samstag Sonntag]
 
   # GET /bids
   def index
-   if !session[:cw]
-      session[:cw] = Date.today.cweek.to_i
-    end
-    if !session[:year]
-      session[:year] = Date.today.year.to_i
-    end
     if params[:search]
       session[:search] = params[:search]
     end
-    if params[:dir]
-      case params[:dir]
-        when ">"
-          if session[:cw] == 52
-            session[:cw] = 1
-            session[:year] = session[:year].to_i + 1
-          else
-            session[:cw] = session[:cw].to_i + 1
-          end
-        when "<"
-          if session[:cw] == 1
-            session[:cw] = 52
-            session[:year] = session[:year].to_i - 1
-          else
-            session[:cw] = session[:cw].to_i - 1
-          end
-      end
-
-    end
-    @start = Date.commercial(session[:year],session[:cw],1)
     if params[:sql_string] != nil
       @bids = Bid.paginate_by_sql(Bid.ext_sql(session[:cw], session[:year], params[:sql_string]), :page => params[:page], :per_page => 10)
     else
@@ -54,7 +28,6 @@ class BidsController < ApplicationController
         marker.lng bid.longitude
         z=z+1
         marker.infowindow z.to_s+ " " + bid.name
-#      marker.picture url: "http://images/ma_anonym.png"
       end
      end
   end

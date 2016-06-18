@@ -18,15 +18,23 @@ class Bid < ActiveRecord::Base
     end
   
   def self.ext_sql (cw, year, sql)
-    start_date = Date.commercial(year,cw,1)
-    end_date = Date.commercial(year,cw,7)
-    sql = sql + " AND ((date_from >= '" + start_date.to_s + "' AND date_from <= '" + end_date.to_s + "') OR (date_to >= '" + start_date.to_s + "' AND date_to <= '" + end_date.to_s + "') OR (date_from <= '" + start_date.to_s + "' AND date_to >= '" + end_date.to_s + "'))"
+    if cw != nil and year != nil
+      start_date = Date.commercial(year,cw,1)
+      end_date = Date.commercial(year,cw,7)
+      sql = sql + " AND ((date_from >= '" + start_date.to_s + "' AND date_from <= '" + end_date.to_s + "') OR (date_to >= '" + start_date.to_s + "' AND date_to <= '" + end_date.to_s + "') OR (date_from <= '" + start_date.to_s + "' AND date_to >= '" + end_date.to_s + "'))"
+    else
+      sql
+    end
   end
   
   def self.search(cw, year, search)
-    start_date = Date.commercial(year,cw,1)
-    end_date = Date.commercial(year,cw,7)
-    where('name LIKE ? and active=? and ((date_from>=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', "%#{search}%", true, start_date, end_date, start_date, end_date, start_date, end_date)
+    if cw != nil and year != nil
+      start_date = Date.commercial(year,cw,1)
+      end_date = Date.commercial(year,cw,7)
+      where('name LIKE ? and active=? and ((date_from>=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', "%#{search}%", true, start_date, end_date, start_date, end_date, start_date, end_date)
+    else
+      where('name LIKE ? and active=?', "%#{search}%", true)
+    end
   end 
 
   def valid_dates?

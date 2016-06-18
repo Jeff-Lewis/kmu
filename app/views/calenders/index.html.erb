@@ -46,7 +46,7 @@
             <% for i in 0..6 %>
               <th>
                 <%= $wochentage[i] %><br>
-                <%= (@start+i).strftime("%d-%m-%y") %>
+                <%= (@start+i).strftime("%d.%m") %>
               </th>
             <% end %>
           </tr>
