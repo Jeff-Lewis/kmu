@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :user_tickets
+  resources :tickets
   resources :customers
   get 'showcal/action'
 

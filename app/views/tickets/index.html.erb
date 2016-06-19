@@ -1,0 +1,78 @@
+<div class="container-fluid">
+  <div class="row">
+     <div class="col-md-12">
+       <div class="panel-heading header">
+          <h1>
+    	    <% if user_signed_in? %>
+    	      <% if current_user.id == @sponsor.event.company.user.id %>
+    	        <%= link_to new_ticket_path :sponsor_id => @sponsor.id do %>
+    	          <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+    	        <% end %>
+    	       <% end %>
+    	    <% end %>
+          Tickets für <%= @sponsor.event.name + " " + @sponsor.company.name  %>
+          <span class="badge"><%= @ticanz %></span>
+          </h1>
+       </div>
+     </div>
+   </div>
+   <br>
+   
+  <div class="panel-body">
+  <% ticketcount = 0 %>
+  <% @tickets.each do |t| %>
+    <div class="col-sm-6 col-md-4 col-lg-3">
+      <div class="thumbnail" align="center">
+        <br>
+        <% ticketcount = 0 %>
+        <% if t.contingent != nil %>
+          <% ticketcount = t.contingent %>
+          <% ut = t.user_tickets.count %>
+          <% if ut > 0 %>
+            <% ticketcount = t.contingent - ut %>
+          <% end %>
+        <% end %>
+        <p>
+          <b><ntext>noch </ntext></b><restlaufzeit><%= ticketcount %></restlaufzeit> <b><ntext> Tickets</ntext></b>
+        </p>
+        <ntext>
+        <anzeigetext>
+          <%= t.ticket_category.name %><br>
+					<%= t.name %>
+				</anzeigetext><br>
+        <b>Veranstaltung</b><br>
+        <%= @sponsor.event.name %><br>
+        <%= @sponsor.event.date_from.strftime("%d.%m.%Y") + " - " + @sponsor.event.date_to.strftime("%d.%m.%Y")  %><br>
+        <br>
+        <b>überreicht von</b>
+        <%= @sponsor.company.name %>
+        </ntext>
+        <div class="caption">
+            <ntext>
+  				  <%= t.description %>
+            </ntext>
+  			</div>
+        <ntext>
+  		  <%= t.created_at.strftime("%d.%b.%Y %H:%M Uhr") %>
+  		  <% if t.created_at.to_date == Date.today %>
+  		    Heute
+  		  <% end %>
+  		  <% if (Date.today - t.created_at.to_date) == 1 %>
+  		    Gestern
+  		  <% end %>
+  		  <% if Date.today - t.created_at.to_date > 1 %>
+          <% anz = (Date.today.to_date - t.created_at.to_date).to_i %>
+          Vor <%= anz %> Tagen
+  		  <% end %>
+        </ntext>    		  
+        </p>
+  			<p>
+        <%= link_to edit_ticket_path(t) do %>
+          <i class="btn btn-primary btn btn-lg glyphicon glyphicon-wrench"></i>
+        <% end %>
+  		</div>
+		</div>
+  <% end %>
+  </div>
+
+</div>

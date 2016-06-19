@@ -1,4 +1,7 @@
 class Sponsor < ActiveRecord::Base
+    
+    has_many :tickets
+    
     belongs_to :company
     belongs_to :user
     belongs_to :event

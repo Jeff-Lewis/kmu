@@ -63,6 +63,11 @@ ev_categories = EvCategory.create({name:"Informationsveranstaltung"})
 ev_categories = EvCategory.create({name:"Jubiläum"})
 ev_categories = EvCategory.create({name:"Flohmarkt"})
 
+#create ticket categories
+ticket_categories = TicketCategory.create({name:"Eintrittsbillet"})
+ticket_categories = TicketCategory.create({name:"Gutschein"})
+ticket_categories = TicketCategory.create({name:"Rabatt"})
+
 #create Params
 appparams = Appparam.create({name:"Kleinanzeigen", description:"Kleinanzeigen für Private Anbieten & Suchen", active:true})
 appparams = Appparam.create({name:"Stellenanzeigen", description:"Stellenanzeigen für Institutionen", active:true})

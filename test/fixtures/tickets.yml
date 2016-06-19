@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sponsor_id: MyString
+  ticket_category_id: 1
+  name: MyString
+  description: MyText
+  amount: 1
+  contingent: 1
+
+two:
+  sponsor_id: MyString
+  ticket_category_id: 1
+  name: MyString
+  description: MyText
+  amount: 1
+  contingent: 1
