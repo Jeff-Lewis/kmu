@@ -6,21 +6,12 @@ class BidsController < ApplicationController
 
   # GET /bids
   def index
-    if params[:search]
-      session[:search] = params[:search]
+    if params[:page]
+      session[:page] = params[:page]
     end
-    if params[:sql_string] != nil
-      @bids = Bid.paginate_by_sql(Bid.ext_sql(session[:cw], session[:year], params[:sql_string]), :page => params[:page], :per_page => 10)
-    else
-      @bids = Bid.search(session[:cw], session[:year], session[:search]).order(date_from: :asc).page(params[:page]).per_page(10)
-    end
+    @bids = Bid.search(session[:cw], session[:year], params[:filter_id], params[:search]).order(date_from: :asc).page(params[:page]).per_page(10)
     @bidanz = @bids.count
-    
-    puts "YEAR" + session[:year].to_s
-    puts "KW" + session[:cw].to_s
-    puts "START" + @start.to_s
-    puts "ANZ" + @eveanz.to_s
-    
+  
     z = 0
     @hash = Gmaps4rails.build_markers(@bids) do |bid, marker|
       if bid.latitude != nil and bid.longitude != nil

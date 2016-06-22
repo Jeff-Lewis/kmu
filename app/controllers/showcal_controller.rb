@@ -6,9 +6,6 @@ class ShowcalController < ApplicationController
     if !session[:year]
       session[:year] = Date.today.year.to_i
     end
-    if params[:search]
-      session[:search] = params[:search]
-    end
     if params[:dir]
       case params[:dir]
         when ">"
@@ -29,11 +26,7 @@ class ShowcalController < ApplicationController
 
     end
     @start = Date.commercial(session[:year],session[:cw],1)
-    if params[:sql_string] != nil
-      @services = Service.paginate_by_sql(Service.ext_sql(session[:cw], session[:year], params[:sql_string]), :page => params[:page], :per_page => 16)
-    else
-      @services = Service.actionsearch(session[:cw], session[:year], session[:search]).order(date_from: :asc).page(params[:page]).per_page(16)
-    end
+    @services = Service.search(session[:cw], session[:year], "action", params[:filter_id], params[:search]).order(date_from: :asc).page(params[:page]).per_page(16)
     @seranz = @services.count
     
     z = 0
@@ -55,9 +48,6 @@ class ShowcalController < ApplicationController
     if !session[:year]
       session[:year] = Date.today.year.to_i
     end
-    if params[:search]
-      session[:search] = params[:search]
-    end
     if params[:dir]
       case params[:dir]
         when ">"
@@ -75,14 +65,9 @@ class ShowcalController < ApplicationController
             session[:cw] = session[:cw].to_i - 1
           end
       end
-
     end
     @start = Date.commercial(session[:year],session[:cw],1)
-    if params[:sql_string] != nil
-      @bids = Bid.paginate_by_sql(Bid.ext_sql(session[:cw], session[:year], params[:sql_string]), :page => params[:page], :per_page => 10)
-    else
-      @bids = Bid.search(session[:cw], session[:year], session[:search]).order(date_from: :asc).page(params[:page]).per_page(10)
-    end
+    @bids = Bid.search(session[:cw], session[:year], params[:filter_id], params[:search]).order(date_from: :asc).page(params[:page]).per_page(10)
     @bidanz = @bids.count
     
     puts "YEAR" + session[:year].to_s
@@ -109,9 +94,6 @@ class ShowcalController < ApplicationController
     if !session[:year]
       session[:year] = Date.today.year.to_i
     end
-    if params[:search]
-      session[:search] = params[:search]
-    end
     if params[:dir]
       case params[:dir]
         when ">"
@@ -132,11 +114,7 @@ class ShowcalController < ApplicationController
 
     end
     @start = Date.commercial(session[:year],session[:cw],1)
-    if params[:sql_string] != nil
-      @events = Event.paginate_by_sql(Bid.ext_sql(session[:cw], session[:year], params[:sql_string]), :page => params[:page], :per_page => 10)
-    else
-      @events = Event.search(session[:cw], session[:year],session[:search]).order(date_from: :asc).page(params[:page]).per_page(10)
-    end
+    @events = Event.search(session[:cw], session[:year], params[:filter_id], params[:search]).order(date_from: :asc).page(params[:page]).per_page(10)
     @eveanz = @events.count
     
     z = 0

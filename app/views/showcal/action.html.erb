@@ -10,11 +10,11 @@
 		    <% end %>
         AKTIONEN
         <span class="badge"><%= @seranz %></span>
-        <%= link_to offer_index_path(:page => session[:page], :dir => "<")  do %>
+        <%= link_to showcal_action_path(:page => session[:page], :dir => "<")  do %>
           <i class="btn btn-primary btn-lg glyphicon glyphicon-chevron-left"></i>
         <% end %>
         KW <%= session[:cw].to_s + " / " + session[:year].to_s %>
-        <%= link_to offer_index_path(:page => session[:page], :dir => ">")  do %>
+        <%= link_to showcal_action_path(:page => session[:page], :dir => ">")  do %>
           <i class="btn btn-primary btn-lg glyphicon glyphicon-chevron-right"></i>
         <% end %>
         </h1>

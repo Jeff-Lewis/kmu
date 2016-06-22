@@ -49,7 +49,8 @@ gem 'geocoder'
 
 gem 'gmaps4rails'
 
-gem 'will_paginate', '> 3.0'
+gem 'will_paginate', '~> 3.0.5'
+#gem 'kaminari'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

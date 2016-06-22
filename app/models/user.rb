@@ -36,11 +36,15 @@ class User < ActiveRecord::Base
       self.geo_address = self.address1 + " " + address2 + " " + address3
     end
     
-    def self.search(search)
-        if search
-            where('anonymous=? and active=? and (name LIKE ? OR lastname LIKE ?)', false, true, "%#{search}%","%#{search}%")
+    def self.search(filter, search)
+        if filter
+            where(Search.find(filter).sql_string)
         else
-            where('anonymous=? and active=?',false, true)
+            if search
+                where('anonymous=? and active=? and (name LIKE ? OR lastname LIKE ?)', false, true, "%#{search}%","%#{search}%")
+            else
+                where('anonymous=? and active=?',false, true)
+            end
         end
     end
 

@@ -337,6 +337,7 @@ ActiveRecord::Schema.define(version: 20160618100823) do
     t.integer  "mob_category_id"
     t.integer  "hs_category_id"
     t.integer  "ev_category_id"
+    t.integer  "ticket_id"
     t.integer  "age_from"
     t.integer  "age_to"
     t.datetime "date_from"

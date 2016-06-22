@@ -4,7 +4,7 @@
        <div class="panel-heading header">
           <h1>
     	    <% if user_signed_in? %>
-    	      <% if current_user.id == @sponsor.event.company.user.id %>
+    	      <% if current_user.id == @sponsor.company.user_id %>
     	        <%= link_to new_ticket_path :sponsor_id => @sponsor.id do %>
     	          <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
     	        <% end %>
@@ -69,6 +69,9 @@
   			<p>
         <%= link_to edit_ticket_path(t) do %>
           <i class="btn btn-primary btn btn-lg glyphicon glyphicon-wrench"></i>
+        <% end %>
+        <%= link_to searches_path :search_domain => "Tickets", :controller_name => controller_name, :ticket_id => t.id do %>
+          <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
         <% end %>
   		</div>
 		</div>

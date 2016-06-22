@@ -6,11 +6,9 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-    if params[:sql_string] != nil
-      @events = Event.paginate_by_sql(Bid.ext_sql(session[:cw], session[:year], params[:sql_string]), :page => params[:page], :per_page => 10)
-    else
-      @events = Event.search(session[:cw], session[:year],session[:search]).order(date_from: :asc).page(params[:page]).per_page(10)
-    end
+    session[:cw] = nil
+    session[:year] = nil
+    @events = Event.search(session[:cw], session[:year], params[:filter_id], params[:search]).order(date_from: :asc).page(params[:page]).per_page(10)
     @eveanz = @events.count
     
     z = 0

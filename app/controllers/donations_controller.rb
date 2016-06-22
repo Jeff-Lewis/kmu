@@ -5,11 +5,7 @@ class DonationsController < ApplicationController
   # GET /donations
   def index
     session[:page] = params[:page]
-    if params[:sql_string] != nil
-      @donations = Donation.paginate_by_sql(params[:sql_string], :page => params[:page], :per_page => 10)
-    else
-      @donations = Donation.search(params[:search]).order(created_at: :desc).page(params[:page]).per_page(10)
-    end
+    @donations = Donation.search(params[:filter_id], params[:search]).order(created_at: :desc).page(params[:page]).per_page(10)
     @donanz = @donations.count
   end
 

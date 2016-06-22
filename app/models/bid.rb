@@ -27,13 +27,21 @@ class Bid < ActiveRecord::Base
     end
   end
   
-  def self.search(cw, year, search)
+  def self.search(cw, year, filter, search)
     if cw != nil and year != nil
       start_date = Date.commercial(year,cw,1)
       end_date = Date.commercial(year,cw,7)
       where('name LIKE ? and active=? and ((date_from>=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', "%#{search}%", true, start_date, end_date, start_date, end_date, start_date, end_date)
     else
-      where('name LIKE ? and active=?', "%#{search}%", true)
+      if filter
+        where(Search.find(filter).sql_string)
+      else
+        if search
+          where('name LIKE ? and active=?', "%#{search}%", true)
+        else
+          where('active=?', true)
+        end
+      end
     end
   end 
 

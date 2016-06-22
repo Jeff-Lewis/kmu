@@ -214,12 +214,14 @@
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-credit-card"></i>
                 <% end %>
                 <% if user_signed_in? %>
-                  <% if current_user.id == cs.company.user_id %>
-          	        <%= link_to edit_sponsor_path(cs) do %>
-                      <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                    <% end %>
-          	        <%= link_to cs, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                      <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                  <% if cs.company.user_id != nil %>
+                    <% if current_user.id == cs.company.user_id %>
+            	        <%= link_to edit_sponsor_path(cs) do %>
+                        <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                      <% end %>
+            	        <%= link_to cs, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                        <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                      <% end %>
                     <% end %>
                   <% end %>
                 <% end %>

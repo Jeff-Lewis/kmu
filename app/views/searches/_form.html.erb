@@ -22,7 +22,7 @@
                       <% end %>
                       ABFRAGEN 
                       <% if @count != nil %>
-                        Einträge gefunden: <%= @count.to_s %>
+                        Einträge gefunden: <%= @count.to_s %><br><%= @search.sql_string %>
                       <% end %>
                       </h2>
                     </div>
@@ -36,6 +36,7 @@
                       <%= f.hidden_field :user_id %>
                       <%= f.hidden_field :search_domain %>
                       <%= f.hidden_field :controller %>
+                      <%= f.hidden_field :ticket_id %>
                       <div class="form-group">
                         <%= f.label "Bezeichnung" %><br/>
                         <%= f.text_field :name, autofocus: true, class:"form-control"%>
@@ -46,7 +47,7 @@
                       </div>
                      
                      <% case @search.search_domain %>
-                     <% when "Privatpersonen" %>
+                     <% when "Privatpersonen", "Tickets" %>
                         <div class="form-group">
                           <%= f.label "Alter von-bis:" %><br/>
                           <%= f.number_field :age_from, class:"form-control"%>
@@ -83,6 +84,10 @@
                         </div>
 
                      <% when "Angebote" %>
+                          <div class="form-group">
+                            <%= f.label "gemeinnützig" %>
+                            <%= f.check_box :social, class:"form-control"%>
+                          </div>
                           <%= f.label "Bewertung mindestens" %><br/>
                           <% for i in 1..5 %>
                               <%= f.radio_button :rating, i.to_i %>

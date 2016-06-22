@@ -3,25 +3,6 @@ class ServicesController < ApplicationController
       permits :stichworte, :status, :company_id, :parent_id, :user_id, :active, :stype, :date_from, :date_to, :price_reg, :price_new, :name, :description, :social, :ansprechpartner, :telefon, :email, :avatar
 
   def index
-      if params[:page] != nil
-        session[:page] = params[:page]
-      end
-      if params[:mode] != nil
-        session[:mode] = params[:mode]
-      end
-      if params[:stype] != nil
-        session[:stype] = params[:stype]
-      end
-      if params[:company_id] != nil
-        @company_id = params[:company_id]
-        session[:company_id] = params[:company_id]
-        @services = Service.where("company_id=? and parent_id=? and stype=?", params[:company_id], 0, params[:stype])
-      end
-      if params[:user_id] != nil
-        @user_id = params[:user_id]
-        session[:user_id] = params[:user_id]
-        @services = Service.where("user_id=? and parent_id=?", params[:user_id], 0)
-      end
   end
 
   # GET /workorders/1

@@ -4,11 +4,19 @@
       <div class="panel-heading header">
         <h1>
 		    <% if user_signed_in? %>
-		        <%= link_to searches_path :search_domain => "Aktionen", :controller_name => controller_name do %>
-		          <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
-		        <% end %>
+		        <% if @stype == "regular" %>
+  		        <%= link_to searches_path :search_domain => "Angebote", :controller_name => controller_name do %>
+  		          <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+  		        <% end %>
+	            ANGEBOTE
+	  		    <% end %>
+		        <% if @stype == "action" %>
+  		        <%= link_to searches_path :search_domain => "Aktionen", :controller_name => controller_name do %>
+  		          <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+  		        <% end %>
+	            AKTIONEN
+	  		    <% end %>
 		    <% end %>
-        AKTIONEN
         <span class="badge"><%= @seranz %></span>
         </h1>
       </div>

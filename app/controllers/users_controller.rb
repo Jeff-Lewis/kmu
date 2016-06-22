@@ -15,11 +15,16 @@ class UsersController < ApplicationController
     if params[:page] != nil
       session[:page] = params[:page]
     end
-    if params[:sql_string] != nil
-      @users = User.paginate_by_sql(params[:sql_string], :page => params[:page], :per_page => 16)
-    else
-      @users = User.search(params[:search]).page(params[:page]).per_page(16)
-    end
+#    if params[:sql_string] != nil
+#      @users = User.paginate_by_sql(params[:sql_string], :page => params[:page], :per_page => 16)
+#    else
+#      @users = User.search(params[:search]).page(params[:page]).per_page(16)
+#    end
+
+#    @users = User.find_by_sql("select * FROM users WHERE active='t'")
+#    @users = Kaminari.paginate_array(@users).page(params[:page]).per(10)
+    @users = User.search(params[:filter_id],params[:search]).page(params[:page]).per_page(16)
+#    @users = User.all.page(params[:page]).per_page(10)
     @usanz = @users.count
 
     z = 0

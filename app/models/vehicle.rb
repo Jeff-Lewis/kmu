@@ -19,12 +19,16 @@ class Vehicle < ActiveRecord::Base
       self.geo_address = self.address1 + " " + address2 + " " + address3
     end
     
-      def self.search(search)
+      def self.search(filter, search)
+        if filter
+          where(Search.find(filter).sql_string)
+        else
           if search
                 where('active=? and stichworte LIKE ? OR name LIKE ?', true, "%#{search}%", "%#{search}%")
           else
                 where('active=?', true)
           end
+        end
       end
 
 end

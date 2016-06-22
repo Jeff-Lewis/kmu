@@ -338,43 +338,56 @@
         </h2>
       </div>
       <div class="panel-body">
-          <% @company.sponsors.each do |cs| %>
-            <div class="col-md-4">
-              <div class="thumbnail" align="center">
-                <anzeigetext>
-      						<%= cs.event.name %><br>
-                </div>
-                <ntext>
-                <p>
-    						<%= align_text(cs.event.description) %>
-    						</p>
-                <% if cs.event.event_details.count > 0 %>
-                    <%= carousel(cs.event.event_details, "medium") %>
-                  <% else %>
-                    <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
-          			<% end %>
-                <br>
-                <%= cs.event.ev_category.name %>
-                <br>
-        				<% case cs.slevel %>
-        				  <% when "1" %>
-                    <%= image_tag("Sponsor_gold.jpg", :size => "200x200", class:"img-rounded" ) %>
-        				  <% when "2" %>
-                    <%= image_tag("Sponsor_silver.jpg", :size => "200x200", class:"img-rounded" ) %>
-        				  <% when "3" %>
-                    <%= image_tag("Sponsor_bronze.jpg", :size => "200x200", class:"img-rounded" ) %>
+        <% @company.sponsors.each do |cs| %>
+          <div class="col-md-4">
+            <div class="thumbnail" align="center">
+              <anzeigetext>
+    						<%= cs.event.name %><br>
+              </anzeigetext>
+              <ntext>
+              <p>
+  						<%= align_text(cs.event.description) %>
+  						</p>
+              <% if cs.event.event_details.count > 0 %>
+                  <%= carousel(cs.event.event_details, "medium") %>
+                <% else %>
+                  <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
+        			<% end %>
+              <br>
+              <%= cs.event.ev_category.name %>
+              <br>
+      				<% case cs.slevel %>
+      				  <% when "1" %>
+                  <%= image_tag("Sponsor_gold.jpg", :size => "200x200", class:"img-rounded" ) %>
+      				  <% when "2" %>
+                  <%= image_tag("Sponsor_silver.jpg", :size => "200x200", class:"img-rounded" ) %>
+      				  <% when "3" %>
+                  <%= image_tag("Sponsor_bronze.jpg", :size => "200x200", class:"img-rounded" ) %>
+              <% end %>
+              <br>
+              vom <%= cs.event.date_from.strftime("%d.%m.%Y") %> bis <%= cs.event.date_to.strftime("%d.%m.%Y") %>
+              </ntext>
+  						<br><br>
+    	        <%= link_to cs.event do %>
+                <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
+              <% end %>
+    	        <%= link_to tickets_path :sponsor_id => cs.id do %>
+                <i class="btn btn-primary btn-lg glyphicon glyphicon-credit-card"></i>
+              <% end %>
+              <% if user_signed_in? %>
+                <% if current_user.id == cs.company.user_id %>
+        	        <%= link_to edit_sponsor_path(cs) do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                  <% end %>
+        	        <%= link_to cs, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                    <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                  <% end %>
                 <% end %>
-                <br>
-                vom <%= cs.event.date_from.strftime("%d.%m.%Y") %> bis <%= cs.event.date_to.strftime("%d.%m.%Y") %>
-                </ntext>
-    						<br><br>
-      	        <%= link_to cs.event do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-                <% end %>
-                <br><br>
-              </div>
+              <% end %>
+              <br><br>
             </div>
-          <% end %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

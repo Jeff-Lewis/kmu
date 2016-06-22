@@ -2,14 +2,22 @@
 	<div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
+        <% if @ticket != nil %>
+          <%   ticket_id = @ticket.id %>
+        <% else %>
+          <% ticket_id = nil %>
+        <% end %>
         <h1>
 		    <%= link_to url_for(@controller_name), :search_domain => @search_domain, :page => session[:page] do %>
           <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
         <% end %>
-		    <%= link_to new_search_path(:user_id => current_user.id, :search_domain => @search_domain, :controller_name => @controller_name) do %>
+		    <%= link_to new_search_path(:user_id => current_user.id, :search_domain => @search_domain, :controller_name => @controller_name, :ticket_id => ticket_id) do %>
           <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
         <% end %>
         SUCHEN <%= @search_domain %>
+        <% if @ticket != nil %>
+          für <%= @ticket.sponsor.event.name + " " + @ticket.name %>
+        <% end %>
         <span class="badge"><%= @seranz %></span>
         </h1>
       </div>
@@ -43,52 +51,58 @@
               <tr>
                 <td>
                 <% case s.search_domain %>
+                <% when "Tickets" %>
+                  <% if s.ticket_id != nil %>
+                    <% @ticket = Ticket.find(s.ticket_id) %>
+                    <%= link_to tickets_path :sponsor_id => @ticket.sponsor.id do %>
+                      <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                    <% end %>
+                    <%= link_to searches_path :ticket_id => @ticket.id, :filter_id => s.id, :sponsor_id => @ticket.sponsor.id do %>
+                      <i class="btn btn-primary btn-lg glyphicon glyphicon-bullhorn"></i>
+                    <% end %>
+                  <% end %>
                 <% when "Privatpersonen" %>
-                  <%= link_to users_path :sql_string => s.sql_string do %>
+                  <%= link_to users_path :filter_id => s.id do %>
                     <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% when "Institutionen" %>
-                  <%= link_to companies_path :sql_string => s.sql_string do %>
+                  <%= link_to companies_path :filter_id => s.id do %>
                     <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
                   <% end %>
-                <% when "Angebote" %>
-                  <%= link_to offer_index2_path :sql_string => s.sql_string do %>
+                <% when "Angebote", "Aktionen" %>
+                  <%= link_to offer_index_path :filter_id => s.id  do %>
                     <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% when "Mobilien" %>
-                  <%= link_to vehicles_path :sql_string => s.sql_string do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
-                  <% end %>
-                <% when "Aktionen" %>
-                  <%= link_to offer_index_path :sql_string => s.sql_string do %>
+                  <%= link_to vehicles_path :filter_id => s.id  do %>
                     <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% when "Ausschreibungen" %>
-                  <%= link_to bids_path :sql_string => s.sql_string do %>
+                  <%= link_to bids_path :filter_id => s.id  do %>
                     <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% when "Kleinanzeigen" %>
-                  <%= link_to requests_path :sql_string => s.sql_string, :rtype => s.rtype do %>
+                  <%= link_to requests_path :filter_id => s.id , :rtype => s.rtype do %>
                     <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% when "Stellenanzeigen" %>
-                  <%= link_to jobs_path :sql_string => s.sql_string do %>
+                  <%= link_to jobs_path :filter_id => s.id do %>
                     <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% when "Veranstaltungen" %>
-                  <%= link_to events_path :sql_string => s.sql_string do %>
+                  <%= link_to events_path :filter_id => s.id  do %>
                     <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% when "Sehenswuerdigkeiten" %>
-                  <%= link_to hotspots_path :sql_string => s.sql_string do %>
+                  <%= link_to hotspots_path :filter_id => s.id do %>
                     <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% when "Spendeninitiativen" %>
-                  <%= link_to donations_path :sql_string => s.sql_string do %>
+                  <%= link_to donations_path :filter_id => s.id  do %>
                     <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% end %>
-      	        <%= link_to edit_search_path(s) do %>
+      	        <%= link_to edit_search_path(s, :ticket_id => ticket_id) do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
                 <% end %>
       	        <%= link_to s, method: :delete, data: { confirm: 'Are you sure?' } do %>
@@ -96,11 +110,9 @@
                 <% end %>
                 </td>
                 <td>
-                  <%= link_to edit_search_path(s) do %>
-                      <anzeigetext>
-                        <%= s.name %><br>
-                      </anzeigetext>
-                  <% end %>
+                  <anzeigetext>
+                    <%= s.name %><br>
+                  </anzeigetext>
                 </td>
                 <ntext>
                 <td><%= s.description %></td>

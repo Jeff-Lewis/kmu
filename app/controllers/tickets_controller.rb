@@ -4,7 +4,6 @@ class TicketsController < ApplicationController
 
   # GET /tickets
   def index
-    puts params[:sponsor_id]
     @sponsor = Sponsor.find(params[:sponsor_id])
     @tickets = Ticket.where('sponsor_id=?',params[:sponsor_id])
     @ticanz = @tickets.count
@@ -17,6 +16,8 @@ class TicketsController < ApplicationController
   # GET /tickets/new
   def new
     @ticket = Ticket.new
+    @ticket.sponsor_id = params[:sponsor_id]
+    @ticket.ticket_category_id = 1
   end
 
   # GET /tickets/1/edit

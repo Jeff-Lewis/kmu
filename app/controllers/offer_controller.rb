@@ -3,19 +3,13 @@ class OfferController < ApplicationController
 
   # GET /events
   def index
-    if params[:stype]
-      session[:stype] = params[:stype]
+    if params[:page]
+      session[:page] = params[:page]
     end
-    session[:page] = params[:page]
-    if params[:search]
-      session[:search] = params[:search]
-    end
-    if params[:sql_string] != nil
-      @services = Service.paginate_by_sql(Service.ext_sql(params[:cw], params[:year], params[:sql_string]), :page => params[:page], :per_page => 16)
-    else
-      @services = Service.search(params[:cw], params[:year], session[:stype], session[:search]).order(created_at: :desc).page(params[:page]).per_page(16)
-    end
+    @stype = params[:stype]
+    @services = Service.search(params[:cw], params[:year], params[:stype], params[:filter_id], params[:search]).order(created_at: :desc).page(params[:page]).per_page(16)
     @seranz = @services.count
+
     z = 0
     @hash = Gmaps4rails.build_markers(@services) do |service, marker|
       if service.company_id != nil

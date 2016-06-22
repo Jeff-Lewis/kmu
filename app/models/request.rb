@@ -5,11 +5,15 @@ class Request < ActiveRecord::Base
 
     validates :name, presence: true
     
-    def self.search(search, typ)
-      if search
-        where('rtype=? and active=? and (stichworte LIKE ? OR name LIKE ?)', typ, true, "%#{search}%", "%#{search}%")
+    def self.search(filter, search, typ)
+      if filter
+          where(Search.find(filter).sql_string)
       else
-        where('rtype=? and active=?', typ, true)
+        if search
+          where('rtype=? and active=? and (stichworte LIKE ? OR name LIKE ?)', typ, true, "%#{search}%", "%#{search}%")
+        else
+          where('rtype=? and active=?', typ, true)
+        end
       end
     end
 

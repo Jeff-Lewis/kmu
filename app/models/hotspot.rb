@@ -17,12 +17,16 @@ class Hotspot < ActiveRecord::Base
       self.geo_address = self.address1 + " " + address2 + " " + address3
     end
     
-    def self.search(search)
+    def self.search(filter, search)
+      if filter
+        where(Search.find(filter).sql_string)
+      else
         if search
             where('active=? and name LIKE ? OR stichworte LIKE ?', true, "%#{search}%","%#{search}%")
         else
             where('active=?',true)
         end
+      end
     end
     
 end

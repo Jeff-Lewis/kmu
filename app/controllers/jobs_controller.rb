@@ -7,15 +7,11 @@ class JobsController < ApplicationController
   # GET /jobs
   def index
     
-    if params[:company_id]
-      session[:company_id] = params[:company_id]
+    if params[:page]
+      session[:page] = params[:page]
     end
     
-    if params[:sql_string] != nil
-      @jobs = Job.paginate_by_sql(params[:sql_string], :page => params[:page], :per_page => 10)
-    else
-      @jobs = Job.search(params[:search]).page(params[:page]).per_page(10)
-    end
+    @jobs = Job.search(params[:filter_id], params[:search]).page(params[:page]).per_page(10)
     @jobanz = @jobs.count
 
     z = 0
