@@ -36,6 +36,7 @@
           <b><ntext>noch </ntext></b><restlaufzeit><%= ticketcount %></restlaufzeit> <b><ntext> Tickets</ntext></b>
         </p>
         <ntext>
+          (Kontingent <%= t.contingent %> Tickets)<br>
         <anzeigetext>
           <%= t.ticket_category.name %><br>
 					<%= t.name %>
@@ -72,6 +73,9 @@
         <% end %>
         <%= link_to searches_path :search_domain => "Tickets", :controller_name => controller_name, :ticket_id => t.id do %>
           <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+        <% end %>
+        <%= link_to ticketuserview_index_path :ticket_id => t.id do %>
+          <i class="btn btn-primary btn-lg glyphicon glyphicon-user"></i>
         <% end %>
   		</div>
 		</div>

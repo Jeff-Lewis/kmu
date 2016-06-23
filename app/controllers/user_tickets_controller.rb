@@ -42,9 +42,9 @@ class UserTicketsController < ApplicationController
 
   # DELETE /user_tickets/1
   def destroy
+    @ticket_id = @user_ticket.ticket_id
     @user_ticket.destroy
-
-    redirect_to user_tickets_url, notice: 'User ticket was successfully destroyed.'
+    redirect_to ticketuserview_index_path :ticket_id => @ticket_id, notice: 'User ticket was successfully destroyed.'
   end
 
   private
