@@ -29,7 +29,7 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new(ticket)
 
     if @ticket.save
-      redirect_to @ticket, notice: 'Ticket was successfully created.'
+      redirect_to tickets_path :sponsor_id => @ticket.sponsor, notice: 'Ticket was successfully created.'
     else
       render :new
     end
@@ -38,7 +38,7 @@ class TicketsController < ApplicationController
   # PUT /tickets/1
   def update(ticket)
     if @ticket.update(ticket)
-      redirect_to @ticket, notice: 'Ticket was successfully updated.'
+      redirect_to tickets_path :sponsor_id => @ticket.sponsor, notice: 'Ticket was successfully updated.'
     else
       render :edit
     end
@@ -46,9 +46,9 @@ class TicketsController < ApplicationController
 
   # DELETE /tickets/1
   def destroy
+    @sponsor = @ticket.sponsor
     @ticket.destroy
-
-    redirect_to tickets_url, notice: 'Ticket was successfully destroyed.'
+    redirect_to tickets_path :sponsor_id => @sponsor, notice: 'Ticket was successfully destroyed.'
   end
 
   private

@@ -36,7 +36,12 @@
           <b><ntext>noch </ntext></b><restlaufzeit><%= ticketcount %></restlaufzeit> <b><ntext> Tickets</ntext></b>
         </p>
         <ntext>
-          (Kontingent <%= t.contingent %> Tickets)<br>
+          <b>Ticket-Statistik</b><br>
+          Kontingent: <%= t.contingent %><br>
+          überreicht: <%= UserTicket.where('ticket_id=? and status=?',t.id, "überreicht").count %><br>
+          aktiviert: <%= UserTicket.where('ticket_id=? and status=?', t.id, "aktiviert").count %><br>
+          eingelöst: <%= UserTicket.where('ticket_id=? and status=?',t.id, "eingelöst").count %><br>
+          <br>
         <anzeigetext>
           <%= t.ticket_category.name %><br>
 					<%= t.name %>
@@ -68,14 +73,17 @@
         </ntext>    		  
         </p>
   			<p>
-        <%= link_to edit_ticket_path(t) do %>
-          <i class="btn btn-primary btn btn-lg glyphicon glyphicon-wrench"></i>
-        <% end %>
         <%= link_to searches_path :search_domain => "Tickets", :controller_name => controller_name, :ticket_id => t.id do %>
           <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
         <% end %>
         <%= link_to ticketuserview_index_path :ticket_id => t.id do %>
           <i class="btn btn-primary btn-lg glyphicon glyphicon-user"></i>
+        <% end %>
+        <%= link_to edit_ticket_path(t) do %>
+          <i class="btn btn-primary btn btn-lg glyphicon glyphicon-wrench"></i>
+        <% end %>
+        <%= link_to t, method: :delete, data: { confirm: 'Are you sure?' } do %>
+          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
         <% end %>
   		</div>
 		</div>

@@ -329,13 +329,6 @@
     <div class="col-md-12">
       <div class="panel-heading header">
         <h2>
-          <% if user_signed_in? %>
-            <% if current_user.id == @user.id %>
-              <%= link_to new_event_path(:user_id => current_user.id) do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
-              <% end %>
-            <% end %>
-          <% end %>
             TICKETS
         </h2>
       </div>
@@ -390,11 +383,11 @@
               </p>
         			<p>
         			<% case ut.status %>
-        			  <% when "gift" %>
+        			  <% when "überreicht" %>
                   <%= link_to edit_user_ticket_path(ut) do %>
                     <i class="btn btn-primary btn btn-lg glyphicon glyphicon-shopping-cart"> Ticket aktivieren</i>
                   <% end %>
-        			  <% when "active" %>
+        			  <% when "aktiviert" %>
                   <%= link_to edit_user_ticket_path(ut) do %>
                     <i class="btn btn-primary btn btn-lg glyphicon glyphicon-shopping-cart"> Ticket einlösen</i>
                   <% end %>

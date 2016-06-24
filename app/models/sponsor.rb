@@ -1,6 +1,6 @@
 class Sponsor < ActiveRecord::Base
     
-    has_many :tickets
+    has_many :tickets, dependent: :destroy 
     
     belongs_to :company
     belongs_to :user

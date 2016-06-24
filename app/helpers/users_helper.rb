@@ -73,6 +73,9 @@ def build_medialist(md_string,items, cname, panel)
                                   html_string = html_string + "<a href=/customers/new?user_id=" + current_user.id.to_s + "&company_id=" + item.id.to_s + ">"
                                   html_string = html_string + "<i class='btn btn-primary btn-lg glyphicon glyphicon-pencil'></i></a>"
                               else
+                                  html_string = html_string + "<a href=/customers/" + @customer.id.to_s + "/edit>"
+                                  html_string = html_string + "<i class='btn btn-primary btn-lg glyphicon glyphicon-wrench'></i></a>"
+                                  
                                   html_string = html_string + "<a data-confirm='Wollen Sie die Kundenbeziehung wirklich löschen?' rel='nofollow' data-method='delete' href=/customers/" + @customer.id.to_s + ">"
                                   html_string = html_string + "<i class='btn btn-danger btn-lg glyphicon glyphicon-trash'></i></a>"
                               end

@@ -1,6 +1,6 @@
 class CustomersController < ApplicationController
   before_action :set_customer, only: [:show, :edit, :update, :destroy]
-  permits :user_id, :company_id
+  permits :customer_number, :user_id, :company_id
 
   # GET /customers
   def index

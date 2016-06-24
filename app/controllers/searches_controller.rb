@@ -29,7 +29,7 @@ class SearchesController < ApplicationController
         userticket = UserTicket.new
         userticket.user_id = u.id
         userticket.ticket_id = params[:ticket_id]
-        userticket.status = "gift"
+        userticket.status = "überreicht"
         userticket.save
       end
     end
