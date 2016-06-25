@@ -333,13 +333,16 @@
         </h2>
       </div>
       <div class="panel-body">
-        <% @user.user_tickets.each do |ut| %>
+        <% @user.user_tickets.where('status<>?',"zurückgegeben").each do |ut| %>
           <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
               <anzeigetext>
                 <%= ut.ticket.ticket_category.name %><br>
       					<%= ut.ticket.name %><br>
-      				</anzeigetext><br>
+      				</anzeigetext>
+      				<ticketstatuss><b>
+      				<%= ut.status %>
+              </b></ticketstatuss><br><br>
               <% if !ut.user.avatar_file_name %>
                 <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
               <% else %>
@@ -359,7 +362,7 @@
                 <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
               <% else %>
                 <%= image_tag ut.ticket.sponsor.company.avatar(:small), class:"img-rounded"%>
-              <% end %>
+              <% end %><br>
               <%= ut.ticket.sponsor.company.name %>
               </ntext>
               <div class="caption">
@@ -384,12 +387,23 @@
         			<p>
         			<% case ut.status %>
         			  <% when "überreicht" %>
-                  <%= link_to edit_user_ticket_path(ut) do %>
-                    <i class="btn btn-primary btn btn-lg glyphicon glyphicon-shopping-cart"> Ticket aktivieren</i>
+                  <%= link_to users_ticketstatus_path :userticket_id => ut.id, :status => "zurückgeben" do %>
+                    <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-down"> Ticket zurückgeben</i>
+                  <% end %><br><br>
+                  <%= link_to users_ticketstatus_path :userticket_id => ut.id, :status => "aktivieren" do %>
+                    <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-up"> Ticket aktivieren</i>
                   <% end %>
+        			  <% when "zurückgegeben" %>
+                  <% link_to users_ticketstatus_path :userticket_id => ut.id, :status => "zurückgeben" do %>
+                    <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-down"> Ticket zurückgegeben</i>
+                  <% end %><br><br>
         			  <% when "aktiviert" %>
-                  <%= link_to edit_user_ticket_path(ut) do %>
+                  <%= link_to users_ticketstatus_path :userticket_id => ut.id, :status => "einlösen" do %>
                     <i class="btn btn-primary btn btn-lg glyphicon glyphicon-shopping-cart"> Ticket einlösen</i>
+                  <% end %>
+        			  <% when "eingelöst" %>
+                  <% link_to users_ticketstatus_path :userticket_id => ut.id, :status => "einlösen" do %>
+                    <i class="btn btn-primary btn btn-lg glyphicon glyphicon-shopping-cart"> Ticket eingelöst</i>
                   <% end %>
               <% end %>
         		</div>

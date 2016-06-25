@@ -7,6 +7,20 @@ class TicketsController < ApplicationController
     @sponsor = Sponsor.find(params[:sponsor_id])
     @tickets = Ticket.where('sponsor_id=?',params[:sponsor_id])
     @ticanz = @tickets.count
+    
+    if params[:ticket_id]
+      @searches = Search.where('ticket_id=?', params[:ticket_id])
+      @searches.each do |s|
+        @users = User.where(s.sql_string)
+        @users.each do |u|
+          userticket = UserTicket.new
+          userticket.user_id = u.id
+          userticket.ticket_id = params[:ticket_id]
+          userticket.status = "überreicht"
+          userticket.save
+        end
+      end
+    end
   end
 
   # GET /tickets/1

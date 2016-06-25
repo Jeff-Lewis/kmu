@@ -11,6 +11,22 @@ class UsersController < ApplicationController
     redirect_to @user, notice: 'Webmaster '  
   end
   
+  def ticketstatus
+    if params[:userticket_id]
+      @ut = UserTicket.find(params[:userticket_id])
+      case params[:status]
+        when "zurückgeben"
+          @ut.status = "zurückgegeben"
+        when "aktivieren"
+          @ut.status = "aktiv"
+        when "einlösen"
+          @ut.status = "eingelöst"
+      end
+      @ut.save
+    end
+    redirect_to @ut.user, notice: 'Ticketstatus successfully updated '  
+  end
+  
   def index
     if params[:page] != nil
       session[:page] = params[:page]

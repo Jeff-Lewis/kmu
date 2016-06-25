@@ -361,6 +361,7 @@ ActiveRecord::Schema.define(version: 20160618100823) do
     t.float    "from_lgt"
     t.boolean  "special"
     t.string   "rtype"
+    t.integer  "counter"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
   end

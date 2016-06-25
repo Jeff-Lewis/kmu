@@ -43,7 +43,7 @@
                   <li><%= link_to "Veranstaltungen", events_path if $activeapps.include?("Veranstaltungen")%></li>
                   <li><%= link_to "Veranstaltungen (Kalender)", showcal_event_path if $activeapps.include?("Veranstaltungen")%></li>
 				  <% if user_signed_in? %>
-	                  <li><%= link_to "Tickets", user_tickets_path if $activeapps.include?("Sponsoring")%></li>
+	                  <li><% link_to "Tickets", user_tickets_path if $activeapps.include?("Sponsoring")%></li>
 	              <% end %>
 				  <li class="divider">
                   <li><%= link_to "Sehenswürdigkeiten", hotspots_path if $activeapps.include?("Sehenswürdigkeiten")%></li>

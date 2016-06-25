@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   get 'ticketuserview/index'
+  get 'users/ticketstatus'
 
   resources :user_tickets
   resources :tickets

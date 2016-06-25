@@ -23,16 +23,6 @@ class SearchesController < ApplicationController
     end
     @seranz = @searches.count
     
-    if params[:filter_id]
-      @users = User.where(Search.find(params[:filter_id]).sql_string)
-      @users.each do |u|
-        userticket = UserTicket.new
-        userticket.user_id = u.id
-        userticket.ticket_id = params[:ticket_id]
-        userticket.status = "überreicht"
-        userticket.save
-      end
-    end
   end
 
   # GET /searches/1
@@ -119,5 +109,6 @@ class SearchesController < ApplicationController
     def set_search(id)
       @search = Search.find(id)
       @count = @search.build_sql if (action_name != "destroy")
+      @search.counter = @count
     end
 end

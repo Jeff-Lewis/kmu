@@ -43,6 +43,8 @@
               <th></th>
               <th>Bezeichnung</th>
               <th>Beschreibung</th>
+              <th>Datum</th>
+              <th>Anzahl</th>
             </tr>
           </thead>
         
@@ -56,9 +58,6 @@
                     <% @ticket = Ticket.find(s.ticket_id) %>
                     <%= link_to tickets_path :sponsor_id => @ticket.sponsor.id do %>
                       <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
-                    <% end %>
-                    <%= link_to searches_path :ticket_id => @ticket.id, :filter_id => s.id, :sponsor_id => @ticket.sponsor.id do %>
-                      <i class="btn btn-primary btn-lg glyphicon glyphicon-bullhorn"></i>
                     <% end %>
                   <% end %>
                 <% when "Privatpersonen" %>
@@ -116,6 +115,8 @@
                 </td>
                 <ntext>
                 <td><%= s.description %></td>
+                <td><%= s.updated_at.strftime("%d.%m.%Y um %T Uhr") %></td>
+                <td><%= s.counter %></td>
                 </ntext>
                 </tr>
             <% end %>

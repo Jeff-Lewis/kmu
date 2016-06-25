@@ -21,7 +21,7 @@
   <div class="panel-body">
   <% ticketcount = 0 %>
   <% @tickets.each do |t| %>
-    <div class="col-sm-6 col-md-4 col-lg-3">
+    <div class="col-sm-6 col-md-6 col-lg-4">
       <div class="thumbnail" align="center">
         <br>
         <% ticketcount = 0 %>
@@ -39,7 +39,8 @@
           <b>Ticket-Statistik</b><br>
           Kontingent: <%= t.contingent %><br>
           überreicht: <%= UserTicket.where('ticket_id=? and status=?',t.id, "überreicht").count %><br>
-          aktiviert: <%= UserTicket.where('ticket_id=? and status=?', t.id, "aktiviert").count %><br>
+          zurückgegeben: <%= UserTicket.where('ticket_id=? and status=?',t.id, "zurückgegeben").count %><br>
+          aktiv: <%= UserTicket.where('ticket_id=? and status=?', t.id, "aktiv").count %><br>
           eingelöst: <%= UserTicket.where('ticket_id=? and status=?',t.id, "eingelöst").count %><br>
           <br>
         <anzeigetext>
@@ -76,8 +77,15 @@
         <%= link_to searches_path :search_domain => "Tickets", :controller_name => controller_name, :ticket_id => t.id do %>
           <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
         <% end %>
+        <% @counter = Search.where('ticket_id=?',t.id).sum(:counter) %>
+        <%= link_to tickets_path :ticket_id => t.id, :sponsor_id => t.sponsor.id do %>
+          <i class="btn btn-primary btn-lg glyphicon glyphicon-bullhorn">
+          <span class="badge"><%= @counter %></span></i>
+        <% end %>
+        <% @counter = UserTicket.where('ticket_id=?',t.id).count %>
         <%= link_to ticketuserview_index_path :ticket_id => t.id do %>
-          <i class="btn btn-primary btn-lg glyphicon glyphicon-user"></i>
+          <i class="btn btn-primary btn-lg glyphicon glyphicon-user">
+          <span class="badge"><%= @counter %></span></i>
         <% end %>
         <%= link_to edit_ticket_path(t) do %>
           <i class="btn btn-primary btn btn-lg glyphicon glyphicon-wrench"></i>
