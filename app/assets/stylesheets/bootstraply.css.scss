@@ -12,8 +12,18 @@
  $orange: #E0633B;
  $gelb: #F2B857;
  
- $color1: #58A5EF;
- $color2: #14296C;
+/* $color1: #58A5EF;
+# $color2: #14296C; */
+
+li_header {
+    background: $color1;
+    color: white;
+    font-size: 120%;
+}
+
+small_cal {
+    font-size: 50%;
+}
 
 .container-fluid {
     background: $color4!important;
@@ -56,12 +66,12 @@ restlaufzeit, preis {
   font-size: 300%;
   color: red;
 }
-restlaufzeits, preiss, ticketstatuss {
+restlaufzeits, preiss, ticketstatuss, betrag {
   color: red;
 }
 
 anzeigetext {
-  font-size: 200%;
+  font-size: 150%;
   color: $color5;
 }
 ntext {

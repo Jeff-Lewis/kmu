@@ -2,15 +2,15 @@
 	<div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h1>
+        <li_header>
 		    <% if user_signed_in? %>
 		        <%= link_to searches_path :search_domain => "Institutionen", :controller_name => controller_name do %>
-		          <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+		          <i class="btn btn-primary glyphicon glyphicon-filter"></i>
 		        <% end %>
 		    <% end %>
         INSTITUTIONEN
         <span class="badge"><%= @companz %></span>
-        </h1>
+        </li_header>
       </div>
     </div>
   </div>

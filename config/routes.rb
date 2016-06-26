@@ -20,9 +20,8 @@ Rails.application.routes.draw do
   get 'ticker/index'
 
   resources :appparams
-  get 'offer/index2'
   get 'offer/index'
-  get 'home/index3'
+  get 'home/index2'
   
   resources :webmasters
   resources :bid_details

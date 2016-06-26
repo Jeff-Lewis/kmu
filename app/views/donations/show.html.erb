@@ -3,9 +3,9 @@
   <div class="row">
     <div class="col-md-12">
         <div class="panel-heading header">
-          <h2>
+          <li_header>
               SPENDENINITIATIVE <%= @donation.name %>
-          </h2>
+          </li_header>
         </div>
         <div class="panel-body">
           <%= link_to donations_path :page => session[:page] do %>
@@ -28,7 +28,7 @@
         <div class="panel-body">
           <p>
           <% if @donation.donation_details.count > 0 %>
-              <%= carousel(@donation.donation_details, "big") %>
+              <%= carousel(@donation.donation_details, "medium") %>
             <% else %>
               <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
     			<% end %>
@@ -41,7 +41,7 @@
             <%= image_tag("company_a.png", :size => "100x100" , class:"img-rounded") %>
           <% else %>
             <%= image_tag @donation.company.avatar(:thumb), class:"img-rounded" %>
-          <% end %>
+          <% end %><br>
           <%= @donation.company.name %>
     			<br><br>
           <%= @donation.created_at.strftime("%d.%m.%Y") %>
@@ -53,7 +53,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
           <% if user_signed_in? %>
             <% if current_user.id == @donation.company.user_id %>
               <%= link_to new_donation_detail_path :mode => "private", :donation_id => @donation.id do %>
@@ -62,19 +62,19 @@
             <% end %>
           <% end %>
             ZUSATZINFORMATIONEN
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
     		<% @donation.donation_details.each do |bd| %>
-          <div class="col-md-4">
+          <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
               <anzeigetext>
     						<%= bd.name %><br>
               </anzeigetext>
       				<% if bd.avatar_file_name == nil %>
-                <%= image_tag("donation_a.png", :size => "500x500", class:"img-rounded" ) %>
+                <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
               <% else %>
-                <%= image_tag bd.avatar, :size => "500x500", class:"img-rounded"  %>
+                <%= image_tag bd.avatar(:medium), class:"img-rounded"  %>
               <% end %>
               <p>
               <ntext>
@@ -103,7 +103,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
           <% if user_signed_in? %>
             <%= link_to new_donation_stat_path :donation_id => @donation.id, :dontype => "User" do %>
               <i class="btn btn-primary btn-lg glyphicon glyphicon-user">+</i>
@@ -115,36 +115,37 @@
             <% end %>
           <% end %>
             SPENDER <%= sprintf("%05.2f CHF", @donation.donation_stats.sum(:amount)) %>
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
         <% @donation.donation_stats.order(amount: :desc).each do |ds| %>
-          <div class="col-md-4">
+          <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
     				  <% if ds.company_id != nil %>
         				<% if ds.company.avatar_file_name == nil %>
                   <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
                 <% else %>
                   <%= image_tag ds.company.avatar(:medium), class:"img-rounded"  %>
-                <% end %>
+                <% end %><br>
       				  <%= ds.company.name %>
       				<% end %>
       				<% if ds.user_id != nil %>
         				<% if ds.user.avatar_file_name == nil %>
                   <%= image_tag("user_a.png", :size => "200x200", class:"img-rounded" ) %>
                 <% else %>
-                  <%= image_tag ds.user.avatar, :size => "200x200", class:"img-rounded"  %>
-                <% end %>
+                  <%= image_tag ds.user.avatar(:medium), class:"img-rounded"  %>
+                <% end %><br>
       				  <%= ds.user.name + " " + ds.user.lastname  %>
       				<% end %>
       				<br><br>
-      				Spendenbetrag
+      				<betrag>
               <% if !ds.anonymous %>
                   <%= sprintf("%05.2f CHF", ds.amount) %>
                 <% else %>
                   *****.** CHF
               <% end %>
-              <br>
+              </betrag>
+              <br><br>
               <%= ds.created_at.strftime("%d.%m.%Y") %>
               <br><br>
               <% if ds.user_id != nil %>
@@ -167,6 +168,7 @@
                   <% end %>
                 <% end %>
               <% end %>
+              <br><br>
             </div>
           </div>
         <% end %>
@@ -178,9 +180,9 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             ORTSANGABE
-        </h2>
+        </li_header>
       </div>
     </div>
     <div class="col-md-12">
@@ -196,9 +198,9 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             KONTAKT
-        </h2>
+        </li_header>
       </div>
     </div>
     <div class="col-md-12">

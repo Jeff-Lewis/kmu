@@ -3,14 +3,14 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             ACCOUNT
             <% if @user.anonymous %>
               ********
             <% else %>
               <%= @user.name + " " + @user.lastname %>
             <% end %>
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
         <%= link_to users_path :page => session[:page] do %>
@@ -76,7 +76,7 @@
 <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_heder>
           <% if user_signed_in? %>
             <% if current_user.id == @user.id %>
               <%= link_to new_service_path :user_id => @user.id do %>
@@ -85,11 +85,11 @@
             <% end %>
           <% end %>
             ANGEBOTE
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
       		<% @user.services.each do |us| %>
-            <div class="col-md-4">
+            <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <anzeigetext>
       						<%= us.name %>
@@ -97,7 +97,7 @@
                 <% if us.avatar_file_name == nil %>
                   <%= image_tag("service_a.png", :size => "200x200", class:"img-rounded" ) %>
                 <% else %>
-                  <%= image_tag us.avatar, :size => "200x200", class:"img-rounded"  %>
+                  <%= image_tag us.avatar(:medium), class:"img-rounded"  %>
                 <% end %>
                 <p>
                 <ntext>
@@ -132,7 +132,7 @@
 <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
           <% if user_signed_in? %>
             <% if current_user.id == @user.id %>
               <%= link_to new_company_path :user_id => @user.id do %>
@@ -141,11 +141,11 @@
             <% end %>
           <% end %>
             INSTITUTIONEN
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
       		<% @user.companies.each do |uc| %>
-            <div class="col-md-4">
+            <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <anzeigetext>
       						<%= uc.name %>
@@ -153,7 +153,7 @@
         				<% if uc.avatar_file_name == nil %>
                   <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
                 <% else %>
-                  <%= image_tag uc.avatar, :size => "200x200", class:"img-rounded"  %>
+                  <%= image_tag uc.avatar(:medium), class:"img-rounded"  %>
                 <% end %>
                 <p>
                 <ntext>
@@ -181,23 +181,20 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
           <% if user_signed_in? %>
             <% if current_user.id == @user.id %>
-              <%= link_to new_request_path(:rtype => "biete", :user_id => current_user.id) do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"> Anbieten</i>
-              <% end %>
-              <%= link_to new_request_path(:rtype => "suche", :user_id => current_user.id) do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"> Suchen</i>
+              <%= link_to new_request_path(:user_id => current_user.id) do %>
+                <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
               <% end %>
             <% end %>
           <% end %>
             KLEINANZEIGEN
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
       		<% @user.requests.order(created_at: :desc).each do |ur| %>
-            <div class="col-md-4">
+            <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <anzeigetext>
       						<%= ur.rtype + " " + ur.name %>
@@ -210,7 +207,7 @@
                 <% if ur.request_details != nil %>
                       <%= carousel(ur.request_details, "medium") %>
                     <% else %>
-                      <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
+                      <%= image_tag("request_a.png", :size => "200x200", class:"img-rounded" ) %>
             		<% end %>
     						<br>
       	        <%= link_to ur do %>
@@ -230,7 +227,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
           <% if user_signed_in? %>
             <% if current_user.id == @user.id %>
               <%= link_to new_vehicle_path(:user_id => current_user.id) do %>
@@ -239,11 +236,11 @@
             <% end %>
           <% end %>
             MOBILIEN
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
       		<% @user.vehicles.each do |uv| %>
-            <div class="col-md-4">
+            <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <anzeigetext>
       						<%= uv.name %><br>
@@ -279,7 +276,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
           <% if user_signed_in? %>
             <% if current_user.id == @user.id %>
               <%= link_to new_event_path(:user_id => current_user.id) do %>
@@ -288,11 +285,11 @@
             <% end %>
           <% end %>
             VERANSTALTUNGEN
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
       		<% @user.events.each do |ue| %>
-            <div class="col-md-4">
+            <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <anzeigetext>
       						<%= ue.name %><br>
@@ -328,9 +325,9 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             TICKETS
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
         <% @user.user_tickets.where('status<>?',"zurückgegeben").each do |ut| %>
@@ -359,7 +356,7 @@
               <br>
               <b>überreicht von</b><br>
               <% if !ut.ticket.sponsor.company.avatar_file_name %>
-                <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
+                <%= image_tag("company_a.png", :size => "50x50" , class:"img-rounded") %>
               <% else %>
                 <%= image_tag ut.ticket.sponsor.company.avatar(:small), class:"img-rounded"%>
               <% end %><br>
@@ -420,7 +417,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
           <% if user_signed_in? %>
             <% if current_user.id == @user.id %>
               <%= link_to new_hotspot_path(:user_id => current_user.id) do %>
@@ -429,11 +426,11 @@
             <% end %>
           <% end %>
             SEHENSWÜRDIGKEITEN / AUSFLUGSZIELE
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
       		<% @user.hotspots.each do |uh| %>
-            <div class="col-md-4">
+            <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <anzeigetext>
       						<%= uh.name %><br>
@@ -441,7 +438,7 @@
                 <% if uh.hotspot_details != nil %>
                       <%= carousel(uh.hotspot_details, "medium") %>
                     <% else %>
-                      <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
+                      <%= image_tag("hotspot_a.png", :size => "200x200", class:"img-rounded" ) %>
             		<% end %>
             		<ntext>
                 <p>
@@ -466,7 +463,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
           <% if user_signed_in? %>
             <% if current_user.id == @user.id %>
               <%= link_to new_bid_path(:user_id => current_user.id) do %>
@@ -475,11 +472,11 @@
             <% end %>
           <% end %>
             AUSSCHREIBUNGEN
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
       		<% @user.bids.each do |ub| %>
-            <div class="col-md-4">
+            <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <anzeigetext>
                   <%= ub.name %><br>
@@ -491,7 +488,7 @@
                 <% if ub.bid_details != nil %>
                       <%= carousel(ub.bid_details, "medium") %>
                     <% else %>
-                      <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
+                      <%= image_tag("bid_a.png", :size => "200x200", class:"img-rounded" ) %>
             		<% end %>
     						<br>
       	        <%= link_to ub do %>
@@ -511,13 +508,13 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             SPENDEN
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
   	    <% @user.donation_stats.each do |uds| %>
-          <div class="col-md-4">
+          <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
               <anzeigetext>
     						<%= uds.donation.name %><br>
@@ -554,13 +551,13 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             RATINGS
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
         <% @user.ratings.each do |ur| %>
-          <div class="col-md-4">
+          <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
               <anzeigetext>
     						<%= ur.service.name %><br>
@@ -607,14 +604,14 @@
 	<div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h1>
-        Favoriten
+        <li_header>
+        FAVORITEN
         <span class="badge"><%= @favanz %></span>
-        </h1>
+        </li_header>
       </div>
       <div class="panel-body">
         <% @user.favourits.each do |f| %>
-          <div class="col-md-4">
+          <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
               <anzeigetext>
                 <% @item = Object.const_get(f.object_name).find(f.object_id) %>
@@ -675,9 +672,9 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             ORTSANGABE
-        </h2>
+        </li_header>
       </div>
     </div>
     <div class="col-md-12">

@@ -3,18 +3,24 @@
   <div class="row">
     <div class="col-md-12">
         <div class="panel-heading header">
-          <h2>
+          <li_header>
             <% if @service.stype == "action" %>
               AKTION
             <% else %>
-              SERVICE 
+              ANGEBOT 
             <% end %>
             <%= @service.name %>
-          </h2>
+          </li_header>
         </div>
         <div class="panel-body">
-          <%= link_to offer_index2_path :page => session[:page] do %>
-            <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+          <% if @service.stype == "action" %>
+            <%= link_to offer_index_path :page => session[:page], :stype => "action" do %>
+              <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+            <% end %>
+          <% else %>
+            <%= link_to offer_index_path :page => session[:page], :stype => "regular" do %>
+              <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+            <% end %>
           <% end %>
           <% if  user_signed_in? %>
               <% if @service.user_id != nil %>
@@ -100,18 +106,18 @@
   <div class="row">
     <div class="col-md-12">
         <div class="panel-heading header">
-          <h2>
+          <li_header>
             <% if user_signed_in? %>
               <%= link_to new_rating_path(:user_id => current_user.id, :service_id => @service.id) do %>
                 <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
               <% end %>
             <% end %>
             Bewertungen
-          </h2>
+          </li_header>
         </div>
         <div class="panel-body">
           <% @service.ratings.each do |sr| %>
-            <div class="col-md-4">
+            <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <% if sr.user.avatar == nil or sr.user.anonymous %>
                   <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
@@ -159,9 +165,9 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             ORTSANGABE
-        </h2>
+        </li_header>
       </div>
     </div>
     <div class="col-md-12">
@@ -177,9 +183,9 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             KONTAKT
-        </h2>
+        </li_header>
       </div>
     </div>
     <div class="col-md-12">

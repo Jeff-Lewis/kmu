@@ -3,9 +3,9 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             INSTITUTION <%= @company.name %>
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
         <%= link_to companies_path :page => session[:page] do %>
@@ -48,7 +48,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
           <% if user_signed_in? %>
             <% if current_user.id == @company.user.id %>
               <%= link_to new_service_path :company_id => @company.id, :stype => "regular" do %>
@@ -57,11 +57,11 @@
             <% end %>
           <% end %>
             ANGEBOTE
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
     		<% @company.services.where("stype=?","regular").each do |cs| %>
-            <div class="col-md-4">
+            <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <anzeigetext>
       						<%= cs.name %><br>
@@ -93,7 +93,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
           <% if user_signed_in? %>
             <% if current_user.id == @company.user.id %>
               <%= link_to new_service_path :company_id => @company.id , :stype => "action" do %>
@@ -102,11 +102,11 @@
             <% end %>
           <% end %>
             AKTIONEN
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
         <% @company.services.where("stype=?","action").each do |cs| %>
-            <div class="col-md-4">
+            <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <anzeigetext>
       						<%= cs.name %><br>
@@ -144,7 +144,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
           <% if user_signed_in? %>
             <% if current_user.id == @company.user.id %>
               <%= link_to new_vehicle_path(:company_id => @company.id) do %>
@@ -153,11 +153,11 @@
             <% end %>
           <% end %>
             MOBILIEN
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
       		<% @company.vehicles.each do |cv| %>
-            <div class="col-md-4">
+            <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <anzeigetext>
       						<%= cv.name %><br>
@@ -193,13 +193,13 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             AUSSCHREIBUNGEN
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
       		<% @company.bid_documents.each do |cbd| %>
-            <div class="col-md-4">
+            <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <anzeigetext>
       						<%= cbd.bid.name %><br>
@@ -232,7 +232,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
           <% if user_signed_in? %>
             <% if current_user.id == @company.user.id %>
               <%= link_to new_job_path(:company_id => @company.id) do %>
@@ -241,11 +241,11 @@
             <% end %>
           <% end %>
             STELLENANGEBOTE
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
       		<% @company.jobs.each do |cj| %>
-            <div class="col-md-4">
+            <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <anzeigetext>
       						<%= cj.name %><br>
@@ -278,7 +278,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
           <% if user_signed_in? %>
             <% if current_user.id == @company.user_id %>
               <%= link_to new_event_path(:company_id => @company.id) do %>
@@ -287,11 +287,11 @@
             <% end %>
           <% end %>
             VERANSTALTUNGEN
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
       		<% @company.events.each do |ce| %>
-            <div class="col-md-4">
+            <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <anzeigetext>
       						<%= ce.name %><br>
@@ -333,13 +333,13 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             SPONSORING
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
         <% @company.sponsors.each do |cs| %>
-          <div class="col-md-4">
+          <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
               <anzeigetext>
     						<%= cs.event.name %><br>
@@ -398,7 +398,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
           <% if @company.social %>
             <% if user_signed_in? %>
               <% if current_user.id == @company.user.id %>
@@ -409,11 +409,11 @@
             <% end %>
           <% end %>
             SPENDENINITIATIVEN
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
         <% @company.donations.each do |cds| %>
-          <div class="col-md-4">
+          <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
               <anzeigetext>
     						<%= cds.name %><br>
@@ -448,13 +448,13 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             SPENDEN
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
   	    <% @company.donation_stats.each do |cds| %>
-          <div class="col-md-4">
+          <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
     					<%= cds.donation.company.name %>
               <anzeigetext>
@@ -491,14 +491,14 @@
 	<div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h1>
+        <li_header>
         Favoriten
         <span class="badge"><%= @favanz %></span>
-        </h1>
+        </li_header>
       </div>
       <div class="panel-body">
         <% @company.user.favourits.each do |f| %>
-          <div class="col-md-4">
+          <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
               <anzeigetext>
                 <% @item = Object.const_get(f.object_name).find(f.object_id) %>
@@ -560,9 +560,9 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             ORTSANGABE
-        </h2>
+        </li_header>
       </div>
     </div>
     <div class="col-md-12">
@@ -578,9 +578,9 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             KONTAKT
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
 				<% if @company.user.avatar_file_name == nil %>

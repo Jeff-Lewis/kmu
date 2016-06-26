@@ -3,9 +3,9 @@
   <div class="row">
     <div class="col-md-12">
         <div class="panel-heading header">
-          <h2>
+          <li_header>
               KLEINANZEIGE <%= @request.name %>
-          </h2>
+          </li_header>
         </div>
         <div class="panel-body">
           <%= link_to requests_path :rtype => session[:rtype], :page => session[:page] do %>
@@ -26,14 +26,12 @@
           <% end %>
         </div>
         <div class="panel-body">
-          <% if @request.request_details.first != nil %>
-    				<% if @request.request_details.first.avatar_file_name == nil %>
-              <%= image_tag("request_a.png", :size => "200x200", class:"img-rounded" ) %>
-            <% else %>
-              <%= image_tag @request.request_details.first.avatar, :size => "200x200", class:"img-rounded"  %>
-            <% end %>
-            <br><br>
+          <% if @request.request_details != nil %>
+            <%= carousel(@request.request_details, "medium") %>
+          <% else %>
+            <%= image_tag("request_a.png", :size => "200x200", class:"img-rounded" ) %>
           <% end %>
+          <br><br>
           <b>Beschreibung</b><br>
     			<%= @request.description %>
           <br><br>
@@ -42,7 +40,7 @@
             <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
           <% else %>
             <%= image_tag @request.user.avatar(:thumb), class:"img-rounded" %>
-          <% end %>
+          <% end %><br>
           <%= @request.user.name + " " + @request.user.lastname %>
     			<br><br>
           <%= @request.created_at.strftime("%d.%m.%Y") %>
@@ -54,7 +52,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
           <% if user_signed_in? %>
             <% if current_user.id == @request.user_id %>
               <%= link_to new_request_detail_path :request_id => @request.id do %>
@@ -63,19 +61,19 @@
             <% end %>
           <% end %>
           ZUSATZINFORMATIONEN
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
       		<% @request.request_details.each do |bd| %>
-            <div class="col-md-4">
+            <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <anzeigetext>
       						<%= bd.name %>
                 </anzeigetext>
         				<% if bd.avatar_file_name == nil %>
-                  <%= image_tag("bid_a.png", :size => "500x500", class:"img-rounded" ) %>
+                  <%= image_tag("bid_a.png", :size => "200x200", class:"img-rounded" ) %>
                 <% else %>
-                  <%= image_tag bd.avatar, :size => "500x500", class:"img-rounded"  %>
+                  <%= image_tag bd.avatar(:medium), class:"img-rounded"  %>
                 <% end %>
                 <p>
                 <ntext>
@@ -104,9 +102,9 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             ORTSANGABE
-        </h2>
+        </li_header>
       </div>
     </div>
     <div class="col-md-12">
@@ -122,9 +120,9 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             KONTAKT
-        </h2>
+        </li_header>
       </div>
     </div>
     <div class="col-md-12">

@@ -4,12 +4,12 @@
         <div class="col-md-10">
             <div class="panel panel-default">
                 <div class="panel-heading header">
-                <h2>
+                <li_header>
                 <%= link_to @bid_document.bid do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
                 <% end %>
                   DOKUMENTE AUSSCHREIBUNG <%= @bid_document.bid.name %>
-                </h2>
+                </li_header>
                 </div>
                 <div class="panel-body">
                   <% if @bid_document.errors.any? %>

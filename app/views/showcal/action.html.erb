@@ -2,22 +2,22 @@
 	<div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h1>
+        <li_header>
 		    <% if user_signed_in? %>
 		        <%= link_to searches_path :search_domain => "Aktionen", :controller_name => controller_name do %>
-		          <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+		          <i class="btn btn-primary glyphicon glyphicon-filter"></i>
 		        <% end %>
 		    <% end %>
         AKTIONEN
-        <span class="badge"><%= @seranz %></span>
+        <span class="badge"><%= @seranz %></span><br>
         <%= link_to showcal_action_path(:page => session[:page], :dir => "<")  do %>
-          <i class="btn btn-primary btn-lg glyphicon glyphicon-chevron-left"></i>
+          <i class="btn btn-primary glyphicon glyphicon-chevron-left"></i>
         <% end %>
         KW <%= session[:cw].to_s + " / " + session[:year].to_s %>
         <%= link_to showcal_action_path(:page => session[:page], :dir => ">")  do %>
-          <i class="btn btn-primary btn-lg glyphicon glyphicon-chevron-right"></i>
+          <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
         <% end %>
-        </h1>
+        </li_header>
       </div>
     </div>
   </div>
@@ -34,12 +34,19 @@
             </td>
           </tr>
           <tr>
-            <th>Bewertung</th>
-            <th colspan="3">Sonderaktion</th>
+            <% mobile = true %>
+            <% if not mobile %>
+              <th>Bewertung</th>
+              <th colspan="3">Sonderaktion</th>
+            <% else %>
+              <th>Sonderaktion</th>
+            <% end %>
             <% for i in 0..6 %>
               <th>
                 <%= $wochentage[i] %><br>
-                <%= (@start+i).strftime("%d.%m") %>
+                <small_cal>
+                  <%= (@start+i).strftime("%d.%m") %>
+                </small_cal>
               </th>
             <% end %>
           </tr>
@@ -48,7 +55,8 @@
         <tbody>
           <% @services.each do |e| %>
             <tr>
-              <td>
+              <% if not mobile %>
+                <td>
         		    <% if avg_rating(e.id) == 0 %>
                   <% image_tag("no_rating.jpg", :size => "50x50" , class:"img-rounded") %>
         		    <% else %>
@@ -57,37 +65,43 @@
                     <i class="glyphicon glyphicon-star"></i>
                   <% end %>
                 <% end %>
-              </td>
-              <td>
+                </td>
+                <td>
                 <% if e.date_to != nil %>
                   <p>
                     <b><ntext>noch </ntext></b><restlaufzeit><%= (e.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeit> <b><ntext> Tage</ntext></b>
                   </p>
                 <% end %>
-            </td>
-      			 <td>
-              <%= link_to e do %>
-                <% if !e.avatar_file_name %>
-                  <%= image_tag("action_a.png", :size => "50x50" , class:"img-rounded") %>
-                <% else %>
-                  <%= image_tag e.avatar(:thumb), class:"img-rounded" %>
+                </td>
+        			 <td>
+                <%= link_to e do %>
+                  <% if !e.avatar_file_name %>
+                    <%= image_tag("action_a.png", :size => "50x50" , class:"img-rounded") %>
+                  <% else %>
+                    <%= image_tag e.avatar(:small), class:"img-rounded" %>
+                  <% end %>
                 <% end %>
-              <% end %>
-              </td>
-              <td>
+                <br>
                 <anzeigetext>
                   <%= e.name %><br>
                 </anzeigetext>
-                <ntext>
-                  <% if e.company_id != nil %>
-                    <%= e.company.name %>
-                  <% end %>
-                  <% if e.user_id != nil %>
-                    <%= e.user.name + " " + e.user.lastname %>
-                  <% end %>
-                  <%= e.date_from.strftime("%d.%m") %>-<%= e.date_to.strftime("%d.%m") %>
-                </ntext>
-              </td>
+                </td>
+              <% else %>
+                  <td>
+                    <ntext>
+                      <%= link_to e do %>
+                        <%= e.name %><br>
+                      <% end %>
+                      <% if e.company_id != nil %>
+                        <%= e.company.name %>
+                      <% end %>
+                      <% if e.user_id != nil %>
+                        <%= e.user.name + " " + e.user.lastname %>
+                      <% end %><br>
+                      <%= e.date_from.strftime("%d.%m") %>-<%= e.date_to.strftime("%d.%m") %>
+                    </ntext>
+                  </td>
+              <% end %>
               <% for i in 0..6 %>
                   <% if AktionDatum(@start+i,e) %>
                     <td class="blocked">

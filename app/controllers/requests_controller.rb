@@ -21,7 +21,7 @@ class RequestsController < ApplicationController
   # GET /requests/new
   def new
     @request = Request.new
-    @request.rtype = params[:rtype]
+    @request.rtype = "biete"
     @request.user_id = current_user.id
     @request.active = true
     @request.status = "new"

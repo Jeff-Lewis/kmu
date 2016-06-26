@@ -4,12 +4,12 @@
         <div class="col-md-10">
             <div class="panel panel-default">
                 <div class="panel-heading header">
-                <h2>
+                <li_header>
                 <%= link_to @bid_detail.bid do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
                 <% end %>
                   ZUSATZINFORMATION AUSSCHREIBUNG <%= @bid_detail.bid.name %>
-                </h2>
+                </li_header>
                 </div>
                 <div class="panel-body">
                   <% if @bid_detail.errors.any? %>

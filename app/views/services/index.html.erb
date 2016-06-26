@@ -1,118 +1,55 @@
 <div class="container-fluid">
 	<div class="row">
     <div class="col-md-12">
-      <div class="panel panel-info">
-        <div class="panel-heading">
-          
-          <% if @service.company_id != nil %>
-            <% if !@service.company.avatar_file_name %>
-              <%= image_tag("company_a.png", :size => "50x50", class:"img-rounded" ) %>
-            <% else %>
-              <%= image_tag @company.avatar(:medium), class:"img-rounded"  %>
-            <% end %>
-            <h1>
-            <%= link_to companies_path :page => session[:page] do %>
-            <i class="btn btn-primary glyphicon glyphicon-list"></i>
-            <% end %>
-            <%= link_to new_service_path do %>
-              <i class="btn btn-primary glyphicon glyphicon-plus"></i>
-            <% end %>
-            ANGEBOT <%=@company.name %>
-            </h1>
-          <% end %>
-          <% if @service.user_id != nil %>
-            <% if !@service.user.avatar_file_name %>
-              <%= image_tag("user_a.png", :size => "50x50", class:"img-rounded" ) %>
-            <% else %>
-              <%= image_tag @service.user.avatar(:medium), class:"img-rounded"  %>
-            <% end %>
-            <h1>
-            <%= link_to users_path :page => session[:page] do %>
-            <i class="btn btn-primary glyphicon glyphicon-list"></i>
-            <% end %>
-            <%= link_to new_service_path do %>
-              <i class="btn btn-primary glyphicon glyphicon-plus"></i>
-            <% end %>
-            ANGEBOT <%= @user.name + " " + @user.lastname %>
-            </h1>
-        <% end %>
-          
+      <div class="panel-heading header">
+        <li_header>
+		    <% if user_signed_in? %>
+		        <% if @stype == "regular" %>
+  		        <%= link_to searches_path :search_domain => "Angebote", :controller_name => controller_name do %>
+  		          <i class="btn btn-primary glyphicon glyphicon-filter"></i>
+  		        <% end %>
+	            ANGEBOTE
+	  		    <% end %>
+		        <% if @stype == "action" %>
+  		        <%= link_to searches_path :search_domain => "Aktionen", :controller_name => controller_name do %>
+  		          <i class="btn btn-primary glyphicon glyphicon-filter"></i>
+  		        <% end %>
+	            AKTIONEN
+	  		    <% end %>
+		    <% end %>
+        <span class="badge"><%= @seranz %></span>
+        </li_header>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="digg_pagination">
+            <%= will_paginate @services, :container => false, previous_label: "<", next_label: ">" %>
         </div>
       </div>
     </div>
   </div>
-	<div class="row">
-    <% @services.each do |se| %>
-      <div class="col-md-3">
-    		<div class="thumbnail" align="center">
-    		    <p>
-    		    <% if avg_rating(se.id) == 0 %>
-                <%= image_tag("no_rating.jpg", :size => "50x50" , class:"img-rounded") %>
-      		    <% else %>
-              <% avg_rating(se.id).times do %>
-                <%= image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
-              <% end %>
-            <% end %>
-            </p>
-          <% if !se.avatar_file_name %>
-            <% if session[:stype] == "regular" or session[:mode] = "private" %>
-              <%= image_tag("service_a.png", :size => "300x300", class:"img-rounded" ) %>
-            <% else %>
-              <%= image_tag("offer_a.jpg", :size => "300x300", class:"img-rounded" ) %>
-            <% end %>
-          <% else %>
-            <%= image_tag se.avatar(:medium), class:"img-rounded"  %>
-          <% end %>
-					<div class="caption">
-						<h3>
-							<%= se.name %>
-    					<% if se.social %>
-                <%= image_tag("helpinghand.png", :size => "50x50" , class:"img-rounded") %>
-              <% end %>
-						</h3>
-						<p>
-              <b>Beschreibung</b>
-						  <%= se.description %>
-						</p>
-						<p>
-              <b>Kontakt</b><br>
-              <% if se.ansprechpartner == nil %>
-  						  <%= se.ansprechpartner %>
-  						<% end %>
-  						<br>
-						</p>
-						<p>
-              <% if se.telefon == nil %>
-  						  <%= se.telefon %>
-  						<% end %>
-  						<br>
-						</p>
-						<p>
-              <% if se.email == nil %>
-  						  <%= se.email %>
-  						<% end %>
-  						<br>
-						</p>
-					</div>
-          <ul class="nav nav-pills">
-	          <li>
-				        <%= link_to ratings_path(:service_id => se.id) do %>
-                  <i class="btn btn-default glyphicon glyphicon-star"></i><span class="badge pull-right"><%= se.ratings.where("service_id=?", se.id).count %></span>
-                <% end %>
-				    </li>
-	          <li>
-				        <%= link_to edit_service_path(se) do %>
-                  <i class="btn btn-default glyphicon glyphicon-wrench"></i>
-                <% end %>
-				    </li>
-    	      <li>
-				        <%= link_to se, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                  <i class="btn btn-danger glyphicon glyphicon-trash"></i>
-                <% end %>
-				    </li>
-			    </ul>
-			   </div>
-			 </div>
-    <% end %>
+        
+  <%= build_medialist("col-sm-6 col-md-4 col-lg-3", @services, "services", true) %>
+  <br>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12">
+          <div id="map"></div>
+      </div>
+    </div>
   </div>
 </div>
+
+<script>
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers(<%=raw @hash.to_json %>);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+});
+</script>

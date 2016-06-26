@@ -3,6 +3,12 @@ module ApplicationHelper
     def ticker
       if user_signed_in?
           ticker = " "
+          
+          # follow Tickets
+          usertickets = UserTicket.where('user_id=? and status=?', current_user.id, "überreicht").last(3)
+          usertickets.each do |ut|
+            	 ticker = ticker + " Sie haben von " + ut.ticket.sponsor.company.name + " ein Ticket " + ut.ticket.name + " für " + ut.ticket.sponsor.event.name + " erhalten... " 
+          end
 
           # follow User
           favourits = Favourit.where('user_id=? and object_name=?', current_user.id, 'User')

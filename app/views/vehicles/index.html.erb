@@ -3,15 +3,15 @@
 	<div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h1>
+        <li_header>
 		    <% if user_signed_in? %>
 		        <%= link_to searches_path :search_domain => "Mobilien", :controller_name => controller_name do %>
-		          <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+		          <i class="btn btn-primary glyphicon glyphicon-filter"></i>
 		        <% end %>
 		    <% end %>
         MOBILIEN
         <span class="badge"><%= @vehanz %></span>
-        </h1>
+        </li_header>
       </div>
     </div>
   </div>

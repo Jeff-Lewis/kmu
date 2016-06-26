@@ -3,9 +3,9 @@
   <div class="row">
     <div class="col-md-12">
         <div class="panel-heading header header">
-          <h2>
+          <li_header>
               AUSSCHREIBUNG <%= @bid.name %>
-          </h2>
+          </li_header>
         </div>
         <div class="panel-body">
           <%= link_to bids_path :page => session[:page] do %>
@@ -27,7 +27,7 @@
         </div>
         <div class="panel-body">
           <% if @bid.bid_details.first != nil %>
-            <%= carousel(@bid.bid_details, "big") %>
+            <%= carousel(@bid.bid_details, "medium") %>
             <br><br>
           <% end %>
           <b>Ausführungsort</b><br>
@@ -46,7 +46,7 @@
             <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
           <% else %>
             <%= image_tag @bid.user.avatar(:thumb), class:"img-rounded" %>
-          <% end %>
+          <% end %><br>
           <%= @bid.user.name + " " + @bid.user.lastname %>
     			<br><br>
           <%= @bid.created_at.strftime("%d.%m.%Y") %>
@@ -58,7 +58,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
           <% if user_signed_in? %>
             <% if current_user.id == @bid.user_id %>
               <%= link_to new_bid_detail_path :bid_id => @bid.id do %>
@@ -67,19 +67,19 @@
             <% end %>
           <% end %>
             ZUSATZINFORMATIONEN
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
       		<% @bid.bid_details.each do |bd| %>
-            <div class="col-md-4">
+            <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <anzeigetext>
       						<%= bd.name %>
                 </anzeigetext><br>
         				<% if bd.avatar_file_name == nil %>
-                  <%= image_tag("bid_a.png", :size => "500x500", class:"img-rounded" ) %>
+                  <%= image_tag("bid_a.png", :size => "200x200", class:"img-rounded" ) %>
                 <% else %>
-                  <%= image_tag bd.avatar(:big), class:"img-rounded"  %>
+                  <%= image_tag bd.avatar(:medium), class:"img-rounded"  %>
                 <% end %>
                 <p>
     						<%= bd.description %>
@@ -106,7 +106,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
           <% if user_signed_in? %>
             <% if current_user.id == @bid.user_id %>
               <%= link_to new_bid_document_path :bid_id => @bid.id, :mode => "user" do %>
@@ -115,12 +115,12 @@
             <% end %>
           <% end %>
             AUSSCHREIBUNGSDOKUMENTE
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
       		<% @bid.bid_documents.each do |bd| %>
             <% if bd.company_id == nil %>
-              <div class="col-md-4">
+              <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
                   <anzeigetext>
         						<%= bd.name %><br>
@@ -154,7 +154,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
           <% if user_signed_in? %>
             <% if current_user.id == @bid.user_id %>
               <% if current_user.companies != nil %>
@@ -165,12 +165,12 @@
             <% end %>
           <% end %>
             ANGEBOTSDOKUMENTE
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
       		<% @bid.bid_documents.each do |bd| %>
             <% if bd.company_id != nil %>
-              <div class="col-md-4">
+              <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
                   <anzeigetext>
         						<%= bd.company.name %>
@@ -217,9 +217,9 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             ORTSANGABE
-        </h2>
+        </li_header>
       </div>
     </div>
     <div class="col-md-12">
@@ -235,9 +235,9 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             KONTAKT
-        </h2>
+        </li_header>
       </div>
     </div>
     <div class="col-md-12">

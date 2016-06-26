@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-12">
           <anzeigetext>
-          xConnect - DAS regionale Portal<br>
+          xConnect - DAS Portal<br>
           </anzeigetext>
         </div>
       </div>
@@ -42,7 +42,7 @@
         <div class="col-sm-6 col-md-4 col-lg-3">          
           <div class="media">
             <div class="media-left">
-              <%= link_to offer_index2_path do %>
+              <%= link_to services_path :stype => "regular" do %>
                 <%= image_tag('service_a.png', :size => "50x50") %>
               <% end %>
             </div>
@@ -56,7 +56,7 @@
         <div class="col-sm-6 col-md-4 col-lg-3">          
           <div class="media">
             <div class="media-left">
-              <%= link_to offer_index_path do %>
+              <%= link_to services_path :stype => "action" do %>
                 <%= image_tag('action_a.png', :size => "50x50") %>
               <% end %>
             </div>
@@ -179,8 +179,7 @@
       <div class="row">
         <div class="col-md-12">
           <anzeigetext>
-          Das Basisangebot von xConnect ist kostenlos!<br><br>
-          Kunden unserer Partner profitieren zusätzlich<br>
+          kostenloses Basisangebot, Kunden profitieren zusätzlich <br><br>
           </anzeigetext>
         </div>
       </div>

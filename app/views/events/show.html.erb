@@ -3,9 +3,9 @@
   <div class="row">
     <div class="col-md-12">
         <div class="panel-heading header">
-          <h2>
+          <li_header>
               VERANSTALTUNG <%= @event.name %>
-          </h2>
+          </li_header>
         </div>
         <div class="panel-body">
           <%= link_to events_path :page => session[:page] do %>
@@ -40,7 +40,7 @@
         <div class="panel-body">
           <p>
           <% if @event.event_details.count > 0 %>
-              <%= carousel(@event.event_details, "big") %>
+              <%= carousel(@event.event_details, "medium") %>
             <% else %>
               <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
     			<% end %>
@@ -67,7 +67,7 @@
               <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
             <% else %>
               <%= image_tag @event.user.avatar(:thumb), class:"img-rounded" %>
-            <% end %>
+            <% end %><br>
             <%= @event.user.name + " " + @event.user.lastname %>
           <% end %>
           <% if @event.company_id != nil %>
@@ -75,7 +75,7 @@
               <%= image_tag("company_a.png", :size => "100x100" , class:"img-rounded") %>
             <% else %>
               <%= image_tag @event.company.avatar(:thumb), class:"img-rounded" %>
-            <% end %>
+            <% end %><br>
             <%= @event.company.name %>
           <% end %>
     			<br><br>
@@ -88,7 +88,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
           <% if user_signed_in? %>
             <% if @event.user_id != nil %>
               <% if current_user.id == @event.user_id %>
@@ -106,19 +106,19 @@
             <% end %>
           <% end %>
             ZUSATZINFORMATIONEN
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
     		<% @event.event_details.each do |ed| %>
-          <div class="col-md-4">
+          <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
               <anzeigetext>
     						<%= ed.name %><br>
               </anzeigetext>
       				<% if ed.avatar_file_name == nil %>
-                <%= image_tag("event_a.png", :size => "500x500", class:"img-rounded" ) %>
+                <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
               <% else %>
-                <%= image_tag ed.avatar, :size => "500x500", class:"img-rounded"  %>
+                <%= image_tag ed.avatar(:medium), class:"img-rounded"  %>
               <% end %>
               <p>
               <ntext></ntext>
@@ -161,7 +161,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
           <% if user_signed_in? %>
             <% if @event.user_id != nil %>
               <% if current_user.companies != nil %>
@@ -179,11 +179,11 @@
             <% end %>
           <% end %>
             SPONSOREN
-        </h2>
+        </li_header>
       </div>
       <div class="panel-body">
           <% @event.sponsors.each do |cs| %>
-            <div class="col-md-4">
+            <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <anzeigetext>
       						<%= cs.company.name %><br>
@@ -191,7 +191,7 @@
         				<% if cs.company.avatar_file_name == nil %>
                   <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
                 <% else %>
-                  <%= image_tag cs.company.avatar, :size => "200x200", class:"img-rounded"  %>
+                  <%= image_tag cs.company.avatar(:medium), class:"img-rounded"  %>
                 <% end %>
                 <br>
                 <ntext>
@@ -238,9 +238,9 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             ORTSANGABE
-        </h2>
+        </li_header>
       </div>
     </div>
     <div class="col-md-12">
@@ -256,9 +256,9 @@
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h2>
+        <li_header>
             KONTAKT
-        </h2>
+        </li_header>
       </div>
     </div>
     <div class="col-md-12">

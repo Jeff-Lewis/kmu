@@ -15,9 +15,9 @@
                     <li><%= link_to "Privatpersonen", users_path(:rtype => "biete") if $activeapps.include?("Privatpersonen") %></li>
 					<li><%= link_to "Institutionen", companies_path(:user_id => nil)  if $activeapps.include?("Institutionen")%></li>
 				    <li class="divider">
-                    <li><%= link_to "Angebote", offer_index_path(:stype => "regular") if $activeapps.include?("Services")%></li>
+                    <li><%= link_to "Angebote", services_path(:stype => "regular") if $activeapps.include?("Services")%></li>
 				    <li class="divider">
-				    <li><%= link_to "Sonderaktionen", offer_index_path(:stype => "action") if $activeapps.include?("Aktionen")%></li>
+				    <li><%= link_to "Sonderaktionen", services_path(:stype => "action") if $activeapps.include?("Aktionen")%></li>
                     <li><%= link_to "Sonderaktionen (Kalender)", showcal_action_path if $activeapps.include?("Aktionen")%></li>
 				    <li class="divider">
                     <li><%= link_to "Mobilien", vehicles_path if $activeapps.include?("Mobilien") %></li>
@@ -51,8 +51,7 @@
 				  <li><%= link_to "Spenden Initiativen", donations_path if $activeapps.include?("Spendeninitiativen") %></li>
 	    		</ul>
 			</li>
-			<% puts controller_name + action_name + "=>" + $controller_list.to_s %>
-			<% if $controller_list.include?(controller_name) and (action_name == "index" or action_name == "index2") %>
+			<% if $controller_list.include?(controller_name) and (action_name == "index") %>
 				<% @items = url_for(action: action_name, controller: controller_name) %>
 				<%= form_tag(@items, method: 'get', class: 'navbar-form navbar-left') do %>
 				  <%= search_field_tag 'search', nil, class: 'form-control', placeholder: 'Search'  %>
@@ -74,7 +73,8 @@
 							<li><%= link_to "Webmaster", webmasters_path  %></li>
 					   <% end %>
 					   <% if current_user.superuser %>
-							<li><%= link_to "Superuser", appparams_path  %></li>
+							<li><%= link_to "App Parameter", appparams_path  %></li>
+							<li><%= link_to "User Statistik", home_index2_path  %></li>
 					   <% end %>
 	                   <li><%= link_to "Abmelden", destroy_user_session_path, method: :delete %></li>
 	                <% else %>

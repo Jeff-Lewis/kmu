@@ -2,30 +2,25 @@
 	<div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <% if !@vehicle.avatar_file_name %>
-          <%= image_tag("vehicle_a.png", :size => "400x400" , class:"img-rounded") %>
-        <% else %>
-          <%= image_tag @vehicle.avatar(:medium), class:"img-rounded" %>
-        <% end %>
-        <h1>
-        <%= link_to vehicles_path(:page => session[:page]) do %>
-          <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+        <li_header>
+        <%= link_to @vehicle do %>
+          <i class="btn btn-primary glyphicon glyphicon-list"></i>
         <% end %>
         <% if user_signed_in? %>
           <%= link_to new_calender_path(:user_id => current_user.id, :vehicle_id => session[:verhicle_id]) do %>
-            <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+            <i class="btn btn-primary glyphicon glyphicon-plus"></i>
           <% end %>
         <% end %>
         Kalender für <%= @vehicle.name %>
-        <span class="badge"><%= @calanz %></span>
+        <span class="badge"><%= @calanz %></span><br>
         <%= link_to calenders_path(:vehicle_id => @vehicle.id, :dir => "<")  do %>
-          <i class="btn btn-primary btn-lg glyphicon glyphicon-chevron-left"></i>
+          <i class="btn btn-primary glyphicon glyphicon-chevron-left"></i>
         <% end %>
         KW <%= session[:cw].to_s + " / " + session[:year].to_s %>
         <%= link_to calenders_path(:vehicle_id => @vehicle.id, :dir => ">")  do %>
-          <i class="btn btn-primary btn-lg glyphicon glyphicon-chevron-right"></i>
+          <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
         <% end %>
-        </h1>
+        </li_header>
 
       </div>
     </div>
@@ -46,7 +41,9 @@
             <% for i in 0..6 %>
               <th>
                 <%= $wochentage[i] %><br>
+                <small_cal>
                 <%= (@start+i).strftime("%d.%m") %>
+                </small_cal>
               </th>
             <% end %>
           </tr>

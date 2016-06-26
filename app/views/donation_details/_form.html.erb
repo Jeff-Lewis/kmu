@@ -3,12 +3,12 @@
      <div class="row">
         <div class="col-md-10">
           <div class="panel panel-heading">
-            <h2>
+            <li_header>
             <%= link_to @donation_detail.donation :donation_id => @donation_detail.donation.id, :page => session[:page] do %>
               <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
             <% end %>
              ZUSATZINFORMATION <%= @donation_detail.donation.name %>
-            </h2>
+            </li_header>
           </div>
         </div>
      </div>

@@ -3,15 +3,15 @@
 	<div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
-        <h1>
+        <li_header>
 		    <% if user_signed_in? %>
 		        <%= link_to searches_path :search_domain => "Stellenanzeigen", :controller_name => controller_name do %>
-		          <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+		          <i class="btn btn-primary glyphicon glyphicon-filter"></i>
 		        <% end %>
 		    <% end %>
         STELLENANZEIGEN
         <span class="badge"><%= @jobanz %></span>
-        </h1>
+        </li_header>
       </div>
     </div>
   </div>
@@ -33,7 +33,7 @@
   				<% if j.company.avatar_file_name == nil %>
             <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
           <% else %>
-            <%= image_tag j.company.avatar(:medium), class:"img-rounded"  %>
+            <%= image_tag j.company.avatar(:small), class:"img-rounded"  %>
           <% end %>
     			</p>
     	    
