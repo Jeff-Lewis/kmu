@@ -64,10 +64,10 @@ def build_medialist(md_string, items, cname, panel)
                           end
                           html_string = html_string + "</h4>"
                           html_string = html_string + item.geo_address
-                          if user_signed_in? 
+                          if user_signed_in? and current_user != nil 
                               if cname == "partners"
                                   html_string = html_string + "<br>"
-                                  @customer = Customer.where("user_id=? AND company_id=?", current_user.id.to_i, item.id.to_i).first
+                                  @customer = Customer.where("user_id=? AND company_id=?", current_user.id, item.id).first
                                   if !@customer
                                       html_string = html_string + "<a href=/customers/new?user_id=" + current_user.id.to_s + "&company_id=" + item.id.to_s + ">"
                                       html_string = html_string + "<i class='btn btn-primary btn-lg glyphicon glyphicon-pencil'></i></a>"
