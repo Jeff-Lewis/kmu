@@ -64,7 +64,7 @@ def build_medialist(md_string, items, cname, panel)
                           end
                           html_string = html_string + "</h4>"
                           html_string = html_string + item.geo_address
-                          if user_signed_in? and current_user != nil 
+                          if user_signed_in? and current_user != nil and 1>2
                               if cname == "partners"
                                   html_string = html_string + "<br>"
                                   @customer = Customer.where("user_id=? AND company_id=?", current_user.id, item.id).first
