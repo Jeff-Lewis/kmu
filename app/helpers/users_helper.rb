@@ -67,8 +67,6 @@ def build_medialist(md_string,items, cname, panel)
                           if user_signed_in? and cname == "partners"
                               html_string = html_string + "<br>"
                               @customer = Customer.where("user_id=? AND company_id=?",current_user.id, item.id).first
-                              if @customer != nil 
-                              end 
                               if !@customer
                                   html_string = html_string + "<a href=/customers/new?user_id=" + current_user.id.to_s + "&company_id=" + item.id.to_s + ">"
                                   html_string = html_string + "<i class='btn btn-primary btn-lg glyphicon glyphicon-pencil'></i></a>"
