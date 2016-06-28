@@ -115,9 +115,11 @@ ActiveRecord::Schema.define(version: 20160618100823) do
   end
 
   create_table "customers", force: :cascade do |t|
-    t.string   "user_id"
-    t.string   "company_id"
+    t.integer   "user_id"
+    t.integer   "company_id"
     t.string   "customer_number"
+    t.boolean   "newsletter"
+    t.integer  "advisor_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
