@@ -34,6 +34,14 @@
                        <%= f.label "Kundennummer" %><br/>
                        <%= f.text_field :customer_number, class:"form-control" %>
                     </div>
+                    <div class="form-group">
+                      <%= f.label "Newsletter" %>
+                      <%= f.check_box :newsletter, class:"form-control"%>
+                    </div>
+                    <div class="form-group">
+                      <%= f.label "Ticketinformation" %>
+                      <%= f.check_box :ticket, class:"form-control"%>
+                    </div>
                      <%= f.hidden_field :user_id, class:"form-control" %>
                      <%= f.hidden_field :company_id, class:"form-control" %>
                     <div class="actions">

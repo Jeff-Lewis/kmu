@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 20160618100823) do
     t.integer   "user_id"
     t.integer   "company_id"
     t.string   "customer_number"
+    t.boolean   "tickets"
     t.boolean   "newsletter"
     t.integer  "advisor_id"
     t.datetime "created_at", null: false
