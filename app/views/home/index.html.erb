@@ -179,12 +179,18 @@
       <div class="row">
         <div class="col-md-12">
           <anzeigetext>
-          xConnect Angebot <br><br>
+          xConnect Partner <br><br>
           </anzeigetext>
         </div>
       </div>
       <br>
-
+      <% @partners = Company.where('partner=? and active=?', true, true) %>
+      <%= build_medialist("col-sm-6 col-md-4 col-lg-3", @partners, "partners", false) %>
+      <br>
+      <br>
+      <anzeigetext>
+      als Kunde profitieren Sie zusätzlich <br><br>
+      </anzeigetext>
       <div class="row">
         <div class="col-sm-6 col-md-4 col-lg-3">
           <div class="media">
@@ -244,11 +250,10 @@
         </div>
       </div>
       <br>
+      <%= link_to customers_path do %>
+        <i class="btn btn-primary btn-lg glyphicon glyphicon-pencil"> jetzt Kunde werden</i>
+      <% end %>
       
-        <anzeigetext>jetzt Kunde werden</anzeigetext><br><br>
-        <% @partners = Company.where('partner=? and active=?', true, true) %>
-        <%= build_medialist("col-sm-6 col-md-4 col-lg-3", @partners, "partners", false) %>
-
     </div>
 
     <br>
@@ -404,6 +409,19 @@
             <div class="media-body">
               <h4 class="media-heading">Sponsoring Tickets verteilen</h4>
                 Verteilen Sie Tickets an spezielle Kunden
+            </div>
+            <br>
+          </div>
+        </div>
+        
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="media">
+            <div class="media-left">
+              <i class="glyphicon glyphicon-star"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Favoriten</h4>
+                Folgen Sie Personen und Institutionen und lassen sich über deren Aktivitäten informieren
             </div>
             <br>
           </div>

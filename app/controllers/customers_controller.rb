@@ -4,7 +4,8 @@ class CustomersController < ApplicationController
 
   # GET /customers
   def index
-    @customers = Customer.all
+    @partners = Company.where('partner=? and active=?', true, true).page(params[:page]).per_page(10)
+    @paranz = @partners.count
   end
 
   # GET /customers/1
@@ -25,9 +26,8 @@ class CustomersController < ApplicationController
   # POST /customers
   def create(customer)
     @customer = Customer.new(customer)
-
     if @customer.save
-      redirect_to home_index_path, notice: 'Customer was successfully created.'
+      redirect_to customers_path, notice: 'Customer was successfully created.'
     else
       render :new
     end
@@ -36,7 +36,7 @@ class CustomersController < ApplicationController
   # PUT /customers/1
   def update(customer)
     if @customer.update(customer)
-      redirect_to home_index_path, notice: 'Customer was successfully updated.'
+      redirect_to customers_path, notice: 'Customer was successfully updated.'
     else
       render :edit
     end
@@ -45,7 +45,7 @@ class CustomersController < ApplicationController
   # DELETE /customers/1
   def destroy
     @customer.destroy
-    redirect_to home_index_path
+    redirect_to customers_path
   end
 
   private
