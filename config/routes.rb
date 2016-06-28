@@ -46,7 +46,7 @@ Rails.application.routes.draw do
   resources :ratings
   resources :searches
 
-  root 'home#index3'
+  root 'home#index'
   get 'admin/sendmail'
   get 'admin/showmap'
   get 'home/index'
