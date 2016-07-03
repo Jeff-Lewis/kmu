@@ -22,13 +22,14 @@
 <% $wochentage = %w[Mo Di Mi Do Fr Sa So] %>
 
   <%= render 'layouts/header' %>
-  <div class='container-fluid'>
-    <% flash.each do |name, msg| %>
-      <% content_tag(:div, msg, class:"alert alert-warning") %>
-    <% end %>
-    <%= yield %>
+  <div class="example1">
+    <div class='container-fluid'>
+      <% flash.each do |name, msg| %>
+        <% content_tag(:div, msg, class:"alert alert-warning") %>
+      <% end %>
+      <%= yield %>
+    </div>
   </div>
   <%= render 'layouts/footer' %>
-
 </body>
 </html>

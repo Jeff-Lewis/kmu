@@ -1,7 +1,7 @@
 <div class="container-fluid">
 	<div class="row">
     <div class="col-md-12">
-      <div class="panel-heading header">
+      <div class="panel-heading">
         <li_header>
 		    <% if user_signed_in? %>
 		        <%= link_to searches_path :search_domain => "Privatpersonen", :controller_name => controller_name do %>
@@ -14,7 +14,6 @@
       </div>
     </div>
   </div>
-  <br>
 
   <div class="panel-body">
     <div class="row">
@@ -25,9 +24,9 @@
       </div>
     </div>
   </div>
-        
+
   <%= build_medialist("col-sm-6 col-md-4 col-lg-3", @users, "users", true) %>
-  <br>
+
   <div class="panel-body">
     <div class="row">
       <div class="col-md-12">

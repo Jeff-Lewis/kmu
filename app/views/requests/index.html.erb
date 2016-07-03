@@ -36,9 +36,9 @@
           <% end %>
           <p>
           <% if req.request_details.count > 0 %>
-              <%= carousel(req.request_details, "medium") %>
+              <%= carousel(req.request_details, "thumb") %>
             <% else %>
-              <%= image_tag("request_a.png", :size => "200x200", class:"img-rounded" ) %>
+              <%= image_tag("request_a.png", :size => "100x100", class:"img-rounded" ) %>
     			<% end %>
     			</p>
           <div class="caption">
@@ -69,7 +69,8 @@
             <% if req.user.avatar_file_name == nil %>
               <%= image_tag("user_a.png", :size => "50x50", class:"img-rounded" ) %>
             <% else %>
-              <%= image_tag req.user.avatar(:small), class:"img-rounded"  %>
+              <%= image_tag req.user.avatar(:small), class:"img-rounded"  %><br>
+              <%= req.user.name + " " + req.user.lastname %><br>
             <% end %>
           <% end %>
   

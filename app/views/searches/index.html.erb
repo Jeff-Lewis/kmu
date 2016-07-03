@@ -7,19 +7,19 @@
         <% else %>
           <% ticket_id = nil %>
         <% end %>
-        <h1>
+        <li_header>
 		    <%= link_to url_for(@controller_name), :search_domain => @search_domain, :page => session[:page] do %>
-          <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+          <i class="btn btn-primary glyphicon glyphicon-list"></i>
         <% end %>
 		    <%= link_to new_search_path(:user_id => current_user.id, :search_domain => @search_domain, :controller_name => @controller_name, :ticket_id => ticket_id) do %>
-          <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+          <i class="btn btn-primary glyphicon glyphicon-plus"></i>
         <% end %>
         SUCHEN <%= @search_domain %>
         <% if @ticket != nil %>
           für <%= @ticket.sponsor.event.name + " " + @ticket.name %>
         <% end %>
         <span class="badge"><%= @seranz %></span>
-        </h1>
+        </li_header>
       </div>
     </div>
   </div>

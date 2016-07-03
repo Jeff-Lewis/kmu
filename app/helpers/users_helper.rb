@@ -39,6 +39,14 @@ def build_medialist(md_string, items, cname, panel)
                                 html_string = html_string + carousel(item.bid_details,"small")
                             when "events"
                                 html_string = html_string + carousel(item.event_details,"small")
+                            when "donations"
+                                html_string = html_string + carousel(item.donation_details,"medium")
+                            when "jobs"
+                                if item.company.avatar_file_name
+                                    html_string = html_string + (image_tag item.company.avatar(:small), class:'img-rounded')
+                                else
+                                    html_string = html_string + (image_tag 'company_a.png', :size => '50x50', class:'img-rounded')
+                                end
                             else
                                 if item.avatar_file_name
                                     html_string = html_string + (image_tag item.avatar(:small), class:'img-rounded')
@@ -109,6 +117,13 @@ def build_medialist(md_string, items, cname, panel)
                           if item.user_id != nil
                               html_string = html_string + item.user.name + " "+ item.user.lastname
                           end
+                      when "jobs"
+                          html_string = html_string + '<h4 class="media-heading">'+ item.name + " "
+                          html_string = html_string + "</h4>"
+                          if item.company_id != nil
+                              html_string = html_string + item.company.name + "<br>"
+                              html_string = html_string + item.company.category.name
+                          end
                       when "hotspots"
                           HsRating.avg_rating(item).to_i.times do
                             html_string = html_string + "<i class='glyphicon glyphicon-star'></i>" + " "
@@ -116,6 +131,26 @@ def build_medialist(md_string, items, cname, panel)
                           html_string = html_string + '<h4 class="media-heading">'+ item.name + " "
                           html_string = html_string + "</h4>"
                           html_string = html_string + item.user.name + " "+ item.user.lastname
+                      when "donations"
+                          if item.date_to != nil
+                              html_string = html_string + "<b><ntext>noch </ntext></b><restlaufzeits>" + (item.date_to.to_date - DateTime.now.to_date).to_i.to_s + "</restlaufzeits> <b><ntext> Tage</ntext></b>"
+                          end
+                          html_string = html_string + '<h4 class="media-heading">'+ item.name + " "
+                          html_string = html_string + "</h4>"
+                          html_string = html_string + item.company.name
+                          soll = item.amount
+                          if item.donation_stats != nil
+                            ist  = item.donation_stats.sum(:amount)
+                          else
+                            ist = 0
+                          end
+                          html_string = html_string + "<br>Spendenstand: "
+                          html_string = html_string + "<preiss>" + sprintf("%05.2f CHF",ist) + "</preiss><br>"
+                          html_string = html_string + '<div class="progress">'
+                              html_string = html_string + '<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="' + ist.to_s + '" aria-valuemin="0" aria-valuemax="' + soll.to_s + '" style="width: ' + (ist/soll*100).to_s + '%">'
+                                  html_string = html_string + '<span class="sr-only">40% Complete (success)</span>'
+                              html_string = html_string + "</div>"
+                          html_string = html_string + "</div>"
                       end
                     html_string = html_string + "</div>"
                 html_string = html_string + "<br></div>"

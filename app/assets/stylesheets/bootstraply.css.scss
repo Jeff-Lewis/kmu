@@ -1,7 +1,7 @@
 /* render html5 elements as block */
 
  $mandant: "TKB";
- $color1: #ACC550;         /* hellgruen */
+ $tkb_light_green: #ACC550;         /* hellgruen */
  $color2: #2E6B33;         /* dunkelgruen */
  $color3: white;
  $color4: #F5F5F5;         /* hellgrau */
@@ -15,10 +15,7 @@
 /* $color1: #58A5EF;
 # $color2: #14296C; */
 
-.example1 {
-    background-image: url(asset-path("Thurgau3.jpg"));
-    background-size: cover;
-}
+$color1: $tkb_light_green;
 
 li_header {
     background: $color1;
@@ -32,6 +29,7 @@ small_cal {
 
 .container-fluid {
     background: $color4!important;
+    background: transparent!important;
 }
 
 #picture{
@@ -91,8 +89,7 @@ footer {
     .panel-body {
         background: black!important;
         border-color: black!important;
-        box-shadow: 0px 0px 0px black!important;    
-        
+        box-shadow: 0px 0px 0px black!important;
     }
  }
  
@@ -111,6 +108,15 @@ body{
   background-color: white!important;
 }
 
+.panel-top {
+  background: transparent!important;
+  border-color: $color1!important;
+  box-shadow: 2px 2px 10px #B1B1B1;
+  height: 200px;
+    background-image: url(asset-path("Thurgau3.jpg"));
+    background-size: cover;
+}
+
 .panel-heading {
   background: $color1!important;
   border-color: $color1!important;
@@ -120,6 +126,10 @@ body{
   background: $color3!important;
   border-color: $color1!important;
   box-shadow: 2px 2px 10px #B1B1B1;
+}
+
+media-body{
+  color: white!important;
 }
 
 .panel-info {
