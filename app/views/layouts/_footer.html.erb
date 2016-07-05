@@ -7,40 +7,19 @@
             </footer_header>
             <br><br>
             <footer_text>
-                <%= link_to "Über uns", home_index_path %>
+                <%= link_to "Über uns", url_with_protocol("xConnect_ueber_uns.html"), :target => '_blank' %>
             </footer_text>
             <br>
             <footer_text>
-                <%= link_to "Offene Stellen", home_index_path %>
+                <%= link_to "Rechtliches & Impressum", url_with_protocol("xConnect_rechtliches_und.impressum"), :target => '_blank' %>
             </footer_text>
             <br>
             <footer_text>
-                <%= link_to "Rechtliches", home_index_path %>
+                <%= link_to "Partner", url_with_protocol("xConnect_partner.html"), :target => '_blank' %>
             </footer_text>
             <br>
             <footer_text>
-                <%= link_to "Impressum", home_index_path %>
-            </footer_text>
-            <br>
-            <footer_text>
-                <%= link_to "Kontakt", home_index_path %>
-            </footer_text>
-        </div>
-        <div class="col-md-3">
-            <footer_header>
-                PARTNER
-            </footer_header>
-            <br><br>
-            <footer_text>
-                <%= link_to "Partner werden", home_index_path %>
-            </footer_text>
-            <br>
-            <footer_text>
-                <%= link_to "Netzwerk", home_index_path %>
-            </footer_text>
-            <br>
-            <footer_text>
-                <%= link_to "Werbung", home_index_path %>
+                <%= link_to "Kontakt", url_with_protocol("xConnect_kontakt.html"), :target => '_blank' %>
             </footer_text>
         </div>
         <div class="col-md-3">
@@ -53,11 +32,15 @@
             </footer_text>
             <br>
             <footer_text>
-                <%= link_to "Login", home_index_path %>
+                <%= link_to "Anmelden", new_user_session_path %>
             </footer_text>
             <br>
             <footer_text>
-                <%= link_to "Registrieren", home_index_path %>
+                <%= link_to "Abmelden", destroy_user_session_path, method: :delete %>
+            </footer_text>
+            <br>
+            <footer_text>
+                <%= link_to "Registrieren", new_user_registration_path %>
             </footer_text>
         </div>
         <div class="col-md-3">

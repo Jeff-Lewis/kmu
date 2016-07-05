@@ -34,22 +34,22 @@ def build_medialist(md_string, items, cname, panel)
                         end
                         case items.table_name
                             when "hotspots"
-                                html_string = html_string + carousel(item.hotspot_details,"small")
+                                html_string = html_string + carousel(item.hotspot_details,"thumb")
                             when "bids"
-                                html_string = html_string + carousel(item.bid_details,"small")
+                                html_string = html_string + carousel(item.bid_details,"thumb")
                             when "events"
-                                html_string = html_string + carousel(item.event_details,"small")
+                                html_string = html_string + carousel(item.event_details,"thumb")
                             when "donations"
                                 html_string = html_string + carousel(item.donation_details,"medium")
                             when "jobs"
                                 if item.company.avatar_file_name
-                                    html_string = html_string + (image_tag item.company.avatar(:small), class:'img-rounded')
+                                    html_string = html_string + (image_tag item.company.avatar(:thumb), class:'img-rounded')
                                 else
                                     html_string = html_string + (image_tag 'company_a.png', :size => '50x50', class:'img-rounded')
                                 end
                             else
                                 if item.avatar_file_name
-                                    html_string = html_string + (image_tag item.avatar(:small), class:'img-rounded')
+                                    html_string = html_string + (image_tag item.avatar(:thumb), class:'img-rounded')
                                 else
                                     html_string = html_string + (image_tag 'user_a.png', :size => '50x50', class:'img-rounded')
                                 end

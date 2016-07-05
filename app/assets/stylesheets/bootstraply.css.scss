@@ -99,6 +99,29 @@ footer_header {
     color: white!important;
  }
  
+footer_text {
+    background: black!important;
+    color: $color5!important;
+}
+
+footer_text:hover {
+    background: black!important;
+    color: $color1!important;
+}
+
+a:link {
+    color: $color5!important;
+}
+a:visitied {
+    color: $color5!important;
+}
+a:hover {
+    color: $color1!important;
+}
+a:active {
+    color: $color1!important;
+}
+
 message {
     background: black!important;
     color: $color1!important;
@@ -231,8 +254,8 @@ input#email:focus {
 
 .jumbotron {
    box-shadow: 2px 2px 10px #B1B1B1;
-   background: $color1!important;
    background: transparent!important;
+   background: $color1!important;
 }
 
 .thumbnail {
