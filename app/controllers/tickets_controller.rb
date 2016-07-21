@@ -1,6 +1,6 @@
 class TicketsController < ApplicationController
   before_action :set_ticket, only: [:show, :edit, :update, :destroy]
-  permits :sponsor_id, :ticket_category_id, :name, :description, :amount, :contingent
+  permits :sponsor_id, :ticket_category_id, :name, :description, :amount, :contingent, :active
 
   # GET /tickets
   def index
@@ -32,6 +32,7 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new
     @ticket.sponsor_id = params[:sponsor_id]
     @ticket.ticket_category_id = 1
+    @ticket.active = true
   end
 
   # GET /tickets/1/edit

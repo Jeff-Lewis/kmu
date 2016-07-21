@@ -14,6 +14,11 @@ class UserTicketsController < ApplicationController
   # GET /user_tickets/new
   def new
     @user_ticket = UserTicket.new
+    @user_ticket.user_id = params[:user_id]
+    @user_ticket.ticket_id = params[:ticket_id]
+    @user_ticket.status = "persönlich"
+    @user_ticket.save
+    redirect_to User.find(@user_ticket.user_id), notice: 'User ticket was successfully created.'    
   end
 
   # GET /user_tickets/1/edit

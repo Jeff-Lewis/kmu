@@ -7,4 +7,8 @@ class TicketuserviewController < ApplicationController
     @usertickets = UserTicket.where('ticket_id=?',params[:ticket_id]).page(params[:page]).per_page(20)
     @ticanz = @usertickets.count
   end
+
+  def index2
+  	@user = User.find(params[:user_id])
+  end
 end

@@ -105,9 +105,17 @@ def build_medialist(md_string, items, cname, panel)
                           if item.user_id != nil
                               html_string = html_string + item.user.name + " "+ item.user.lastname
                           end
+                          html_string = html_string + "<br>"
                           if item.date_to != nil
                             html_string = html_string + "<ntext>noch </ntext><restlaufzeits>" + (item.date_to.to_date - DateTime.now.to_date).to_i.to_s + "</restlaufzeits><ntext> Tage</ntext><br>"
                           end
+                          if item.sponsors.count > 0
+                            html_string = html_string + "Sponsoren:<br>"
+                          end
+                          item.sponsors.each do |s|
+                            html_string = html_string + (image_tag s.company.avatar(:small), class:'img-rounded')
+                          end
+
                       when "vehicles"
                           html_string = html_string + '<h4 class="media-heading">'+ item.name + " "
                           html_string = html_string + "</h4>"

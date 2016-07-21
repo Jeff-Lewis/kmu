@@ -28,7 +28,6 @@ class Search < ActiveRecord::Base
       end
 
     def build_sql
-        puts "hello i am here"
         sql_string = []
         sql_string[0] ="active=?"
         sql_string << true
@@ -67,10 +66,21 @@ class Search < ActiveRecord::Base
                 @users.each do |user|
                     uli << user.id
                 end
-                if !uli.blank?
-                    sql_string << uli
+                sql_string << uli
+            end
+            if self.search_domain == "Tickets"
+                if self.customer
+                    sql_string[0] = sql_string[0] + " and id IN (?)"
+                    cid = Ticket.find(self.ticket_id).sponsor.company.id
+                    @customers = Customer.where('company_id=?', cid)
+                    cli = []
+                    @customers.each do |c|
+                        cli << c.user_id
+                    end
+                    sql_string << cli
                 end
             end
+
             self.sql_string = sql_string
             User.where(sql_string).count
 

@@ -6,6 +6,61 @@
         <li_header>
             INSTITUTION <%= @company.name %>
         </li_header>
+
+        <% if @company.partner_links.count > 0 %>
+          <%= link_to "#link" do %>
+            <%= image_tag('link_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @company.services.count > 0 %>
+          <%= link_to "#service" do %>
+            <%= image_tag('service_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @company.services.count > 0 %>
+          <%= link_to "#action" do %>
+            <%= image_tag('action_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @company.vehicles.count > 0 %>
+          <%= link_to "#vehicle" do %>
+            <%= image_tag('vehicle_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @company.events.count > 0 %>
+          <%= link_to "#event" do %>
+            <%= image_tag('event_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @company.jobs.count > 0 %>
+          <%= link_to "#job" do %>
+            <%= image_tag('job_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @company.bid_documents.count > 0 %>
+          <%= link_to "#bid" do %>
+            <%= image_tag('bid_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @company.donations.count > 0 %>
+          <%= link_to "#donation_initiatives" do %>
+            <%= image_tag('donation_Inititive_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @company.donation_stats.count > 0 %>
+          <%= link_to "#donation" do %>
+            <%= image_tag('donation_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @company.user.favourits.count > 0 %>
+          <%= link_to "#favorit" do %>
+            <%= image_tag('favorit_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <%= link_to "#location" do %>
+          <%= image_tag('location_a.png', :size => "50x50") %>
+        <% end %>
+
       </div>
       <div class="panel-body">
         <%= link_to companies_path :page => session[:page] do %>
@@ -44,7 +99,71 @@
   </div>
   <br>
 
+  <% if $activeapps.include?("Links") %>
+  <a id="link">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <li_header>
+          <% if user_signed_in? %>
+            <% if current_user.id == @company.user.id %>
+              <% if @company.partner %>
+                <%= link_to new_partner_link_path :company_id => @company.id do %>
+                  <i class="btn btn-primary glyphicon glyphicon-plus"></i>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+            LINKS
+        </li_header>
+      </div>
+      <div class="panel-body">
+        <% @company.partner_links.each do |pl| %>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="thumbnail" align="center">
+                <anzeigetext>
+                  <%= pl.name %><br>
+                </anzeigetext>
+                <ntext>
+                <%= pl.link %>
+                </ntext>
+                <ntext>
+                <%= align_text(pl.description) %>
+                </ntext>
+                <br>
+                <% if pl.avatar_file_name == nil %>
+                  <%= image_tag("link_a.png", :size => "200x200", class:"img-rounded" ) %>
+                <% else %>
+                  <%= image_tag pl.avatar(:medium), class:"img-rounded"  %>
+                <% end %>
+                <br>
+                <%= link_to pl do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
+                <% end %>
+                <% if user_signed_in? %>
+                  <% if current_user.id == @company.user.id %>
+                    <% if @company.partner %>
+                      <%= link_to edit_partner_link_path(pl) do %>
+                        <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                      <% end %>
+                      <%= link_to pl, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                        <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+                <br><br>
+              </div>
+             </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <br>
+  <% end %>
+
   <% if $activeapps.include?("Services") %>
+  <a id="service">
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
@@ -89,7 +208,8 @@
   <br>
   <% end %>
 
-  <% if $activeapps.include?("Aktionen") %>
+<% if $activeapps.include?("Aktionen") %>
+  <a id="action">
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
@@ -141,6 +261,7 @@
   <% end %>
 
   <% if $activeapps.include?("Mobilien") %>
+  <a id="vehicle">
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
@@ -190,6 +311,7 @@
   <% end %>
 
 <% if $activeapps.include?("Ausschreibungen") %>
+  <a id="bid">
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
@@ -229,6 +351,7 @@
   <% end %>
   
   <% if $activeapps.include?("Stellenanzeigen") %>
+  <a id="job">
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
@@ -275,6 +398,7 @@
   <% end %>
   
   <% if $activeapps.include?("Veranstaltungen") %>
+  <a id="event">
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
@@ -330,6 +454,7 @@
   <% end %>
 
   <% if $activeapps.include?("Sponsoring") %>
+  <a id="sponsor">
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
@@ -371,11 +496,11 @@
     	        <%= link_to cs.event do %>
                 <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
               <% end %>
-    	        <%= link_to tickets_path :sponsor_id => cs.id do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-credit-card"></i>
-              <% end %>
               <% if user_signed_in? %>
                 <% if current_user.id == cs.company.user_id %>
+                  <%= link_to tickets_path :sponsor_id => cs.id do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-credit-card"></i>
+                  <% end %>
         	        <%= link_to edit_sponsor_path(cs) do %>
                     <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
                   <% end %>
@@ -394,7 +519,8 @@
   <br>
   <% end %>
   
-  <% if $activeapps.include?("Spendeninitiativen") and @company.social %>  
+  <% if $activeapps.include?("Spendeninitiativen") and @company.social %> 
+  <a id="donation_initiative">
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
@@ -445,6 +571,7 @@
   <% end %>
 
   <% if $activeapps.include?("Spenden") %>
+  <a id="donation">
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
@@ -488,11 +615,12 @@
   <% end %>
 
 <% if $activeapps.include?("Favoriten") %>
+  <a id="favorit">
 	<div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
         <li_header>
-        Favoriten
+        FAVORITEN
         <span class="badge"><%= @favanz %></span>
         </li_header>
       </div>
@@ -557,6 +685,7 @@
 <br>
 <% end %>
 
+  <a id="location">
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">

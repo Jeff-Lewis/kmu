@@ -11,6 +11,66 @@
               <%= @user.name + " " + @user.lastname %>
             <% end %>
         </li_header>
+
+        <% if @user.services.count > 0 %>
+          <%= link_to "#service" do %>
+            <%= image_tag('service_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @user.companies.count > 0 %>
+          <%= link_to "#company" do %>
+            <%= image_tag('company_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @user.requests.count > 0 %>
+          <%= link_to "#request" do %>
+            <%= image_tag('request_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @user.vehicles.count > 0 %>
+          <%= link_to "#vehicle" do %>
+            <%= image_tag('vehicle_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @user.events.count > 0 %>
+          <%= link_to "#event" do %>
+            <%= image_tag('event_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @user.user_tickets.count > 0 %>
+          <%= link_to "#ticket" do %>
+            <%= image_tag('user_ticket_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @user.hotspots.count > 0 %>
+          <%= link_to "#hotspot" do %>
+            <%= image_tag('hotspot_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @user.bids.count > 0 %>
+          <%= link_to "#bid" do %>
+            <%= image_tag('bid_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @user.donation_stats.count > 0 %>
+          <%= link_to "#donation" do %>
+            <%= image_tag('donation_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @user.ratings.count > 0 %>
+          <%= link_to "#rating" do %>
+            <%= image_tag('rating_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @user.favourits.count > 0 %>
+          <%= link_to "#favorit" do %>
+            <%= image_tag('favorit_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <%= link_to "#location" do %>
+          <%= image_tag('location_a.png', :size => "50x50") %>
+        <% end %>
+
       </div>
       <div class="panel-body">
         <%= link_to users_path :page => session[:page] do %>
@@ -73,6 +133,7 @@
 
 <% if !@user.anonymous %>
 <% if $activeapps.include?("Services") %>
+<a id="service">
 <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
@@ -129,6 +190,7 @@
 <% end %>
   
 <% if $activeapps.include?("Institutionen") %>
+<a id="company">
 <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
@@ -178,6 +240,7 @@
   <% end %>
   
 <% if $activeapps.include?("Kleinanzeigen") %>
+<a id="request">
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
@@ -224,6 +287,7 @@
   <% end %>
 
 <% if $activeapps.include?("Mobilien") %>
+  <a id="vehicle">
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
@@ -273,6 +337,7 @@
   <% end %>
   
 <% if $activeapps.include?("Veranstaltungen") %>
+  <a id="event">
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
@@ -322,15 +387,32 @@
   <% end %>
   
 <% if $activeapps.include?("Sponsoring") %>
+  <a id="ticket">
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
         <li_header>
+          <% if user_signed_in? %>
+            <% found = false %>
+            <% com = Company.where('user_id=?',current_user.id) %>
+            <% com.each do |c| %>
+              <% c.sponsors.each do |sp| %>
+                <% if sp.tickets.where('active=?','t').count > 0 %>
+                  <% found = true %>
+                <% end %> 
+              <% end %>
+            <% end %>
+            <% if found %>
+              <%= link_to ticketuserview_index2_path :user_id => @user.id do %>
+                <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+              <% end %>
+            <% end %>
+          <% end %>
             TICKETS
         </li_header>
       </div>
       <div class="panel-body">
-        <% @user.user_tickets.where('status<>?',"zurückgegeben").each do |ut| %>
+        <% @user.user_tickets.where('status<>? and status<>?',"zurückgegeben", "Filter Kampagne").each do |ut| %>
           <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
               <anzeigetext>
@@ -383,7 +465,7 @@
               </p>
         			<p>
         			<% case ut.status %>
-        			  <% when "überreicht" %>
+        			  <% when "persönlich", "übergeben" %>
                   <%= link_to users_ticketstatus_path :userticket_id => ut.id, :status => "zurückgeben" do %>
                     <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-down"> Ticket zurückgeben</i>
                   <% end %><br><br>
@@ -394,7 +476,7 @@
                   <% link_to users_ticketstatus_path :userticket_id => ut.id, :status => "zurückgeben" do %>
                     <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-down"> Ticket zurückgegeben</i>
                   <% end %><br><br>
-        			  <% when "aktiviert" %>
+        			  <% when "aktiv" %>
                   <%= link_to users_ticketstatus_path :userticket_id => ut.id, :status => "einlösen" do %>
                     <i class="btn btn-primary btn btn-lg glyphicon glyphicon-shopping-cart"> Ticket einlösen</i>
                   <% end %>
@@ -414,6 +496,7 @@
   
 
 <% if $activeapps.include?("Sehenswürdigkeiten") %>
+  <a id="hotspot">
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
@@ -460,6 +543,7 @@
   <% end %>
   
 <% if $activeapps.include?("Ausschreibungen") %>
+  <a id="bid">
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
@@ -505,7 +589,8 @@
   <% end %>
 
   <% if $activeapps.include?("Spenden") %>
-  <div class="row">
+  <a id="donation">
+    <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
         <li_header>
@@ -548,7 +633,8 @@
   <% end %>
 
 <% if $activeapps.include?("Bewertungen") %>
-  <div class="row">
+  <a id="rating">
+    <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
         <li_header>
@@ -557,6 +643,7 @@
       </div>
       <div class="panel-body">
         <% @user.ratings.each do |ur| %>
+          <% if ur.service != nil %>
           <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
               <anzeigetext>
@@ -593,6 +680,7 @@
               <% end %>
             </div>
           </div>
+          <% end %>
         <% end %>
     	</div>
     </div>
@@ -601,7 +689,8 @@
   <% end %>
 
 <% if $activeapps.include?("Favoriten") %>
-	<div class="row">
+  <a id="favorit">
+  	<div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
         <li_header>
@@ -669,7 +758,8 @@
 <br>
 <% end %>
   
-  <div class="row">
+  <a id="location">
+    <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
         <li_header>

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :partner_links
   get 'ticketuserview/index'
+  get 'ticketuserview/index2'
   get 'users/ticketstatus'
 
   resources :user_tickets

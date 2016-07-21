@@ -2,7 +2,7 @@
   <div class="row">
      <div class="col-md-12">
        <div class="panel-heading header">
-          <h1>
+          <li_header>
     	    <% if user_signed_in? %>
     	      <% if current_user.id == @sponsor.company.user_id %>
     	        <%= link_to new_ticket_path :sponsor_id => @sponsor.id do %>
@@ -12,7 +12,7 @@
     	    <% end %>
           Tickets für <%= @sponsor.event.name + " " + @sponsor.company.name  %>
           <span class="badge"><%= @ticanz %></span>
-          </h1>
+          </li_header>
        </div>
      </div>
    </div>
@@ -38,7 +38,8 @@
         <ntext>
           <b>Ticket-Statistik</b><br>
           Kontingent: <%= t.contingent %><br>
-          überreicht: <%= UserTicket.where('ticket_id=? and status=?',t.id, "überreicht").count %><br>
+          Kampagne: <%= UserTicket.where('ticket_id=? and status=?',t.id, "Filter Kampagne").count %><br>
+          Persönlich: <%= UserTicket.where('ticket_id=? and status=?',t.id, "überreicht").count %><br>
           zurückgegeben: <%= UserTicket.where('ticket_id=? and status=?',t.id, "zurückgegeben").count %><br>
           aktiv: <%= UserTicket.where('ticket_id=? and status=?', t.id, "aktiv").count %><br>
           eingelöst: <%= UserTicket.where('ticket_id=? and status=?',t.id, "eingelöst").count %><br>
@@ -74,18 +75,10 @@
         </ntext>    		  
         </p>
   			<p>
+        <% @search_anz = Search.where('ticket_id=?',t.id).count %>
         <%= link_to searches_path :search_domain => "Tickets", :controller_name => controller_name, :ticket_id => t.id do %>
-          <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
-        <% end %>
-        <% @counter = Search.where('ticket_id=?',t.id).sum(:counter) %>
-        <%= link_to tickets_path :ticket_id => t.id, :sponsor_id => t.sponsor.id do %>
-          <i class="btn btn-primary btn-lg glyphicon glyphicon-bullhorn">
-          <span class="badge"><%= @counter %></span></i>
-        <% end %>
-        <% @counter = UserTicket.where('ticket_id=?',t.id).count %>
-        <%= link_to ticketuserview_index_path :ticket_id => t.id do %>
-          <i class="btn btn-primary btn-lg glyphicon glyphicon-user">
-          <span class="badge"><%= @counter %></span></i>
+          <i class="btn btn-primary btn-lg glyphicon glyphicon-filter">
+          <span class="badge"><%= @search_anz %></span></i>
         <% end %>
         <%= link_to edit_ticket_path(t) do %>
           <i class="btn btn-primary btn btn-lg glyphicon glyphicon-wrench"></i>

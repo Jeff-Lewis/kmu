@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160618100823) do
+ActiveRecord::Schema.define(version: 20160716124258) do
 
   create_table "appparams", force: :cascade do |t|
     t.string   "name"
@@ -115,14 +115,14 @@ ActiveRecord::Schema.define(version: 20160618100823) do
   end
 
   create_table "customers", force: :cascade do |t|
-    t.integer   "user_id"
-    t.integer   "company_id"
+    t.integer  "user_id"
+    t.integer  "company_id"
     t.string   "customer_number"
-    t.boolean   "tickets"
-    t.boolean   "newsletter"
+    t.boolean  "tickets"
+    t.boolean  "newsletter"
     t.integer  "advisor_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "donation_details", force: :cascade do |t|
@@ -287,6 +287,20 @@ ActiveRecord::Schema.define(version: 20160618100823) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "partner_links", force: :cascade do |t|
+    t.integer  "company_id"
+    t.string   "name"
+    t.text     "description"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.boolean  "active"
+    t.string   "link"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
   create_table "ratings", force: :cascade do |t|
     t.string   "status"
     t.integer  "user_id"
@@ -356,6 +370,7 @@ ActiveRecord::Schema.define(version: 20160618100823) do
     t.datetime "date_created_at"
     t.integer  "rating"
     t.boolean  "social"
+    t.boolean  "customer"
     t.integer  "amount_from_target"
     t.integer  "amount_to_target"
     t.integer  "amount_from"
@@ -413,6 +428,7 @@ ActiveRecord::Schema.define(version: 20160618100823) do
 
   create_table "tickets", force: :cascade do |t|
     t.string   "sponsor_id"
+    t.boolean  "active"
     t.integer  "ticket_category_id"
     t.string   "name"
     t.text     "description"

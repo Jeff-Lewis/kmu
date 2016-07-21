@@ -22,7 +22,7 @@
                       <% end %>
                       ABFRAGEN 
                       <% if @count != nil %>
-                        Einträge gefunden: <%= @count.to_s %><br><%= @search.sql_string %>
+                        Einträge gefunden: <%= @count.to_s %><br><% @search.sql_string %>
                       <% end %>
                       </li_header>
                     </div>
@@ -57,6 +57,12 @@
                           <%= f.label "Sozialengagement" %>
                           <%= f.check_box :social, class:"form-control"%>
                         </div>
+                        <% if @search.search_domain == "Tickets" %>
+                          <div class="form-group">
+                            <%= f.label "Kunde" %>
+                            <%= f.check_box :customer, class:"form-control"%>
+                          </div>
+                        <% end %>
 
                      <% when "Institutionen" %>
                         <div class="form-group">

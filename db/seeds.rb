@@ -84,6 +84,7 @@ appparams = Appparam.create({name:"Bewertungen", description:"Bewertung von Prod
 appparams = Appparam.create({name:"Privatpersonen", description:"Privatpersonen", active:true})
 appparams = Appparam.create({name:"Favoriten", description:"Personen & Institutionen folgen", active:true})
 appparams = Appparam.create({name:"Sehenswürdigkeiten", description:"Lohnenswerte Ausflugsziele in der Region", active:true})
+appparams = Appparam.create({name:"Links", description:"Links der Partnerfirmen", active:true})
 
 path = Rails.root.to_s + "/app/assets/images/sample_pics/"
 #create some users...
@@ -114,6 +115,10 @@ companies = Company.create({status:"ok", active:true, user_id:1, name:"Tierschut
 companies = Company.create({status:"ok", active:true, user_id:1, name:"Blindenverein Wängi", category_id:9 ,stichworte: "Verein", address1:"Wängi", address2:"Haupstrasse", address3:"Thurgau", avatar:File.open(path+'blindenverein.jpg', 'rb'), social:true}) 
 companies = Company.create({status:"ok", active:true, user_id:2, name:"Kosmetikstudio Jasmine", category_id:10 ,stichworte: "Kosmetik", address1:"Gartenstrasse 2", address2:"Bürglen", address3:"Thurgau", avatar:File.open(path+'kosmetik.jpg', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:1, name:"Autohaus Hummel", category_id:25 ,stichworte: "Auto KFZ", address1:"Hauptstrasse", address2:"Bissegg", address3:"Thurgau", avatar:File.open(path+'autobissegg.png', 'rb')}) 
+companies = Company.create({status:"ok", active:true, user_id:1, name:"Valiant Bank", category_id:26 ,stichworte: "Bank Finanz Geld", address1:"Bahnhof", address2:"Bern", address3:"Bern", avatar:File.open(path+'valiant.png', 'rb')}) 
+
+partnerlinks = PartnerLink.create({active:true, company_id:13, name:"eBanking", link:"www.valiant.ch/ebanking"})
+partnerlinks = PartnerLink.create({active:true, company_id:13, name:"OnlineLimite", link:"www.valiant.ch/online"})
 
 #create some company services..
 services = Service.create({status:"ok", active:true, company_id:1, parent_id:0, stype:"regular", name:"frische Fische", social:false,avatar:File.open(path+'fische.jpg', 'rb')})

@@ -12,6 +12,7 @@ class Company < ActiveRecord::Base
     has_many :sponsors, dependent: :destroy 
     has_many :vehicles, dependent: :destroy 
     has_many :events, dependent: :destroy 
+    has_many :partner_links, dependent: :destroy 
 
     has_many :customers, dependent: :destroy 
 

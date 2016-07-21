@@ -210,12 +210,12 @@
       	        <%= link_to cs.company do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
                 <% end %>
-      	        <%= link_to tickets_path :sponsor_id => cs.id do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-credit-card"></i>
-                <% end %>
                 <% if user_signed_in? %>
                   <% if cs.company.user_id != nil %>
                     <% if current_user.id == cs.company.user_id %>
+                      <%= link_to tickets_path :sponsor_id => cs.id do %>
+                        <i class="btn btn-primary btn-lg glyphicon glyphicon-credit-card"></i>
+                      <% end %>
             	        <%= link_to edit_sponsor_path(cs) do %>
                         <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
                       <% end %>
