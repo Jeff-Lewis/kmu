@@ -1,4 +1,5 @@
 <% if $activeapps != nil %>
+<a id="user">
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
@@ -63,8 +64,8 @@
           <% end %>
         <% end %>
         <% if @user.favourits.count > 0 %>
-          <%= link_to "#favorit" do %>
-            <%= image_tag('favorit_a.png', :size => "50x50") %>
+          <%= link_to "#favourit" do %>
+            <%= image_tag('favourit_a.png', :size => "50x50") %>
           <% end %>
         <% end %>
         <%= link_to "#location" do %>
@@ -147,6 +148,9 @@
           <% end %>
             ANGEBOTE
         </li_header>
+        <%= link_to "#user" do %>
+          <%= image_tag('user_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
       		<% @user.services.each do |us| %>
@@ -204,6 +208,9 @@
           <% end %>
             INSTITUTIONEN
         </li_header>
+        <%= link_to "#user" do %>
+          <%= image_tag('user_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
       		<% @user.companies.each do |uc| %>
@@ -254,6 +261,9 @@
           <% end %>
             KLEINANZEIGEN
         </li_header>
+        <%= link_to "#user" do %>
+          <%= image_tag('user_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
       		<% @user.requests.order(created_at: :desc).each do |ur| %>
@@ -301,6 +311,9 @@
           <% end %>
             MOBILIEN
         </li_header>
+        <%= link_to "#user" do %>
+          <%= image_tag('user_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
       		<% @user.vehicles.each do |uv| %>
@@ -351,6 +364,9 @@
           <% end %>
             VERANSTALTUNGEN
         </li_header>
+        <%= link_to "#user" do %>
+          <%= image_tag('user_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
       		<% @user.events.each do |ue| %>
@@ -410,6 +426,9 @@
           <% end %>
             TICKETS
         </li_header>
+        <%= link_to "#user" do %>
+          <%= image_tag('user_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
         <% @user.user_tickets.where('status<>? and status<>?',"zurückgegeben", "Filter Kampagne").each do |ut| %>
@@ -508,8 +527,11 @@
               <% end %>
             <% end %>
           <% end %>
-            SEHENSWÜRDIGKEITEN / AUSFLUGSZIELE
+            AUSFLUGSZIELE
         </li_header>
+        <%= link_to "#user" do %>
+          <%= image_tag('user_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
       		<% @user.hotspots.each do |uh| %>
@@ -557,6 +579,9 @@
           <% end %>
             AUSSCHREIBUNGEN
         </li_header>
+        <%= link_to "#user" do %>
+          <%= image_tag('user_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
       		<% @user.bids.each do |ub| %>
@@ -596,6 +621,9 @@
         <li_header>
             SPENDEN
         </li_header>
+        <%= link_to "#user" do %>
+          <%= image_tag('user_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
   	    <% @user.donation_stats.each do |uds| %>
@@ -640,6 +668,9 @@
         <li_header>
             RATINGS
         </li_header>
+        <%= link_to "#user" do %>
+          <%= image_tag('user_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
         <% @user.ratings.each do |ur| %>
@@ -689,7 +720,7 @@
   <% end %>
 
 <% if $activeapps.include?("Favoriten") %>
-  <a id="favorit">
+  <a id="favourit">
   	<div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
@@ -697,6 +728,9 @@
         FAVORITEN
         <span class="badge"><%= @favanz %></span>
         </li_header>
+        <%= link_to "#user" do %>
+          <%= image_tag('user_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
         <% @user.favourits.each do |f| %>
@@ -765,6 +799,9 @@
         <li_header>
             ORTSANGABE
         </li_header>
+        <%= link_to "#user" do %>
+          <%= image_tag('user_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
     </div>
     <div class="col-md-12">

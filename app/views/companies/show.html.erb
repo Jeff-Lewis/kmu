@@ -1,5 +1,5 @@
+<a id="company">
 <div class="container-fluid">
-
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
@@ -43,8 +43,8 @@
           <% end %>
         <% end %>
         <% if @company.donations.count > 0 %>
-          <%= link_to "#donation_initiatives" do %>
-            <%= image_tag('donation_Inititive_a.png', :size => "50x50") %>
+          <%= link_to "#donation_initiative" do %>
+            <%= image_tag('donation_initiative_a.png', :size => "50x50") %>
           <% end %>
         <% end %>
         <% if @company.donation_stats.count > 0 %>
@@ -53,8 +53,8 @@
           <% end %>
         <% end %>
         <% if @company.user.favourits.count > 0 %>
-          <%= link_to "#favorit" do %>
-            <%= image_tag('favorit_a.png', :size => "50x50") %>
+          <%= link_to "#favourit" do %>
+            <%= image_tag('favourit_a.png', :size => "50x50") %>
           <% end %>
         <% end %>
         <%= link_to "#location" do %>
@@ -116,6 +116,9 @@
           <% end %>
             LINKS
         </li_header>
+        <%= link_to "#company" do %>
+          <%= image_tag('company_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
         <% @company.partner_links.each do |pl| %>
@@ -177,6 +180,9 @@
           <% end %>
             ANGEBOTE
         </li_header>
+        <%= link_to "#company" do %>
+          <%= image_tag('company_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
     		<% @company.services.where("stype=?","regular").each do |cs| %>
@@ -223,6 +229,9 @@
           <% end %>
             AKTIONEN
         </li_header>
+        <%= link_to "#company" do %>
+          <%= image_tag('company_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
         <% @company.services.where("stype=?","action").each do |cs| %>
@@ -275,6 +284,9 @@
           <% end %>
             MOBILIEN
         </li_header>
+        <%= link_to "#company" do %>
+          <%= image_tag('company_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
       		<% @company.vehicles.each do |cv| %>
@@ -318,6 +330,9 @@
         <li_header>
             AUSSCHREIBUNGEN
         </li_header>
+        <%= link_to "#company" do %>
+          <%= image_tag('company_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
       		<% @company.bid_documents.each do |cbd| %>
@@ -365,6 +380,9 @@
           <% end %>
             STELLENANGEBOTE
         </li_header>
+        <%= link_to "#company" do %>
+          <%= image_tag('company_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
       		<% @company.jobs.each do |cj| %>
@@ -412,6 +430,9 @@
           <% end %>
             VERANSTALTUNGEN
         </li_header>
+        <%= link_to "#company" do %>
+          <%= image_tag('company_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
       		<% @company.events.each do |ce| %>
@@ -461,6 +482,9 @@
         <li_header>
             SPONSORING
         </li_header>
+        <%= link_to "#company" do %>
+          <%= image_tag('company_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
         <% @company.sponsors.each do |cs| %>
@@ -536,6 +560,9 @@
           <% end %>
             SPENDENINITIATIVEN
         </li_header>
+        <%= link_to "#company" do %>
+          <%= image_tag('company_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
         <% @company.donations.each do |cds| %>
@@ -578,6 +605,9 @@
         <li_header>
             SPENDEN
         </li_header>
+        <%= link_to "#company" do %>
+          <%= image_tag('company_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
   	    <% @company.donation_stats.each do |cds| %>
@@ -615,7 +645,7 @@
   <% end %>
 
 <% if $activeapps.include?("Favoriten") %>
-  <a id="favorit">
+  <a id="favourit">
 	<div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
@@ -623,6 +653,9 @@
         FAVORITEN
         <span class="badge"><%= @favanz %></span>
         </li_header>
+        <%= link_to "#company" do %>
+          <%= image_tag('company_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
       <div class="panel-body">
         <% @company.user.favourits.each do |f| %>
@@ -692,6 +725,9 @@
         <li_header>
             ORTSANGABE
         </li_header>
+        <%= link_to "#company" do %>
+          <%= image_tag('company_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
       </div>
     </div>
     <div class="col-md-12">

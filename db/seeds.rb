@@ -115,7 +115,7 @@ companies = Company.create({status:"ok", active:true, user_id:1, name:"Tierschut
 companies = Company.create({status:"ok", active:true, user_id:1, name:"Blindenverein Wängi", category_id:9 ,stichworte: "Verein", address1:"Wängi", address2:"Haupstrasse", address3:"Thurgau", avatar:File.open(path+'blindenverein.jpg', 'rb'), social:true}) 
 companies = Company.create({status:"ok", active:true, user_id:2, name:"Kosmetikstudio Jasmine", category_id:10 ,stichworte: "Kosmetik", address1:"Gartenstrasse 2", address2:"Bürglen", address3:"Thurgau", avatar:File.open(path+'kosmetik.jpg', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:1, name:"Autohaus Hummel", category_id:25 ,stichworte: "Auto KFZ", address1:"Hauptstrasse", address2:"Bissegg", address3:"Thurgau", avatar:File.open(path+'autobissegg.png', 'rb')}) 
-companies = Company.create({status:"ok", active:true, user_id:1, name:"Valiant Bank", category_id:26 ,stichworte: "Bank Finanz Geld", address1:"Bahnhof", address2:"Bern", address3:"Bern", avatar:File.open(path+'valiant.png', 'rb')}) 
+companies = Company.create({status:"ok", active:true, user_id:1, name:"Valiant Bank", partner:true, category_id:26 ,stichworte: "Bank Finanz Geld", address1:"Bahnhof", address2:"Bern", address3:"Bern", avatar:File.open(path+'valiant.png', 'rb')}) 
 
 partnerlinks = PartnerLink.create({active:true, company_id:13, name:"eBanking", link:"www.valiant.ch/ebanking"})
 partnerlinks = PartnerLink.create({active:true, company_id:13, name:"OnlineLimite", link:"www.valiant.ch/online"})
