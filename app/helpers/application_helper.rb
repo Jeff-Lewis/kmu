@@ -47,13 +47,4 @@ module ApplicationHelper
       end
     end
 
-    def update_location
-     if user_signed_in?
-       current_user.c_latitude = request.location.latitude
-       current_user.c_longitude = request.location.longitude
-       current_user.save
-       puts "location set to ..." + current_user.c_latitude.to_s + " " + current_user.c_longitude.to_s
-     end
-    end
-
 end

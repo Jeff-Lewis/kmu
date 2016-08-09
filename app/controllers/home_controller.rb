@@ -24,12 +24,8 @@ def index3
         end
       end
      end
-
      if user_signed_in?
-         current_user.c_latitude = request.location.latitude
-         current_user.c_longitude = request.location.longitude
-         current_user.save
-         @hash.push({lat: current_user.c_latitude, lng: current_user.c_longitude})
+         @hash.push({lat: request.location.latitude, lng: request.location.longitude})
      end
 end
 

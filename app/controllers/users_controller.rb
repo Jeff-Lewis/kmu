@@ -38,7 +38,11 @@ class UsersController < ApplicationController
         marker.lat user.latitude
         marker.lng user.longitude
         marker.infowindow "<a href=/users/" + user.id.to_s + ">" + user.name + " " + user.lastname + "</a>"
-        marker.picture :url => url_for(user.avatar(:small)), :width => 50, :height => 50
+        if user.avatar != nil
+          marker.picture :url => url_for(user.avatar(:small)), :width => 50, :height => 50
+        else
+          marker.picture :url => url_for(user_a.png(:small)), :width => 50, :height => 50
+        end
       end
      end
   end

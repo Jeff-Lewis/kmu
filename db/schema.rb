@@ -462,8 +462,6 @@ ActiveRecord::Schema.define(version: 20160716124258) do
     t.date     "dateofbirth"
     t.float    "latitude"
     t.float    "longitude"
-    t.float    "c_latitude"
-    t.float    "c_longitude"
     t.string   "geo_address"
     t.string   "phone1"
     t.string   "phone2"
