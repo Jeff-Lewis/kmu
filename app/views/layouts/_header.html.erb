@@ -44,6 +44,8 @@
 				  <li class="divider">
                   <li><%= link_to "Kleinanzeigen (Suchen)", requests_path(:rtype => "suche") if $activeapps.include?("Kleinanzeigen") %></li>
 	              <li><%= link_to "Kleinanzeigen (Anbieten)", requests_path(:rtype => "biete") if $activeapps.include?("Kleinanzeigen") %></li>
+				  <li class="divider">
+                  <li><%= link_to "Wer ist wo?", home_index3_path if $activeapps.include?("Wer ist wo") %></li>
 	    		</ul>
 			</li>
 			<li class="dropdown">
@@ -91,5 +93,8 @@
 		</ul>
 	</div>
 	<marquee height="100%" scrolldelay="150"><%= ticker() %></marquee>
+
+	<%= update_location %>
+
 </nav>
 <br><br><br><br><br>

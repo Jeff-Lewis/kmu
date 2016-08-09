@@ -85,6 +85,7 @@ appparams = Appparam.create({name:"Privatpersonen", description:"Privatpersonen"
 appparams = Appparam.create({name:"Favoriten", description:"Personen & Institutionen folgen", active:true})
 appparams = Appparam.create({name:"Sehenswürdigkeiten", description:"Lohnenswerte Ausflugsziele in der Region", active:true})
 appparams = Appparam.create({name:"Links", description:"Links der Partnerfirmen", active:true})
+appparams = Appparam.create({name:"Wer ist wo", description:"wer ist online", active:true})
 
 path = Rails.root.to_s + "/app/assets/images/sample_pics/"
 #create some users...

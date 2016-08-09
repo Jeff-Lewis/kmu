@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   resources :appparams
   get 'offer/index'
   get 'home/index2'
+  get 'home/index3'
   
   resources :webmasters
   resources :bid_details

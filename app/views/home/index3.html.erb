@@ -2,11 +2,18 @@
     <div class="panel-body">
       <div class="row">
         <div class="col-xs-12">
-          <anzeigetext>
-          xConnect - DAS regionale Portal<br>
-          </anzeigetext>
+          <div id="map"></div>
         </div>
       </div>
       <br>
     </div>
 </div>
+
+<script>
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers(<%=raw @hash.to_json %>);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+});
+</script>

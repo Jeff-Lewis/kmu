@@ -40,7 +40,7 @@
         <% end %>
         <% if @user.user_tickets.count > 0 %>
           <%= link_to "#ticket" do %>
-            <%= image_tag('user_ticket_a.png', :size => "50x50") %>
+            <%= image_tag('ticket_a.png', :size => "50x50") %>
           <% end %>
         <% end %>
         <% if @user.hotspots.count > 0 %>
@@ -811,6 +811,7 @@
         </div>
       </div>
     </div>
+ 
   </div>
   <br>
   <% end %>
@@ -824,7 +825,8 @@
         {
           "lat": <%= @user.latitude %>,
           "lng": <%= @user.longitude %>,
-          "infowindow": "<%= @user.name + " " + @user.lastname %>"
+          "infowindow": "<%= @user.name + " " + @user.lastname %>",
+          "picture": {"url": "<%= url_for @user.avatar(:small) %>", "width": 50, "height": 50},
         }
       ]);
       handler.bounds.extendWith(markers);

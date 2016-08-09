@@ -5,7 +5,7 @@ module ApplicationHelper
           ticker = " "
           
           # follow Tickets
-          usertickets = UserTicket.where('user_id=? and status=?', current_user.id, "überreicht").last(3)
+          usertickets = UserTicket.where('user_id=? and (status=? or status=?)', current_user.id, "übergeben", "persönlich").last(3)
           usertickets.each do |ut|
             	 ticker = ticker + " Sie haben von " + ut.ticket.sponsor.company.name + " ein Ticket " + ut.ticket.name + " für " + ut.ticket.sponsor.event.name + " erhalten... " 
           end
@@ -45,6 +45,15 @@ module ApplicationHelper
           
           return ticker
       end
+    end
+
+    def update_location
+     if user_signed_in?
+       current_user.c_latitude = request.location.latitude
+       current_user.c_longitude = request.location.longitude
+       current_user.save
+       puts "location set to ..." + current_user.c_latitude.to_s + " " + current_user.c_longitude.to_s
+     end
     end
 
 end

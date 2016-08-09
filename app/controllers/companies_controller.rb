@@ -14,14 +14,16 @@ class CompaniesController < ApplicationController
     @companies = Company.search(params[:filter_id], params[:search]).page(params[:page]).per_page(16)
     @companz = @companies.count
 
-    z = 0
     @hash = Gmaps4rails.build_markers(@companies) do |company, marker|
       if company.latitude != nil and company.longitude != nil
         marker.lat company.latitude
         marker.lng company.longitude
-        z=z+1
-        marker.infowindow z.to_s+ " " + company.name
-#      marker.picture url: "http://images/ma_anonym.png"
+        marker.infowindow "<a href=/companies/" + company.id.to_s + ">" + company.name + "</a>"
+        if company.avatar 
+          marker.picture :url => url_for(company.avatar(:small)), :width => 50, :height => 50
+        else
+          marker.picture :url => "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|", :width => 50, :height => 50
+        end
       end
      end
     
