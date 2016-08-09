@@ -107,7 +107,7 @@ users = User.create({dateofbirth:"12.7.2010", anonymous:false, status:"ok", acti
 companies = Company.create({status:"ok", active:true, user_id:1, name:"Fischzucht Hecht", category_id:24 ,stichworte: "Fische, Zierfische, Angelbedarf", address1:"Bahnhof", address2:"Frauenfeld", address3:"Thurgau", avatar:File.open(path+'fischhaendler.jpg', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:2, name:"Alder Entsorgung", category_id:11 ,stichworte: "Hocbau, Tiefbau", address1:"Bahnhof", address2:"Wil", address3:"Thurgau", avatar:File.open(path+'alder.jpg', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:3, name:"Eisenwaren Müller", category_id:12 ,stichworte: "Hocbau, Tiefbau", address1:"Thurgauer Str", address2:"Matzingen", address3:"Thurgau", avatar:File.open(path+'eisenmueller.jpg', 'rb')}) 
-companies = Company.create({status:"ok", active:true, user_id:4, name:"TKB", category_id:26 ,stichworte: "Banken", address1:"Bahnhof", address2:"Weinfelden", address3:"Thurgau", avatar:File.open(path+'tkb.png', 'rb')}) 
+companies = Company.create({status:"ok", active:true, user_id:4, name:"TKB", partner:true, category_id:26 ,stichworte: "Banken", address1:"Bahnhof", address2:"Weinfelden", address3:"Thurgau", avatar:File.open(path+'tkb.png', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:5, name:"Prematic", category_id:12 ,stichworte: "Luftdruck", address1:"Bahnhof", address2:"Wängi", address3:"Thurgau", avatar:File.open(path+'prematic.png', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:6, name:"Baufirma Meier", category_id:11 ,stichworte: "Hocbau, Tiefbau", address1:"Hauptstrasse", address2:"Zezikon", address3:"Thurgau", avatar:File.open(path+'meier.jpg', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:1, name:"Lackierwerkstatt Manser", category_id:9 ,stichworte: "Karosserie", address1:"Amlikon", address2:"Haupstrasse", address3:"Thurgau", avatar:File.open(path+'mazda-mx-5-cabriolet-2006-occasion.jpg', 'rb')}) 
@@ -116,10 +116,13 @@ companies = Company.create({status:"ok", active:true, user_id:1, name:"Tierschut
 companies = Company.create({status:"ok", active:true, user_id:1, name:"Blindenverein Wängi", category_id:9 ,stichworte: "Verein", address1:"Wängi", address2:"Haupstrasse", address3:"Thurgau", avatar:File.open(path+'blindenverein.jpg', 'rb'), social:true}) 
 companies = Company.create({status:"ok", active:true, user_id:2, name:"Kosmetikstudio Jasmine", category_id:10 ,stichworte: "Kosmetik", address1:"Gartenstrasse 2", address2:"Bürglen", address3:"Thurgau", avatar:File.open(path+'kosmetik.jpg', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:1, name:"Autohaus Hummel", category_id:25 ,stichworte: "Auto KFZ", address1:"Hauptstrasse", address2:"Bissegg", address3:"Thurgau", avatar:File.open(path+'autobissegg.png', 'rb')}) 
-companies = Company.create({status:"ok", active:true, user_id:1, name:"Valiant Bank", partner:true, category_id:26 ,stichworte: "Bank Finanz Geld", address1:"Bahnhof", address2:"Bern", address3:"Bern", avatar:File.open(path+'valiant.png', 'rb')}) 
+companies = Company.create({status:"ok", active:true, user_id:1, name:"Valiant Bank", category_id:26 ,stichworte: "Bank Finanz Geld", address1:"Bahnhof", address2:"Bern", address3:"Bern", avatar:File.open(path+'valiant.png', 'rb')}) 
 
-partnerlinks = PartnerLink.create({active:true, company_id:13, name:"eBanking", link:"www.valiant.ch/ebanking"})
-partnerlinks = PartnerLink.create({active:true, company_id:13, name:"OnlineLimite", link:"www.valiant.ch/online"})
+partnerlinks = PartnerLink.create({active:true, company_id:4, name:"eBanking", link:"www.tkb.ch/ebanking"})
+partnerlinks = PartnerLink.create({active:true, company_id:4, name:"Adressänderungen", link:"https://www.tkb.ch/default/online-schalter/adressaenderung.htm"})
+partnerlinks = PartnerLink.create({active:true, company_id:4, name:"Terminvereinbarung", link:"https://www.tkb.ch/default/online-schalter/adressaenderung.htm"})
+partnerlinks = PartnerLink.create({active:true, company_id:4, name:"Formularbestellung", link:"https://www.tkb.ch/default/online-schalter/bestellung-zv-formulare.htm"})
+partnerlinks = PartnerLink.create({active:true, company_id:4, name:"Reisegeldbestellung", link:"https://www.tkb.ch/default/online-schalter/reisegeld.htm"})
 
 #create some company services..
 services = Service.create({status:"ok", active:true, company_id:1, parent_id:0, stype:"regular", name:"frische Fische", social:false,avatar:File.open(path+'fische.jpg', 'rb')})
