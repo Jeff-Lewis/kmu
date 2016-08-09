@@ -41,7 +41,7 @@ class UsersController < ApplicationController
         if user.avatar != nil
           marker.picture :url => url_for(user.avatar(:small)), :width => 50, :height => 50
         else
-          marker.picture :url => url_for("images/user_a.png"), :width => 50, :height => 50
+          marker.picture :url => image-url("user_a.png"), :width => 50, :height => 50
         end
       end
      end
