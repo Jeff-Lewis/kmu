@@ -33,6 +33,8 @@ def build_medialist(md_string, items, cname, panel)
                                 html_string = html_string + "<a href=/"+cname+"/"+item.id.to_s+">"
                         end
                         case items.table_name
+                            when "requests"
+                                html_string = html_string + carousel(item.request_details,"thumb")
                             when "hotspots"
                                 html_string = html_string + carousel(item.hotspot_details,"thumb")
                             when "bids"
@@ -58,6 +60,33 @@ def build_medialist(md_string, items, cname, panel)
                     html_string = html_string + "</div>"
                     html_string = html_string + "<div class='media-body'>"
                       case items.table_name
+                      when "requests"
+                          html_string = html_string + '<h4 class="media-heading">'+ item.name + " "
+                          if item.social
+                                html_string = html_string + "<i class='glyphicon glyphicon-heart'></i>"
+                          end
+                          html_string = html_string + "</h4>"
+  					      if !item.social
+          					  if item.price
+    					        html_string = html_string + "<preiss><b>" + sprintf("%05.2f CHF", item.price) + "</b></preiss>"
+    					      end
+    					  else
+    					      html_string = html_string + "<preiss><b><i class='glyphicon glyphicon-heart'></i></b></preiss>"
+    					  end
+                          html_string = html_string + "<br>"    					  
+                          if item.date_to != nil
+                              html_string = html_string + "<b><ntext>noch </ntext></b><restlaufzeits>" + (item.date_to.to_date - DateTime.now.to_date).to_i.to_s + "</restlaufzeits> <b><ntext> Tage</ntext></b>"
+                          end
+                          html_string = html_string + "<br>"    					  
+                          if !item.user.anonymous
+                            if item.user.avatar_file_name == nil
+                              html_string = html_string + (image_tag "user_a.png", :size => "50x50", class:"img-rounded")
+                            else
+                              html_string = html_string + (image_tag item.user.avatar(:small), class:"img-rounded") + "<br>"
+                              html_string = html_string + item.user.name + " " + item.user.lastname
+                            end
+                          end
+
                       when "users"
                           html_string = html_string + '<h4 class="media-heading">'+ item.name + " " + item.lastname + " "
                           if item.services.where("social=?",true).count > 0

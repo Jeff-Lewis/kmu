@@ -17,7 +17,7 @@
 
 $valiant_lila: #624E94;
 $color1: $tkb_light_green;
-$color1: $valiant_lila;
+/*$color1: $valiant_lila; */
 
 li_header {
     background: $color1;
@@ -264,17 +264,12 @@ input#email:focus {
    box-shadow: 2px 2px 10px #B1B1B1;
 }
 .thumbnail:hover {
-    background: $color1!important;
-    text-color: white!important;
-    anzeigetext, ntext {
-     color: white!important;
-    }
-    restlaufzeit {
-     color: $color2!important;
-    }
-    preis {
-     color: $color2!important;
-    }
+    border-color: $color1!important;
+    border: 10px solid;
+}
+
+.media-body:hover {
+    color: $color1!important;
 }
 
 .carousel-caption {

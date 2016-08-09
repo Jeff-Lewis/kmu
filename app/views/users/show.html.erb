@@ -826,7 +826,11 @@
           "lat": <%= @user.latitude %>,
           "lng": <%= @user.longitude %>,
           "infowindow": "<%= @user.name + " " + @user.lastname %>",
-          "picture": {"url": "<%= url_for @user.avatar(:small) %>", "width": 50, "height": 50},
+            <% if @user.avatar != nil %>
+              "picture": {"url": "<%= url_for @user.avatar(:small) %>", "width": 50, "height": 50},
+            <% else %>
+              "picture": {"url": "<%= image-url('user_a.png') %>", "width": 50, "height": 50},
+            <% end %>
         }
       ]);
       handler.bounds.extendWith(markers);
