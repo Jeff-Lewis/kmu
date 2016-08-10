@@ -237,6 +237,32 @@ thead {
   background: $blocked!important;
 }
 
+angefragt {
+  color: white;
+  background: #F7E388;
+  padding-left:1em;
+  padding-right:1em;
+}
+
+verschoben {
+  color: white;
+  background: #F5AF76;
+  padding-left:1em;
+  padding-right:1em;
+}
+
+bestaetigt {
+  color: white;
+  background: $color1;
+  padding-left:1em;
+  padding-right:1em;
+}
+geblockt {
+  color: white;
+  background: #D0D7DB;;
+  padding-left:1em;
+  padding-right:1em;
+}
 .Spendenbetrag_IST {
   font-size: 200%;
   color: $color2;

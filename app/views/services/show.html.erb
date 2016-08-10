@@ -101,7 +101,78 @@
       </div>
     </div>
     <br>
-          
+
+  <% if $activeapps.include?("Kundenberater") %>
+  <div class="row">
+    <div class="col-md-12">
+        <div class="panel-heading header">
+          <li_header>
+            <% if user_signed_in? %>
+              <%= link_to users_path do %>
+                <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+              <% end %>
+            <% end %>
+            Kundenberater
+          </li_header>
+        </div>
+        <div class="panel-body">
+          <% @service.advisors.each do |sa| %>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="thumbnail" align="center">
+                <% if sa.user.avatar != nil %>
+                  <%= image_tag sa.user.avatar, :size => 200, class:"img-rounded" %>
+                <% else %>
+                  <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
+                <% end %>
+                <br>
+                <anzeigetext>
+                <%= sa.user.name + " " + sa.user.lastname %><br>
+                </anzeigetext>
+                <ntext>
+                <%= sa.grade %>
+                <br><br>
+                <% if sa.user.phone1 != nil %>
+                  <%= sa.user.phone1 %><br>
+                <% end %>
+                <% if sa.user.phone2 != nil %>
+                  <%= sa.user.phone2 %><br>
+                <% end %>
+                <% if sa.user.address1 != nil %>
+                  <%= sa.user.address1 %><br>
+                <% end %>
+                <% if sa.user.address2 != nil %>
+                  <%= sa.user.address2 %><br>
+                <% end %>
+                <% if sa.user.address3 != nil %>
+                  <%= sa.user.address3 %><br>
+                <% end %>
+                </ntext>
+                <% if user_signed_in? %>
+                  <% if (sa.service.user_id != nil and current_user.id == sa.service.user_id) or (sa.service.company.user_id != nil and current_user.id == sa.service.company.user_id) %>
+          	        <%= link_to edit_advisor_path(sa) do %>
+                      <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                    <% end %>
+          	        <%= link_to sa, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                      <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                    <% end %>
+                  <% end %>
+                <% end %>
+      	        <%= link_to sa.service do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-envelope"></i>
+                <% end %>
+      	        <%= link_to appointments_path(:user_id1 => sa.user_id, :subject => @service.name) do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-calendar"></i>
+                <% end %>
+                <br><br>
+              </div>
+            </div>
+  				<% end %>
+        </div>
+    </div>
+  </div>
+  <br>
+  <% end %>          
+
   <% if $activeapps.include?("Bewertungen") %>
   <div class="row">
     <div class="col-md-12">

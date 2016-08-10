@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :appointments
+  resources :advisors
   resources :partner_links
   get 'ticketuserview/index'
   get 'ticketuserview/index2'

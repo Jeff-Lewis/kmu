@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
     has_many :searches, dependent: :destroy
     has_many :customers, dependent: :destroy 
     has_many :user_tickets, dependent: :destroy 
+    has_many :advisors, dependent: :destroy 
     
     # validates :userid, presence: true, :uniqueness => true
     validates :lastname, presence: true    

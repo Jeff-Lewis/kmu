@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: MyString
+  active: false
+  subject: MyString
+  subject_id: 1
+  user_id: 1
+  partner_id: 1
+  partner_type: MyString
+  datum: 2016-08-10
+  zeit: 2016-08-10 05:58:42
+  reminder: false
+
+two:
+  status: MyString
+  active: false
+  subject: MyString
+  subject_id: 1
+  user_id: 1
+  partner_id: 1
+  partner_type: MyString
+  datum: 2016-08-10
+  zeit: 2016-08-10 05:58:42
+  reminder: false

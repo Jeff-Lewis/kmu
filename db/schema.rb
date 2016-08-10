@@ -11,7 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160716124258) do
+ActiveRecord::Schema.define(version: 20160810055842) do
+
+  create_table "advisors", force: :cascade do |t|
+    t.integer  "service_id"
+    t.integer  "user_id"
+    t.string   "grade"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "appointments", force: :cascade do |t|
+    t.string   "status"
+    t.boolean  "active"
+    t.string   "subject"
+    t.integer  "user_id1"
+    t.integer  "user_id2"
+    t.date     "date_from"
+    t.date     "date_to"
+    t.integer  "time_from"
+    t.integer  "time_to"
+    t.string   "channel"
+    t.boolean  "reminder"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
 
   create_table "appparams", force: :cascade do |t|
     t.string   "name"
@@ -467,6 +491,9 @@ ActiveRecord::Schema.define(version: 20160716124258) do
     t.string   "phone2"
     t.string   "org"
     t.binary   "image"
+    t.boolean  "calendar"
+    t.integer  "time_from"
+    t.integer  "time_to"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "avatar_file_name"

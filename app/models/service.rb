@@ -3,6 +3,7 @@ class Service < ActiveRecord::Base
     belongs_to :company
     belongs_to :user
     has_many :ratings, dependent: :destroy 
+    has_many :advisors, dependent: :destroy 
     
     validates :name, presence: true
     validate :valid_dates?

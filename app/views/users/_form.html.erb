@@ -58,6 +58,15 @@
                       <%= f.label "Anonym" %>
                       <%= f.check_box :anonymous, class:"form-control"%>
                     </div>
+                    <div class="form-group">
+                      <%= f.label "Kalender" %>
+                      <%= f.check_box :calendar, class:"form-control"%>
+                    </div>
+                    <div class="form-group">
+                       <%= f.label "Kalender von-bis" %><br/>
+                       <%= f.number_field :time_from, class:"form-control" %>
+                       <%= f.number_field :time_to, class:"form-control" %>
+                    </div>
                     <% if current_user.superuser %>
                         <div class="form-group">
                           <%= f.label "Webmaster" %>

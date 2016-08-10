@@ -1,0 +1,142 @@
+<div class="container-fluid">
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <li_header>
+        Kalender von <%= @user.name + " " + @user.lastname %>
+        <b>
+        <% @user.advisors.each do |ad| %>
+          <%= ad.service.name %> 
+        <% end %>
+        </b>
+        <span class="badge"><%= @appanz %></span><br>
+        <%= link_to appointments_path(:user_id1 => @user.id, :subject => @subject, :dir => "<")  do %>
+          <i class="btn btn-primary glyphicon glyphicon-chevron-left"></i>
+        <% end %>
+        KW <%= session[:cw].to_s + " / " + session[:year].to_s %>
+        <%= link_to appointments_path(:user_id1 => @user.id, :subject => @subject, :dir => ">")  do %>
+          <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
+        <% end %>
+        </li_header>
+      </div>
+    </div>
+  </div>
+	<div class="row">
+    <div class="col-md-12">
+  		<table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Uhrzeit</th>
+            <% for i in 0..6 %>
+              <th>
+                <%= $wochentage[i] %><br>
+                <small_cal>
+                <%= (@start+i).strftime("%d.%m") %>
+                </small_cal>
+              </th>
+            <% end %>
+          </tr>
+        </thead>
+        
+        <tbody>
+
+          <% @items = AppItem(@appointments,@start) %>
+          <% for hour in 0..@anz_stunden-1 %>
+            <tr>
+              <td>
+                <%= (@user.time_from + hour).to_s + " Uhr" %>
+              </td>
+              <% for day in 0..@anz_tage-1 %>
+                <td>
+                <% if @array[hour][day] != 0 %>
+                  <% @a = Appointment.find(@array[hour][day]) %>
+                  <% @a.id %>
+                  <% case @a.status %>
+                    <% when "angefragt" %>
+                       <angefragt></angefragt>
+                    <% when "verschoben" %>
+                       <verschoben></verschoben>
+                    <% when "bestaetigt" %>
+                       <bestaetigt></bestaetigt>
+                    <% when "nicht verfügbar" %>
+                      <geblockt></geblockt>
+                  <% end %>
+                <% end %>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <angefragt>angefragt</angefragt><verschoben>verschoben</verschoben><bestaetigt>bestätigt</bestaetigt><geblockt>nicht verfügbar</geblockt><br><br>
+
+	<div class="row">
+    <div class="col-md-12">
+    	<table class="table table-striped">
+        <thead>
+          <tr>
+            <th colspan=3>gebucht von</th>
+            <th>von</th>
+            <th>bis</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <body>
+      	<% if user_signed_in? %>
+      	  <tr>
+      	    <td colspan=6>
+              <%= link_to new_appointment_path(:user_id1 => @user.id, :user_id2 => current_user.id, :subject => @subject) do %>
+                <i class="btn btn-primary glyphicon glyphicon-plus"></i>
+              <% end %>
+              <b>Terminanfrage für <%= @subject %></b>
+    	      </td>
+    	    </tr>
+        <% end %>
+
+          <% @appointments.each do |ca| %>
+            <tr>
+              <td>
+    				    <% if user_signed_in? %>
+      				    <% if ca.user_id2 == current_user.id or ca.user_id1 == current_user.id %>
+    				        <%= link_to edit_appointment_path(ca) do %>
+                      <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
+                    <% end %>
+    				        <%= link_to ca, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                      <i class="btn btn-danger glyphicon glyphicon-trash"></i>
+                    <% end %>
+        				  <% end %>
+      				    <% if ca.user_id1 == current_user.id and ca.status == "angefragt" %>
+                    <%= link_to appointments_path(:user_id1 => @user.id, :confirm_id => ca.id) do %>
+                      <i class="btn btn-primary glyphicon glyphicon-ok"></i>
+                    <% end %>
+                  <% end %>
+        				<% end %>
+              </td>
+              <td>
+              <% @user2 = User.find(ca.user_id2) %>
+              <% if @user2.avatar_file_name %>
+                <%= image_tag @user2.avatar(:small), class:"img-rounded" %>
+              <% else %>
+                <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
+              <% end %>
+              </td>
+                <td>
+                  <anzeigetext>
+                  <%= @user2.name + " " + @user2.lastname %><br>
+                  </anzeigetext>
+                  <ntext><%= @user2.address2 %></ntext>
+                </td>
+              <td><%= ca.date_from.strftime("%d.%m.%Y")+"  "+ca.time_from.to_s+" Uhr"%></td>
+              <td><%= ca.date_to.strftime("%d.%m.%Y")+"  "+ca.time_to.to_s+" Uhr"%></td>
+              <td><%= ca.status %></td>
+            </tr>
+          <% end %>
+        </body>
+     	</table>
+    </div>
+  </div>
+
+</div>
