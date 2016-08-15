@@ -59,7 +59,7 @@ module AppointmentsHelper
       case status
         when "angefragt"
            html_string = html_string + "<angefragt>"
-        when "geht leider nicht"
+        when "leider nicht möglich"
            html_string = html_string + "<abgelehnt>"
         when "bestaetigt"
            html_string = html_string + "<bestaetigt>"
@@ -69,7 +69,7 @@ module AppointmentsHelper
       end
       if status != "nicht verfügbar"
           case channel
-            when "Geschäftstelle"
+            when "Geschäftsstelle"
                html_string = html_string + '<i class="glyphicon glyphicon-briefcase"></i>'
             when "Treffpunkt"
                html_string = html_string + '<i class="glyphicon glyphicon-map-marker"></i>'
@@ -89,7 +89,7 @@ module AppointmentsHelper
       case status
         when "angefragt"
            html_string = html_string + "</angefragt>"
-        when "abgelehnt"
+        when "leider nicht möglich"
            html_string = html_string + "</abgelehnt>"
         when "bestaetigt"
            html_string = html_string + "</bestaetigt>"
