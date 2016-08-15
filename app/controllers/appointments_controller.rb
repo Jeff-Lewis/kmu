@@ -69,6 +69,7 @@ class AppointmentsController < ApplicationController
     end
     @appointment.active = true
     @appointment.channel = "Geschäftstelle"
+    @appointment.channel_detail = ""
     @appointment.reminder = true
   end
 
