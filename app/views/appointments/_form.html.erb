@@ -27,7 +27,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-6">
                 <div class="panel-body">
@@ -37,8 +36,7 @@
                     </div>
                     <div class="form-group">
                       <%= f.label "am" %><br/>
-                      <%= f.text_field :date_from, class:"form-control"%>
-                      <!--<%= f.text_field :date_to, class:"form-control"%> *//-->
+                      <%= f.text_field :app_date, class:"form-control"%>
                     </div>
                     <div class="form-group">
                       <%= f.label "Zeit" %><br/>
@@ -47,7 +45,8 @@
                     </div>
                     <div class="form-group">
                       <%= f.label "Kommunikationskanal" %><br/>
-                      <%= f.text_field :channel, class:"form-control"%>
+                      <%= f.select :channel, options_for_select(["Geschäftstelle", "Treffpunkt", "Wohnort Berater", "Wohnort Kunde", "Telefon", "VideoChat"]), {}, class:"form-control" %>
+                      <%= f.text_field :channel_detail, class:"form-control"%>
                     </div>
                     <div class="form-group">
                       <%= f.label "Erinnerung" %>

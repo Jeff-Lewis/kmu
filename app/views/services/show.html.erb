@@ -80,20 +80,24 @@
           <br><br>
           <b>angeboten von:</b><br>
           <% if @service.company_id != nil %>
-            <% if !@service.company.avatar_file_name %>
-              <%= image_tag("company_a.png", :size => "100x100" , class:"img-rounded") %>
-            <% else %>
-              <%= image_tag @service.company.avatar(:thumb), class:"img-rounded" %>
+            <%= link_to @service.company do %>
+              <% if !@service.company.avatar_file_name %>
+                <%= image_tag("company_a.png", :size => "100x100" , class:"img-rounded") %>
+              <% else %>
+                <%= image_tag @service.company.avatar(:thumb), class:"img-rounded" %>
+              <% end %>
+              <%= @service.company.name %>
             <% end %>
-            <%= @service.company.name %>
           <% end %>
           <% if @service.user_id != nil %>
-            <% if !@service.user.avatar_file_name %>
-              <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
-            <% else %>
-              <%= image_tag @service.user.avatar(:thumb), class:"img-rounded" %>
+            <%= link_to @service.user do %> 
+              <% if !@service.user.avatar_file_name %>
+                <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
+              <% else %>
+                <%= image_tag @service.user.avatar(:thumb), class:"img-rounded" %>
+              <% end %>
+              <%= @service.user.name + " " + @service.user.lastname %>
             <% end %>
-            <%= @service.user.name + " " + @service.user.lastname %>
           <% end %>
     			<br><br>
           <%= @service.created_at.strftime("%d.%m.%Y") %>

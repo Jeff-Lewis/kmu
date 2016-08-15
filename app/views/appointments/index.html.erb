@@ -3,13 +3,24 @@
     <div class="col-md-12">
       <div class="panel-heading header">
         <li_header>
-        Kalender von <%= @user.name + " " + @user.lastname %>
-        <b>
-        <% @user.advisors.each do |ad| %>
-          <%= ad.service.name %> 
+        <% if @user.avatar_file_name %>
+          <%= image_tag @user.avatar(:small), class:"img-rounded" %>
+        <% else %>
+          <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
         <% end %>
-        </b>
-        <span class="badge"><%= @appanz %></span><br>
+        <%= @user.name + " " + @user.lastname %>
+        <span class="badge"><%= @appanz %></span>
+        <% @user.advisors.each do |ad| %>
+          <%= link_to ad.service do %>
+            <% if ad.service.avatar_file_name %>
+              <%= image_tag ad.service.avatar(:small), class:"img-rounded pull-right" %>
+            <% else %>
+              <%= image_tag("service_a.png", :size => "50x50" , class:"img-rounded pull-right") %>
+            <% end %>
+            <% ad.service.name %> 
+          <% end %>
+        <% end %>
+        <br>
         <%= link_to appointments_path(:user_id1 => @user.id, :subject => @subject, :dir => "<")  do %>
           <i class="btn btn-primary glyphicon glyphicon-chevron-left"></i>
         <% end %>
@@ -40,48 +51,24 @@
         
         <tbody>
 
-          <% @items = AppItem(@appointments,@start) %>
-          <% for hour in 0..@anz_stunden-1 %>
-            <tr>
-              <td>
-                <%= (@user.time_from + hour).to_s + " Uhr" %>
-              </td>
-              <% for day in 0..@anz_tage-1 %>
-                <td>
-                <% if @array[hour][day] != 0 %>
-                  <% @a = Appointment.find(@array[hour][day]) %>
-                  <% @a.id %>
-                  <% case @a.status %>
-                    <% when "angefragt" %>
-                       <angefragt></angefragt>
-                    <% when "verschoben" %>
-                       <verschoben></verschoben>
-                    <% when "bestaetigt" %>
-                       <bestaetigt></bestaetigt>
-                    <% when "nicht verfügbar" %>
-                      <geblockt></geblockt>
-                  <% end %>
-                <% end %>
-                </td>
-              <% end %>
-            </tr>
-          <% end %>
+          <%= AppItem(@user, @appointments, @start) %>
 
         </tbody>
       </table>
     </div>
   </div>
-  <angefragt>angefragt</angefragt><verschoben>verschoben</verschoben><bestaetigt>bestätigt</bestaetigt><geblockt>nicht verfügbar</geblockt><br><br>
+  <angefragt>angefragt</angefragt><abgelehnt>leider nicht möglich</abgelehnt><bestaetigt>bestätigt</bestaetigt><geblockt>nicht verfügbar</geblockt><br><br>
 
 	<div class="row">
     <div class="col-md-12">
     	<table class="table table-striped">
         <thead>
           <tr>
-            <th colspan=3>gebucht von</th>
-            <th>von</th>
-            <th>bis</th>
             <th>Status</th>
+            <th>Betreff</th>
+            <th>Art</th>
+            <th colspan=2>gebucht von</th>
+            <th>Datum/Uhrzeit</th>
           </tr>
         </thead>
         <body>
@@ -99,21 +86,47 @@
           <% @appointments.each do |ca| %>
             <tr>
               <td>
+                <% case ca.status %>
+                  <% when "angefragt" %>
+                     <angefragt><%= ca.status %></angefragt>
+                  <% when "geht leider nicht" %>
+                     <abgelehnt><%= ca.status %></abgelehnt>
+                  <% when "bestaetigt" %>
+                     <bestaetigt><%= ca.status %></bestaetigt>
+                  <% when "nicht verfügbar" %>
+                    <geblockt><%= ca.status %></geblockt>
+                  <% else %>
+                <% end %>
+                <br>
     				    <% if user_signed_in? %>
+      				    <% if ca.user_id1 == current_user.id or ca.user_id2 == current_user.id %>
+                    <%= link_to edit_appointment_path(ca) do %>
+                      <i class="btn btn-primary btn-xs glyphicon glyphicon-wrench"></i>
+                    <% end %>
+                  <% end %>
+      				    <% if ca.user_id1 == current_user.id and ca.status == "angefragt" %>
+                    <%= link_to appointments_path(:user_id1 => @user.id, :confirm_id => ca.id, :subject => @subject) do %>
+                      <i class="btn btn-primary btn-xs glyphicon glyphicon-ok"></i>
+                    <% end %>
+                    <%= link_to appointments_path(:user_id1 => @user.id, :deny_id => ca.id, :subject => @subject) do %>
+                      <i class="btn btn-primary btn-xs glyphicon glyphicon-remove"></i>
+                    <% end %>
+                  <% end %>
       				    <% if ca.user_id2 == current_user.id or ca.user_id1 == current_user.id %>
-    				        <%= link_to edit_appointment_path(ca) do %>
+    				        <% link_to edit_appointment_path(ca) do %>
                       <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
                     <% end %>
     				        <%= link_to ca, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                      <i class="btn btn-danger glyphicon glyphicon-trash"></i>
+                      <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
                     <% end %>
         				  <% end %>
-      				    <% if ca.user_id1 == current_user.id and ca.status == "angefragt" %>
-                    <%= link_to appointments_path(:user_id1 => @user.id, :confirm_id => ca.id) do %>
-                      <i class="btn btn-primary glyphicon glyphicon-ok"></i>
-                    <% end %>
-                  <% end %>
         				<% end %>
+              </td>
+              <td>
+                <%= ca.subject %>
+              </td>
+              <td>
+                <%= ca.channel + " " + ca.channel_detail %>
               </td>
               <td>
               <% @user2 = User.find(ca.user_id2) %>
@@ -129,9 +142,10 @@
                   </anzeigetext>
                   <ntext><%= @user2.address2 %></ntext>
                 </td>
-              <td><%= ca.date_from.strftime("%d.%m.%Y")+"  "+ca.time_from.to_s+" Uhr"%></td>
-              <td><%= ca.date_to.strftime("%d.%m.%Y")+"  "+ca.time_to.to_s+" Uhr"%></td>
-              <td><%= ca.status %></td>
+              <td>
+                <%= ca.app_date.strftime("%d.%m.%Y") %><br>
+                <%= ca.time_from.to_s+"-"+ca.time_to.to_s+" Uhr"%>
+              </td>
             </tr>
           <% end %>
         </body>

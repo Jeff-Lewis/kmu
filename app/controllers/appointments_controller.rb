@@ -1,6 +1,6 @@
 class AppointmentsController < ApplicationController
   before_action :set_appointment, only: [:show, :edit, :update, :destroy]
-  permits :channel, :status, :active, :subject, :user_id1, :user_id2, :date_from, :date_to, :time_from, :time_to, :reminder
+  permits :channel, :channel_detail, :status, :active, :subject, :user_id1, :user_id2, :app_date, :time_from, :time_to, :reminder
 
   # GET /appointments
   def index
@@ -29,20 +29,21 @@ class AppointmentsController < ApplicationController
       end
     end
     if params[:confirm_id]
-      @appointment = Appointment.find(params[:confirm_id])
-      if @appointment
-        @appointment.status = "bestaetigt"
-        @appointment.save
+      @appoint = Appointment.find(params[:confirm_id])
+      if @appoint
+        @appoint.status = "bestaetigt"
+        @appoint.save
       end
     end
-    if params[:delete_id]
-      @appointment = Appointment.find(params[:delete_id])
-      if @appointment
-        @appointment.destroy
+    if params[:deny_id]
+      @appoint = Appointment.find(params[:deny_id])
+      if @appoint
+        @appoint.status = "geht leider nicht"
+        @appoint.save
       end
     end
     @start = Date.commercial(session[:year],session[:cw],1)
-    @appointments = Appointment.search(params[:user_id1], session[:cw], session[:year]).order(date_from: :asc)
+    @appointments = Appointment.search(params[:user_id1], session[:cw], session[:year]).order(app_date: :asc)
     @appanz = @appointments.count
     @user = User.find(params[:user_id1])
     @subject = params[:subject]
@@ -58,17 +59,16 @@ class AppointmentsController < ApplicationController
     @appointment.user_id1 = params[:user_id1]
     @appointment.user_id2 = params[:user_id2]
     @appointment.subject = params[:subject]
-    @appointment.date_from = Date.today
-    @appointment.date_to = Date.today
-    @appointment.time_from = 8
-    @appointment.time_to = 12
+    @appointment.app_date = Date.today
+    @appointment.time_from = 9
+    @appointment.time_to = 10
     if @appointment.user_id1 == current_user.id
       @appointment.status = "nicht verfügbar"
     else
       @appointment.status = "angefragt"
     end
     @appointment.active = true
-    @appointment.channel = "Filiale"
+    @appointment.channel = "Geschäftstelle"
     @appointment.reminder = true
   end
 
@@ -88,6 +88,8 @@ class AppointmentsController < ApplicationController
 
   # PUT /appointments/1
   def update(appointment)
+    @appointment.subject = @appointment.subject + params[:time_from].to_s
+    puts params[:time_to]
     if @appointment.update(appointment)
       redirect_to appointments_path(:user_id1 => @appointment.user_id1, :subject => @appointment.subject), notice: 'Appointment was successfully updated.'
     else
@@ -107,6 +109,6 @@ class AppointmentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_appointment(id)
       @appointment = Appointment.find(id)
-      @appointment.date_to = @appointment.date_from
+      #@appointment.date_to = @appointment.date_from
     end
 end

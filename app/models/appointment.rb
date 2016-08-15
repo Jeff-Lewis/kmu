@@ -5,21 +5,23 @@ class Appointment < ActiveRecord::Base
     validates_inclusion_of :time_to, :in => 1..24
 
     def valid_dates?
-      self.date_to = self.date_from
-      if date_from.to_date.is_a?(Date) and date_to.to_date.is_a?(Date)
-        if date_from <= date_to
-          if time_from < time_to
-            return true
+      if app_date.is_a?(Date)
+        if app_date >= Date.today
+          if time_from >= time_to
+            errors.add(:time_to, "invalid time")
           end
+        else
+          errors.add(:date_from, "date in past")
         end
+      else
+        errors.add(:date_from, "invalid date")
       end
-      errors.add(:Date_from, "invalid date or time")
     end
 
   def self.search(user_id1, cw, year)
     start_date = Date.commercial(year,cw,1)
     end_date = Date.commercial(year,cw,7)
-    where('user_id1=? and active=? and ((date_from>=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', user_id1, true, start_date, end_date, start_date, end_date, start_date, end_date)
+    where('user_id1=? and active=? and app_date>=? and app_date<=?', user_id1, true, start_date, end_date)
   end 
 
 end

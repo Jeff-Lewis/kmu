@@ -27,11 +27,11 @@ ActiveRecord::Schema.define(version: 20160810055842) do
     t.string   "subject"
     t.integer  "user_id1"
     t.integer  "user_id2"
-    t.date     "date_from"
-    t.date     "date_to"
+    t.date     "app_date"
     t.integer  "time_from"
     t.integer  "time_to"
     t.string   "channel"
+    t.string   "channel_detail"
     t.boolean  "reminder"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
