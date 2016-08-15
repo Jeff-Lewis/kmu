@@ -27,7 +27,7 @@ module AppointmentsHelper
             for tag in 0..anz_tage-1
                 if c.app_date.to_date == (start+tag).to_date
                     for stunde in 0..anz_stunden
-                        if (stunde+start_stunde) >= c.time_from and (stunde+start_stunde) <= c.time_to
+                        if (stunde+start_stunde) >= c.time_from and (stunde+start_stunde) < c.time_to
                             array[stunde][tag] = Hash.new
                             array[stunde][tag] = {"key" => c.id, "status" => c.status, "channel" => c.channel}
                         end
