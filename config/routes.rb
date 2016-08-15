@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :service_documents
   resources :appointments
   resources :advisors
   resources :partner_links

@@ -106,6 +106,61 @@
     </div>
     <br>
 
+  <% if $activeapps.include?("Dokumente") or true %>
+  <div class="row">
+    <div class="col-md-12">
+        <div class="panel-heading header">
+          <li_header>
+            <% if user_signed_in? %>
+              <% if (@service.user_id != nil and current_user.id == @service.user_id) or (@service.company.user_id != nil and current_user.id == @service.company.user_id) %>
+                <%= link_to new_service_document_path :service_id => @service.id do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+                <% end %>
+              <% end %>
+            <% end %>
+            SERVICE DOKUMENTE
+          </li_header>
+        </div>
+        <div class="panel-body">
+          <% @service.service_documents.each do |sd| %>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="thumbnail" align="center">
+                <% if sd.avatar != nil %>
+                  <%= image_tag sd.avatar(:medium), class:"img-rounded" %>
+                <% else %>
+                  <%= image_tag("service_a.png", :size => "200x200" , class:"img-rounded") %>
+                <% end %>
+                <br>
+                <anzeigetext>
+                <%= sd.name %><br>
+                </anzeigetext>
+                <ntext>
+                <%= sd.description %>
+                <br><br>
+                </ntext>
+      	        <%= link_to sd.document.url, target: "_blank" do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-cloud-download"></i>
+                <% end %>
+                <% if user_signed_in? %>
+                  <% if (sd.service.user_id != nil and current_user.id == sd.service.user_id) or (sd.service.company.user_id != nil and current_user.id == sd.service.company.user_id) %>
+          	        <%= link_to edit_service_document_path(sd) do %>
+                      <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                    <% end %>
+          	        <%= link_to sd, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                      <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                    <% end %>
+                  <% end %>
+                <% end %>
+                <br><br>
+              </div>
+            </div>
+  				<% end %>
+        </div>
+    </div>
+  </div>
+  <br>
+  <% end %>          
+
   <% if $activeapps.include?("Kundenberater") %>
   <div class="row">
     <div class="col-md-12">

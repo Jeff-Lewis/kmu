@@ -1,0 +1,62 @@
+<div class="container-fluid">
+  <%= form_for @service_document, html: {multipart: true}  do |f| %>
+     <div class="row">
+        <div class="col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-heading header">
+                <li_header>
+                <%= link_to @service_document.service do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+                <% end %>
+                  DOKUMENTE SERVICE <%= @service_document.service.name %>
+                </li_header>
+                </div>
+                <div class="panel-body">
+                  <% if @service_document.errors.any? %>
+                    <div id="error_explanation">
+                      <h2><%= pluralize(@service_document.errors.count, "error") %> prohibited this document from being saved:</h2>
+                      <ul>
+                        <% @service_document.errors.full_messages.each do |message| %>
+                          <li><%= message %></li>
+                        <% end %>
+                      </ul>
+                    </div>
+                  <% end %>
+                  <div class="form-group">
+                    <%= f.label "Bezeichnung" %><br/>
+                    <%= f.text_field :name, autofocus: true, class:"form-control"%>
+                  </div>
+                  <div class="form-group">
+                    <%= f.label "Beschreibung" %><br/>
+                    <%= f.text_area :description, rows: 5, class:"form-control"%>
+                  </div>
+                  <div class="form-group">
+                     <%= f.label "Photo" %><br/>
+                     <%= image_tag @service_document.avatar.url(:big) %>
+                  </div>
+                  <div class="form-group">
+                     <%= f.file_field :avatar, class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                     <%= f.label "Dokument " + @service_document.document_file_name.to_s %><br/>
+                  </div>
+                  <div class="form-group">
+                     <%= f.file_field :document, class:"form-control" %>
+                  </div>
+                  <div>
+                      <%= f.hidden_field :service_id, class:"form-control" %>
+                  </div>
+                </div>
+            </div>
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-md-6">
+            <div class="actions">
+              <%= f.submit "Speichern", class:"btn btn-primary btn-lg"%>
+            </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

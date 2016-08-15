@@ -147,7 +147,18 @@ services = Service.create({status:"ok", active:true, company_id:4, parent_id:0, 
 services = Service.create({status:"ok", active:true, company_id:4, parent_id:0, stype:"regular", name:"Vorsorgen", social:false,avatar:File.open(path+'vorsorgen.jpg', 'rb')})
 services = Service.create({status:"ok", active:true, company_id:4, parent_id:0, stype:"regular", name:"Erben", social:false,avatar:File.open(path+'erbschaft.jpg', 'rb')})
 services = Service.create({status:"ok", active:true, company_id:4, parent_id:0, stype:"regular", name:"Steuern", social:false,avatar:File.open(path+'steuern.jpg', 'rb')})
+services = Service.create({status:"ok", active:true, company_id:4, parent_id:0, stype:"regular", name:"Kinder und Jugendliche", social:false,avatar:File.open(path+'young.jpg', 'rb')})
 services = Service.create({status:"ok", active:true, company_id:5, parent_id:0, stype:"regular", name:"Maschinen Luftdruck", social:false, avatar:File.open(path+'luftdruck.jpg', 'rb')})
+
+path2 = Rails.root.to_s + "/app/assets/images/sample_pdfs/"
+servicedocs = ServiceDocument.create({service_id:7, name:"Finanzplanung allgm.", avatar:File.open(path2+'anlegen.jpg', 'rb'), document:File.open(path2+'anlegen.pdf', 'rb')})
+servicedocs = ServiceDocument.create({service_id:7, name:"Finanzplanung", avatar:File.open(path2+'anlegen.jpg', 'rb'), document:File.open(path2+'finanzplanung.pdf', 'rb')})
+servicedocs = ServiceDocument.create({service_id:10, name:"Erbschaft", avatar:File.open(path2+'erben.jpg', 'rb'), document:File.open(path2+'erbschaft.pdf', 'rb')})
+servicedocs = ServiceDocument.create({service_id:10, name:"Erbrecht", avatar:File.open(path2+'erben.jpg', 'rb'), document:File.open(path2+'erbrecht.pdf', 'rb')})
+servicedocs = ServiceDocument.create({service_id:11, name:"Steuerberatung", avatar:File.open(path2+'steuerberatung.jpg', 'rb'), document:File.open(path2+'steuerberatung.pdf', 'rb')})
+servicedocs = ServiceDocument.create({service_id:11, name:"Steuern", avatar:File.open(path2+'steuerberatung.jpg', 'rb'), document:File.open(path2+'steuern.pdf', 'rb')})
+servicedocs = ServiceDocument.create({service_id:12, name:"Kids Club", avatar:File.open(path2+'young.jpg', 'rb'), document:File.open(path2+'kids.pdf', 'rb')})
+servicedocs = ServiceDocument.create({service_id:12, name:"Blockbuster", avatar:File.open(path2+'young.jpg', 'rb'), document:File.open(path2+'kids2.pdf', 'rb')})
 
 advisors = Advisor.create({user_id:1, service_id:8, grade:"Senior Berater"})
 advisors = Advisor.create({user_id:2, service_id:8, grade:"Senior Berater"})
@@ -167,10 +178,10 @@ advisors = Advisor.create({user_id:11, service_id:9, grade:"Berater"})
 
 appointments = Appointment.create({user_id1:1, user_id2:12, subject:"Finanzieren", active:true, status:"angefragt", app_date:Date.today, time_from:8, time_to:10, channel:"Geschäftsstelle", channel_detail:""})
 appointments = Appointment.create({user_id1:1, user_id2:11, subject:"Finanzieren", active:true, status:"angefragt", app_date:Date.today, time_from:12, time_to:13, channel:"Geschäftsstelle", channel_detail:""})
-appointments = Appointment.create({user_id1:1, user_id2:10, subject:"Finanzieren", active:true, status:"angefragt", app_date:Date.today+1, time_from:8, time_to:10, channel:"Geschäftsstelle", channel_detail:""})
-appointments = Appointment.create({user_id1:1, user_id2:9, subject:"Finanzieren", active:true, status:"angefragt", app_date:Date.today+1, time_from:9, time_to:10, channel:"Geschäftsstelle", channel_detail:""})
-appointments = Appointment.create({user_id1:1, user_id2:8, subject:"Finanzieren", active:true, status:"angefragt", app_date:Date.today+2, time_from:15, time_to:18, channel:"Geschäftsstelle", channel_detail:""})
-appointments = Appointment.create({user_id1:1, user_id2:7, subject:"Finanzieren", active:true, status:"angefragt", app_date:Date.today+3, time_from:7, time_to:8, channel:"Geschäftsstelle", channel_detail:""})
+appointments = Appointment.create({user_id1:2, user_id2:10, subject:"Finanzieren", active:true, status:"angefragt", app_date:Date.today+1, time_from:8, time_to:10, channel:"Geschäftsstelle", channel_detail:""})
+appointments = Appointment.create({user_id1:2, user_id2:9, subject:"Finanzieren", active:true, status:"angefragt", app_date:Date.today+1, time_from:9, time_to:10, channel:"Geschäftsstelle", channel_detail:""})
+appointments = Appointment.create({user_id1:3, user_id2:8, subject:"Finanzieren", active:true, status:"angefragt", app_date:Date.today+2, time_from:15, time_to:18, channel:"Geschäftsstelle", channel_detail:""})
+appointments = Appointment.create({user_id1:3, user_id2:7, subject:"Finanzieren", active:true, status:"angefragt", app_date:Date.today+3, time_from:7, time_to:8, channel:"Geschäftsstelle", channel_detail:""})
 
 services = Service.create({status:"ok", active:true, company_id:1, parent_id:0, stype:"action", name:"Fischbuffet zum halben Preis", date_from:DateTime.now, date_to:DateTime.now, avatar:File.open(path+'fischbuffet.jpg', 'rb')})
 services = Service.create({status:"ok", active:true, company_id:11, parent_id:0, stype:"action", name:"Gesichtsbehandlung 50% Rabatt", date_from:DateTime.now, date_to:DateTime.now, avatar:File.open(path+'gesicht.jpg', 'rb')})

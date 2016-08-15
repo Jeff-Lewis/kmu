@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160810055842) do
+ActiveRecord::Schema.define(version: 20160815072025) do
 
   create_table "advisors", force: :cascade do |t|
     t.integer  "service_id"
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20160810055842) do
     t.string   "channel"
     t.string   "channel_detail"
     t.boolean  "reminder"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "appparams", force: :cascade do |t|
@@ -406,6 +406,22 @@ ActiveRecord::Schema.define(version: 20160810055842) do
     t.integer  "counter"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+  end
+
+  create_table "service_documents", force: :cascade do |t|
+    t.integer  "service_id"
+    t.string   "name"
+    t.text     "description"
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "services", force: :cascade do |t|
