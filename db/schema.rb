@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160815072025) do
+ActiveRecord::Schema.define(version: 20160815182230) do
 
   create_table "advisors", force: :cascade do |t|
     t.integer  "service_id"
@@ -19,6 +19,18 @@ ActiveRecord::Schema.define(version: 20160815072025) do
     t.string   "grade"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "appointment_documents", force: :cascade do |t|
+    t.integer  "appointment_id"
+    t.string   "name"
+    t.text     "description"
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "appointments", force: :cascade do |t|

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :appointment_documents
   resources :service_documents
   resources :appointments
   resources :advisors

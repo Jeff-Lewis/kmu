@@ -66,7 +66,7 @@
           <tr>
             <th>Status</th>
             <th>Betreff</th>
-            <th>Art</th>
+            <th colspan=2>Dokumente</th>
             <th colspan=2>gebucht von</th>
             <th>Datum/Uhrzeit</th>
           </tr>
@@ -123,11 +123,29 @@
         				<% end %>
               </td>
               <td>
+                <%= ca.channel + " " + ca.channel_detail %><br>
                 <%= ca.subject %>
               </td>
-              <td>
-                <%= ca.channel + " " + ca.channel_detail %>
-              </td>
+    				    <% if ca.user_id1 == current_user.id or ca.user_id2 == current_user.id %>
+    				      <td>
+                  <%= link_to new_appointment_document_path(:appointment_id => ca.id) do %>
+                    <i class="btn btn-primary btn-xs glyphicon glyphicon-cloud-upload"></i><br>
+                  <% end %>
+                  </td>
+                  <td>
+                  <% ca.appointment_documents.each do |ad| %>
+          	        <%= link_to ad.document.url, target: "_blank" do %>
+                      <i class="btn btn-primary btn-xs glyphicon glyphicon-cloud-download"></i>
+                    <% end %>
+    				        <%= link_to ad, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                      <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
+                    <% end %>
+                    <%= ad.name %><br>  
+                  <% end %>
+                  </td>
+                <% else %>
+                  <td></td><td></td>
+                <% end %>
               <td>
               <% @user2 = User.find(ca.user_id2) %>
               <% if @user2.avatar_file_name %>

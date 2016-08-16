@@ -1,4 +1,6 @@
 class Appointment < ActiveRecord::Base
+  
+    has_many :appointment_documents
     
     validate :valid_dates?
     validates_inclusion_of :time_from, :in => 1..24
