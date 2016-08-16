@@ -38,7 +38,7 @@ class AppointmentsController < ApplicationController
     if params[:deny_id]
       @appoint = Appointment.find(params[:deny_id])
       if @appoint
-        @appoint.status = "geht leider nicht"
+        @appoint.status = "leider nicht möglich"
         @appoint.save
       end
     end
