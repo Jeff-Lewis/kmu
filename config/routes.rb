@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   get 'offer/index'
   get 'home/index2'
   get 'home/index3'
+  get 'home/index4'
   
   resources :webmasters
   resources :bid_details

@@ -29,4 +29,7 @@ def index3
      end
 end
 
+def index4
+end
+
 end

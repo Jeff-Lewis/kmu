@@ -1,0 +1,43 @@
+<div class="container-fluid">
+  
+  <div id="flip">Click to slide the panel down or up</div>
+  <div id="panel">Hello world!</div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12">
+        <div id="map"></div>
+      </div>
+    </div>
+    <br>
+  </div>
+  
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<script>
+$(document).ready(function(){
+    $("#flip").hover(function(){
+        $("#map").fadeOut(5000);
+    });
+    $("#flip").mouseleave(function(){
+        $("#map").fadeIn(5000);
+    });
+});
+</script>
+
+<script>
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers(<%=raw @hash.to_json %>);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+});
+</script>
