@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160815182230) do
+ActiveRecord::Schema.define(version: 20160816145418) do
 
   create_table "advisors", force: :cascade do |t|
     t.integer  "service_id"
@@ -198,6 +198,17 @@ ActiveRecord::Schema.define(version: 20160815182230) do
     t.string   "stichworte"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "emails", force: :cascade do |t|
+    t.string   "header"
+    t.text     "body"
+    t.integer  "m_from"
+    t.integer  "m_to"
+    t.string   "status"
+    t.string   "back_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "ev_categories", force: :cascade do |t|

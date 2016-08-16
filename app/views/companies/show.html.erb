@@ -93,7 +93,15 @@
         <b>Branche</b>
         <%= @company.category.name %>
         <br>
-        <cite><%= @company.created_at.strftime("%d.%m.%Y") %></cite>
+        <cite><%= @company.created_at.strftime("%d.%m.%Y") %></cite><br>
+        <% if user_signed_in? %>
+	        <%= link_to new_email_path :m_from_id => current_user.id, :m_to_id => @company.user.id, :header => @company.name, :back_url => request.original_url do %>
+            <i class="btn btn-default glyphicon glyphicon-envelope"></i>
+          <% end %>
+        <% else %>
+            <i class="glyphicon glyphicon-envelope"></i>
+        <% end %>
+        <%= @company.user.email %><br>
       </div>
     </div>
   </div>
@@ -739,50 +747,6 @@
     </div>
   </div>
   <br>
-  
-  <div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-            KONTAKT
-        </li_header>
-      </div>
-      <div class="panel-body">
-				<% if @company.user.avatar_file_name == nil %>
-          <%= image_tag("user_a.png", :size => "50x50", class:"img-rounded" ) %>
-        <% else %>
-          <%= image_tag @company.user.avatar(:small), class:"img-rounded"  %>
-        <% end %>
-        <%= form_tag companies_path, :method => "get" do %>
-          <div class="form-group">
-            <% if @company.user.phone1 == "" %>
-              <i class="glyphicon glyphicon-phone"></i>
-              <%= @company.user.phone1 %><br>
-            <% end %>
-            <% if @company.user.phone2 == "" %>
-            <i class="glyphicon glyphicon-phone"></i>
-              <%= @company.user.phone2 %><br>
-            <% end %>
-            <i class="glyphicon glyphicon-envelope"></i>
-            <%= @company.user.email %><br>
-          </div>
-          <div class="form-group">
-            <%= label_tag "Betreff" %>
-            <%= text_field_tag :header, @company.name, class:"form-control" %>
-          </div>
-          <div class="form-group">
-            <%= label_tag "Nachricht" %>
-            <%= text_area_tag :body, params[:body], rows: 5, class:"form-control" %>
-          </div>
-          <div class="form-group">
-            <%= submit_tag "Senden", :name => nil, class:"btn btn-primary btn-lg" %>
-          </div>
-        <% end %>
-        </p>
-      </div>
-    </div>
-  </div>
-
 </div>
 
 <script>

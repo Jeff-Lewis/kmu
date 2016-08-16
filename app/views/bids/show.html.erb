@@ -42,12 +42,14 @@
     			<%= @bid.description %>
           <br><br>
           <b>ausgeschrieben von:</b><br>
-          <% if !@bid.user.avatar_file_name %>
-            <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
-          <% else %>
-            <%= image_tag @bid.user.avatar(:thumb), class:"img-rounded" %>
-          <% end %><br>
-          <%= @bid.user.name + " " + @bid.user.lastname %>
+          <%= link_to @bid.user do %>
+            <% if !@bid.user.avatar_file_name %>
+              <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
+            <% else %>
+              <%= image_tag @bid.user.avatar(:thumb), class:"img-rounded" %>
+            <% end %><br>
+            <%= @bid.user.name + " " + @bid.user.lastname %>
+          <% end %>
     			<br><br>
           <%= @bid.created_at.strftime("%d.%m.%Y") %>
         </div>
@@ -231,50 +233,6 @@
     </div>
   </div>
   <br>
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-            KONTAKT
-        </li_header>
-      </div>
-    </div>
-    <div class="col-md-12">
-      <div class="panel-body">
-        <%= form_tag bid_path, :method => "get" do %>
-            <div class="form-group">
-              <% if !@bid.user.anonymous %>
-                  <% if @bid.user.phone1 == "" %>
-                    <i class="glyphicon glyphicon-phone"></i>
-                    <%= @bid.user.phone1 %><br>
-                  <% end %>
-                  <% if @bid.user.phone2 == "" %>
-                  <i class="glyphicon glyphicon-phone"></i>
-                    <%= @bid.user.phone2 %><br>
-                  <% end %>
-                  <i class="glyphicon glyphicon-envelope"></i>
-                  <%= @bid.user.email %><br>
-              <% else %>
-                ***
-              <% end %>
-            </div>
-            <div class="form-group">
-              <%= label_tag "Betreff" %>
-              <%= text_field_tag :header, @bid.name, class:"form-control" %>
-            </div>
-            <div class="form-group">
-              <%= label_tag "Nachricht" %>
-              <%= text_area_tag :body, params[:body], rows: 5, class:"form-control" %>
-            </div>
-            <div class="form-group">
-              <%= submit_tag "Senden", :name => nil, class:"btn btn-primary btn-lg" %>
-            </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
 </div>
 
 <script>

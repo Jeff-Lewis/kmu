@@ -62,20 +62,24 @@
           <br>
           <b>vermietet von</b><br>
           <% if @vehicle.user_id != nil %>
-    				<% if @vehicle.user.avatar_file_name == nil %>
-              <%= image_tag("user_a.png", :size => "100x100", class:"img-rounded" ) %>
-            <% else %>
-              <%= image_tag @vehicle.user.avatar(:thumb), class:"img-rounded"  %>
+            <%= link_to @vehicle.user do %>
+      				<% if @vehicle.user.avatar_file_name == nil %>
+                <%= image_tag("user_a.png", :size => "100x100", class:"img-rounded" ) %>
+              <% else %>
+                <%= image_tag @vehicle.user.avatar(:thumb), class:"img-rounded"  %>
+              <% end %>
+              <%= @vehicle.user.name + " " + @vehicle.user.lastname %>
             <% end %>
-            <%= @vehicle.user.name + " " + @vehicle.user.lastname %>
           <% end %>
           <% if @vehicle.company_id != nil %>
-    				<% if @vehicle.company.avatar_file_name == nil %>
-              <%= image_tag("user_a.png", :size => "100x100", class:"img-rounded" ) %>
-            <% else %>
-              <%= image_tag @vehicle.company.avatar(:thumb), class:"img-rounded"  %>
+            <%= link_to @vehicle.company do %>
+      				<% if @vehicle.company.avatar_file_name == nil %>
+                <%= image_tag("user_a.png", :size => "100x100", class:"img-rounded" ) %>
+              <% else %>
+                <%= image_tag @vehicle.company.avatar(:thumb), class:"img-rounded"  %>
+              <% end %>
+              <%= @vehicle.company.name %>
             <% end %>
-            <%= @vehicle.company.name %>
           <% end %>
           <br><br>
           <cite> <%= @vehicle.created_at.strftime("%d.%m.%Y") %></cite>        
@@ -148,62 +152,6 @@
     </div>
   </div>
   <br>
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-            KONTAKT
-        </li_header>
-      </div>
-    </div>
-    <div class="col-md-12">
-      <div class="panel-body">
-        <%= form_tag request_path, :method => "get" do %>
-          <% if @vehicle.user_id != nil %>
-            <div class="form-group">
-              <% if @vehicle.user.phone1 == "" %>
-                <i class="glyphicon glyphicon-phone"></i>
-                <%= @vehicle.user.phone1 %><br>
-              <% end %>
-              <% if @vehicle.user.phone2 == "" %>
-              <i class="glyphicon glyphicon-phone"></i>
-                <%= @vehicle.user.phone2 %><br>
-              <% end %>
-              <i class="glyphicon glyphicon-envelope"></i>
-              <%= @vehicle.user.email %><br>
-            </div>
-          <% end %>
-          <% if @vehicle.company_id != nil %>
-            <div class="form-group">
-              <% if @vehicle.company.user.phone1 == "" %>
-                <i class="glyphicon glyphicon-phone"></i>
-                <%= @vehicle.company.user.phone1 %><br>
-              <% end %>
-              <% if @vehicle.company.user.phone2 == "" %>
-              <i class="glyphicon glyphicon-phone"></i>
-                <%= @vehicle.company.user.phone2 %><br>
-              <% end %>
-              <i class="glyphicon glyphicon-envelope"></i>
-              <%= @vehicle.company.user.email %><br>
-            </div>
-          <% end %>
-          <div class="form-group">
-            <%= label_tag "Betreff" %>
-            <%= text_field_tag :header, @vehicle.name, class:"form-control" %>
-          </div>
-          <div class="form-group">
-            <%= label_tag "Nachricht" %>
-            <%= text_area_tag :body, params[:body], rows: 5, class:"form-control" %>
-          </div>
-          <div class="form-group">
-            <%= submit_tag "Senden", :name => nil, class:"btn btn-primary btn-lg" %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
 </div>
 
 <script>
