@@ -1,43 +1,32 @@
 <div class="container-fluid">
+
+  <h2>Cards</h2>
   
-  <div id="flip">Click to slide the panel down or up</div>
-  <div id="panel">Hello world!</div>
-  <div class="panel-body">
-    <div class="row">
-      <div class="col-xs-12">
-        <div id="map"></div>
+  <% @users = User.all %>
+  <% @users.each do |u| %>
+    <div class="card">
+      <%= image_tag u.avatar, :width => "50", :height => "50" %>
+      <div class="container">
+        <h4><b><%= u.name + " " + u.lastname %></b></h4>
+        <p>Architect & Engineer dsjhgfjd gfjhdaj gdfjhg jdfg ljdfgjlhdf ghlfkjg dfhj jdhsgfjksdg jfdsgjfhg dsjhfg jsds  ddds dsg </p>
       </div>
     </div>
-    <br>
-  </div>
-  
+  <% end %>
+
 </div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
+<style>
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 40%;
+}
 
-<script>
-$(document).ready(function(){
-    $("#flip").hover(function(){
-        $("#map").fadeOut(5000);
-    });
-    $("#flip").mouseleave(function(){
-        $("#map").fadeIn(5000);
-    });
-});
-</script>
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
 
-<script>
-    handler = Gmaps.build('Google');
-    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-      markers = handler.addMarkers(<%=raw @hash.to_json %>);
-      handler.bounds.extendWith(markers);
-      handler.fitMapToBounds();
-});
-</script>
+.container {
+    padding: 2px 16px;
+}
+</style>

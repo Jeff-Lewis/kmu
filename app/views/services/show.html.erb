@@ -167,11 +167,13 @@
         <div class="panel-heading header">
           <li_header>
             <% if user_signed_in? %>
-              <%= link_to users_path do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+              <% if (@service.user_id != nil and current_user.id == @service.user_id) or (@service.company.user_id != nil and current_user.id == @service.company.user_id) %>
+                <%= link_to advisors_path :service_id => @service.id do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+                <% end %>
               <% end %>
             <% end %>
-            Kundenberater
+            KUNDENBERATER
           </li_header>
         </div>
         <div class="panel-body">
