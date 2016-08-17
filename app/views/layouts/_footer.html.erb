@@ -9,9 +9,12 @@
             <footer_text>
                 <%= link_to "Über uns", url_with_protocol("xConnect_ueber_uns.html"), :target => '_blank' %><br>
                 <%= link_to "Rechtliches & Impressum", url_with_protocol("xConnect_rechtliches_und.impressum"), :target => '_blank' %><br>
-                <%= link_to "Anmelden", new_user_session_path %><br>
-                <%= link_to "Abmelden", destroy_user_session_path, method: :delete %><br>
-                <%= link_to "Registrieren", new_user_registration_path %>
+                <% if !user_signed_in? %>
+                    <%= link_to "Anmelden", new_user_session_path %><br>
+                    <%= link_to "Registrieren", new_user_registration_path %><br>
+                <% else %>
+                    <%= link_to "Abmelden", destroy_user_session_path, method: :delete %><br>
+                <% end %>
             </footer_text>
         </div>
         

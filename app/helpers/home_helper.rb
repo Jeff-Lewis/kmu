@@ -3,47 +3,58 @@ module HomeHelper
 def carousel(scope, size)
 
     html = ""
-    html = html +  "<div id='carousel-example-generic' class='carousel slide' data-ride='carousel'>"
     
-        html = html + "<ol class='carousel-indicators'>"
-          scope.each do |p|
-          	if p.avatar_file_name != nil
-                html = html + "<li data-target='#carousel-example-generic' data-slide-to='" + p.id.to_s + "' class='active'>"
-            end
-          end
-        html = html + "</ol>"
-        
-        html = html + "<div class='carousel-inner' role='listbox'>"
-            first = true
-            scope.each do |p|
-              if first
-                 html = html + "<div class='item active'>"
-                 first = false
-              else
-                 html = html + "<div class='item'>"
-              end
-      	      if p.avatar_file_name != nil
-      	        case size
-      	            when "big"
-                        html = html + (image_tag p.avatar(:big), class:"img-rounded")
-                    when "medium"
-                        html = html + (image_tag p.avatar(:medium), class:"img-rounded")
-                    when "thumb"
-                        html = html + (image_tag p.avatar(:thumb), class:"img-rounded")
-                    when "small"
-                        html = html + (image_tag p.avatar(:small), class:"img-rounded")
-                end
-                #html = html + "<div class='carousel-caption'>"
-                #    html = html + "<h1>" + p.name + "</h1>"
-                #html = html + "</div>"
-              end
-              html = html + "</div>"
-            end
-        html = html + "</div>"
+    if scope.count == 0
+      case size
+          when "big"
+            html = html + (image_tag "key.png", :size => "500x500", class:"img-rounded")
+        when "medium"
+            html = html + (image_tag "key.png", :size => "200x200", class:"img-rounded")
+        when "thumb"
+            html = html + (image_tag "key.png", :size => "100x100", class:"img-rounded")
+        when "small"
+            html = html + (image_tag "key.png", :size => "50x50", class:"img-rounded")
+      end
+      
+    else
 
-    html = html + "</div>"
+        html = html +  "<div id='carousel-example-generic' class='carousel slide' data-ride='carousel'>"
+        
+            html = html + "<ol class='carousel-indicators'>"
+              scope.each do |p|
+              	if p.avatar_file_name != nil
+                    html = html + "<li data-target='#carousel-example-generic' data-slide-to='" + p.id.to_s + "' class='active'>"
+                end
+              end
+            html = html + "</ol>"
+            
+            html = html + "<div class='carousel-inner' role='listbox'>"
+                first = true
+                scope.each do |p|
+                  if first
+                     html = html + "<div class='item active'>"
+                     first = false
+                  else
+                     html = html + "<div class='item'>"
+                  end
+          	      if p.avatar_file_name != nil
+          	        case size
+          	            when "big"
+                            html = html + (image_tag p.avatar(:big), class:"img-rounded")
+                        when "medium"
+                            html = html + (image_tag p.avatar(:medium), class:"img-rounded")
+                        when "thumb"
+                            html = html + (image_tag p.avatar(:thumb), class:"img-rounded")
+                        when "small"
+                            html = html + (image_tag p.avatar(:small), class:"img-rounded")
+                    end
+                  end
+                  html = html + "</div>"
+                end
+                html = html + "</div>"
+            html = html + "</div>"
+        end
                 
-    puts html
     return html.html_safe
 end
 
