@@ -13,6 +13,11 @@
             <% end %>
         </li_header>
 
+        <% if @user.advisors.count > 0 %>
+          <%= link_to "#kundenberater" do %>
+            <%= image_tag('kundenberater_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
         <% if @user.services.count > 0 %>
           <%= link_to "#service" do %>
             <%= image_tag('service_a.png', :size => "50x50") %>
@@ -124,6 +129,52 @@
   <br>
 
 <% if !@user.anonymous %>
+<% if $activeapps.include?("Kundenberater") %>
+<a id="Kundenberater">
+<div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <li_header>
+          <%= link_to appointments_path :user_id1 => @user.id do %>
+            <i class="btn btn-primary btn-lg glyphicon glyphicon-calendar"></i>
+          <% end %>
+            KUNDENBERATER
+        </li_header>
+        <%= link_to "#user" do %>
+          <%= image_tag('user_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
+      </div>
+      <div class="panel-body">
+      		<% @user.advisors.each do |us| %>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="thumbnail" align="center">
+                <anzeigetext>
+      						<%= us.service.name %>
+                </anzeigetext>
+                <% if us.service.avatar_file_name == nil %>
+                  <%= image_tag("service_a.png", :size => "200x200", class:"img-rounded" ) %>
+                <% else %>
+                  <%= image_tag us.service.avatar(:medium), class:"img-rounded"  %>
+                <% end %>
+                <p>
+                <ntext>
+    						<%= align_text(us.service.description) %>
+                </ntext>
+    						</p>
+                <br><br>
+      	        <%= link_to service_path(us.service) do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
+                <% end %>
+                <br><br>
+          		</div>
+        		</div>
+      		<% end %>
+      </div>
+      </div>
+    </div>
+  <br>
+<% end %>
+
 <% if $activeapps.include?("Services") %>
 <a id="service">
 <div class="row">

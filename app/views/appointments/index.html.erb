@@ -3,10 +3,12 @@
     <div class="col-md-12">
       <div class="panel-heading header">
         <li_header>
-        <% if @user.avatar_file_name %>
-          <%= image_tag @user.avatar(:small), class:"img-rounded" %>
-        <% else %>
-          <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
+        <%= link_to @user do %>
+          <% if @user.avatar_file_name %>
+            <%= image_tag @user.avatar(:small), class:"img-rounded" %>
+          <% else %>
+            <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
+          <% end %>
         <% end %>
         <%= @user.name + " " + @user.lastname %>
         <span class="badge"><%= @appanz %></span>

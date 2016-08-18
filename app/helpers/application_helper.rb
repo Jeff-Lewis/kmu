@@ -7,7 +7,7 @@ module ApplicationHelper
           # follow Tickets
           usertickets = UserTicket.where('user_id=? and (status=? or status=?)', current_user.id, "übergeben", "persönlich").last(3)
           usertickets.each do |ut|
-            	 ticker = ticker + " Sie haben von " + ut.ticket.sponsor.company.name + " ein Ticket " + ut.ticket.name + " für " + ut.ticket.sponsor.event.name + " erhalten... " 
+            	 ticker = ticker + "Ticket von " + ut.ticket.sponsor.company.name + " (" + ut.ticket.name + " " + ut.ticket.sponsor.event.name + ") erhalten... " 
           end
 
           # follow User
@@ -15,7 +15,7 @@ module ApplicationHelper
           favourits.each do |f|
              u=User.find(f.object_id)
              u.events.order(created_at: :desc).last(3).each do |ue|
-            	 ticker = ticker + " neue Veranstaltung " + ue.name + " von " + u.name + " " + u.lastname + " "
+            	 ticker = ticker + " neue Veranstaltung " + ue.name + " von " + u.name + " " + u.lastname + "..."
              end
           end
           
@@ -24,7 +24,7 @@ module ApplicationHelper
           favourits.each do |f|
              c=Company.find(f.object_id)
              c.events.order(created_at: :desc).last(3).each do |ce|
-            	 ticker = ticker + " neue Veranstaltung " + ce.name + " von " + c.name + " " 
+            	 ticker = ticker + " neue Veranstaltung " + ce.name + " von " + c.name + "..." 
              end
           end
           
@@ -37,12 +37,26 @@ module ApplicationHelper
                 	 spende = ds.company.name + " hat für " + d.name + " " + sprintf("%05.2f CHF",ds.amount) + " gespendet "
                  end
                  if ds.user_id != nil
-                	 spende = ds.user.name + " " + ds.user.lastname + " hat für " + d.name + " " + sprintf("%05.2f CHF",ds.amount) + " gespendet "
+                	 spende = ds.user.name + " " + ds.user.lastname + " hat für " + d.name + " " + sprintf("%05.2f CHF",ds.amount) + " gespendet..."
                  end
                  ticker = ticker + spende
              end
           end
-          
+
+          # follow Termin
+          appointments = Appointment.where('app_date=? AND (user_id1=? OR user_id2=?)', Date.today, current_user.id, current_user.id)
+          appointments.each do |a|
+           
+             if a.user_id1 == current_user.id
+                @user = User.find(a.user_id2)
+             else
+                @user = User.find(a.user_id1)
+             end
+             if @user
+               ticker = ticker + "Termin mit " + @user.name + " " + @user.lastname + " um " + a.time_from.to_s + " Uhr..."
+             end
+           
+          end
           return ticker
       end
     end
