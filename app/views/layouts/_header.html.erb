@@ -45,8 +45,8 @@
                   <li><%= link_to "Kleinanzeigen (Suchen)", requests_path(:rtype => "suche") if $activeapps.include?("Kleinanzeigen") %></li>
 	              <li><%= link_to "Kleinanzeigen (Anbieten)", requests_path(:rtype => "biete") if $activeapps.include?("Kleinanzeigen") %></li>
 				  <li class="divider">
-                  <li><%= link_to "Wer ist wo?", home_index3_path if $activeapps.include?("Wer ist wo") %></li>
-                  <li><%= link_to "Test", home_index4_path if $activeapps.include?("Wer ist wo") %></li>
+                  <li><% link_to "Wer ist wo?", home_index3_path if $activeapps.include?("Wer ist wo") %></li>
+                  <li><% link_to "Test", home_index4_path if $activeapps.include?("Wer ist wo") %></li>
 	    		</ul>
 			</li>
 			<% if $controller_list.include?(controller_name) and (action_name == "index") %>
@@ -74,6 +74,7 @@
 							<li><%= link_to "App Parameter", appparams_path  %></li>
 							<li><%= link_to "User Statistik", home_index2_path  %></li>
 					   <% end %>
+		               <li><%= link_to "Passwort ändern", edit_user_registration_path %></li>
 	                   <li><%= link_to "Abmelden", destroy_user_session_path, method: :delete %></li>
 	                <% else %>
 	                   <li><%= link_to "Anmelden", new_user_session_path %></li>

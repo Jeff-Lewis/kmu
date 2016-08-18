@@ -156,6 +156,26 @@
                 <% else %>
                   <%= image_tag us.service.avatar(:medium), class:"img-rounded"  %>
                 <% end %>
+                <br>
+                <ntext>angeboten von</ntext><br><br>
+                <% if us.service.user_id %>
+                  <%= link_to us.service.user do %>
+                    <% if us.service.user.avatar_file_name == nil %>
+                      <%= image_tag("user_a.png", :size => "50x50", class:"img-rounded" ) %>
+                    <% else %>
+                      <%= image_tag us.service.user.avatar(:thumb), class:"img-rounded"  %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+                <% if us.service.company_id %>
+                  <%= link_to us.service.company do %> 
+                    <% if us.service.company.avatar_file_name == nil %>
+                      <%= image_tag("company_a.png", :size => "50x50", class:"img-rounded" ) %>
+                    <% else %>
+                      <%= image_tag us.service.company.avatar(:thumb), class:"img-rounded"  %>
+                    <% end %>
+                  <% end %>
+                <% end %>
                 <p>
                 <ntext>
     						<%= align_text(us.service.description) %>

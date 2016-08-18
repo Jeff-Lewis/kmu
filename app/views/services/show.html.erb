@@ -180,10 +180,12 @@
           <% @service.advisors.each do |sa| %>
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
-                <% if sa.user.avatar != nil %>
-                  <%= image_tag sa.user.avatar, :size => 200, class:"img-rounded" %>
-                <% else %>
-                  <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
+                <%= link_to sa.user do %>
+                  <% if sa.user.avatar != nil %>
+                    <%= image_tag sa.user.avatar, :size => 200, class:"img-rounded" %>
+                  <% else %>
+                    <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
+                  <% end %>
                 <% end %>
                 <br>
                 <anzeigetext>
@@ -210,7 +212,7 @@
                 </ntext>
                 <% if user_signed_in? %>
                   <% if (sa.service.user_id != nil and current_user.id == sa.service.user_id) or (sa.service.company.user_id != nil and current_user.id == sa.service.company.user_id) %>
-          	        <%= link_to edit_advisor_path(sa) do %>
+          	        <% link_to edit_advisor_path(sa) do %>
                       <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
                     <% end %>
           	        <%= link_to sa, method: :delete, data: { confirm: 'Are you sure?' } do %>
