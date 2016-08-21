@@ -6,7 +6,7 @@
         <li_header>
             INSTITUTION <%= @company.name %>
         </li_header>
-
+        <br>
         <% if @company.services.count > 0 %>
           <%= link_to "#service" do %>
             <%= image_tag('service_a.png', :size => "50x50") %>
