@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'statement/index'
+
+  resources :transactions
+  resources :accounts
   resources :emails
   resources :appointment_documents
   resources :service_documents

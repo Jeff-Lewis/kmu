@@ -162,6 +162,22 @@
               <% end %>
               <% if user_signed_in? %>
                 <% if (ds.user_id != nil and current_user.id == ds.user_id) or (ds.company_id != nil and current_user.id == ds.company.user_id) %>
+                
+                  <% if ds.user_id != nil %>
+                    <% @company_id = ds.donation.company_id if ds.donation.company_id != nil %>
+                    <%= link_to new_transaction_path :ref => ds.donation.name, :object_name => "Donation", :object_id => ds.donation.id, :user_id => current_user.id, :user_id2 => nil, :company_id => @company_id, :amount => ds.amount do %>
+                      <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
+                    <% end %>
+                  <% end %>
+
+                  <% if ds.company_id != nil %>
+                    <% @company_id = ds.donation.company_id if ds.donation.company_id != nil %>
+                    <% @company_id2 = ds.company_id if ds.company_id != nil %>
+                    <%= link_to new_transaction_path :ref => ds.donation.name, :object_name => "Donation", :object_id => ds.donation.id, :user_id => nil, :user_id2 => nil, :company_id => @company_id, :company_id2 => @company_id2, :amount => ds.amount do %>
+                      <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
+                    <% end %>
+                  <% end %>
+                
         	        <%= link_to edit_donation_stat_path(ds) do %>
                     <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
                   <% end %>

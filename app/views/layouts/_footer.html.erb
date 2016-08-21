@@ -39,12 +39,5 @@
             <%= image_tag ('connect.jpg'), :size => "250x140" %>
         </div>
         
-        <div class="col-lg 12">
-            <br>
-            <% flash.each do |name, msg| %>
-              <% content_tag(:div, msg, class:"alert alert-warning") %>
-              <message><%= msg %></message> 
-            <% end %>
-        </div>
     </div>
 </footer>

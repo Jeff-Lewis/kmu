@@ -12,18 +12,7 @@
             <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
           <% end %>
           <% if user_signed_in? %>
-            <% if @vehicle.user_id != nil %>
-              <% if current_user.id == @vehicle.user.id %>
-      	        <%= link_to edit_vehicle_path(@vehicle) do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                <% end %>
-      	        <%= link_to @vehicle, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                  <i class="btn btn-danger btn-lg pull-right glyphicon glyphicon-trash"></i>
-                <% end %>
-              <% end %>
-            <% end %>
-            <% if @vehicle.company_id != nil %>
-              <% if current_user.id == @vehicle.company.user.id %>
+            <% if (@vehicle.user_id != nil and current_user.id == @vehicle.user.id) or (@vehicle.company_id != nil and current_user.id == @vehicle.company.user.id) %>
                 <%= link_to new_vehicle_path :user_id => current_user.id do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
                 <% end %>
@@ -33,7 +22,11 @@
       	        <%= link_to @vehicle, method: :delete, data: { confirm: 'Are you sure?' } do %>
                   <i class="btn btn-danger btn-lg pull-right glyphicon glyphicon-trash"></i>
                 <% end %>
-              <% end %>
+            <% end %>
+            <% @user_id2 = @vehicle.user_id if @vehicle.user_id != nil %>
+            <% @company_id = @vehicle.company.id if @vehicle.company_id != nil %>
+            <%= link_to new_transaction_path :ref => @vehicle.name, :object_name => "Vehicle", :object_id => @vehicle.id, :user_id => current_user.id, :user_id2 => @user_id2, :company_id => @company_id, :amount => @vehicle.price do %>
+              <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
             <% end %>
   	        <%= link_to new_webmaster_path :object_name => "Vehicle", :object_id => @vehicle.id, :user_id => current_user.id do %>
               <i class="btn btn-warning btn-lg pull-right glyphicon glyphicon-eye-open"></i>

@@ -50,6 +50,9 @@
                   <i class="btn btn-primary btn btn-lg glyphicon glyphicon-pencil"></i>
                 <% end %>
               <% else %>
+                <%= link_to accounts_path :customer_id => @customer.id do %>
+                  <i class="btn btn-primary btn btn-lg glyphicon glyphicon-book"></i>
+                <% end %>
                 <%= link_to edit_customer_path(@customer) do %>
                   <i class="btn btn-primary btn btn-lg glyphicon glyphicon-wrench"></i>
                 <% end %>

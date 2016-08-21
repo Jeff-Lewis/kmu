@@ -87,6 +87,9 @@ appparams = Appparam.create({name:"Sehenswürdigkeiten", description:"Lohnenswer
 appparams = Appparam.create({name:"Links", description:"Links der Partnerfirmen", active:true})
 appparams = Appparam.create({name:"Wer ist wo", description:"wer ist online", active:true})
 appparams = Appparam.create({name:"Kundenberater", description:"Kundenberater für Services", active:true})
+appparams = Appparam.create({name:"Kundenstatus", description:"Kundenstatus für Kunden von Partner", active:true})
+appparams = Appparam.create({name:"Accounts", description:"Konten für Kunden von Partner", active:true})
+appparams = Appparam.create({name:"Transaktionen", description:"Transaktionen", active:true})
 
 path = Rails.root.to_s + "/app/assets/images/sample_pics/"
 #create some users...

@@ -13,14 +13,21 @@
           <% end %>
           <% if user_signed_in? %>
   	        <%= link_to new_webmaster_path :object_name => "Request", :object_id => @request.id, :user_id => current_user.id do %>
-              <i class="btn btn-warning btn-lg glyphicon glyphicon-eye-open"></i>
+              <i class="btn btn-warning btn-lg glyphicon glyphicon-eye-open pull-right"></i>
             <% end %>
             <% if current_user.id == @request.user_id %>
     	        <%= link_to edit_request_path(@request) do %>
                 <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
               <% end %>
     	        <%= link_to @request, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                <i class="btn btn-danger btn-lg glyphicon glyphicon-trash pull-right"></i>
+              <% end %>
+            <% end %>
+            <% if @request.rtype == "biete" %>
+              <% @user_id = current_user.id %>
+              <% @user_id2 = @request.user_id %>
+              <%= link_to new_transaction_path :ref => @request.name, :object_name => "Request", :object_id => @request.id, :user_id => @user_id, :user_id2 => @user_id2, :company_id => nil, :company_id2 => nil, :amount => @request.price do %>
+                <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
               <% end %>
             <% end %>
           <% end %>

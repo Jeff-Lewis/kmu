@@ -334,6 +334,15 @@ input#email:focus {
    width: 100%;
  }
  
+ /* Bootstrap Css Map Fix*/
+#map-container #map-canvas img {
+  max-width: none;
+}
+/* Bootstrap Css Map Fix*/
+#map-container #map-canvas label {
+  width: auto; display:inline;
+}
+ 
 .digg_pagination {
   background: white;
   cursor: default;

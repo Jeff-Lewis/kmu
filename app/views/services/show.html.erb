@@ -22,26 +22,19 @@
               <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
             <% end %>
           <% end %>
-          <% if  user_signed_in? %>
-              <% if @service.user_id != nil %>
-                <% if @service.user_id == current_user.id %>
-        	        <%= link_to edit_service_path(@service) do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                  <% end %>
-        	        <%= link_to @service, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                    <i class="btn btn-danger btn-lg pull-right glyphicon glyphicon-trash"></i>
-                  <% end %>
+          <% if user_signed_in? %>
+              <% if (@service.user_id !=nil and @service.user_id == current_user.id) or (@service.company_id !=nil and @service.company.user.id == current_user.id) %>
+      	        <%= link_to edit_service_path(@service) do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                <% end %>
+      	        <%= link_to @service, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                  <i class="btn btn-danger btn-lg pull-right glyphicon glyphicon-trash"></i>
                 <% end %>
               <% end %>
-              <% if @service.company_id != nil %>
-                <% if @service.company.user_id == current_user.id %>
-                  <%= link_to edit_service_path(@service) do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                  <% end %>
-        	        <%= link_to @service, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                    <i class="btn btn-danger btn-lg pull-right glyphicon glyphicon-trash"></i>
-                  <% end %>
-                <% end %>
+              <% @user_id2 = @service.user_id if @service.user_id != nil %>
+              <% @company_id = @service.company.id if @service.company_id != nil %>
+              <%= link_to new_transaction_path :ref => @service.name, :object_name => "Service", :object_id => @service.id, :user_id => current_user.id, :user_id2 => @user_id2, :company_id => @company_id, :amount => @service.price_new do %>
+                <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
               <% end %>
     	        <%= link_to new_webmaster_path :object_name => "Service", :object_id => @service.id, :user_id => current_user.id do %>
                 <i class="btn btn-warning btn-lg pull-right glyphicon glyphicon-eye-open"></i>
@@ -112,7 +105,12 @@
         <div class="panel-heading header">
           <li_header>
             <% if user_signed_in? %>
-              <% if (@service.user_id != nil and current_user.id == @service.user_id) or (@service.company.user_id != nil and current_user.id == @service.company.user_id) %>
+              <% if @service.user_id != nil and current_user.id == @service.user_id %>
+                <%= link_to new_service_document_path :service_id => @service.id do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+                <% end %>
+              <% end %>
+              <% if @service.company_id != nil and current_user.id == @service.company.user_id %>
                 <%= link_to new_service_document_path :service_id => @service.id do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
                 <% end %>
@@ -167,7 +165,7 @@
         <div class="panel-heading header">
           <li_header>
             <% if user_signed_in? %>
-              <% if (@service.user_id != nil and current_user.id == @service.user_id) or (@service.company.user_id != nil and current_user.id == @service.company.user_id) %>
+              <% if (@service.user_id != nil and current_user.id == @service.user_id) or (@service.company_id != nil and current_user.id == @service.company.user_id) %>
                 <%= link_to advisors_path :service_id => @service.id do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
                 <% end %>
@@ -211,7 +209,15 @@
                 <% end %>
                 </ntext>
                 <% if user_signed_in? %>
-                  <% if (sa.service.user_id != nil and current_user.id == sa.service.user_id) or (sa.service.company.user_id != nil and current_user.id == sa.service.company.user_id) %>
+                  <% if sa.service.user_id != nil and current_user.id == sa.service.user_id %>
+          	        <% link_to edit_advisor_path(sa) do %>
+                      <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                    <% end %>
+          	        <%= link_to sa, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                      <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                    <% end %>
+                  <% end %>
+                  <% if sa.service.company.user_id != nil and current_user.id == sa.service.company.user_id %>
           	        <% link_to edit_advisor_path(sa) do %>
                       <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
                     <% end %>

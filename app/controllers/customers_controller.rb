@@ -1,6 +1,6 @@
 class CustomersController < ApplicationController
   before_action :set_customer, only: [:show, :edit, :update, :destroy]
-  permits :customer_number, :user_id, :company_id, :tickets, :newsletter
+  permits :customer_number, :partner_id, :user_id, :company_id, :tickets, :newsletter
 
   # GET /customers
   def index
@@ -17,6 +17,7 @@ class CustomersController < ApplicationController
     @customer = Customer.new
     @customer.user_id = params[:user_id]
     @customer.company_id = params[:company_id]
+    @customer.partner_id = params[:partner_id]
   end
 
   # GET /customers/1/edit
@@ -27,7 +28,11 @@ class CustomersController < ApplicationController
   def create(customer)
     @customer = Customer.new(customer)
     if @customer.save
-      redirect_to customers_path, notice: 'Customer was successfully created.'
+      if @customer.user 
+        redirect_to @customer.user, notice: 'Customer was successfully created.'
+      else
+        redirect_to @customer.company, notice: 'Customer was successfully created.'
+      end
     else
       render :new
     end
@@ -36,7 +41,11 @@ class CustomersController < ApplicationController
   # PUT /customers/1
   def update(customer)
     if @customer.update(customer)
-      redirect_to customers_path, notice: 'Customer was successfully updated.'
+      if @customer.user 
+        redirect_to @customer.user, notice: 'Customer was successfully updated.'
+      else
+        redirect_to @customer.company, notice: 'Customer was successfully updated.'
+      end
     else
       render :edit
     end
@@ -44,8 +53,13 @@ class CustomersController < ApplicationController
 
   # DELETE /customers/1
   def destroy
+    if @customer.user 
+      @item = @customer.user
+    else
+      @item = @customer.company
+    end
     @customer.destroy
-    redirect_to customers_path
+    redirect_to @item
   end
 
   private

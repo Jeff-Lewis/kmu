@@ -46,7 +46,7 @@
 	              <li><%= link_to "Kleinanzeigen (Anbieten)", requests_path(:rtype => "biete") if $activeapps.include?("Kleinanzeigen") %></li>
 				  <li class="divider">
                   <li><% link_to "Wer ist wo?", home_index3_path if $activeapps.include?("Wer ist wo") %></li>
-                  <li><% link_to "Test", home_index4_path if $activeapps.include?("Wer ist wo") %></li>
+                  <li><%= link_to "Test", home_index4_path if $activeapps.include?("Wer ist wo") %></li>
 	    		</ul>
 			</li>
 			<% if $controller_list.include?(controller_name) and (action_name == "index") %>
@@ -84,6 +84,10 @@
 			</li>
 		</ul>
 	</div>
+    <% flash.each do |name, msg| %>
+      <% content_tag(:div, msg, class:"alert alert-warning") %>
+      <message><%= msg %></message> 
+    <% end %>
 	<marquee height="100%" scrolldelay="150"><%= ticker() %></marquee>
 </nav>
 <br><br><br><br><br>

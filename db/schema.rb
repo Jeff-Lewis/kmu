@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816145418) do
+ActiveRecord::Schema.define(version: 20160819164300) do
+
+  create_table "accounts", force: :cascade do |t|
+    t.integer  "customer_id"
+    t.string   "name"
+    t.string   "iban"
+    t.boolean  "is_account_ver"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "advisors", force: :cascade do |t|
     t.integer  "service_id"
@@ -153,6 +162,7 @@ ActiveRecord::Schema.define(version: 20160816145418) do
   create_table "customers", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "company_id"
+    t.integer  "partner_id"
     t.string   "customer_number"
     t.boolean  "tickets"
     t.boolean  "newsletter"
@@ -499,6 +509,24 @@ ActiveRecord::Schema.define(version: 20160816145418) do
     t.integer  "contingent"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.integer  "account_ver"
+    t.integer  "account_bel"
+    t.date     "trx_date"
+    t.date     "valuta"
+    t.boolean  "status_ver"
+    t.boolean  "status_bel"
+    t.string   "status"
+    t.boolean  "active"
+    t.text     "text"
+    t.string   "ref"
+    t.decimal  "amount"
+    t.string   "object_name"
+    t.integer  "object_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "user_tickets", force: :cascade do |t|

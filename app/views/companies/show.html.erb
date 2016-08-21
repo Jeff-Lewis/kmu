@@ -7,11 +7,6 @@
             INSTITUTION <%= @company.name %>
         </li_header>
 
-        <% if @company.partner_links.count > 0 %>
-          <%= link_to "#link" do %>
-            <%= image_tag('link_a.png', :size => "50x50") %>
-          <% end %>
-        <% end %>
         <% if @company.services.count > 0 %>
           <%= link_to "#service" do %>
             <%= image_tag('service_a.png', :size => "50x50") %>
@@ -55,6 +50,21 @@
         <% if @company.user.favourits.count > 0 %>
           <%= link_to "#favourit" do %>
             <%= image_tag('favourit_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if user_signed_in? and current_user.id == @company.user.id %>
+          <%= link_to "#Kundenstatus" do %>
+            <%= image_tag('customer_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if user_signed_in? and current_user.id == @company.user.id %>
+          <%= link_to "#Transaktionen" do %>
+            <%= image_tag('calculator_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @company.partner_links.count > 0 %>
+          <%= link_to "#link" do %>
+            <%= image_tag('link_a.png', :size => "50x50") %>
           <% end %>
         <% end %>
         <%= link_to "#location" do %>
@@ -106,72 +116,6 @@
     </div>
   </div>
   <br>
-
-  <% if $activeapps.include?("Links") %>
-  <a id="link">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-          <% if user_signed_in? %>
-            <% if current_user.id == @company.user.id %>
-              <% if @company.partner %>
-                <%= link_to new_partner_link_path :company_id => @company.id do %>
-                  <i class="btn btn-primary glyphicon glyphicon-plus"></i>
-                <% end %>
-              <% end %>
-            <% end %>
-          <% end %>
-            LINKS
-        </li_header>
-        <%= link_to "#company" do %>
-          <%= image_tag('company_a.png', :size => "50x50", class: "pull-right") %>
-        <% end %>
-      </div>
-      <div class="panel-body">
-        <% @company.partner_links.each do |pl| %>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="thumbnail" align="center">
-                <anzeigetext>
-                  <%= pl.name %><br>
-                </anzeigetext>
-                <ntext>
-                <%= pl.link %>
-                </ntext>
-                <ntext>
-                <%= align_text(pl.description) %>
-                </ntext>
-                <br>
-                <% if pl.avatar_file_name == nil %>
-                  <%= image_tag("link_a.png", :size => "200x200", class:"img-rounded" ) %>
-                <% else %>
-                  <%= image_tag pl.avatar(:medium), class:"img-rounded"  %>
-                <% end %>
-                <br>
-                <%= link_to pl do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-                <% end %>
-                <% if user_signed_in? %>
-                  <% if current_user.id == @company.user.id %>
-                    <% if @company.partner %>
-                      <%= link_to edit_partner_link_path(pl) do %>
-                        <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                      <% end %>
-                      <%= link_to pl, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                        <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
-                      <% end %>
-                    <% end %>
-                  <% end %>
-                <% end %>
-                <br><br>
-              </div>
-             </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-  <br>
-  <% end %>
 
   <% if $activeapps.include?("Services") %>
   <a id="service">
@@ -725,6 +669,196 @@
   </div>
 <br>
 <% end %>
+
+<% if $activeapps.include?("Kundenstatus") and user_signed_in? and current_user.id == @company.user_id %>
+  <a id="Kundenstatus">
+  	<div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <li_header>
+        KUNDENSTATUS PARTNER
+        </li_header>
+        <%= link_to "#company" do %>
+          <%= image_tag('company_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
+      </div>
+      <div class="panel-body">
+        <% @partners = Company.where('partner=?',true) %>
+        <% @partners.each do |p| %>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="thumbnail" align="center">
+              <%= link_to p do %>
+                <% if !p.avatar_file_name %>
+                  <%= image_tag("company_a.png", :size => "200x200" , class:"img-rounded") %>
+                <% else %>
+                  <%= image_tag p.avatar(:medium), class:"img-rounded"%>
+                <% end %><br>
+              <% end %>
+              <anzeigetext>
+                <%= p.name %>
+              </anzeigetext>
+              <br><br>
+              <% @customer = Customer.where("company_id=? AND partner_id=?", @company.id, p.id).first %>
+              <% if @customer == nil %>
+                <%= link_to new_customer_path :partner_id => p.id, :company_id => @company.id do %>
+                  <i class="btn btn-primary btn btn-lg glyphicon glyphicon-pencil"> Kundeneröffnung</i>
+                <% end %>
+              <% else %>
+                <%= link_to accounts_path :customer_id => @customer.id do %>
+                  <i class="btn btn-primary btn btn-lg glyphicon glyphicon-book"></i>
+                <% end %>
+                <%= link_to edit_customer_path(@customer) do %>
+                  <i class="btn btn-primary btn btn-lg glyphicon glyphicon-wrench"></i>
+                <% end %>
+      	        <%= link_to @customer, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                  <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                <% end %>
+              <% end %>
+              <br><br>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<br>
+<% end %>
+
+<% if $activeapps.include?("Transaktionen") and user_signed_in? and current_user.id == @company.user.id %>
+  <a id="Transaktionen">
+  	<div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <li_header>
+        TRANSAKTIONSÜBERSICHT
+        </li_header>
+        <%= link_to "#company" do %>
+          <%= image_tag('company_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
+      </div>
+      <div class="panel-body">
+        <% ali = [] %>
+        <% @partners = Company.where('partner=?',true) %>
+        <% @partners.each do |p| %>
+          <% @customer = Customer.where("company_id=? AND partner_id=?", @company.id, p.id).first %>
+          <% if @customer %>
+            <% @customer.accounts.each do |ca| %>
+                <% ali << ca.id %>
+            <% end %>
+          <% end %>
+        <% end %>
+        <% @trx = Transaction.where('account_ver IN (?) OR account_bel IN (?)', (ali), (ali)) %>
+        <% if @trx.count > 0 %>
+      		<table class="table table-striped">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Datum (Valuta)</th>
+                <th>Mitteilung</th>
+                <th>Konto Belastung</th>
+                <th>Konto Vergütung</th>
+                <th>Referenz</th>
+                <th>Betrag</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @trx.each do |t| %>
+                <tr>
+                  <td>
+                    <%= link_to edit_transaction_path(t, :user_id => current_user.id) do %>
+                      <i class="btn btn-primary btn btn-xs glyphicon glyphicon-wrench"></i>
+                    <% end %>
+          	        <%= link_to t, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                      <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= t.trx_date.strftime("%d.%m.%Y") %><br>
+                    (<%= t.valuta.strftime("%d.%m.%Y") %>)
+                  </td>
+                  <td><%= t.text %></td>
+                  <td><%= Account.find(t.account_bel).iban if t.account_bel %></td>
+                  <td><%= Account.find(t.account_ver).iban if t.account_ver %></td>
+                  <td><%= t.ref %></td>
+                  <td><%= sprintf("%05.2f CHF",t.amount) if t.amount != nil %></td>
+                  <td><%= t.status %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<br>
+<% end %>
+
+  <% if $activeapps.include?("Links") %>
+  <a id="link">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <li_header>
+          <% if user_signed_in? %>
+            <% if current_user.id == @company.user.id %>
+              <% if @company.partner %>
+                <%= link_to new_partner_link_path :company_id => @company.id do %>
+                  <i class="btn btn-primary glyphicon glyphicon-plus"></i>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+            LINKS
+        </li_header>
+        <%= link_to "#company" do %>
+          <%= image_tag('company_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
+      </div>
+      <div class="panel-body">
+        <% @company.partner_links.each do |pl| %>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="thumbnail" align="center">
+                <anzeigetext>
+                  <%= pl.name %><br>
+                </anzeigetext>
+                <ntext>
+                <%= pl.link %>
+                </ntext>
+                <ntext>
+                <%= align_text(pl.description) %>
+                </ntext>
+                <br>
+                <% if pl.avatar_file_name == nil %>
+                  <%= image_tag("link_a.png", :size => "200x200", class:"img-rounded" ) %>
+                <% else %>
+                  <%= image_tag pl.avatar(:medium), class:"img-rounded"  %>
+                <% end %>
+                <br>
+                <%= link_to pl do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
+                <% end %>
+                <% if user_signed_in? %>
+                  <% if current_user.id == @company.user.id %>
+                    <% if @company.partner %>
+                      <%= link_to edit_partner_link_path(pl) do %>
+                        <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                      <% end %>
+                      <%= link_to pl, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                        <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+                <br><br>
+              </div>
+             </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <br>
+  <% end %>
 
   <a id="location">
   <div class="row">
