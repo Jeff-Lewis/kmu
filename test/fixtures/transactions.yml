@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  account_ver: 1
+  account_bel: 1
+  valuta: 2016-08-19
+  status_ver: false
+  status_bel: false
+  status: MyString
+  active: false
+  trx_text: MyText
+  trx_ref: MyString
+
+two:
+  account_ver: 1
+  account_bel: 1
+  valuta: 2016-08-19
+  status_ver: false
+  status_bel: false
+  status: MyString
+  active: false
+  trx_text: MyText
+  trx_ref: MyString

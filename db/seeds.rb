@@ -145,8 +145,8 @@ customers = Customer.create({company_id:9, partner_id:4, customer_number:"cno"+T
 customers = Customer.create({company_id:10, partner_id:4, customer_number:"cno"+Time.now.to_s})
 customers = Customer.create({company_id:11, partner_id:4, customer_number:"cno"+Time.now.to_s})
 
-for i in 1..20 do
-    accounts = Account.create({customer_id:i, name:"Konto-Nr."+i.to_s, iban:"IBAN1234567890"+i.to_s, is_account_ver:true})
+for i in 1..20
+    accounts = Account.create({customer_id:i.to_i, name:"Konto-Nr."+i.to_s, iban:"IBAN1234567890"+i.to_s, is_account_ver:true})
 end
 
 transactions = Transaction.create({account_ver:1, account_bel:2, trx_date:Date.today, valuta:Date.today+1, status:"erfasst", ref: "dies ist eine Test-Transaktion", amount:100})
