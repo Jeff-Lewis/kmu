@@ -91,6 +91,13 @@
               <i class="btn btn-danger btn-lg pull-right glyphicon glyphicon-trash"></i>
             <% end %>
           <% end %>
+          
+          <% @user_id = current_user.id %>
+          <% @company_id = @company.id %>
+          <%= link_to new_transaction_path :ref => "Vergütung an "+ @company.name, :object_name => "Company", :object_id => @company.id, :user_id => @user_id, :user_id2 => nil, :company_id => @company_id, :company_id2 => nil, :amount => nil do %>
+            <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
+          <% end %>
+          
         <% end %>
       </div>
       <div class="panel-body">
