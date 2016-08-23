@@ -28,7 +28,7 @@ class AdvisorsController < ApplicationController
       @advisor = Advisor.where('service_id=? and user_id=?', session[:service_id], params[:senior_advisor_id]).first
       if !@advisor
         @advisor = Advisor.new
-        @advisor.user_id = params[:advisor_id]
+        @advisor.user_id = params[:senior_advisor_id]
         @advisor.service_id = session[:service_id]
       end
       @advisor.grade = "Senior Berater"

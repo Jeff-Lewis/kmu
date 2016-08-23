@@ -39,6 +39,19 @@
             <%= image_tag("request_a.png", :size => "200x200", class:"img-rounded" ) %>
           <% end %>
           <br><br>
+          
+				  <% if !@request.social and @request.price %>
+            <preiss><b><%= sprintf("%05.2f CHF", @request.price) %></b></preiss>
+					<% else %>
+					  <preiss><b><i class='glyphicon glyphicon-heart'></i></b></preiss>
+					<% end %>
+          <br><br>
+
+          <% if @request.date_to != nil %>
+              <b><ntext>noch </ntext></b><restlaufzeits><%= (@request.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeits> <b><ntext> Tage</ntext></b>
+          <% end %>
+          <br><br>
+          
           <b>Beschreibung</b><br>
     			<%= @request.description %>
           <br><br>

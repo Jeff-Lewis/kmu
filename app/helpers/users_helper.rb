@@ -61,11 +61,7 @@ def build_medialist(md_string, items, cname, panel)
                     html_string = html_string + "<div class='media-body'>"
                       case items.table_name
                       when "requests"
-                          html_string = html_string + '<h4 class="media-heading">'+ item.name + " "
-                          if item.social
-                                html_string = html_string + "<i class='glyphicon glyphicon-heart'></i>"
-                          end
-                          html_string = html_string + "</h4>"
+                          html_string = html_string + '<h4 class="media-heading">'+ item.name + "</h4>"
   					      if !item.social
           					  if item.price
     					        html_string = html_string + "<preiss><b>" + sprintf("%05.2f CHF", item.price) + "</b></preiss>"

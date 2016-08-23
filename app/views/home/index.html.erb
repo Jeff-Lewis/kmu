@@ -56,6 +56,20 @@
         <div class="col-sm-6 col-md-4 col-lg-3">          
           <div class="media">
             <div class="media-left">
+              <%= link_to services_path :stype => "regular" do %>
+                <%= image_tag('kundenberater_a.png', :size => "50x50") %>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Kundenberater</h4>
+                Ermöglichen Sie Connect Nutzern den Zugriff auf Kalender Ihrer Kundenberater...
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">          
+          <div class="media">
+            <div class="media-left">
               <%= link_to services_path :stype => "action" do %>
                 <%= image_tag('action_a.png', :size => "50x50") %>
               <% end %>
@@ -170,6 +184,37 @@
             <br>
           </div>
         </div>
+        
+        <div class="col-sm-6 col-md-4 col-lg-3">          
+          <div class="media">
+            <div class="media-left">
+              <%= link_to users_path do %>
+                <%= image_tag('customer_a.png', :size => "50x50") %>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Partner Konto</h4>
+                Als Kunde der Partnerbank können Sie Konti für den Zahlunsgverkehr festlegen...
+            </div>
+            <br>
+          </div>
+        </div>
+        
+         <div class="col-sm-6 col-md-4 col-lg-3">          
+          <div class="media">
+            <div class="media-left">
+              <%= link_to users_path do %>
+                <%= image_tag('calculator_a.png', :size => "50x50") %>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Zahlen</h4>
+                Zahlen Sie Connect Services bequem über die integrierte ZV Schnittstelle zum e-Banking Ihrer Partnerbank...
+            </div>
+            <br>
+          </div>
+        </div>
+        
       </div>
     </div>
     <br>
@@ -424,6 +469,19 @@
             <div class="media-body">
               <h4 class="media-heading">Favoriten</h4>
                 Folgen Sie Personen und Institutionen und lassen sich über deren Aktivitäten informieren
+            </div>
+            <br>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="media">
+            <div class="media-left">
+              <i class="glyphicon glyphicon-euro"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Favoriten</h4>
+                Zahlen Sie Ihre Connect Services ganz einfach direkt in der Connect Plattform
             </div>
             <br>
           </div>
