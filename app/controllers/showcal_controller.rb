@@ -23,26 +23,23 @@ class ShowcalController < ApplicationController
             session[:cw] = session[:cw].to_i - 1
           end
       end
-
     end
+    
     @start = Date.commercial(session[:year],session[:cw],1)
     @services = Service.search(session[:cw], session[:year], "action", params[:filter_id], params[:search]).order(date_from: :asc).page(params[:page]).per_page(16)
     @seranz = @services.count
     
-    z = 0
     @hash = Gmaps4rails.build_markers(@services) do |service, marker|
       if service.company.latitude != nil and service.company.longitude != nil
         marker.lat service.company.latitude
         marker.lng service.company.longitude
-        z=z+1
-        marker.infowindow z.to_s+ " " + service.name
-#      marker.picture url: "http://images/ma_anonym.png"
+        marker.infowindow service.name
       end
      end
   end
 
   def bid
-   if !session[:cw]
+   if params[:cw]
       session[:cw] = Date.today.cweek.to_i
     end
     if !session[:year]

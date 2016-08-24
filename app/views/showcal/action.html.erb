@@ -42,20 +42,14 @@
               </td>
             </tr>
             <tr>
-              <% mobile = true %>
-              <% if not mobile %>
-                <th>Bewertung</th>
-                <th colspan="3">Sonderaktion</th>
-              <% else %>
-                <th>Sonderaktion</th>
-              <% end %>
+              <th>Sonderaktion</th>
               <% for i in 0..6 %>
-                <th>
-                  <%= $wochentage[i] %><br>
-                  <small_cal>
-                    <%= (@start+i).strftime("%d.%m") %>
-                  </small_cal>
-                </th>
+                  <th>
+                    <%= $wochentage[i] %><br>
+                    <small_cal>
+                      <%= (@start+i).strftime("%d.%m") %>
+                    </small_cal>
+                  </th>
               <% end %>
             </tr>
           </thead>
@@ -63,8 +57,7 @@
           <tbody>
             <% @services.each do |e| %>
               <tr>
-                <% if not mobile %>
-                  <td>
+                <td>
           		    <% if avg_rating(e.id) == 0 %>
                     <% image_tag("no_rating.jpg", :size => "50x50" , class:"img-rounded") %>
           		    <% else %>
@@ -72,44 +65,22 @@
                       <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
                       <i class="glyphicon glyphicon-star"></i>
                     <% end %>
-                  <% end %>
-                  </td>
-                  <td>
-                  <% if e.date_to != nil %>
-                    <p>
-                      <b><ntext>noch </ntext></b><restlaufzeit><%= (e.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeit> <b><ntext> Tage</ntext></b>
-                    </p>
-                  <% end %>
-                  </td>
-          			 <td>
+                  <% end %><br>
                   <%= link_to e do %>
                     <% if !e.avatar_file_name %>
                       <%= image_tag("action_a.png", :size => "50x50" , class:"img-rounded") %>
                     <% else %>
                       <%= image_tag e.avatar(:small), class:"img-rounded" %>
                     <% end %>
+                  <% end %><br>
+                  <anzeigetext>
+                    <%= e.name %>
+                  </anzeigetext><br>
+                  <% if e.date_to != nil %>                    <p>
+                    <b><ntext>noch </ntext></b><restlaufzeit><%= (e.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeit> <b><ntext> Tage</ntext></b>
                   <% end %>
                   <br>
-                  <anzeigetext>
-                    <%= e.name %><br>
-                  </anzeigetext>
-                  </td>
-                <% else %>
-                    <td>
-                      <ntext>
-                        <%= link_to e do %>
-                          <%= e.name %><br>
-                        <% end %>
-                        <% if e.company_id != nil %>
-                          <%= e.company.name %>
-                        <% end %>
-                        <% if e.user_id != nil %>
-                          <%= e.user.name + " " + e.user.lastname %>
-                        <% end %><br>
-                        <%= e.date_from.strftime("%d.%m") %>-<%= e.date_to.strftime("%d.%m") %>
-                      </ntext>
-                    </td>
-                <% end %>
+                </td>
                 <% for i in 0..6 %>
                     <% if AktionDatum(@start+i,e) %>
                       <td class="blocked">

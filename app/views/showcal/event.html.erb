@@ -40,12 +40,7 @@
               </td>
             </tr>
             <tr>
-              <% mobile = true %>
-              <% if not mobile %>
-                <th colspan="3">Veranstaltung</th>
-              <% else %>
-                <th>Veranstaltung</th>
-              <% end %>
+              <th>Veranstaltung</th>
               <% for i in 0..6 %>
                 <th>
                   <%= $wochentage[i] %><br>
@@ -62,51 +57,30 @@
               <% @events.each do |e| %>
   
                 <tr>
-      				    <% if not mobile %>
-      				      <td>
-                    <% if e.date_to != nil %>
-                        <b><ntext>noch </ntext></b><restlaufzeit><%= (e.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeit> <b><ntext> Tage</ntext></b>
-                    <% end %>
-        				    </td>
-        				    <td>
+      				    <td>
         				    <%= link_to e do %>
                       <% if e.event_details != nil %>
-                            <%= carousel(e.event_details, "thumb") %>
+                            <%= carousel(e.event_details, "small") %>
                           <% else %>
                             <%= image_tag("event_a.png", :size => "100x100", class:"img-rounded" ) %>
                   		<% end %>
+                    <% end %><br>
+            	      <anzeigetext>
+                      <%= e.name %></br>
+                    </anzeigetext>
+                    <ntext>
+                    <% if e.company_id != nil %>
+                      <%= e.company.name %>
                     <% end %>
-                    </td>
-                    <td>
-                  	      <anzeigetext>
-                            <%= e.name %></br>
-                          </anzeigetext>
-                          <ntext>
-                          <% if e.company_id != nil %>
-                            <%= e.company.name %>
-                          <% end %>
-                          <% if e.user_id != nil %>
-                            <%= e.user.name + " " + e.user.lastname %>
-                          <% end %>
-                          <%= e.date_from.strftime("%d.%m") %>-<%= e.date_to.strftime("%d.%m") %>
-                          </ntext>
-            				</td>
-            			<% else %>
-                    <td>
-              	      <ntext>
-              	        <%= link_to e do %> 
-                          <%= e.name %></br>
-                        <% end %>
-                        <% if e.company_id != nil %>
-                          <%= e.company.name %>
-                        <% end %>
-                        <% if e.user_id != nil %>
-                          <%= e.user.name + " " + e.user.lastname %>
-                        <% end %>
-                        <%= e.date_from.strftime("%d.%m") %>-<%= e.date_to.strftime("%d.%m") %>
-                      </ntext>
-            				</td>
-            			<% end %>
+                    <% if e.user_id != nil %>
+                      <%= e.user.name + " " + e.user.lastname %>
+                    <% end %><br>
+                    <%= e.date_from.strftime("%d.%m") %>-<%= e.date_to.strftime("%d.%m") %><br>
+                    </ntext>
+                    <% if e.date_to != nil %>
+                        <b><ntext>noch </ntext></b><restlaufzeit><%= (e.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeit> <b><ntext> Tage</ntext></b>
+                    <% end %>
+            			</td>
                   <% for i in 0..6 %>
                       <% if EventDatum(@start+i,e) %>
                         <td class="blocked">

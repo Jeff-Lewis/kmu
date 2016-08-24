@@ -55,7 +55,7 @@
 	          <% end %>
 	    		</ul>
 			</li>
-			<% if $controller_list.include?(controller_name) and (action_name == "index") %>
+			<% if $controller_list.include?(controller_name) and (action_name == "index") or (controller_name == "showcal" and (action_name == "action" or action_name == "bid" or action_name == "event")) %>
 				<% @items = url_for(action: action_name, controller: controller_name) %>
 				<%= form_tag(@items, method: 'get', class: 'navbar-form navbar-left') do %>
 				  <%= search_field_tag 'search', nil, class: 'form-control', placeholder: 'Search'  %>

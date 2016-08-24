@@ -42,12 +42,7 @@
               </td>
             </tr>
             <tr>
-              <% mobile = true %>
-              <% if not mobile %>
-                <th colspan="3">Ausschreibung</th>
-              <% else %>
-                <th>Ausschreibung</th>
-              <% end %>
+              <th>Ausschreibung</th>
               <% for i in 0..6 %>
                 <th>
                   <%= $wochentage[i] %><br>
@@ -58,21 +53,11 @@
               <% end %>
             </tr>
           </thead>
-          
           <tbody>
   
               <% @bids.each do |b| %>
-  
                 <tr>
-                  <% if not mobile %>
-                    <td>
-                    <% if b.date_to != nil %>
-                      <p>
-                        <b><ntext>noch </ntext></b><restlaufzeit><%= (b.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeit> <b><ntext> Tage</ntext></b>
-                      </p>
-                    <% end %>
-                    </td>
-        				    <td>
+                  <td>
         				    <%= link_to b do %>
         				      <% if b.bid_details != nil %>
         				        <%= carousel(b.bid_details,"thumb") %>
@@ -80,20 +65,17 @@
                         <%= image_tag("bid_a.png", :size => "50x50" , class:"img-rounded") %>
                       <% end %>
                     <% end %>
-                    </td>
-                  <% else %>
-                    <td>
-                        <ntext>
-                        <%= link_to b do %>
-                            <%= b.name %><br>
-                        <% end %>
-                        <% if b.user_id != nil %>
-                          <%= b.user.name + " " + b.user.lastname %><br>
-                        <% end %>
-                        <%= b.date_from.strftime("%d.%m") %>-<%= b.date_to.strftime("%d.%m") %>
-                        </ntext
-                    </td>
-                  <% end %>
+            	      <anzeigetext>
+                      <%= b.name %></br>
+                    </anzeigetext>
+                    <ntext>
+                    <% if b.user_id != nil %>
+                      <%= b.user.name + " " + b.user.lastname %>
+                    <% end %><br>
+                    <% if b.date_to != nil %>
+                        <b><ntext>noch </ntext></b><restlaufzeit><%= (b.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeit> <b><ntext> Tage</ntext></b><br>
+                    <% end %>
+                  </td>
                   <% for i in 0..6 %>
                       <% if BidDatum(@start+i,b) %>
                         <td class="blocked">
