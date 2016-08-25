@@ -1,7 +1,11 @@
 <br>
 <footer>
     <div class="panel-body">
-        <div class="sm-6 col-md-4 col-lg-3">
+        <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <%= image_tag ('connect.jpg'), :size => "250x140" %>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
             <footer_header>
                 XCONNECT
             </footer_header>
@@ -19,7 +23,11 @@
                 <% end %>
             </footer_text>
         </div>
-        
+        <div class="col-sm-6 col-md-4 col-lg-3">
+              <i class="glyphicon glyphicon-copyright-mark"></i> 2016, alle Rechte vorbehalten, WUSOFT Horst Wurm
+        </div>
+        </div>
+        <div class="row">
         <% @partners = Company.where('partner=?','t') %>
         <% @partners.each do |p| %>
             <div class="col-sm-6 col-md-4 col-lg-3">
@@ -32,15 +40,8 @@
 	      				<li><%= link_to pl.name, url_with_protocol(pl.link), :target => "_blank" %></li>
                     </footer_text>
 			 	<% end %>
-			</div>
+            </div>
         <% end %>
-        
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <%= image_tag ('connect.jpg'), :size => "250x140" %>
-        </div>
-        
-        <div class="col-sm-6 col-md-4 col-lg-3">
-              <i class="glyphicon glyphicon-copyright-mark"></i> 2016, all rights reserved, WUSOFT
         </div>
 
     </div>
