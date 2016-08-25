@@ -7,13 +7,13 @@ def carousel(scope, size)
     if scope.count == 0
       case size
           when "big"
-            html = html + (image_tag "key.png", :size => "500x500", class:"img-rounded")
+            html = html + (image_tag "no_pic.jpg", :size => "500x500", class:"img-rounded")
         when "medium"
-            html = html + (image_tag "key.png", :size => "200x200", class:"img-rounded")
+            html = html + (image_tag "no_pic.jpg", :size => "200x200", class:"img-rounded")
         when "thumb"
-            html = html + (image_tag "key.png", :size => "100x100", class:"img-rounded")
+            html = html + (image_tag "no_pic.jpg", :size => "100x100", class:"img-rounded")
         when "small"
-            html = html + (image_tag "key.png", :size => "50x50", class:"img-rounded")
+            html = html + (image_tag "no_pic.jpg", :size => "50x50", class:"img-rounded")
       end
       
     else

@@ -89,19 +89,20 @@
       		<% @request.request_details.each do |bd| %>
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
-                <anzeigetext>
-      						<%= bd.name %>
-                </anzeigetext>
         				<% if bd.avatar_file_name == nil %>
-                  <%= image_tag("bid_a.png", :size => "200x200", class:"img-rounded" ) %>
+                  <%= image_tag("no_pic.jpg", :size => "200x200", class:"img-rounded" ) %>
                 <% else %>
                   <%= image_tag bd.avatar(:medium), class:"img-rounded"  %>
                 <% end %>
-                <p>
+                <br>
+                <anzeigetext>
+      						<%= bd.name %>
+                </anzeigetext>
+                <br>
                 <ntext>
     						<%= bd.description %>
     						</ntext>
-    						</p>
+    						<br>
                 <% if user_signed_in? %>
                   <% if current_user.id == @request.user_id %>
           	        <%= link_to edit_request_detail_path(bd) do %>

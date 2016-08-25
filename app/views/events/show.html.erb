@@ -116,19 +116,19 @@
     		<% @event.event_details.each do |ed| %>
           <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
-              <anzeigetext>
-    						<%= ed.name %><br>
-              </anzeigetext>
       				<% if ed.avatar_file_name == nil %>
                 <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
               <% else %>
                 <%= image_tag ed.avatar(:medium), class:"img-rounded"  %>
               <% end %>
-              <p>
-              <ntext></ntext>
+              <br>
+              <anzeigetext>
+    						<%= ed.name %><br>
+              </anzeigetext>
+              <br>
+              <ntext>
   						<%= ed.description %>
               </ntext>
-              </p>
               <br><br>
               <% if user_signed_in? %>
                 <% if @event.user_id != nil %>
@@ -189,14 +189,17 @@
           <% @event.sponsors.each do |cs| %>
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
+                <%= link_to cs.company do %>
+          				<% if cs.company.avatar_file_name == nil %>
+                    <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
+                  <% else %>
+                    <%= image_tag cs.company.avatar(:medium), class:"img-rounded"  %>
+                  <% end %>
+                <% end %>
+                <br>
                 <anzeigetext>
       						<%= cs.company.name %><br>
                 </anzeigetext>
-        				<% if cs.company.avatar_file_name == nil %>
-                  <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
-                <% else %>
-                  <%= image_tag cs.company.avatar(:medium), class:"img-rounded"  %>
-                <% end %>
                 <br>
                 <ntext>
                 <%= cs.company.category.name %>
@@ -211,9 +214,6 @@
                     <%= image_tag("Sponsor_bronze.jpg", :size => "200x200", class:"img-rounded" ) %>
                 <% end %>
     						<br><br>
-      	        <%= link_to cs.company do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-                <% end %>
                 <% if user_signed_in? %>
                   <% if cs.company.user_id != nil %>
                     <% if current_user.id == cs.company.user_id %>

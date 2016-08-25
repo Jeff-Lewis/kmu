@@ -88,19 +88,20 @@
     		<% @hotspot.hotspot_details.each do |bd| %>
           <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
-              <anzeigetext>
-    						<%= bd.name %><br>
-              </anzeigetext>
       				<% if bd.avatar_file_name == nil %>
                 <%= image_tag("hotspot_a.png", :size => "200x200", class:"img-rounded" ) %>
               <% else %>
                 <%= image_tag bd.avatar(:medium), class:"img-rounded"  %>
               <% end %>
-              <p>
+              <br>
+              <anzeigetext>
+    						<%= bd.name %><br>
+              </anzeigetext>
+              <br>
               <ntext>
   						<%= bd.description %>
   						</ntext>
-  						</p>
+  						<br>
               <% if user_signed_in? %>
                 <% if current_user.id == @hotspot.user_id %>
         	        <%= link_to edit_hotspot_detail_path(bd) do %>
@@ -137,19 +138,23 @@
           <% @hotspot.hs_ratings.each do |sr| %>
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
-                <% if sr.user.avatar == nil or sr.user.anonymous %>
-                  <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
-                <% else %>
-                  <%= image_tag sr.user.avatar(:medium), class:"img-rounded" %>
+                <%= link_to sr.user do %>
+                  <% if sr.user.avatar == nil or sr.user.anonymous %>
+                    <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
+                  <% else %>
+                    <%= image_tag sr.user.avatar(:medium), class:"img-rounded" %>
+                  <% end %>
                 <% end %>
                 <br>
+                <anzeigetext>
                 <%= sr.user.name + " " + sr.user.lastname %>
+                </anzeigetext>
                 <br><br>
                 <% sr.user_rating.times do %>
                   <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
                   <i class="glyphicon glyphicon-star"></i>
                 <% end %>
-                <br>
+                <br><br>
                 <%= sr.user_comment %>
                 <br><br>
                 <%= sr.created_at.strftime("%d.%m.%Y") %>

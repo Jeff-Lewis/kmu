@@ -106,12 +106,14 @@ users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"6.3.20
 users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.12.2008", anonymous:false, status:"ok", active:true, email:"barak@outlook.com", password:"password", name:"Barak", lastname:"Obama", address1:"Marktplatz", address2:"Frauenfeld", address3:"", superuser:false,avatar:File.open(path+'ma_10.jpg', 'rb')})
 users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"26.4.2009", anonymous:false, status:"ok", active:true, email:"trump@bluewin.ch", password:"password", name:"Donald", lastname:"Trump", address1:"Hauptstrasse 1", address2:"Buch", address3:"Thurgau", superuser:false,avatar:File.open(path+'ma_11.jpg', 'rb')})
 users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.7.2010", anonymous:false, status:"ok", active:true, email:"angela@outlook.com", password:"password", name:"Angela", lastname:"Merkel", address1:"Bahnhof", address2:"Wil SG", address3:"", superuser:false,avatar:File.open(path+'ma_12.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.7.1970", anonymous:false, status:"ok", active:true, email:"kurt.felix@outlook.com", password:"password", name:"Kurt", lastname:"Felix", address1:"Vadianstrasse 8", address2:"St Gallen", address3:"", superuser:false,avatar:File.open(path+'ma_5.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.7.1969", anonymous:false, status:"ok", active:true, email:"pierin.claglüna@outlook.com", password:"password", name:"Pierin", lastname:"Claglüna", address1:"Bahnhof", address2:"Chur", address3:"", superuser:false,avatar:File.open(path+'ma_13.jpg', 'rb')})
 
 #create some companies...
 companies = Company.create({status:"ok", active:true, user_id:1, name:"Fischzucht Hecht", category_id:24 ,stichworte: "Fische, Zierfische, Angelbedarf", address1:"Bahnhof", address2:"Frauenfeld", address3:"Thurgau", avatar:File.open(path+'fischhaendler.jpg', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:2, name:"Alder Entsorgung", category_id:11 ,stichworte: "Hocbau, Tiefbau", address1:"Bahnhof", address2:"Wil", address3:"Thurgau", avatar:File.open(path+'alder.jpg', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:3, name:"Eisenwaren Müller", category_id:12 ,stichworte: "Hocbau, Tiefbau", address1:"Thurgauer Str", address2:"Matzingen", address3:"Thurgau", avatar:File.open(path+'eisenmueller.jpg', 'rb')}) 
-companies = Company.create({status:"ok", active:true, user_id:4, name:"TKB", partner:true, category_id:26 ,stichworte: "Banken", address1:"Bahnhof", address2:"Weinfelden", address3:"Thurgau", avatar:File.open(path+'tkb.png', 'rb')}) 
+companies = Company.create({status:"ok", active:true, user_id:4, name:"Thurgauer Kantonalbank", partner:true, category_id:26 ,stichworte: "Banken", address1:"Bahnhof", address2:"Weinfelden", address3:"Thurgau", avatar:File.open(path+'tkb.png', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:5, name:"Prematic", category_id:12 ,stichworte: "Luftdruck", address1:"Bahnhof", address2:"Wängi", address3:"Thurgau", avatar:File.open(path+'prematic.png', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:6, name:"Baufirma Meier", category_id:11 ,stichworte: "Hocbau, Tiefbau", address1:"Hauptstrasse", address2:"Zezikon", address3:"Thurgau", avatar:File.open(path+'meier.jpg', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:1, name:"Lackierwerkstatt Manser", category_id:9 ,stichworte: "Karosserie", address1:"Amlikon", address2:"Haupstrasse", address3:"Thurgau", avatar:File.open(path+'mazda-mx-5-cabriolet-2006-occasion.jpg', 'rb')}) 
@@ -121,6 +123,8 @@ companies = Company.create({status:"ok", active:true, user_id:1, name:"Blindenve
 companies = Company.create({status:"ok", active:true, user_id:2, name:"Kosmetikstudio Jasmine", category_id:10 ,stichworte: "Kosmetik", address1:"Gartenstrasse 2", address2:"Bürglen", address3:"Thurgau", avatar:File.open(path+'kosmetik.jpg', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:1, name:"Autohaus Hummel", category_id:25 ,stichworte: "Auto KFZ", address1:"Hauptstrasse", address2:"Bissegg", address3:"Thurgau", avatar:File.open(path+'autobissegg.png', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:1, name:"Valiant Bank", category_id:26 ,stichworte: "Bank Finanz Geld", address1:"Bahnhof", address2:"Bern", address3:"Bern", avatar:File.open(path+'valiant.png', 'rb')}) 
+companies = Company.create({status:"ok", active:true, user_id:4, name:"St.Galler Kantonalbank", partner:true, category_id:26 ,stichworte: "Banken", address1:"Bahnhof", address2:"St.Gallen", address3:"St.gallen", avatar:File.open(path+'sgkb.png', 'rb')}) 
+companies = Company.create({status:"ok", active:true, user_id:4, name:"Graubündner Kantonalbank", partner:true, category_id:26 ,stichworte: "Banken", address1:"Bahnhof", address2:"Chur", address3:"Graubünden", avatar:File.open(path+'grkb.png', 'rb')}) 
 
 customers = Customer.create({user_id:1, partner_id:4, customer_number:"uno"+Time.now.to_s})
 customers = Customer.create({user_id:2, partner_id:4, customer_number:"uno"+Time.now.to_s})
@@ -144,16 +148,20 @@ customers = Customer.create({company_id:8, partner_id:4, customer_number:"cno"+T
 customers = Customer.create({company_id:9, partner_id:4, customer_number:"cno"+Time.now.to_s})
 customers = Customer.create({company_id:10, partner_id:4, customer_number:"cno"+Time.now.to_s})
 customers = Customer.create({company_id:11, partner_id:4, customer_number:"cno"+Time.now.to_s})
+customers = Customer.create({user_id:13, partner_id:14, customer_number:"cno"+Time.now.to_s})
+customers = Customer.create({user_id:14, partner_id:15, customer_number:"cno"+Time.now.to_s})
 
 for i in 1..20
     accounts = Account.create({customer_id:i.to_i, name:"Konto-Nr."+i.to_s, iban:"IBAN1234567890"+i.to_s, is_account_ver:true})
 end
+accounts = Account.create({customer_id:23, name:"SGKB Konto-Nr.12345", iban:"IBAN1234567890"+i.to_s, is_account_ver:true})
+accounts = Account.create({customer_id:24, name:"GRKB Konto-Nr.12345", iban:"IBAN1234567890"+i.to_s, is_account_ver:true})
 
-transactions = Transaction.create({account_ver:1, account_bel:2, trx_date:Date.today, valuta:Date.today+1, status:"erfasst", ref: "dies ist eine Test-Transaktion", amount:100})
-transactions = Transaction.create({account_ver:1, account_bel:3, trx_date:Date.today, valuta:Date.today+1, status:"erfasst", ref: "dies ist eine Test-Transaktion", amount:100})
-transactions = Transaction.create({account_ver:1, account_bel:4, trx_date:Date.today, valuta:Date.today+1, status:"erfasst", ref: "dies ist eine Test-Transaktion", amount:100})
-transactions = Transaction.create({account_ver:3, account_bel:2, trx_date:Date.today, valuta:Date.today+1, status:"erfasst", ref: "dies ist eine Test-Transaktion", amount:100})
-transactions = Transaction.create({account_ver:4, account_bel:2, trx_date:Date.today, valuta:Date.today+1, status:"erfasst", ref: "dies ist eine Test-Transaktion", amount:100})
+transactions = Transaction.create({account_ver:1, account_bel:2, trx_date:Date.today, valuta:Date.today+1, status:"erfasst", ref: "dies ist eine Test-Transaktion", object_name:"User", object_id:1, amount:100})
+transactions = Transaction.create({account_ver:1, account_bel:3, trx_date:Date.today, valuta:Date.today+1, status:"erfasst", ref: "dies ist eine Test-Transaktion", object_name:"User", object_id:1, amount:100})
+transactions = Transaction.create({account_ver:1, account_bel:4, trx_date:Date.today, valuta:Date.today+1, status:"erfasst", ref: "dies ist eine Test-Transaktion", object_name:"User", object_id:1, amount:100})
+transactions = Transaction.create({account_ver:3, account_bel:2, trx_date:Date.today, valuta:Date.today+1, status:"erfasst", ref: "dies ist eine Test-Transaktion", object_name:"User", object_id:1, amount:100})
+transactions = Transaction.create({account_ver:4, account_bel:2, trx_date:Date.today, valuta:Date.today+1, status:"erfasst", ref: "dies ist eine Test-Transaktion", object_name:"User", object_id:1, amount:100})
 
 partnerlinks = PartnerLink.create({active:true, company_id:4, name:"eBanking", link:"www.tkb.ch/ebanking"})
 partnerlinks = PartnerLink.create({active:true, company_id:4, name:"Adressänderungen", link:"https://www.tkb.ch/default/online-schalter/adressaenderung.htm"})

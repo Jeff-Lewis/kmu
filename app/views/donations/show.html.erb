@@ -70,19 +70,19 @@
     		<% @donation.donation_details.each do |bd| %>
           <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
-              <anzeigetext>
-    						<%= bd.name %><br>
-              </anzeigetext>
       				<% if bd.avatar_file_name == nil %>
                 <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
               <% else %>
                 <%= image_tag bd.avatar(:medium), class:"img-rounded"  %>
               <% end %>
-              <p>
+              <br>
+              <anzeigetext>
+    						<%= bd.name %><br>
+              </anzeigetext>
               <ntext>
   						<%= bd.description %>
               </ntext>
-  						</p>
+              <br>
               <% if user_signed_in? %>
                 <% if current_user.id == @donation.company.user_id %>
         	        <%= link_to edit_donation_detail_path(bd) do %>
@@ -124,19 +124,23 @@
           <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
     				  <% if ds.company_id != nil %>
-        				<% if ds.company.avatar_file_name == nil %>
-                  <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
-                <% else %>
-                  <%= image_tag ds.company.avatar(:medium), class:"img-rounded"  %>
-                <% end %><br>
+                <%= link_to ds.company do %>
+          				<% if ds.company.avatar_file_name == nil %>
+                    <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
+                  <% else %>
+                    <%= image_tag ds.company.avatar(:medium), class:"img-rounded"  %>
+                  <% end %><br>
+                <% end %>
       				  <%= ds.company.name %>
       				<% end %>
       				<% if ds.user_id != nil %>
-        				<% if ds.user.avatar_file_name == nil %>
-                  <%= image_tag("user_a.png", :size => "200x200", class:"img-rounded" ) %>
-                <% else %>
-                  <%= image_tag ds.user.avatar(:medium), class:"img-rounded"  %>
-                <% end %><br>
+      				  <%= link_to ds.user do %>
+          				<% if ds.user.avatar_file_name == nil %>
+                    <%= image_tag("user_a.png", :size => "200x200", class:"img-rounded" ) %>
+                  <% else %>
+                    <%= image_tag ds.user.avatar(:medium), class:"img-rounded"  %>
+                  <% end %><br>
+                <% end %>
       				  <%= ds.user.name + " " + ds.user.lastname  %>
       				<% end %>
       				<br><br>
@@ -150,16 +154,6 @@
               <br><br>
               <%= ds.created_at.strftime("%d.%m.%Y") %>
               <br><br>
-              <% if ds.user_id != nil %>
-      	        <%= link_to ds.user do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-                <% end %>
-              <% end %>
-              <% if ds.company_id != nil %>
-      	        <%= link_to ds.company do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-                <% end %>
-              <% end %>
               <% if user_signed_in? %>
                 <% if (ds.user_id != nil and current_user.id == ds.user_id) or (ds.company_id != nil and current_user.id == ds.company.user_id) %>
                 

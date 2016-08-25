@@ -75,17 +75,17 @@
       		<% @bid.bid_details.each do |bd| %>
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
-                <anzeigetext>
-      						<%= bd.name %>
-                </anzeigetext><br>
         				<% if bd.avatar_file_name == nil %>
                   <%= image_tag("bid_a.png", :size => "200x200", class:"img-rounded" ) %>
                 <% else %>
                   <%= image_tag bd.avatar(:medium), class:"img-rounded"  %>
                 <% end %>
-                <p>
+                <br>
+                <anzeigetext>
+      						<%= bd.name %>
+                </anzeigetext><br>
     						<%= bd.description %>
-    						</p>
+    						<br>
                 <% if user_signed_in? %>
                   <% if current_user.id == @bid.user_id %>
           	        <%= link_to edit_bid_detail_path(bd) do %>
@@ -124,6 +124,8 @@
             <% if bd.company_id == nil %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
+                  <%= image_tag("pdf.jpg", :size => "200x200", class:"img-rounded" ) %>
+                  <br>
                   <anzeigetext>
         						<%= bd.name %><br>
                   </anzeigetext>
