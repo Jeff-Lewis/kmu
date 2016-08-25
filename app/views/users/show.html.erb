@@ -123,14 +123,28 @@
           <%= image_tag("user_a.png", :size => "200x200", class:"img-rounded" ) %>
         <% else %>
           <%= image_tag @user.avatar(:medium), class:"img-rounded"  %>
+          <br><br>
+          <b><i class="glyphicon glyphicon-home"></i> Adresse</b><br>
+          <% if !@user.anonymous and @user.address1 != nil and @user.address1 != "" %>
+            <%= @user.address1 %><br> 
+          <% end %>
+          <% if !@user.anonymous and @user.address2 != nil and @user.address2 != "" %>
+            <%= @user.address2 %><br> 
+          <% end %>
+          <% if !@user.anonymous and @user.address3 != nil and @user.address3 != "" %>
+            <%= @user.address3 %><br> 
+          <% end %>
           <br>
-          <cite><%= @user.created_at.strftime("%d.%m.%Y") %></cite><br>
-          <% if !@user.anonymous and @user.phone1 != nil %>
-            <i class="glyphicon glyphicon-phone"></i><%= @user.phone1 %><br> 
+          <b><i class="glyphicon glyphicon-phone"></i> Telefon</b><br>
+          <% if !@user.anonymous and @user.phone1 != nil and @user.phone1 != "" %>
+            <%= @user.phone1 %><br> 
           <% end %>
-          <% if !@user.anonymous and @user.phone2 != nil %>
-            <i class="glyphicon glyphicon-phone"></i><%= @user.phone2 %><br> 
+          <% if !@user.anonymous and @user.phone2 != nil and @user.phone2 != "" %>
+            <%= @user.phone2 %><br> 
           <% end %>
+          <br>
+          <b>Geburtsdatum</b><br>
+          <%= @user.dateofbirth.strftime("%d.%m.%Y") %><br>
           <% if user_signed_in? %>
   	        <%= link_to new_email_path :m_from_id => current_user.id, :m_to_id => @user.id, :back_url => request.original_url do %>
               <i class="btn btn-default glyphicon glyphicon-envelope"></i>
@@ -166,14 +180,17 @@
       		<% @user.advisors.each do |us| %>
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
+                <%= link_to us.service do %>
+                  <% if us.service.avatar_file_name == nil %>
+                    <%= image_tag("service_a.png", :size => "200x200", class:"img-rounded" ) %>
+                  <% else %>
+                    <%= image_tag us.service.avatar(:medium), class:"img-rounded"  %>
+                  <% end %>
+                <% end %>
+                <br>
                 <anzeigetext>
       						<%= us.service.name %>
                 </anzeigetext>
-                <% if us.service.avatar_file_name == nil %>
-                  <%= image_tag("service_a.png", :size => "200x200", class:"img-rounded" ) %>
-                <% else %>
-                  <%= image_tag us.service.avatar(:medium), class:"img-rounded"  %>
-                <% end %>
                 <br>
                 <ntext>angeboten von</ntext><br><br>
                 <% if us.service.user_id %>
@@ -198,12 +215,7 @@
                 <ntext>
     						<%= align_text(us.service.description) %>
                 </ntext>
-    						</p>
-                <br><br>
-      	        <%= link_to service_path(us.service) do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-                <% end %>
-                <br><br>
+                <br>
           		</div>
         		</div>
       		<% end %>
@@ -236,23 +248,23 @@
       		<% @user.services.each do |us| %>
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
+                <%= link_to us do %>
+                  <% if us.avatar_file_name == nil %>
+                    <%= image_tag("service_a.png", :size => "200x200", class:"img-rounded" ) %>
+                  <% else %>
+                    <%= image_tag us.avatar(:medium), class:"img-rounded"  %>
+                  <% end %>
+                <% end %>
+                <br>
                 <anzeigetext>
       						<%= us.name %>
                 </anzeigetext>
-                <% if us.avatar_file_name == nil %>
-                  <%= image_tag("service_a.png", :size => "200x200", class:"img-rounded" ) %>
-                <% else %>
-                  <%= image_tag us.avatar(:medium), class:"img-rounded"  %>
-                <% end %>
                 <p>
                 <ntext>
     						<%= align_text(us.description) %>
                 </ntext>
     						</p>
-                <br><br>
-      	        <%= link_to service_path(us) do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-                <% end %>
+                <br>
                 <% if user_signed_in? %>
                   <% if current_user.id == @user.id %>
           	        <%= link_to edit_service_path(us) do %>
@@ -296,27 +308,24 @@
       		<% @user.companies.each do |uc| %>
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
-                <anzeigetext>
-      						<%= uc.name %>
-                </anzeigetext>
-        				<% if uc.avatar_file_name == nil %>
-                  <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
-                <% else %>
-                  <%= image_tag uc.avatar(:medium), class:"img-rounded"  %>
+                <%= link_to uc do %>
+          				<% if uc.avatar_file_name == nil %>
+                    <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
+                  <% else %>
+                    <%= image_tag uc.avatar(:medium), class:"img-rounded"  %>
+                  <% end %>
                 <% end %>
-                <p>
+                <br>
+                <anzeigetext>
+      						<%= uc.name %><br>
+                </anzeigetext>
                 <ntext>
     						<%= uc.category.name %>
-    						</p>
-                <p>
+    						<br>
     						<%= align_text(uc.description) %>
     						</p>
     						</ntext>
     						<br>
-      	        <%= link_to uc do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-                <% end %>
-                <br><br>
       			  </div>
       			</div>
       		<% end %>
@@ -349,23 +358,20 @@
       		<% @user.requests.order(created_at: :desc).each do |ur| %>
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
+                <%= link_to ur do %>
+                  <% if ur.request_details != nil %>
+                        <%= carousel(ur.request_details, "medium") %>
+                      <% else %>
+                        <%= image_tag("request_a.png", :size => "200x200", class:"img-rounded" ) %>
+              		<% end %><br>
+              	<% end %>
                 <anzeigetext>
       						<%= ur.rtype + " " + ur.name %>
                 </anzeigetext>
-                <p>
+                <br>
                 <ntext>
     						<%= ur.description %>
     						</ntext>
-    						</p>
-                <% if ur.request_details != nil %>
-                      <%= carousel(ur.request_details, "medium") %>
-                    <% else %>
-                      <%= image_tag("request_a.png", :size => "200x200", class:"img-rounded" ) %>
-            		<% end %>
-    						<br>
-      	        <%= link_to ur do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-                <% end %>
       			    <br><br>
       			 </div>
       			</div>
@@ -399,26 +405,23 @@
       		<% @user.vehicles.each do |uv| %>
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
+                <%= link_to uv do %>
+          				<% if uv.avatar_file_name == nil %>
+                    <%= image_tag("vehicle_a.png", :size => "200x200", class:"img-rounded" ) %>
+                  <% else %>
+                    <%= image_tag uv.avatar(:medium), class:"img-rounded"  %>
+                  <% end %>
+                <% end %>
+                <br>
                 <anzeigetext>
       						<%= uv.name %><br>
                 </anzeigetext>
-        				<% if uv.avatar_file_name == nil %>
-                  <%= image_tag("vehicle_a.png", :size => "200x200", class:"img-rounded" ) %>
-                <% else %>
-                  <%= image_tag uv.avatar(:medium), class:"img-rounded"  %>
-                <% end %>
                 <ntext>
-                <p>
       						<%= uv.mob_category.name %>
-    						</p>
-                <p>
+      						<br>
       						<%= align_text(uv.description) %>
-    						</p>
-    						<br>
+      						<br>
     						</ntext>
-      	        <%= link_to uv do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-                <% end %>
                 <br><br>
       			  </div>
       			 </div>
@@ -452,27 +455,24 @@
       		<% @user.events.each do |ue| %>
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
+                <%= link_to ue do %>
+                  <% if ue.event_details.count > 0 %>
+                    <%= carousel(ue.event_details, "medium") %>
+                  <% else %>
+                    <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
+            			<% end %>
+            		<% end %>
+          			<br>
                 <anzeigetext>
       						<%= ue.name %><br>
                 </anzeigetext>
-                <% if ue.event_details.count > 0 %>
-                  <%= carousel(ue.event_details, "medium") %>
-                <% else %>
-                  <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
-          			<% end %>
+                <br>
                 <ntext>
-                <p>
       						<%= ue.ev_category.name %>
-    						</p>
-                <p>
-    						<%= align_text(ue.description) %>
-    						</p>
+      						<br>
+      						<%= align_text(ue.description) %>
                 </ntext>
-    						<br>
-      	        <%= link_to ue do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
-                <% end %>
-                <br><br>
+    						<br><br>
       			  </div>
       			 </div>
       		<% end %>
