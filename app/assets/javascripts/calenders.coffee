@@ -2,5 +2,11 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 jQuery ->
-    $('#calender_date_from').datepicker dateFormat: 'yy-mm-dd'
-    $('#calender_date_to').datepicker dateFormat: 'yy-mm-dd'
+    $('#calender_date_from').datepicker {
+        dateFormat: 'yy-mm-dd',
+        firstDay: 1
+    }
+    $('#calender_date_to').datepicker {
+        dateFormat: 'yy-mm-dd',
+        firstDay: 1
+    }

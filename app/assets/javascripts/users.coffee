@@ -2,4 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 jQuery ->
-    $('#user_dateofbirth').datepicker dateFormat: 'yy-mm-dd'
+    $('#user_dateofbirth').datepicker {
+        dateFormat: 'yy-mm-dd',
+        firstDay: 1
+    }

@@ -2,5 +2,11 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 jQuery ->
-    $('#service_date_from').datepicker dateFormat: 'yy-mm-dd'
-    $('#service_date_to').datepicker dateFormat: 'yy-mm-dd'
+    $('#service_date_from').datepicker {
+        dateFormat: 'yy-mm-dd',
+        firstDay: 1
+    }
+    $('#service_date_to').datepicker {
+        dateFormat: 'yy-mm-dd',
+        firstDay: 1
+    }
