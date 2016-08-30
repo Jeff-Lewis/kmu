@@ -702,9 +702,11 @@
       <div class="panel-heading header">
         <li_header>
             <% if user_signed_in? %>
+              <% if current_user.id == @user.id %>
                 <%= link_to new_donation_path(:user_id => @user.id, :dtype => "Reward") do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
                 <% end %>
+              <% end %>
             <% end %>
             CROWDFUNDING mit Belohnung
         </li_header>
@@ -751,9 +753,11 @@
       <div class="panel-heading header">
         <li_header>
             <% if user_signed_in? %>
+              <% if current_user.id == @user.id %>
                 <%= link_to new_donation_path(:user_id => @user.id, :dtype => "Loan") do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
                 <% end %>
+              <% end %>
             <% end %>
             CROWDFUNDING mit Verzinsung
         </li_header>
