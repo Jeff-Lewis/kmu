@@ -42,7 +42,9 @@
 				  <li class="divider">
                   <li><%= link_to "Sehenswürdigkeiten", hotspots_path if $activeapps.include?("Sehenswürdigkeiten")%></li>
 				  <li class="divider">
-				  <li><%= link_to "Spenden Initiativen", donations_path if $activeapps.include?("Spendeninitiativen") %></li>
+				  <li><%= link_to "Crowdfunding Spenden", donations_path(:dtype => "Donation") if $activeapps.include?("Spendeninitiativen") %></li>
+				  <li><%= link_to "Crowdfunding Belohnung", donations_path(:dtype => "Reward") if $activeapps.include?("Rewardinitiativen") %></li>
+				  <li><%= link_to "Crowdfunding Kredit", donations_path(:dtype => "Loan") if $activeapps.include?("Loaninitiativen") %></li>
 				  <li class="divider">
                   <li><%= link_to "Kleinanzeigen (Suchen)", requests_path(:rtype => "suche") if $activeapps.include?("Kleinanzeigen") %></li>
 	              <li><%= link_to "Kleinanzeigen (Anbieten)", requests_path(:rtype => "biete") if $activeapps.include?("Kleinanzeigen") %></li>

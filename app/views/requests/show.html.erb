@@ -24,9 +24,7 @@
               <% end %>
             <% end %>
             <% if @request.rtype == "biete" %>
-              <% @user_id = current_user.id %>
-              <% @user_id2 = @request.user_id %>
-              <%= link_to new_transaction_path :ref => @request.name, :object_name => "Request", :object_id => @request.id, :user_id => @user_id, :user_id2 => @user_id2, :company_id => nil, :company_id2 => nil, :amount => @request.price do %>
+              <%= link_to new_transaction_path :ref => @request.name, :object_name => "Request", :object_id => @request.id, :user_id_bel => current_user.id, :user_id_ver => @request.user_id, :amount => @request.price do %>
                 <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
               <% end %>
             <% end %>

@@ -37,9 +37,19 @@
             <%= image_tag('bid_a.png', :size => "50x50") %>
           <% end %>
         <% end %>
-        <% if @company.donations.count > 0 %>
+        <% if @company.donations.where('dtype=?',"Donation").count > 0 %>
           <%= link_to "#donation_initiative" do %>
             <%= image_tag('donation_initiative_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @company.donations.where('dtype=?',"Reward").count > 0 %>
+          <%= link_to "#reward" do %>
+            <%= image_tag('cfr_a.png', :size => "50x50") %>
+          <% end %>
+        <% end %>
+        <% if @company.donations.where('dtype=?',"Loan").count > 0 %>
+          <%= link_to "#loan" do %>
+            <%= image_tag('cfl_a.png', :size => "50x50") %>
           <% end %>
         <% end %>
         <% if @company.donation_stats.count > 0 %>
@@ -92,9 +102,7 @@
             <% end %>
           <% end %>
           
-          <% @user_id = current_user.id %>
-          <% @company_id = @company.id %>
-          <%= link_to new_transaction_path :ref => "Vergütung an "+ @company.name, :object_name => "Company", :object_id => @company.id, :user_id => @user_id, :user_id2 => nil, :company_id => @company_id, :company_id2 => nil, :amount => nil do %>
+          <%= link_to new_transaction_path :ref => "Vergütung an "+ @company.name, :object_name => "Company", :object_id => @company.id, :user_id_bel => current_user.id, :company_id_ver => @company.id do %>
             <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
           <% end %>
           
@@ -491,7 +499,7 @@
           <% if @company.social %>
             <% if user_signed_in? %>
               <% if current_user.id == @company.user.id %>
-                <%= link_to new_donation_path(:company_id => @company.id) do %>
+                <%= link_to new_donation_path(:company_id => @company.id, :dtype => "Donation") do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
                 <% end %>
               <% end %>
@@ -504,7 +512,7 @@
         <% end %>
       </div>
       <div class="panel-body">
-        <% @company.donations.each do |cds| %>
+        <% @company.donations.where('dtype=?',"Donation").each do |cds| %>
           <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
               <%= link_to cds do %>
@@ -532,45 +540,162 @@
   </div>
   <br>
   <% end %>
-
-  <% if $activeapps.include?("Spenden") %>
-  <a id="donation">
+  
+  <% if $activeapps.include?("Rewardinitiativen") %> 
+  <a id="reward">
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
         <li_header>
-            SPENDEN
+            <% if user_signed_in? %>
+              <% if current_user.id == @company.user.id %>
+                <%= link_to new_donation_path(:company_id => @company.id, :dtype => "Reward") do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+                <% end %>
+              <% end %>
+            <% end %>
+            CROWDFUNDING mit Belohnung
         </li_header>
         <%= link_to "#company" do %>
           <%= image_tag('company_a.png', :size => "50x50", class: "pull-right") %>
         <% end %>
       </div>
       <div class="panel-body">
-  	    <% @company.donation_stats.each do |cds| %>
+        <% @company.donations.where('dtype=?',"Reward").each do |cds| %>
           <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
-              <%= link_to cds.donation do %>
-                <% if cds.donation.donation_details != nil %>
-                      <%= carousel(cds.donation.donation_details, "medium") %>
+              <%= link_to cds do %>
+                <% if cds.donation_details != nil %>
+                      <%= carousel(cds.donation_details, "medium") %>
+                    <% else %>
+                      <%= image_tag("cfr_a.png", :size => "200x200", class:"img-rounded" ) %>
+            		<% end %>
+            	<% end %>
+              <br>
+              <anzeigetext>
+    						<%= cds.name %><br>
+              </anzeigetext>
+              <ntext>
+  						<%= align_text(cds.description) %>
+  						<br>
+              </ntext>
+              <ntext>Ziel <br></ntext><preis><%= sprintf("%05.2f CHF", cds.amount) %></preis>
+              <br><br>
+              <ntext>Unterstützungsbetrag <br></ntext><preis><%= sprintf("%05.2f CHF", cds.donation_stats.sum(:amount)) %></preis>
+              <br><br>
+            </div>
+          </div>
+        <% end %>
+    	</div>
+    </div>
+  </div>
+  <br>
+  <% end %>
+
+  <% if $activeapps.include?("Loaninitiativen") %> 
+  <a id="loan">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <li_header>
+            <% if user_signed_in? %>
+              <% if current_user.id == @company.user.id %>
+                <%= link_to new_donation_path(:company_id => @company.id, :dtype => "Loan") do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+                <% end %>
+              <% end %>
+            <% end %>
+            CROWDFUNDING mit Verzinsung
+        </li_header>
+        <%= link_to "#user" do %>
+          <%= image_tag('company_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
+      </div>
+      <div class="panel-body">
+        <% @company.donations.where('dtype=?',"Loan").each do |cds| %>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="thumbnail" align="center">
+              <%= link_to cds do %>
+                <% if cds.donation_details != nil %>
+                      <%= carousel(cds.donation_details, "medium") %>
+                    <% else %>
+                      <%= image_tag("cfl_a.png", :size => "200x200", class:"img-rounded" ) %>
+            		<% end %>
+            	<% end %>
+              <br>
+              <anzeigetext>
+    						<%= cds.name %><br>
+              </anzeigetext>
+              <ntext>
+  						<%= align_text(cds.description) %>
+  						<br>
+              </ntext>
+              <ntext>Ziel <br></ntext><preis><%= sprintf("%05.2f CHF", cds.amount) %></preis>
+              <br><br>
+              <ntext>Kreditbetrag <br></ntext><preis><%= sprintf("%05.2f CHF", cds.donation_stats.sum(:amount)) %></preis>
+              <br><br>
+            </div>
+          </div>
+        <% end %>
+    	</div>
+    </div>
+  </div>
+  <br>
+  <% end %>
+
+  <% if $activeapps.include?("Spenden") %>
+  <a id="donation">
+    <div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <li_header>
+            SPENDEN und CROWDFUNDING
+        </li_header>
+        <%= link_to "#company" do %>
+          <%= image_tag('company_a.png', :size => "50x50", class: "pull-right") %>
+        <% end %>
+      </div>
+      <div class="panel-body">
+  	    <% @company.donation_stats.each do |uds| %>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="thumbnail" align="center">
+              <%= link_to uds.donation do %>
+                <% if uds.donation.donation_details != nil %>
+                      <%= carousel(uds.donation.donation_details, "medium") %>
                     <% else %>
                       <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
             		<% end %>
             	<% end %>
           		<br>
-    					<%= cds.donation.company.name %>
-    					<br>
               <anzeigetext>
-    						<%= cds.donation.name %><br>
+    						<%= uds.donation.name %><br>
               </anzeigetext>
               <ntext>
-  						<%= align_text(cds.donation.description) %>
-  						<br>
-              Spendenbetrag<br> </ntext><preis><%= sprintf("%05.2f CHF", cds.amount) %></preis><ntext> <br> am <%= cds.created_at.strftime("%d.%m.%Y") %></ntext>
-              <br><br>
-             </div>
+                <%= align_text(uds.donation.description) %><br>
+      					<%= uds.donation.company.name if uds.donation.company_id %><br>
+      					<%= uds.donation.user.name + " " + uds.donation.user.lastname if uds.donation.user_id %><br>
+              </ntext>
+              <br>
+    	        <% if uds.donation.dtype == "Donation" %>
+                <ntext>Spendenbetrag</ntext><br><preis><%= sprintf("%05.2f CHF", uds.amount) %></preis><ntext><br> am <%= uds.created_at.strftime("%d.%m.%Y") %></ntext>
+                <br><br>
+              <% end %>
+    	        <% if uds.donation.dtype == "Reward" %>
+                <ntext>Unterstützungsbetrag</ntext><br><preis><%= sprintf("%05.2f CHF", uds.amount) %></preis><ntext><br> am <%= uds.created_at.strftime("%d.%m.%Y") %></ntext>
+                <br><br>
+                <anzeigetext><%= uds.donation.reward %></anzeigetext>
+                <br>
+              <% end %>
+    	        <% if uds.donation.dtype == "Loan" %>
+                <ntext>Kreditbetrag</ntext><br><preis><%= sprintf("%05.2f CHF", uds.amount) %></preis><ntext><br> am <%= uds.created_at.strftime("%d.%m.%Y") %></ntext>
+                <br><br>
+                <anzeigetext><%= uds.donation.interest_rate %>%</anzeigetext>
+                <br>
+              <% end %>
+            </div>
           </div>
         <% end %>
-  	  </div>
+    	</div>
     </div>
   </div>
   <br>

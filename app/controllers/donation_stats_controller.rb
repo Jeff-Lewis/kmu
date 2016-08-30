@@ -18,6 +18,7 @@ class DonationStatsController < ApplicationController
   def new
     @donation_stat = DonationStat.new
     @donation_stat.donation_id = params[:donation_id]
+    @donation_stat.amount = Donation.find(params[:donation_id]).price
     @dontype = params[:dontype]
     if params[:dontype] == "User"
         @donation_stat.user_id = current_user.id

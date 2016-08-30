@@ -20,8 +20,14 @@
           <% end %>
         <% else %>
           <% ticket_id = nil %>
-          <%= link_to url_for(@controller_name), :search_domain => @search_domain, :page => session[:page] do %>
-            <i class="btn btn-primary glyphicon glyphicon-list"></i>
+          <% if @controller_name == "donations" %>
+            <%= link_to donations_path :search_domain => @search_domain, :dtype => @dtype, :page => session[:page] do %>
+              <i class="btn btn-primary glyphicon glyphicon-list"></i>
+            <% end %>
+          <% else %>
+            <%= link_to url_for(@controller_name), :search_domain => @search_domain, :dtype => @dtype, :page => session[:page] do %>
+              <i class="btn btn-primary glyphicon glyphicon-list"></i>
+            <% end %>
           <% end %>
         <% end %>
 		    <%= link_to new_search_path(:user_id => current_user.id, :search_domain => @search_domain, :controller_name => @controller_name, :ticket_id => session[:ticket_id]) do %>
@@ -101,8 +107,8 @@
                   <%= link_to hotspots_path :filter_id => s.id do %>
                     <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
                   <% end %>
-                <% when "Spendeninitiativen" %>
-                  <%= link_to donations_path :filter_id => s.id  do %>
+                <% when "Spendeninitiativen", "Rewardinitiativen" %>
+                  <%= link_to donations_path :filter_id => s.id, :dtype => @dtype  do %>
                     <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% end %>

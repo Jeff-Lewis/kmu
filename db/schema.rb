@@ -197,14 +197,20 @@ ActiveRecord::Schema.define(version: 20160819164300) do
 
   create_table "donations", force: :cascade do |t|
     t.string   "status"
+    t.string   "dtype"
     t.string   "name"
+    t.string   "reward"
+    t.float    "interest_rate"
+    t.date     "due_date"
     t.integer  "days"
     t.text     "description"
     t.integer  "company_id"
+    t.integer  "user_id"
     t.float    "amount"
+    t.integer  "price"
     t.boolean  "active"
-    t.datetime "date_from"
-    t.datetime "date_to"
+    t.date     "date_from"
+    t.date     "date_to"
     t.string   "stichworte"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -512,12 +518,13 @@ ActiveRecord::Schema.define(version: 20160819164300) do
   end
 
   create_table "transactions", force: :cascade do |t|
+    t.string   "ttype"
+    t.integer  "user_id"
+    t.integer  "company_id"
     t.integer  "account_ver"
     t.integer  "account_bel"
     t.date     "trx_date"
     t.date     "valuta"
-    t.boolean  "status_ver"
-    t.boolean  "status_bel"
     t.string   "status"
     t.boolean  "active"
     t.text     "text"

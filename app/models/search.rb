@@ -107,9 +107,7 @@ class Search < ActiveRecord::Base
                 @companies.each do |company|
                     cli << company.id
                 end
-                if !cli.blank?
-                    sql_string << cli
-                end
+                sql_string << cli
             end
             self.sql_string = sql_string
             Company.where(sql_string).count
@@ -140,9 +138,7 @@ class Search < ActiveRecord::Base
                 @users.each do |user|
                     uli << user.id
                 end
-                if !uli.blank?
-                    sql_string << uli
-                end
+                sql_string << uli
             end
             self.sql_string = sql_string
             Bid.where(sql_string).count
@@ -245,9 +241,7 @@ class Search < ActiveRecord::Base
                 @vehicles.each do |v|
                     vli << v.id
                 end
-                if !vli.blank?
-                    sql_string << vli
-                end
+                sql_string << vli
             end
             self.sql_string = sql_string
             Vehicle.where(sql_string).count
@@ -272,9 +266,7 @@ class Search < ActiveRecord::Base
                 @users.each do |user|
                     uli << user.id
                 end
-                if !uli.blank?
-                    sql_string << uli
-                end
+                sql_string << uli
             end
             self.sql_string = sql_string
             Request.where(sql_string).count
@@ -296,9 +288,7 @@ class Search < ActiveRecord::Base
                 @companies.each do |company|
                     cli << company.id
                 end
-                if !cli.blank?
-                    sql_string << cli
-                end
+                sql_string << cli
             end
             self.sql_string = sql_string
             Job.where(sql_string).count
@@ -327,9 +317,7 @@ class Search < ActiveRecord::Base
                 @events.each do |e|
                     eli << e.id
                 end
-                if !eli.blank?
-                    sql_string << eli
-                end
+                sql_string << eli
             end
             self.sql_string = sql_string
             Event.where(sql_string).count
@@ -350,14 +338,19 @@ class Search < ActiveRecord::Base
                 @hotspots.each do |h|
                     hli << h.id
                 end
-                if !hli.blank?
-                    sql_string << hli
-                end
+                sql_string << hli
             end
             self.sql_string = sql_string
             Hotspot.where(sql_string).count
             
-        when "Spendeninitiativen"
+        when "Spendeninitiativen", "Rewardinitiativen"
+            sql_string[0] = sql_string[0] + " and dtype=?"
+            if self.search_domain == "Spendeninitiativen"
+                sql_string << "Donation"
+            end
+            if self.search_domain == "Rewardinitiativen"
+                sql_string << "Reward"
+            end
             if self.keywords != nil and self.keywords != ""
                 sql_string[0] = sql_string[0] + " and name LIKE ?"
                 sql_string << "%" + self.keywords + "%"
@@ -379,20 +372,34 @@ class Search < ActiveRecord::Base
                 sql_string << self.amount_to
             end
             if self.distance > 0 and self.longitude != nil and self.latitude != nil
-                @companies = Company.near(self.geo_address, self.distance)
-                sql_string[0] = sql_string[0] + " and company_id IN (?)"
-                @companies = Company.near(self.geo_address, self.distance)
-                cli = []
-                @companies.each do |company|
-                    cli << company.id
+                if self.search_domain == "Spendeninitiativen"
+                    sql_string[0] = sql_string[0] + " and company_id IN (?)"
+                    @companies = Company.near(self.geo_address, self.distance)
+                    cli = []
+                    @companies.each do |company|
+                        cli << company.id
+                    end
+                    sql_string << cli
                 end
-                if !cli.blank?
+                if self.search_domain == "Rewardinitiativen"
+                    sql_string[0] = sql_string[0] + " and (company_id IN (?)"
+                    @companies = Company.near(self.geo_address, self.distance)
+                    cli = []
+                    @companies.each do |company|
+                        cli << company.id
+                    end
+                    sql_string << cli
+                    sql_string[0] = sql_string[0] + " or user_id IN (?))"
+                    @users = User.near(self.geo_address, self.distance)
+                    cli = []
+                    @users.each do |user|
+                        cli << user.id
+                    end
                     sql_string << cli
                 end
             end
             self.sql_string = sql_string
             Donation.where(sql_string).count
-
         end
     end
 end

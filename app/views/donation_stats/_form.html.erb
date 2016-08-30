@@ -7,7 +7,12 @@
               <%= link_to @donation_stat.donation do %>
                 <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
               <% end %>
-              SPENDER
+              <% if @donation_stat.donation.dtype == "Donation" %>
+                SPENDER
+              <% end %>
+              <% if @donation_stat.donation.dtype == "Reward" %>
+                UNTERSTUETZER
+              <% end %>
               <% if @donation_stat.company_id != nil %>
                 <%= @donation_stat.company.name %>
               <% end %>
@@ -40,10 +45,24 @@
             <% end %>
             <%= f.hidden_field :donation_id, class:"form-control" %>
             <%= f.hidden_field :user_id, class:"form-control" %>
-            <div class="form-group">
-              <%= f.label "Spendenbetrag" %><br/>
-              <%= f.number_field :amount, class:"form-control"%>
-            </div>
+            <% if @donation_stat.donation.dtype == "Donation" %>
+              <div class="form-group">
+                <%= f.label "Spendenbetrag" %><br/>
+                <%= f.number_field :amount, class:"form-control"%>
+              </div>
+            <% end %>
+            <% if @donation_stat.donation.dtype == "Reward" %>
+              <div class="form-group">
+                <%= f.label "Unterstützungsbetrag" %><br/>
+                <%= f.number_field :amount, :readonly => true, class:"form-control"%>
+              </div>
+            <% end %>
+            <% if @donation_stat.donation.dtype == "Loan" %>
+              <div class="form-group">
+                <%= f.label "Kreditbetrag" %><br/>
+                <%= f.number_field :amount, class:"form-control"%>
+              </div>
+            <% end %>
             <div class="form-group">
               <%= f.label "Anonym" %><br/>
                 <%= f.check_box :anonymous, class:"form-control"%>

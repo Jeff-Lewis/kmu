@@ -6,6 +6,12 @@ class SearchesController < ApplicationController
   def index
     if params[:search_domain]
       @search_domain = params[:search_domain]
+      if @search_domain == "Spendeninitiativen"
+        @dtype = "Donation"
+      end
+      if @search_domain == "Rewardinitiativen"
+        @dtype = "Reward"
+      end
     end
     if params[:controller_name]
       @controller_name = params[:controller_name]

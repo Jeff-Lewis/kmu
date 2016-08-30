@@ -53,6 +53,20 @@ class UsersController < ApplicationController
     if params[:header] != nil and params[:body] != nil
       UserMailer.send_message(params[:id], params[:header], params[:body]).deliver_now
     end
+     if params[:trx_status_ok_id]
+       @trx = Transaction.find(params[:trx_status_ok_id])
+       if @trx
+         @trx.status = "freigegeben"
+         @trx.save
+       end
+     end
+     if params[:trx_status_ausgefuehrt_id]
+       @trx = Transaction.find(params[:trx_status_ausgefuehrt_id])
+       if @trx
+         @trx.status = "ausgeführt"
+         @trx.save
+       end
+     end
   end
 
   # GET /users/new

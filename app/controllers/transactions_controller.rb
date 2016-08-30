@@ -1,6 +1,6 @@
 class TransactionsController < ApplicationController
   before_action :set_transaction, only: [:show, :edit, :update, :destroy]
-  permits :account_ver, :account_bel, :valuta, :trx_date, :status_ver, :status_bel, :status, :active, :text, :ref, :amount, :object_name, :object_id
+  permits :account_ver, :account_bel, :valuta, :trx_date, :company_id, :user_id, :ttype, :status, :active, :text, :ref, :amount, :object_name, :object_id
 
   # GET /transactions
   def index
@@ -15,6 +15,7 @@ class TransactionsController < ApplicationController
   def new
     
     @transaction = Transaction.new
+    @transaction.ttype = "Payment"
     @transaction.trx_date = Date.today
     @transaction.valuta = Date.today
     @transaction.amount = params[:amount]
@@ -23,12 +24,13 @@ class TransactionsController < ApplicationController
     
     # Belastungskonti     
     
-    if params[:user_id]
-      @user = User.find(params[:user_id])
+    if params[:user_id_bel]
+      @transaction.user_id = params[:user_id_bel]
+      @user = User.find(params[:user_id_bel])
       @ali = []
       @partners = Company.where('partner=?',true)
       @partners.each do |p|
-        @customer = Customer.where("user_id=? AND partner_id=?", params[:user_id], p.id).first
+        @customer = Customer.where("user_id=? AND partner_id=?", params[:user_id_bel], p.id).first
         if @customer
           @customer.accounts.each do |ca|
             @ali << ca.id
@@ -37,12 +39,13 @@ class TransactionsController < ApplicationController
       end
     end
 
-    if params[:company_id2]
-      @company = Company.find(params[:company_id2])
+    if params[:company_id_bel]
+      @transaction.company_id = params[:company_id_bel]
+      @company = Company.find(params[:company_id_bel])
       @ali = []
       @partners = Company.where('partner=?',true)
       @partners.each do |p|
-        @customer = Customer.where("company_id=? AND partner_id=?", params[:company_id2], p.id).first
+        @customer = Customer.where("company_id=? AND partner_id=?", params[:company_id_bel], p.id).first
         if @customer
           @customer.accounts.each do |ca|
             @ali << ca.id
@@ -58,11 +61,11 @@ class TransactionsController < ApplicationController
     
     # Vergütungskonto 
     
-    if params[:user_id2]
-      @user = User.find(params[:user_id2])
+    if params[:user_id_ver]
+      @user = User.find(params[:user_id_ver])
       @partners = Company.where('partner=?',true)
       @partners.each do |p|
-        @customer = Customer.where("user_id=? AND partner_id=?", params[:user_id2], p.id).first
+        @customer = Customer.where("user_id=? AND partner_id=?", params[:user_id_ver], p.id).first
         if @customer
           @account = @customer.accounts.where('is_account_ver=?',true).first
           if @account != nil
@@ -75,11 +78,11 @@ class TransactionsController < ApplicationController
       end
     end
 
-    if params[:company_id]
-      @company = Company.find(params[:company_id])
+    if params[:company_id_ver]
+      @company = Company.find(params[:company_id_ver])
       @partners = Company.where('partner=?',true)
       @partners.each do |p|
-        @customer = Customer.where("company_id=? AND partner_id=?", params[:company_id], p.id).first
+        @customer = Customer.where("company_id=? AND partner_id=?", params[:company_id_ver], p.id).first
         if @customer
           @account = @customer.accounts.where('is_account_ver=?',true).first
           if @account != nil
@@ -93,7 +96,7 @@ class TransactionsController < ApplicationController
     end
 
     if !@account
-      redirect_to @item, notice: 'no counterpart account defined, no trx possible'
+      redirect_to @item, notice: 'no counterpart account defined, trx not possible'
       return
     end
     
@@ -106,13 +109,27 @@ class TransactionsController < ApplicationController
   end
 
   # GET /transactions/1/edit
-  def edit 
+  def edit
+    @account = Account.find(@transaction.account_ver)
     if params[:user_id]
       @user = User.find(params[:user_id])
       @ali = []
       @partners = Company.where('partner=?',true)
       @partners.each do |p|
         @customer = Customer.where("user_id=? AND partner_id=?", params[:user_id], p.id).first
+        if @customer
+          @customer.accounts.each do |ca|
+            @ali << ca.id
+          end
+        end
+      end
+    end
+    if params[:company_id]
+      @company = Company.find(params[:company_id])
+      @ali = []
+      @partners = Company.where('partner=?',true)
+      @partners.each do |p|
+        @customer = Customer.where("company_id=? AND partner_id=?", params[:company_id], p.id).first
         if @customer
           @customer.accounts.each do |ca|
             @ali << ca.id

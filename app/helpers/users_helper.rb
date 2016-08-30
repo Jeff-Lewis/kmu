@@ -170,20 +170,45 @@ def build_medialist(md_string, items, cname, panel)
                           end
                           html_string = html_string + '<h4 class="media-heading">'+ item.name + " "
                           html_string = html_string + "</h4>"
-                          html_string = html_string + item.company.name
+                          if item.company_id
+                              html_string = html_string + item.company.name
+                          end
+                          if item.user_id
+                              html_string = html_string + item.user.name + " " + item.user.lastname
+                          end
                           soll = item.amount
                           if item.donation_stats != nil
                             ist  = item.donation_stats.sum(:amount)
                           else
                             ist = 0
                           end
-                          html_string = html_string + "<br>Spendenstand: "
+                          if item.dtype == "Donation"
+                              html_string = html_string + "<br>Spendenstand<br>"
+                          end
+                          if item.dtype == "Reward"
+                              html_string = html_string + "<br>Stand Unterstützung<br>"
+                          end
+                          if item.dtype == "Loan"
+                              html_string = html_string + "<br>Stand Kreditsumme<br>"
+                          end
                           html_string = html_string + "<preiss>" + sprintf("%05.2f CHF",ist) + "</preiss><br>"
                           html_string = html_string + '<div class="progress">'
                               html_string = html_string + '<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="' + ist.to_s + '" aria-valuemin="0" aria-valuemax="' + soll.to_s + '" style="width: ' + (ist/soll*100).to_s + '%">'
                                   html_string = html_string + '<span class="sr-only">40% Complete (success)</span>'
                               html_string = html_string + "</div>"
                           html_string = html_string + "</div>"
+                          if item.dtype == "Reward"
+                              if item.price > 0 
+                                  if ist > 0
+                                      anz = ((item.amount-ist)/item.price).to_i
+                                  else
+                                      anz = (item.amount/item.price).to_i
+                                  end
+                              else
+                                  anz = 0
+                              end
+                              html_string = html_string + "noch "+ anz.to_s + " Unterstützer gesucht"
+                          end
                       end
                     html_string = html_string + "</div>"
                 html_string = html_string + "<br></div>"

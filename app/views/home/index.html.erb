@@ -199,7 +199,7 @@
         <div class="col-sm-6 col-md-4 col-lg-3">          
           <div class="media">
             <div class="media-left">
-              <%= link_to donations_path do %>
+              <%= link_to donations_path, :dtype => "Donation" do %>
                 <%= image_tag('donation_a.png', :size => "50x50") %>
               <% end %>
             </div>
@@ -211,6 +211,36 @@
           </div>
         </div>
         
+        <div class="col-sm-6 col-md-4 col-lg-3">          
+          <div class="media">
+            <div class="media-left">
+              <%= link_to donations_path, :dtype => "Reward" do %>
+                <%= image_tag('cfr_a.png', :size => "50x50") %>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Crowdfunding mit Belohnungen</h4>
+                Setzen Sie eigene Crowdfunding Projekte auf oder unterstützen Sie welche und erhalten entsprechende Belohnungen...
+            </div>
+            <br>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">          
+          <div class="media">
+            <div class="media-left">
+              <%= link_to donations_path, :dtype => "Reward" do %>
+                <%= image_tag('cfl_a.png', :size => "50x50") %>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Crowdfunding mit Verzinsung</h4>
+                Finanzieren Sie Ihre Projekte in der Crowd oder investieren Sie in welche und erhalten einen Zins...
+            </div>
+            <br>
+          </div>
+        </div>
+
         <div class="col-sm-6 col-md-4 col-lg-3">          
           <div class="media">
             <div class="media-left">

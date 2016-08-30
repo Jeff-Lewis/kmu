@@ -4,15 +4,24 @@
     <div class="col-md-12">
         <div class="panel-heading header">
           <li_header>
-              SPENDENINITIATIVE <%= @donation.name %>
+              <% if @donation.dtype == "Donation" %>
+                SPENDENINITIATIVE 
+              <% end %>
+              <% if @donation.dtype == "Reward" %>
+                CROWDFUNDING Belohnung 
+              <% end %>
+              <% if @donation.dtype == "Loan" %>
+                CROWDFUNDING Zins 
+              <% end %>
+              <%= @donation.name %>
           </li_header>
         </div>
         <div class="panel-body">
-          <%= link_to donations_path :page => session[:page] do %>
+          <%= link_to donations_path :dtype => @donation.dtype, :page => session[:page] do %>
             <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
           <% end %>
           <% if user_signed_in? %>
-            <% if (@donation.company_id != nil and current_user.id == @donation.company.user_id) %>
+            <% if (@donation.company_id and current_user.id == @donation.company.user_id) or (@donation.user_id and current_user.id == @donation.user_id) %>
       	        <%= link_to edit_donation_path(@donation) do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
                 <% end %>
@@ -36,14 +45,52 @@
           <b>Beschreibung</b><br>
     			<%= @donation.description %>
           <br><br>
+          <% case @donation.dtype %>
+            <% when "Donation" %>
+              <b>Spendenziel</b><br>
+              <%= sprintf("%05.2f CHF", @donation.amount) %>
+              <br>
+            <% when "Reward" %>
+              <b>Projektziel</b><br>
+              <%= sprintf("%05.2f CHF", @donation.amount) %>
+              <br><br>
+              <b>Stückelung</b><br>
+              <%= sprintf("%05.2f CHF", @donation.price) %>
+              <br><br>
+              <b>Belohnung</b><br>
+              <%= @donation.reward %>
+              <br>
+            <% when "Loan" %>
+              <b>Kreditsumme</b><br>
+              <%= sprintf("%05.2f CHF", @donation.amount) %>
+              <br><br>
+              <b>Zinssatz</b><br>
+              <%= @donation.interest_rate %>%
+              <br><br>
+              Rückzahlung am <%= @donation.due_date.strftime("%d.%m.%Y") %>
+              <br>
+          <% end %>
+          <br>
           <b>initialisiert von:</b><br>
-          <%= link_to @donation.company do %>
-            <% if !@donation.company.avatar_file_name %>
-              <%= image_tag("company_a.png", :size => "100x100" , class:"img-rounded") %>
-            <% else %>
-              <%= image_tag @donation.company.avatar(:thumb), class:"img-rounded" %>
-            <% end %><br>
-            <%= @donation.company.name %>
+          <% if @donation.company_id %>
+            <%= link_to @donation.company do %>
+              <% if !@donation.company.avatar_file_name %>
+                <%= image_tag("company_a.png", :size => "100x100" , class:"img-rounded") %>
+              <% else %>
+                <%= image_tag @donation.company.avatar(:thumb), class:"img-rounded" %>
+              <% end %><br>
+              <%= @donation.company.name %>
+            <% end %>
+          <% end %>
+          <% if @donation.user_id %>
+            <%= link_to @donation.user do %>
+              <% if !@donation.user.avatar_file_name %>
+                <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
+              <% else %>
+                <%= image_tag @donation.user.avatar(:thumb), class:"img-rounded" %>
+              <% end %><br>
+              <%= @donation.user.name + " " + @donation.user.lastname %>
+            <% end %>
           <% end %>
     			<br><br>
           <%= @donation.created_at.strftime("%d.%m.%Y") %>
@@ -57,7 +104,7 @@
       <div class="panel-heading header">
         <li_header>
           <% if user_signed_in? %>
-            <% if current_user.id == @donation.company.user_id %>
+            <% if (@donation.company_id and current_user.id == @donation.company.user_id) or (@donation.user_id and current_user.id == @donation.user_id) %>
               <%= link_to new_donation_detail_path :mode => "private", :donation_id => @donation.id do %>
                 <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
               <% end %>
@@ -84,7 +131,7 @@
               </ntext>
               <br>
               <% if user_signed_in? %>
-                <% if current_user.id == @donation.company.user_id %>
+              <% if (@donation.company_id and current_user.id == @donation.company.user_id) or (@donation.user_id and current_user.id == @donation.user_id) %>
         	        <%= link_to edit_donation_detail_path(bd) do %>
                     <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
                   <% end %>
@@ -107,16 +154,33 @@
       <div class="panel-heading header">
         <li_header>
           <% if user_signed_in? %>
-            <%= link_to new_donation_stat_path :donation_id => @donation.id, :dontype => "User" do %>
-              <i class="btn btn-primary btn-lg glyphicon glyphicon-user">+</i>
-            <% end %>
-            <% if Company.where('active=? and user_id=?',true,current_user.id).count > 0 %>
-              <%= link_to new_donation_stat_path :donation_id => @donation.id, :dontype => "Company" do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-briefcase">+</i>
+            <% if @donation.donation_stats.sum(:amount) < @donation.amount %> 
+              <%= link_to new_donation_stat_path :donation_id => @donation.id, :dontype => "User" do %>
+                <i class="btn btn-primary btn-lg glyphicon glyphicon-user">+</i>
+              <% end %>
+              <% if Company.where('active=? and user_id=?',true,current_user.id).count > 0 %>
+                <%= link_to new_donation_stat_path :donation_id => @donation.id, :dontype => "Company" do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-briefcase">+</i>
+                <% end %>
+              <% end %>
+            <% else %>
+              <% if (@donation.company_id and current_user.id == @donation.company.user_id) or (@donation.user_id and current_user.id == @donation.user_id) and @donation.dtype == "Reward" %>
+                <%= link_to donation_path(@donation, :donation_trx_id => @donation.id) do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
+                <% end %>
               <% end %>
             <% end %>
           <% end %>
-            SPENDER <%= sprintf("%05.2f CHF", @donation.donation_stats.sum(:amount)) %>
+          <% if @donation.dtype == "Donation" %>
+            SPENDER
+          <% end %>
+          <% if @donation.dtype == "Reward" %>
+            UNTERSTUETZER
+          <% end %>
+          <% if @donation.dtype == "Loan" %>
+            KREDITGEBER
+          <% end %>
+          <%= sprintf("%05.2f CHF", @donation.donation_stats.sum(:amount)) %>
         </li_header>
       </div>
       <div class="panel-body">
@@ -144,34 +208,31 @@
       				  <%= ds.user.name + " " + ds.user.lastname  %>
       				<% end %>
       				<br><br>
-      				<betrag>
-              <% if !ds.anonymous %>
-                  <%= sprintf("%05.2f CHF", ds.amount) %>
-                <% else %>
-                  *****.** CHF
+      				<% if !ds.anonymous %>
+      	        <% if ds.donation.dtype == "Donation" %>
+                  <ntext>Spendenbetrag</ntext><br><preis><%= sprintf("%05.2f CHF", ds.amount) %></preis><ntext><br> am <%= ds.created_at.strftime("%d.%m.%Y") %></ntext>
+                  <br><br>
+                <% end %>
+      	        <% if ds.donation.dtype == "Reward" %>
+                  <ntext>Unterstützungsbetrag</ntext><br><preis><%= sprintf("%05.2f CHF", ds.amount) %></preis><ntext><br> am <%= ds.created_at.strftime("%d.%m.%Y") %></ntext>
+                  <br><br>
+                <% end %>
+      	        <% if ds.donation.dtype == "Loan" %>
+                  <ntext>Kreditbetrag</ntext><br><preis><%= sprintf("%05.2f CHF", ds.amount) %></preis><ntext><br> am <%= ds.created_at.strftime("%d.%m.%Y") %></ntext>
+                  <br><br>
+                <% end %>
+              <% else %>
+                  <betrag>*****.** CHF</betrag>
               <% end %>
-              </betrag>
               <br><br>
               <%= ds.created_at.strftime("%d.%m.%Y") %>
               <br><br>
               <% if user_signed_in? %>
-                <% if (ds.user_id != nil and current_user.id == ds.user_id) or (ds.company_id != nil and current_user.id == ds.company.user_id) %>
-                
-                  <% if ds.user_id != nil %>
-                    <% @company_id = ds.donation.company_id if ds.donation.company_id != nil %>
-                    <%= link_to new_transaction_path :ref => ds.donation.name, :object_name => "Donation", :object_id => ds.donation.id, :user_id => current_user.id, :user_id2 => nil, :company_id => @company_id, :amount => ds.amount do %>
-                      <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
-                    <% end %>
-                  <% end %>
+                <% if (ds.user_id and current_user.id == ds.user_id) or (ds.company_id and current_user.id == ds.company.user_id) %>
 
-                  <% if ds.company_id != nil %>
-                    <% @company_id = ds.donation.company_id if ds.donation.company_id != nil %>
-                    <% @company_id2 = ds.company_id if ds.company_id != nil %>
-                    <%= link_to new_transaction_path :ref => ds.donation.name, :object_name => "Donation", :object_id => ds.donation.id, :user_id => nil, :user_id2 => nil, :company_id => @company_id, :company_id2 => @company_id2, :amount => ds.amount do %>
-                      <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
-                    <% end %>
+                  <%= link_to new_transaction_path :ref => ds.donation.name, :object_name => "Donation", :object_id => ds.donation.id, :user_id_bel => ds.user_id, :company_id_bel => ds.company_id, :user_id_ver => ds.donation.user_id, :company_id_ver => ds.donation.company_id, :amount => ds.amount do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
                   <% end %>
-                
         	        <%= link_to edit_donation_stat_path(ds) do %>
                     <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
                   <% end %>

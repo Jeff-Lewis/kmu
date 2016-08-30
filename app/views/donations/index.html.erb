@@ -4,11 +4,26 @@
       <div class="panel-heading header">
         <li_header>
 		    <% if user_signed_in? %>
+  		    <% if @dtype == "Donation" %>
 		        <%= link_to searches_path :search_domain => "Spendeninitiativen", :controller_name => controller_name do %>
 		          <i class="btn btn-primary glyphicon glyphicon-filter"></i>
 		        <% end %>
+		      <% end %>
+  		    <% if @dtype == "Reward" %>
+		        <%= link_to searches_path :search_domain => "Rewardinitiativen", :controller_name => controller_name do %>
+		          <i class="btn btn-primary glyphicon glyphicon-filter"></i>
+		        <% end %>
+		      <% end %>
 		    <% end %>
-         SPENDENINITIATIVEN
+		    <% if @dtype == "Donation" %>
+           SPENDENINITIATIVEN
+        <% end %>
+		    <% if @dtype == "Reward" %>
+           CROWDFUNDING mit Belohnung
+        <% end %>
+		    <% if @dtype == "Loan" %>
+           CROWDFUNDING mit Verzinsung
+        <% end %>
         <span class="badge"><%= @donanz %></span>
         </li_header>
       </div>

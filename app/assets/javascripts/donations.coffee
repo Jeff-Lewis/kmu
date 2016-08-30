@@ -9,4 +9,8 @@ jQuery ->
     $('#donation_date_to').datepicker {
         dateFormat: 'yy-mm-dd',
         firstDay: 1
+    }    
+    $('#donation_due_date').datepicker {
+        dateFormat: 'yy-mm-dd',
+        firstDay: 1
     }
