@@ -37,15 +37,61 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="panel-body">
-                    <div class="form-group">
-                      <%= f.label "Belastungskonto" %><br>
-                      <%= f.collection_select :account_bel, Account.where('id IN (?)',@ali), :id, :name, {}, class:"form-control" %>
-                    </div>
+
+                    <% @account_ver = Account.find(@transaction.account_ver) %>
                     <div class="form-group">
                       <%= f.label "Bankverbindung" %><br>
-                      <%= @item.name %><br>
-                      <%= @account.iban %><br>
+                      <% if @account_ver.customer.user_id %>
+                        <% if @account_ver.customer.user.avatar_file_name != nil %>
+                          <%= image_tag @account_ver.customer.user.avatar(:small), class:"img-rounded"  %>
+                        <% else %>
+                          <%= image_tag("user_a.png", :size => "50x50", class:"img-rounded" ) %>
+                        <% end %>
+                        <br>
+                        <%= @account_ver.customer.user.name + " " + @account_ver.customer.user.lastname %><br>
+                        <%= @account_ver.name %><br>
+                        <%= @account_ver.iban %><br>
+                      <% end %>
+                      <% if @account_ver.customer.company_id %>
+                        <% if @account_ver.customer.company.avatar_file_name != nil %>
+                          <%= image_tag @account_ver.customer.company.avatar(:small), class:"img-rounded"  %>
+                        <% else %>
+                          <%= image_tag("company_a.png", :size => "50x50", class:"img-rounded" ) %>
+                        <% end %>
+                        <br>
+                       <%= @account_ver.customer.company.name %><br>
+                        <%= @account_ver.name %><br>
+                        <%= @account_ver.iban %><br>
+                      <% end %>
                     </div>
+                    
+                    <% @account_bel = Account.find(@transaction.account_bel) %>
+                    <div class="form-group">
+                      <%= f.label "KtoBelastung" %><br>
+                      <% if @account_bel.customer.user_id %>
+                        <% if @account_bel.customer.user.avatar_file_name != nil %>
+                          <%= image_tag @account_bel.customer.user.avatar(:small), class:"img-rounded"  %>
+                        <% else %>
+                          <%= image_tag("user_a.png", :size => "50x50", class:"img-rounded" ) %>
+                        <% end %>
+                        <br>
+                       <%= @account_bel.customer.user.name + " " + @account_bel.customer.user.lastname %><br>
+                        <%= @account_bel.name %><br>
+                        <%= @account_bel.iban %><br>
+                      <% end %>
+                      <% if @account_bel.customer.company_id %>
+                        <% if @account_bel.customer.company.avatar_file_name != nil %>
+                          <%= image_tag @account_bel.customer.company.avatar(:small), class:"img-rounded"  %>
+                        <% else %>
+                          <%= image_tag("company_a.png", :size => "50x50", class:"img-rounded" ) %>
+                        <% end %>
+                        <br>
+                       <%= @account_bel.customer.company.name %><br>
+                        <%= @account_bel.name %><br>
+                        <%= @account_bel.iban %><br>
+                      <% end %>
+                    </div>
+
                     <div class="form-group">
                       <%= f.label "Betrag" %><br>
                       <%= f.number_field :amount, class:"form-control" %>
@@ -67,6 +113,7 @@
                       <%= f.text_field :valuta, class:"form-control" %>
                     </div>
                     <%= f.hidden_field :account_ver, class:"form-control"  %>
+                    <%= f.hidden_field :account_bel, class:"form-control"  %>
                     <%= f.hidden_field :user_id, class:"form-control"  %>
                     <%= f.hidden_field :company_id, class:"form-control"  %>
                     <%= f.hidden_field :ttype, class:"form-control"  %>

@@ -1,0 +1,104 @@
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <li_header>
+            KONTOUEBERSICHT 
+        </li_header>
+        <br>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <li_header>
+            <%= link_to @user do %>
+              <% if @user.avatar_file_name == nil %>
+                <%= image_tag("user_a.png", :size => "50x50", class:"img-rounded" ) %>
+              <% else %>
+                <%= image_tag @user.avatar(:small), class:"img-rounded"  %>
+              <% end %>
+            <% end %>
+            <%= @user.name + " " + @user.lastname %>        
+        </li_header>
+      </div>
+      <div class="panel-body">
+          <% @ali = [] %>
+          <% @partners = Company.where('partner=?',true) %>
+          <% @partners.each do |p| %>
+            <% @customer = Customer.where("user_id=? AND partner_id=?", @user.id, p.id).first %>
+            <% if @customer %>
+              <% @customer.accounts.each do |ca| %>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                  <div class="thumbnail" align="center">
+                    <%= link_to new_transaction_path(:user_id => @user.id, :ref => @ref, :object_name => @object_name, :object_id => @object_id, :amount => @amount, :user_id_ver => @user_id_ver, :company_id_ver => @company_id_ver, :account_bel => ca.id) do %>
+                      <% if p.avatar_file_name == nil %>
+                        <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
+                      <% else %>
+                        <%= image_tag p.avatar(:medium), class:"img-rounded"  %>
+                      <% end %>
+                    <% end %>
+                    <br><br>
+                    <%= p.name %><br>
+                    <anzeigetext><%= ca.name %></anzeigetext><br>
+                    <ntext><%= ca.iban %></ntext>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+      </div>
+     </div>
+    </div>
+
+  <% @user.companies.each do |c| %>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel-heading header">
+          <li_header>
+            <%= link_to c do %>
+              <% if c.avatar_file_name == nil %>
+                <%= image_tag("company_a.png", :size => "50x50", class:"img-rounded" ) %>
+              <% else %>
+                <%= image_tag c.avatar(:small), class:"img-rounded"  %>
+              <% end %>
+            <% end %>
+            <%= c.name %>
+          </li_header>
+        </div>
+        <div class="panel-body">
+          <% @ali = [] %>
+          <% @partners = Company.where('partner=?',true) %>
+          <% @partners.each do |p| %>
+            <% @customer = Customer.where("company_id=? AND partner_id=?", c.id, p.id).first %>
+            <% if @customer %>
+              <% @customer.accounts.each do |ca| %>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                  <div class="thumbnail" align="center">
+                    <%= link_to new_transaction_path(:company_id => c.id, :ref => @ref, :object_name => @object_name, :object_id => @object_id, :amount => @amount, :user_id_ver => @user_id_ver, :company_id_ver => @company_id_ver, :account_bel => ca.id) do %>
+                      <% if p.avatar_file_name == nil %>
+                        <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
+                      <% else %>
+                        <%= image_tag p.avatar(:medium), class:"img-rounded"  %>
+                      <% end %>
+                    <% end %>
+                    <br><br>
+                    <%= p.name %><br>
+                    <anzeigetext><%= ca.name %></anzeigetext><br>
+                    <ntext><%= ca.iban %></ntext>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+      </div>
+     </div>
+    </div>
+  <% end %>
+
+
+</div>

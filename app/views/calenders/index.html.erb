@@ -74,6 +74,9 @@
               <td>
     				    <% if user_signed_in? %>
       				    <% if ca.user_id == current_user.id %>
+                    <%= link_to listaccounts_index_path :user_id => current_user.id, :user_id_ver => @vehicle.user_id, :company_id_ver => @vehicle.company_id, :ref => "Vergütung an "+ @vehicle.name, :object_name => "Vehicle", :object_id => @vehicle.id, :amount => 0 do %>
+                      <i class="btn btn-primary btn-xs glyphicon glyphicon-euro"></i>
+                    <% end %>
     				        <%= link_to edit_calender_path(ca) do %>
                       <i class="btn btn-default glyphicon glyphicon-wrench"></i>
                     <% end %>
@@ -114,11 +117,14 @@
               <td>
     				    <% if user_signed_in? %>
       				    <% if ca.user_id == current_user.id %>
+                    <%= link_to listaccounts_index_path :user_id => current_user.id, :user_id_ver => ca.vehicle.user_id, :company_id_ver => ca.vehicle.company_id, :ref => "Vergütung an "+ ca.vehicle.name + " " + ca.date_from.strftime("%d.%m.%Y") + " " + ca.time_from.to_s + "Uhr -" + ca.date_to.strftime("%d.%m.%Y") + " " + ca.time_to.to_s + " Uhr", :object_name => "Vehicle", :object_id => ca.vehicle.id, :amount => 0 do %>
+                      <i class="btn btn-primary btn-xs glyphicon glyphicon-euro"></i>
+                    <% end %>
     				        <%= link_to edit_calender_path(ca) do %>
-                      <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                      <i class="btn btn-primary btn-xs glyphicon glyphicon-wrench"></i>
                     <% end %>
     				        <%= link_to ca, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                      <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                      <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
                     <% end %>
         				  <% end %>
         				<% end %>

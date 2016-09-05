@@ -15,52 +15,23 @@ class TransactionsController < ApplicationController
   def new
     
     @transaction = Transaction.new
+
+    @transaction.user_id = params[:user_id]
+    @transaction.company_id = params[:company_id]
     @transaction.ttype = "Payment"
     @transaction.trx_date = Date.today
     @transaction.valuta = Date.today
     @transaction.amount = params[:amount]
+    @transaction.account_bel = params[:account_bel]
+    @transaction.status = "erfasst"
+    @transaction.ref = params[:ref]
+    @transaction.text = ""
+    @transaction.object_id = params[:object_id].to_i
+    @transaction.object_name = params[:object_name]
 
     @item = Object.const_get(params[:object_name]).find(params[:object_id])
     
-    # Belastungskonti     
-    
-    if params[:user_id_bel]
-      @transaction.user_id = params[:user_id_bel]
-      @user = User.find(params[:user_id_bel])
-      @ali = []
-      @partners = Company.where('partner=?',true)
-      @partners.each do |p|
-        @customer = Customer.where("user_id=? AND partner_id=?", params[:user_id_bel], p.id).first
-        if @customer
-          @customer.accounts.each do |ca|
-            @ali << ca.id
-          end
-        end
-      end
-    end
-
-    if params[:company_id_bel]
-      @transaction.company_id = params[:company_id_bel]
-      @company = Company.find(params[:company_id_bel])
-      @ali = []
-      @partners = Company.where('partner=?',true)
-      @partners.each do |p|
-        @customer = Customer.where("company_id=? AND partner_id=?", params[:company_id_bel], p.id).first
-        if @customer
-          @customer.accounts.each do |ca|
-            @ali << ca.id
-          end
-        end
-      end
-    end
-    
-    if @ali.size == 0
-      redirect_to @item, notice: 'no account defined, please open partner account first'
-      return
-    end
-    
     # Vergütungskonto 
-    
     if params[:user_id_ver]
       @user = User.find(params[:user_id_ver])
       @partners = Company.where('partner=?',true)
@@ -77,7 +48,6 @@ class TransactionsController < ApplicationController
         end
       end
     end
-
     if params[:company_id_ver]
       @company = Company.find(params[:company_id_ver])
       @partners = Company.where('partner=?',true)
@@ -94,18 +64,11 @@ class TransactionsController < ApplicationController
         end
       end
     end
-
     if !@account
       redirect_to @item, notice: 'no counterpart account defined, trx not possible'
       return
     end
     
-    @transaction.status = "erfasst"
-    @transaction.amount = params[:amount]
-    @transaction.ref = params[:ref]
-    @transaction.text = ""
-    @transaction.object_id = params[:object_id].to_i
-    @transaction.object_name = params[:object_name]
   end
 
   # GET /transactions/1/edit

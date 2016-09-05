@@ -102,7 +102,7 @@
             <% end %>
           <% end %>
           
-          <%= link_to new_transaction_path :ref => "Vergütung an "+ @company.name, :object_name => "Company", :object_id => @company.id, :user_id_bel => current_user.id, :company_id_ver => @company.id do %>
+          <%= link_to listaccounts_index_path :user_id => current_user.id, :user_id_ver => nil, :company_id_ver => @company.id, :ref => "Vergütung an "+@company.name, :object_name => "Company", :object_id => @company.id, :amount => nil do %>
             <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
           <% end %>
           
@@ -838,58 +838,78 @@
         <% end %>
       </div>
       <div class="panel-body">
-        <% ali = [] %>
-        <% @partners = Company.where('partner=?',true) %>
-        <% @partners.each do |p| %>
-          <% @customer = Customer.where("company_id=? AND partner_id=?", @company.id, p.id).first %>
-          <% if @customer %>
-            <% @customer.accounts.each do |ca| %>
-                <% ali << ca.id %>
-            <% end %>
-          <% end %>
-        <% end %>
-        <% @trx = Transaction.where('account_ver IN (?) OR account_bel IN (?)', (ali), (ali)) %>
-        <% if @trx.count > 0 %>
-      		<table class="table table-striped">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Datum (Valuta)</th>
-                <th>Mitteilung</th>
-                <th>Konto Belastung</th>
-                <th>Konto Vergütung</th>
-                <th>Referenz</th>
-                <th>Betrag</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @trx.each do |t| %>
-                <tr>
-                  <td>
-                    <%= link_to edit_transaction_path(t, :user_id => current_user.id) do %>
-                      <i class="btn btn-primary btn btn-xs glyphicon glyphicon-wrench"></i>
+        <% @trx = Transaction.where('ttype=? and company_id=?', "Payment", @company.id).order(trx_date: :desc) %>
+        <% @trx.each do |t| %>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="thumbnail" align="center">
+              
+              <% ac_ver = Account.find(t.account_ver) %>
+              <% if ac_ver %>
+                <% if ac_ver.customer.user_id %>
+                  <%= link_to ac_ver.customer.user do %>
+                    <% if !ac_ver.customer.user.avatar_file_name %>
+                      <%= image_tag("user_a.png", :size => "200x200" , class:"img-rounded") %>
+                    <% else %>
+                      <%= image_tag ac_ver.customer.user.avatar(:medium), class:"img-rounded"%>
                     <% end %>
-          	        <%= link_to t, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                      <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
+                  <% end %>
+                  <anzeigetext>
+                    <%= ac_ver.customer.user.name + " " + ac_ver.customer.user.lastname %>
+                  </anzeigetext>
+                <% end %>
+                <% if ac_ver.customer.company_id %>
+                  <%= link_to ac_ver.customer.company do %>
+                    <% if !ac_ver.customer.company.avatar_file_name %>
+                      <%= image_tag("company_a.png", :size => "200x200" , class:"img-rounded") %>
+                    <% else %>
+                      <%= image_tag ac_ver.customer.company.avatar(:medium), class:"img-rounded"%>
                     <% end %>
-                  </td>
-                  <td>
-                    <%= t.trx_date.strftime("%d.%m.%Y") %><br>
-                    (<%= t.valuta.strftime("%d.%m.%Y") %>)
-                  </td>
-                  <td><%= t.text %></td>
-                  <td><%= Account.find(t.account_bel).iban if t.account_bel %></td>
-                  <td><%= Account.find(t.account_ver).iban if t.account_ver %></td>
-                  <td><%= t.ref %></td>
-                  <td><%= sprintf("%05.2f CHF",t.amount) if t.amount != nil %></td>
-                  <td><%= t.status %></td>
-                </tr>
+                  <% end %>
+                  <anzeigetext>
+                    <%= ac_ver.customer.company.name %>
+                  </anzeigetext>
+                <% end %>
               <% end %>
-            </tbody>
-          </table>
+              <br><br>
+              <b>Referenz</b>
+              <% @item = Object.const_get(t.object_name).find(t.object_id) %>
+              <% if @item %>
+                <%= link_to @item do %>
+                  <%= @item.name %>
+                <% end %>
+                <br>
+              <% end %>
+              <br>
+              <b>Betrag</b>
+              <%= sprintf("%05.2f CHF",t.amount) if t.amount != nil %>
+              <br><br>
+              <b>Mitteilung</b><br>
+              <%= t.text %>
+              <br><br>
+              <b>Status</b>
+              <%= t.status if t.amount != nil %>
+              <br><br>
+              <% if t.status == "erfasst" %>
+                <%= link_to company_path(@company, :trx_status_ok_id => t.id) do %>
+                  <i class="btn btn-primary btn btn-lg glyphicon glyphicon-ok"></i>
+                <% end %>
+                <%= link_to edit_transaction_path(t, :user_id => current_user.id) do %>
+                  <i class="btn btn-primary btn btn-lg glyphicon glyphicon-wrench"></i>
+                <% end %>
+      	        <%= link_to t, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                  <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                <% end %>
+              <% end %>
+              <% if t.status == "freigegeben" %>
+                <%= link_to company_path(@company, :trx_status_ausgefuehrt_id => t.id) do %>
+                  <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-up"></i>
+                <% end %>
+              <% end %>
+              <br><br>
+            </div>
+          </div>
         <% end %>
-      </div>
+    </div>
     </div>
   </div>
 <br>

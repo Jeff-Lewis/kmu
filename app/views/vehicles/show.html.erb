@@ -11,6 +11,9 @@
           <%= link_to vehicles_path :page => session[:page] do %>
             <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
           <% end %>
+          <%= link_to calenders_path :vehicle_id => @vehicle.id do %>
+            <i class="btn btn-primary btn-lg glyphicon glyphicon-calendar"></i>
+          <% end %>
           <% if user_signed_in? %>
             <% if (@vehicle.user_id != nil and current_user.id == @vehicle.user.id) or (@vehicle.company_id != nil and current_user.id == @vehicle.company.user.id) %>
                 <%= link_to new_vehicle_path :user_id => current_user.id do %>
@@ -25,7 +28,7 @@
             <% end %>
             <% @user_id2 = @vehicle.user_id if @vehicle.user_id != nil %>
             <% @company_id = @vehicle.company.id if @vehicle.company_id != nil %>
-            <%= link_to new_transaction_path :ref => @vehicle.name, :object_name => "Vehicle", :object_id => @vehicle.id, :user_id => current_user.id, :user_id2 => @user_id2, :company_id => @company_id, :amount => @vehicle.price do %>
+            <%= link_to listaccounts_index_path :user_id => current_user.id, :user_id_ver => @vehicle.user_id, :company_id_ver => @vehicle.company_id, :ref => "Vergütung an "+ @vehicle.name, :object_name => "Vehicle", :object_id => @vehicle.id, :amount => 0 do %>
               <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
             <% end %>
   	        <%= link_to new_webmaster_path :object_name => "Vehicle", :object_id => @vehicle.id, :user_id => current_user.id do %>
@@ -81,53 +84,6 @@
   </div>
   <br>
   
-  <div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-          <%= link_to calenders_path :vehicle_id => @vehicle.id do %>
-            <i class="btn btn-primary btn-lg glyphicon glyphicon-calendar"></i>
-          <% end %>
-            VERMIETUNGEN
-        </li_header>
-      </div>
-      <% if @vehicle.calenders.count > 0 %>
-  			<table class="table table striped">
-  			  <thead>
-  			    <tr>
-  					  <th colspan="3">
-  					    Benutzer
-  					  </th>
-  					  <th colspan="2">
-  					    Mietzeitraum
-  					  </th>
-  					  <th>
-  					    Datum
-  					  </th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @vehicle.calenders.each do |vc| %>
-              <tr>
-                <td>
-        				<% if vc.user.avatar_file_name == nil %>
-                  <%= image_tag("user_a.png", :size => "50x50", class:"img-rounded" ) %>
-                <% else %>
-                  <%= image_tag vc.user.avatar(:small), class:"img-rounded"  %>
-                <% end %>
-                </td>
-                <td><%= vc.user.name + " " + vc.user.lastname %></td>
-                <td><%= vc.date_from.strftime("%d.%m.%Y") %></td>
-                <td><%= vc.date_to.strftime("%d.%m.%Y") %></td>
-                <td><%= vc.created_at.strftime("%d.%m.%Y") %></td>
-              </tr>
-            <% end %>
-          </tbody>
-  			</table>
-  		<% end %>
-  	</div>
-  </div>
-
   <div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">

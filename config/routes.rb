@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'listaccounts/index'
+
   get 'statement/index'
 
   resources :transactions
