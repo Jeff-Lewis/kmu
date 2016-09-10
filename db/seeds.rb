@@ -168,12 +168,13 @@ transactions = Transaction.create({user_id:5, company_id:nil, account_ver:3, acc
 transactions = Transaction.create({user_id:6, company_id:nil, account_ver:4, account_bel:2, trx_date:Date.today, valuta:Date.today+1, status:"erfasst", ref: "dies ist eine Test-Transaktion", object_name:"User", object_id:1, amount:100})
 
 partnerlinks = PartnerLink.create({active:true, company_id:4, name:"eBanking", link:"www.tkb.ch/ebanking"})
-partnerlinks = PartnerLink.create({active:true, company_id:4, name:"Adressänderungen", link:"https://www.tkb.ch/default/online-schalter/adressaenderung.htm"})
-partnerlinks = PartnerLink.create({active:true, company_id:4, name:"Terminvereinbarung", link:"https://www.tkb.ch/default/online-schalter/adressaenderung.htm"})
-partnerlinks = PartnerLink.create({active:true, company_id:4, name:"Formularbestellung", link:"https://www.tkb.ch/default/online-schalter/bestellung-zv-formulare.htm"})
-partnerlinks = PartnerLink.create({active:true, company_id:4, name:"Reisegeldbestellung", link:"https://www.tkb.ch/default/online-schalter/reisegeld.htm"})
-partnerlinks = PartnerLink.create({active:true, company_id:4, name:"Geschäftstellen", link:"https://www.tkb.ch/private/service/geschaeftsstellen.htm"})
-partnerlinks = PartnerLink.create({active:true, company_id:4, name:"Bancomaten", link:"https://www.tkb.ch/private/service/tkb_bancomaten.htm"})
+partnerlinks = PartnerLink.create({active:true, company_id:4, name:"Kunden Webportal", link:"https://www.tkb.ch/default/online-schalter/adressaenderung.htm"})
+
+#partnerlinks = PartnerLink.create({active:true, company_id:4, name:"Terminvereinbarung", link:"https://www.tkb.ch/default/online-schalter/adressaenderung.htm"})
+#partnerlinks = PartnerLink.create({active:true, company_id:4, name:"Formularbestellung", link:"https://www.tkb.ch/default/online-schalter/bestellung-zv-formulare.htm"})
+#partnerlinks = PartnerLink.create({active:true, company_id:4, name:"Reisegeldbestellung", link:"https://www.tkb.ch/default/online-schalter/reisegeld.htm"})
+#partnerlinks = PartnerLink.create({active:true, company_id:4, name:"Geschäftstellen", link:"https://www.tkb.ch/private/service/geschaeftsstellen.htm"})
+#partnerlinks = PartnerLink.create({active:true, company_id:4, name:"Bancomaten", link:"https://www.tkb.ch/private/service/tkb_bancomaten.htm"})
 
 #create some company services..
 services = Service.create({status:"ok", active:true, company_id:1, parent_id:0, stype:"regular", name:"frische Fische", social:false,avatar:File.open(path+'fische.jpg', 'rb')})
