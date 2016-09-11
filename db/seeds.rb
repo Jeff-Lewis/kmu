@@ -113,6 +113,24 @@ users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.7.1
 users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.7.1958", anonymous:false, status:"ok", active:true, email:"gregor.stuecheli@outlook.com", password:"password", name:"Gregor", lastname:"Stücheli", address1:"Bahnhof", address2:"Münchwilen", address3:"", superuser:false,avatar:File.open(path+'stuecheli.jpg', 'rb')})
 users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1967", anonymous:false, status:"ok", active:true, email:"hans.nagel@outlook.com", password:"password", name:"Hans", lastname:"Nagel", address1:"Amriswil", address2:"Hauptstrasse 2", address3:"", superuser:false,avatar:File.open(path+'nagel.jpg', 'rb')})
 
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1967", anonymous:false, status:"ok", active:true, email:"corinne@outlook.com", password:"password", name:"Corinne", lastname:"Iaonnidis-Sondereggert", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'Corinne-Ioannidis-Sonderegger.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1967", anonymous:false, status:"ok", active:true, email:"christoph@outlook.com", password:"password", name:"Christoph", lastname:"Sprenger", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'Christoph-Sprenger.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1967", anonymous:false, status:"ok", active:true, email:"aron@outlook.com", password:"password", name:"Aron", lastname:"Gamba", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'Aron_Gamba.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1967", anonymous:false, status:"ok", active:true, email:"fabio@outlook.com", password:"password", name:"Fabio", lastname:"Tauro", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'FabioTauro.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1967", anonymous:false, status:"ok", active:true, email:"isabelle@outlook.com", password:"password", name:"Isabelle", lastname:"Hugentobler", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'IsabelleHugentobler.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1967", anonymous:false, status:"ok", active:true, email:"marco@outlook.com", password:"password", name:"Marco", lastname:"Sonderegger", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'Marco-Sonderegger.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1967", anonymous:false, status:"ok", active:true, email:"melanie@outlook.com", password:"password", name:"Melanie", lastname:"Forster", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'MelanieForster2015.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1967", anonymous:false, status:"ok", active:true, email:"nunzia@outlook.com", password:"password", name:"Nunzia", lastname:"Seiler", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'NunziaSeiler.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1967", anonymous:false, status:"ok", active:true, email:"oliverp@outlook.com", password:"password", name:"Oliver", lastname:"Paulin", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'Oliver_Paulin.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1967", anonymous:false, status:"ok", active:true, email:"petrak@outlook.com", password:"password", name:"Petra", lastname:"Koch", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'PetraKoch.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1967", anonymous:false, status:"ok", active:true, email:"rschaelchi@outlook.com", password:"password", name:"Raymond", lastname:"Schaelchli", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'RaymondSchaelchli.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1967", anonymous:false, status:"ok", active:true, email:"rschoch@outlook.com", password:"password", name:"Remo", lastname:"Schoch", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'RemoSchoch.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1967", anonymous:false, status:"ok", active:true, email:"sherzog@outlook.com", password:"password", name:"Stefanie", lastname:"Herzog", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'StefanieHerzog.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1967", anonymous:false, status:"ok", active:true, email:"vkirli@outlook.com", password:"password", name:"Vesile", lastname:"Kirli", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'VesileKirli.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1967", anonymous:false, status:"ok", active:true, email:"mbueschl@outlook.com", password:"password", name:"Manuela", lastname:"Bueschl", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'ManuelaBueschl.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1967", anonymous:false, status:"ok", active:true, email:"ppreite@outlook.com", password:"password", name:"Patric", lastname:"Preite", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'PatricPreite.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1967", anonymous:false, status:"ok", active:true, email:"rruckstuhl@outlook.com", password:"password", name:"Ramona", lastname:"Ruckstuhl", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'RamonaRuckstuhl.jpg', 'rb')})
+
 #create some companies...
 companies = Company.create({status:"ok", active:true, user_id:1, name:"Fischzucht Hecht", category_id:24 ,stichworte: "Fische, Zierfische, Angelbedarf", address1:"Bahnhof", address2:"Frauenfeld", address3:"Thurgau", avatar:File.open(path+'fischhaendler.jpg', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:2, name:"Alder Entsorgung", category_id:11 ,stichworte: "Hocbau, Tiefbau", address1:"Bahnhof", address2:"Wil", address3:"Thurgau", avatar:File.open(path+'alder.jpg', 'rb')}) 
@@ -129,6 +147,7 @@ companies = Company.create({status:"ok", active:true, user_id:1, name:"Autohaus 
 companies = Company.create({status:"ok", active:true, user_id:1, name:"Valiant Bank", category_id:26 ,stichworte: "Bank Finanz Geld", address1:"Bahnhof", address2:"Bern", address3:"Bern", avatar:File.open(path+'valiant.png', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:4, name:"St.Galler Kantonalbank", partner:true, category_id:26 ,stichworte: "Banken", address1:"Bahnhof", address2:"St.Gallen", address3:"St.gallen", avatar:File.open(path+'sgkb.png', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:4, name:"Graubündner Kantonalbank", partner:true, category_id:26 ,stichworte: "Banken", address1:"Bahnhof", address2:"Chur", address3:"Graubünden", avatar:File.open(path+'grkb.png', 'rb')}) 
+companies = Company.create({status:"ok", active:true, user_id:1, name:"Sonderegger publish", partner:false, category_id:22 ,stichworte: "Copyshop Drucken Druckerei Publish Webdesign", address1:"Marktstrasse 26", address2:"8570 Weinfelden", address3:"Thurgau", avatar:File.open(path+'sonderegger.tiff', 'rb')}) 
 
 customers = Customer.create({user_id:1, partner_id:4, customer_number:"uno"+Time.now.to_s})
 customers = Customer.create({user_id:2, partner_id:4, customer_number:"uno"+Time.now.to_s})
@@ -199,6 +218,68 @@ services = Service.create({status:"ok", active:true, company_id:4, parent_id:0, 
 services = Service.create({status:"ok", active:true, company_id:4, parent_id:0, stype:"regular", name:"Kinder und Jugendliche", social:false,avatar:File.open(path+'young.jpg', 'rb')})
 services = Service.create({status:"ok", active:true, company_id:5, parent_id:0, stype:"regular", name:"Maschinen Luftdruck", social:false, avatar:File.open(path+'luftdruck.jpg', 'rb')})
 
+services = Service.create({status:"ok", active:true, company_id:16, parent_id:0, stype:"regular", name:"Project & Services", description:"Medien­projekt­management    Als Generalunternehmer begleiten wir Ihr Projekt von der Idee bis zur Publikation. Egal ob elektronisch oder gedruckt, ob inhouse produziert oder extern bei einem unserer Partner.
+
+Individualität zeichnet unsere Kunden und ihre Wünsche und Bedürfnisse aus. Gefragt ist deshalb ein Leistungsangebot, das von der Konzeption bis zum fertigen Druckerzeugnis alles beinhaltet. Aber immer aus einer Hand. Wir verstehen uns als ein Generalunternehmen, das in der ganzen grafischen Industrie zu Hause ist. In den vergangenen 60 Jahren haben wir zuverlässige Netzwerke mit unseren Partnern aufgebaut. Wir erfüllen auch den ausgefallensten Wunsch, für den es entweder hochspezialisiertes Wissen oder aussergewöhnliche Maschinen benötigt. Was immer Sie möchten, Sie bekommen es. Die Zusammenarbeit richtet sich nach individueller Planung – und immer so, dass Sie das Gewünschte wirklich aus einer Hand bekommen. Aus erster Hand!
+
+Es ist das Ziel unserer Kundenberater, Ihnen die wirtschaftlichste, optimalste und kostengünstigste Produktionsvariante anzubieten. Profitieren Sie von der Erfahrung unserer Kundenberater und von unserem breiten Netzwerk an Spezialisten.", social:false, avatar:File.open(path+'luftdruck.jpg', 'rb')})
+services = Service.create({status:"ok", active:true, company_id:16, parent_id:0, stype:"regular", name:"Create & Design", description: "Mediengestaltung    Wir sind zwar keine Werbeagentur. Trotzdem haben unsere Grafiker kreative Ideen und gestalterisches Flair. Wenn Sie ein bereits bestehendes Konzept oder eine Idee für ein Projekt haben, sind Sie bei uns genau richtig!
+
+Wir setzen Ihre Ideen visuell um oder realisieren Ihre Drucksachen unter Berücksichtigung von bestehenden Corporate-Design-Vorgaben. Bei grösseren Projekten mit Bedarf an Konzeption und Design arbeiten wir eng mit unseren Agenturpartnern zusammen.", social:false, avatar:File.open(path+'luftdruck.jpg', 'rb')})
+services = Service.create({status:"ok", active:true, company_id:16, parent_id:0, stype:"regular", name:"DTP & Premedia", description: "Medienvorstufe    Ob als Bestandteil einer unserer Gesamtlösungen oder als eigenständige Dienstleistung: Wir sind Ihr kompetenter Partner in allen Anliegen rund um digitale Medienaufbereitung.
+
+Lassen Sie Ihre Druckvorstufe, egal in welcher Sprache, komplett von uns erstellen. Wir kümmern uns um die typografischen Feinheiten und bereiten die Daten drucktechnisch auf. Oder nutzen Sie eines unserer Online-Tools zur Druckvorstufenherstellung.
+
+Einfache und anspruchsvolle Bildretuschen gehören ebenfalls zu unseren Spezialitäten. So kann Ungewolltes wegretuschiert oder Erwünschtes ergänzt werden. Unser ins Colormanagement eingebundene Proofingsystem sorgt für Kontrolle und Farbsicherheit und führt zu Übereinstimmung zwischen Proof und Druck. Nutzen Sie unser Fotostudio. Unser Fotograf realisiert Ihre Wünsche direkt vor Ort oder bei uns im Haus. Im Korrektorat und Lektorat sind zwei geprüfte Korrektorinnen für uns tätig. Korrekturarbeiten und Übersetzungen in Fremdsprachen übernehmen für uns renommierte Übersetzungsbüros. Nach Fertigstellung des Auftrags werden die Daten archiviert und können jederzeit abgerufen werden.
+
+Da die Kommunikation zunehmend auf Datenbanken und Internet basiert, ist eine sinnvolle Ergänzung zum Gedruckten immer naheliegender, zumal dadurch ein Mehrfachnutzen entsteht. Gerne unterstützen wir Sie bei Ihren elektronischen Projekten. Ob Produktion per Redaktionssystem, Bestellung über Webshop, Publikation über Database-Publishing oder Personalisierungen (Bild und/oder Text). Wir haben eine massgeschneiderte Lösung für Sie bereit.", social:false, avatar:File.open(path+'luftdruck.jpg', 'rb')})
+services = Service.create({status:"ok", active:true, company_id:16, parent_id:0, stype:"regular", name:"Outline & Design", description:"Media- und Websolutions    In Zusammenarbeit mit interactive friends ag aus Rorschach bieten wir sowohl Standardlösungen wie auch individuelle Lösungen im Online-Bereich an. Dazu haben wir gemeinsam die Firma Sonderegger Interactive AG gegründet.
+
+Wir leben und lieben interaktive Kommunikation im digitalen Zeitalter. Indem wir klassische und digitale Medien gekonnt synchronisieren und einsetzen, erreichen wir Kunden auf allen Kanälen effizient.
+
+Ihr Vorteil
+Ein Ansprechpartner für Druck und Online
+Vielfältige Möglichkeiten für Ihre crossmedialen Projekte dank Kombination von Print und Web
+Breites Angebot an Online-/Mobile-Produkten
+Realisierung von Standardlösungen aber auch hoch individualisierte Projekte
+Über 15 Jahre Erfahrung aus mehr als 1’000 Online-Projekten
+Einige Anwendungsbeispiele
+Übersichtliche und einfache Websites
+Grössere Corporate Websites
+Landing- und Promopages
+Crossmedia-Projekte
+Online-Shops
+Smartphone- und Tablet-Lösungen (Blätterbare Magazin/Kataloge)
+Newsletter und E-Mail-Marketing
+Social Media und Redaktion
+Online-Videos
+AdWords, Facebook Ads
+Alle Leistungen inkl. Redaktion und Bildkonzept
+und vieles mehr …
+Professionelle Webauftritte zum Fixpreis
+Die Web-Basispakete sind jederzeit durch eine Vielzahl verschiedener Module und Erweiterungen ausbaufähig – damit Ihre Website flexibel und effizient mit den Bedürfnissen Ihres Unternehmens wachsen kann. Als Auswahl: Downloads, Gallery, Search, Agenda, Video, Jobs, Newsletter, E-Book, Webshop light, Article.", social:false, avatar:File.open(path+'luftdruck.jpg', 'rb')})
+services = Service.create({status:"ok", active:true, company_id:16, parent_id:0, stype:"regular", name:"Print & Press", description: "Offset- und Digitaldruck    Das Drucken ist weiterhin unser Kerngeschäft. Seit 1949 produzieren wir qualitativ hochstehende Printprodukte in allen Varianten.
+
+Für die Produktion von Broschüren, Prospekten, Zeitschriften, Katalogen, Jahresberichten, Büchern sowie diversen Werbe- und Geschäftsdrucksachen wie Flyer, Briefbogen, Couverts und Visitenkarten im Bogenoffsetdruckverfahren stehen insgesamt 12 hochmoderne Druckwerke bis zum Format 70/100 zur Verfügung. Wir verarbeiten sowohl Dünndruckpapiere als auch Karton bis zu einer Stärke von 1 mm. Um Ihren Drucksachen den gewissen Glanz oder das gewisse Etwas zu verleihen, können diese auf unseren Maschinen dispersionslackiert (auch mit Duftlack), geprägt, gerillt, perforiert oder gestanzt werden.
+
+Für Drucksachen in Grossauflagen arbeiten wir eng mit Spezialisten im Bereich Rollenoffsetdruck zusammen. Leistungsstarke Rollenoffsetmaschinen fertigen Ihr Produkt in hochwertiger Qualität, perfekt ausgerüstet und zu einem optimalen Preis-Leistungs-Verhältnis.
+
+Benötigen Sie zielgruppengerechte Drucksachen, kleine Auflagen oder Unikate? Wir erfüllen Ihre Wünsche im Digitaldruck für höchste Ansprüche bis zum Format A1. Auch personalisierte Drucksachen lassen sich einfach realisieren. Unsere Digitaldruckmaschinen bieten Ihnen eine dynamische, hochauflösende Bildqualität, eine breite Farbskala und die Möglichkeit zur Anwendung von partiellen Lackeffekten (Clear Dry Ink). Überzeugen Sie sich von unserem Preis-Leistungs-Verhältnis.", social:false, avatar:File.open(path+'luftdruck.jpg', 'rb')})
+services = Service.create({status:"ok", active:true, company_id:16, parent_id:0, stype:"regular", name:"Posters & Signs", description:"Beschriftungstechnik    Durch Übernahme der Firma Repro Design GmbH im Jahr 2012 haben wir unsere Angebotspalette umfangreich erweitert. Grossformatdruck, Beschriftungen und Werbetechnik gehören nun ebenfalls zu unseren Spezialitäten.
+
+Wichtige Botschaften brauchen manchmal eben viel Platz! Deshalb bedrucken wir auch richtig grosse Formate, denn manchmal ist mehr eben mehr. Mit Solventdruck geht das sogar für den Einsatzbereich draussen, UV-lichtecht. Was aber besonders beeindruckend ist: die Vielzahl von Bedruckstoffen, auf die wir Ihre Sujets reproduzieren können. Fotopapiere und Blachen, Backlitfolien, Fahnenstoffe, Leinwände, Klebefolien – und noch viel mehr. Lassen Sie Ihren Ideen freien Lauf: Posterprint (matt oder glänzend), Leinwandbilder, Blachen (inkl. Säumen und Ösen), Synthetikpapier (reissfest), Fahnenstoff, Klebefolie (auch transparent), Windowfolie, Glasdekorfolie und vieles mehr.
+
+Es gibt kaum etwas, worauf wir Ihre Botschaft nicht aufbringen können. Es braucht viel Know-how um die richtige Technik auszuwählen, und meistens noch mehr Fingerspitzengefühl bei der sauberen Ausführung. Wir bedrucken und bekleben fast alles und nutzen dafür unterschiedlichste Materialien, damit Wirkung und Haltbarkeit perfekt auf die jeweilige Aufgabe abgestimmt sind. Die Gestaltungsmöglichkeiten am Objekt sind schier unerschöpflich – besprechen Sie Ihre Ideen mit uns, und wir sagen Ihnen, wie sie umgesetzt werden können. Einige Beispiele für Beschriftungen und Werbetechnik: Werbetafeln (im Innen- und Aussenbereich), Fahrzeuge und Fahrzeuganhänger (als mobile Werbeflächen), Schaufenster (aussen und innen), Büros und Eingangsbereiche (Logos, Beschriftungen, Öffnungszeiten), Glasdekor- und Windowfolien (Sichtschutz und Veredelung) und vieles mehr.", social:false, avatar:File.open(path+'luftdruck.jpg', 'rb')})
+services = Service.create({status:"ok", active:true, company_id:16, parent_id:0, stype:"regular", name:"Bind & Book", description:"Druckweiter­verarbeitung    Wir sagen gerne: «Fertig ist das Druckprodukt, wenn es der Kunde in den Händen hält.» Damit meinen wir, dass ein Produkt nach dem Drucken meistens noch nicht fertig ist – im Gegenteil, oftmals beginnt es erst dann richtig zu entstehen.
+
+Deshalb bieten wir eine breite Palette an individuellen Möglichkeiten, um Ihren Druckprodukten den letzten Schliff zu verpassen. Zum Beispiel: Binden (Draht-, Spiral- und Thermobindung), Aufziehen (auf Polystyrol, Forex, Aluminium, Kunstoff), Laminieren (zur Erhöhung von Schutz und Haltbarkeit / matt oder glänzend), Sortieren, Falzen, Lochen (2- bis 4-fach), Rillen, Heften und Stanzen.
+
+", social:false, avatar:File.open(path+'luftdruck.jpg', 'rb')})
+services = Service.create({status:"ok", active:true, company_id:16, parent_id:0, stype:"regular", name:"Logistics & Letters", description:"Medien­logistik­lösungen    Viel zu wichtig, um vergessen zu gehen: Wer schnell produziert, muss auch die Logistik im Griff haben. Schliesslich haben Drucksachen etwas gemeinsam: Sie haben einen Empfänger.
+
+Wir unterstützen Sie kompetent bei der Versandplanung, beim Adressieren, Kuvertieren, Etikettieren sowie bei der Postaufgabe im In- und Ausland. Auch für personalisierte Mailings jeglicher Art sind Sie bei uns am richtigen Ort. Sollten Sie wenig Platz haben, können Sie Ihre Drucksachen bei uns einlagern. Rufen Sie uns an, unsere Berater stehen Ihnen gerne zur Verfügung.", social:false, avatar:File.open(path+'luftdruck.jpg', 'rb')})
+
+
 path2 = Rails.root.to_s + "/app/assets/images/sample_pdfs/"
 servicedocs = ServiceDocument.create({service_id:7, name:"Finanzplanung allgm.", avatar:File.open(path2+'anlegen.jpg', 'rb'), document:File.open(path2+'anlegen.pdf', 'rb')})
 servicedocs = ServiceDocument.create({service_id:7, name:"Finanzplanung", avatar:File.open(path2+'anlegen.jpg', 'rb'), document:File.open(path2+'finanzplanung.pdf', 'rb')})
@@ -224,6 +305,38 @@ advisors = Advisor.create({user_id:10, service_id:11, grade:"Senior Berater"})
 advisors = Advisor.create({user_id:9, service_id:8, grade:"Berater"})
 advisors = Advisor.create({user_id:10, service_id:9, grade:"Berater"})
 advisors = Advisor.create({user_id:11, service_id:9, grade:"Berater"})
+
+advisors = Advisor.create({user_id:17, service_id:14, grade:"Berater"})
+advisors = Advisor.create({user_id:18, service_id:14, grade:"Berater"})
+advisors = Advisor.create({user_id:28, service_id:14, grade:"Berater"})
+advisors = Advisor.create({user_id:30, service_id:14, grade:"Berater"})
+
+advisors = Advisor.create({user_id:18, service_id:15, grade:"Berater"})
+advisors = Advisor.create({user_id:26, service_id:15, grade:"Berater"})
+
+advisors = Advisor.create({user_id:27, service_id:16, grade:"Berater"})
+
+advisors = Advisor.create({user_id:17, service_id:17, grade:"Berater"})
+advisors = Advisor.create({user_id:31, service_id:17, grade:"Berater"})
+advisors = Advisor.create({user_id:32, service_id:17, grade:"Berater"})
+
+advisors = Advisor.create({user_id:28, service_id:18, grade:"Berater"})
+advisors = Advisor.create({user_id:17, service_id:18, grade:"Berater"})
+advisors = Advisor.create({user_id:18, service_id:18, grade:"Berater"})
+advisors = Advisor.create({user_id:20, service_id:18, grade:"Berater"})
+advisors = Advisor.create({user_id:21, service_id:18, grade:"Berater"})
+advisors = Advisor.create({user_id:33, service_id:18, grade:"Berater"})
+advisors = Advisor.create({user_id:30, service_id:18, grade:"Berater"})
+advisors = Advisor.create({user_id:23, service_id:18, grade:"Berater"})
+
+advisors = Advisor.create({user_id:33, service_id:19, grade:"Berater"})
+advisors = Advisor.create({user_id:23, service_id:19, grade:"Berater"})
+advisors = Advisor.create({user_id:26, service_id:19, grade:"Berater"})
+
+advisors = Advisor.create({user_id:19, service_id:20, grade:"Berater"})
+
+advisors = Advisor.create({user_id:19, service_id:21, grade:"Berater"})
+advisors = Advisor.create({user_id:21, service_id:21, grade:"Berater"})
 
 appointments = Appointment.create({user_id1:1, user_id2:12, subject:"Finanzieren", active:true, status:"angefragt", app_date:Date.today, time_from:8, time_to:10, channel:"Geschäftsstelle", channel_detail:""})
 appointments = Appointment.create({user_id1:1, user_id2:11, subject:"Finanzieren", active:true, status:"angefragt", app_date:Date.today, time_from:12, time_to:13, channel:"Geschäftsstelle", channel_detail:""})
