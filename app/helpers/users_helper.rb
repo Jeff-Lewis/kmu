@@ -59,6 +59,13 @@ def build_medialist(md_string, items, cname, panel)
                         html_string = html_string + "</a>"
                     html_string = html_string + "</div>"
                     html_string = html_string + "<div class='media-body'>"
+                        if item.created_at.to_date == Date.today
+                            html_string = html_string + (image_tag 'neu.jpg', :size => '30x30', class:'img-rounded')
+                        else
+                            if item.updated_at.to_date == Date.today
+                                html_string = html_string + (image_tag 'update.jpg', :size => '30x30', class:'img-rounded')
+                            end
+                        end 
                       case items.table_name
                       when "requests"
                           html_string = html_string + '<h4 class="media-heading">'+ item.name + "</h4>"
