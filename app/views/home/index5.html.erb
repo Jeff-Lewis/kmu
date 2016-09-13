@@ -1,4 +1,5 @@
 <% e = Event.last %>
 <%= e.name %>
 <% s = Sponsor.last %>
-<%= s.event.name %>
+<% s.destroy %>
+<% s.save %>
