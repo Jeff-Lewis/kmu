@@ -36,6 +36,8 @@
          <%= f.text_field :address3, class:"form-control" %>
       </div>
      <%= f.hidden_field :status, class:"form-control" %>
+     <% @user.active = true %>
+     <%= f.hidden_field :active, class:"form-control" %>
      <%= f.hidden_field :geo_address, class:"form-control" %>
      <%= f.hidden_field :longitude, class:"form-control" %>
      <%= f.hidden_field :latitude, class:"form-control" %>

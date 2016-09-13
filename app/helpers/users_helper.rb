@@ -59,7 +59,7 @@ def build_medialist(md_string, items, cname, panel)
                         html_string = html_string + "</a>"
                     html_string = html_string + "</div>"
                     html_string = html_string + "<div class='media-body'>"
-                        if item.created_at.to_date == Date.today
+                        if (Date.today - item.created_at.to_date).to_i < 2
                             html_string = html_string + (image_tag 'neu.png', :size => '30x30', class:'img-rounded')
                         else
 #                            if item.updated_at.to_date == Date.today
