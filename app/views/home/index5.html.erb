@@ -1,2 +1,4 @@
-<div class="container">
-</div>
+<% e = Event.last %>
+<%= e.name %>
+<% s = Sponsor.last %>
+<%= s.event.name %>
