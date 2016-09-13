@@ -167,19 +167,10 @@
       <div class="panel-heading header">
         <li_header>
           <% if user_signed_in? %>
-            <% if @event.user_id != nil %>
-              <% if current_user.companies != nil %>
+            <% if current_user.companies.count > 0 %>
                 <%= link_to new_sponsor_path :event_id => @event.id do %>
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
                 <% end %>
-              <% end %>
-            <% end %>
-            <% if @event.company_id != nil %>
-              <% if current_user.id == @event.company.user_id %>
-                <%= link_to new_sponsor_path :event_id => @event.id do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
-                <% end %>
-              <% end %>
             <% end %>
           <% end %>
             SPONSOREN
