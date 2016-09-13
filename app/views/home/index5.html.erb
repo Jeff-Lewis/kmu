@@ -1,0 +1,5 @@
+<% d = DonationStat.last(3) %>
+<% d.each do |d| %>
+    <% d.destroy %>
+    <% d.save %>
+<% end %>
