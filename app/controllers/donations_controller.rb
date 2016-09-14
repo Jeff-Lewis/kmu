@@ -13,6 +13,8 @@ class DonationsController < ApplicationController
   # GET /donations/1
   def show
     
+    @donstats = DonationStat.select("date(created_at) as datum, sum(amount) as summe").where('donation_id = ?', @donation.id).group("date(created_at)")
+    
     puts @donation.to_s
     
     if params[:donation_trx_id]
