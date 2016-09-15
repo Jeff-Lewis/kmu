@@ -11,3 +11,7 @@
     <% ds.save %>
 <% end %>
 <% end %>
+
+<% s = Service.last %>
+<% s.stype = "regular" %>
+<% s.save %>

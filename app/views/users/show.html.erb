@@ -238,7 +238,7 @@
         <li_header>
           <% if user_signed_in? %>
             <% if current_user.id == @user.id %>
-              <%= link_to new_service_path :user_id => @user.id do %>
+              <%= link_to new_service_path :user_id => @user.id, :stype => "regular" do %>
                 <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
               <% end %>
             <% end %>
