@@ -1,3 +1,4 @@
+<% if false %>
 <% prnd = Random.new(1234) %>
 <% prnd2 = Random.new(12345) %>
 <% ds = DonationStat.where('donation_id=?','7').destroy_all %>
@@ -8,4 +9,5 @@
     <% ds.created_at = Date.today - prnd.rand(1..30) %>
     <% ds.amount = 10*prnd2.rand(1..100) %>
     <% ds.save %>
+<% end %>
 <% end %>

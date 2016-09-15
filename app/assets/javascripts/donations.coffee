@@ -15,18 +15,3 @@ jQuery ->
         firstDay: 1
     }
 
-    Morris.Line
-        element: 'reports_chart_bet' 
-        data: $('#reports_chart_bet').data('reports')
-        xkey: 'datum' 
-        ykeys: ['summe'] 
-        labels: ['$ spent']
-
-    Morris.Line
-        element: 'reports_chart_anz' 
-        data: $('#reports_chart_anz').data('reports')
-        xkey: 'datum' 
-        ykeys: ['summe'] 
-        labels: ['Anzahl']
-
-    $('.dropdown-toggle').dropdown()
