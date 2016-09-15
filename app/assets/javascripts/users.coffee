@@ -6,3 +6,6 @@ jQuery ->
         dateFormat: 'yy-mm-dd',
         firstDay: 1
     }
+    
+jQuery ->
+ $('.dropdown-toggle').dropdown()

@@ -14,10 +14,14 @@ jQuery ->
         dateFormat: 'yy-mm-dd',
         firstDay: 1
     }
-    
+
+jQuery ->    
     Morris.Line
         element: 'reports_chart' 
         data: $('#reports_chart').data('reports')
         xkey: 'datum' 
         ykeys: ['summe'] 
         labels: ['$ spent']
+
+jQuery ->
+ $('.dropdown-toggle').dropdown()
