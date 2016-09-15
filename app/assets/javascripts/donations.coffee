@@ -17,11 +17,19 @@ jQuery ->
 
 jQuery ->    
     Morris.Line
-        element: 'reports_chart' 
-        data: $('#reports_chart').data('reports')
+        element: 'reports_chart_bet' 
+        data: $('#reports_chart_bet').data('reports')
         xkey: 'datum' 
         ykeys: ['summe'] 
         labels: ['$ spent']
+
+jQuery ->    
+    Morris.Line
+        element: 'reports_chart_anz' 
+        data: $('#reports_chart_anz').data('reports')
+        xkey: 'datum' 
+        ykeys: ['summe'] 
+        labels: ['Anzahl']
 
 jQuery ->
  $('.dropdown-toggle').dropdown()

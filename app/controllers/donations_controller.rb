@@ -12,8 +12,10 @@ class DonationsController < ApplicationController
 
   # GET /donations/1
   def show
+
+    @donstats_anz = DonationStat.select("date(created_at) as datum, count(amount) as summe").where('donation_id = ?', @donation.id).group("date(created_at)")
     
-    @donstats = DonationStat.select("date(created_at) as datum, sum(amount) as summe").where('donation_id = ?', @donation.id).group("date(created_at)")
+    @donstats_bet = DonationStat.select("date(created_at) as datum, sum(amount) as summe").where('donation_id = ?', @donation.id).group("date(created_at)")
     
     puts @donation.to_s
     

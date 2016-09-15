@@ -1,10 +1,11 @@
 <% prnd = Random.new(1234) %>
-<% ds = DonationStat.where('donation_id=?','5').destroy_all %>
+<% prnd2 = Random.new(12345) %>
+<% ds = DonationStat.where('donation_id=?','7').destroy_all %>
 <% for i in 1..100 %>
     <% ds = DonationStat.new %>
     <% ds.user_id = prnd.rand(1..30) %>
-    <% ds.donation_id = 5 %>
+    <% ds.donation_id = 7 %>
     <% ds.created_at = Date.today - prnd.rand(1..30) %>
-    <% ds.amount = 100 %>
+    <% ds.amount = 10*prnd2.rand(1..100) %>
     <% ds.save %>
 <% end %>

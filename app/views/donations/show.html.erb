@@ -153,11 +153,25 @@
     <div class="col-md-12">
       <div class="panel-heading header">
         <li_header>
-          STATISTIK
+          STATISTIK Anzahl
         </li_header>
       </div>
       <div class="panel-body">
-        <%= content_tag :div, "", id: "reports_chart",  data: {reports: @donstats} %>
+        <%= content_tag :div, "", id: "reports_chart_anz",  data: {reports: @donstats_anz} %>
+      </div>
+    </div>  
+  </div>
+  <br>
+  
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <li_header>
+          STATISTIK Betrag
+        </li_header>
+      </div>
+      <div class="panel-body">
+        <%= content_tag :div, "", id: "reports_chart_bet",  data: {reports: @donstats_bet} %>
       </div>
     </div>  
   </div>
