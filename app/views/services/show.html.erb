@@ -143,7 +143,7 @@
                   <i class="btn btn-primary btn-lg glyphicon glyphicon-cloud-download"></i>
                 <% end %>
                 <% if user_signed_in? %>
-                  <% if (sd.service.user_id != nil and current_user.id == sd.service.user_id) or (sd.service.company.user_id != nil and current_user.id == sd.service.company.user_id) %>
+                  <% if (sd.service.user_id and current_user.id == sd.service.user_id) or (sd.service.company.user_id and current_user.id == sd.service.company.user_id) %>
           	        <%= link_to edit_service_document_path(sd) do %>
                       <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
                     <% end %>
