@@ -3,15 +3,8 @@
     <div class="col-md-12">
       <div class="panel-heading header">
         <li_header>
-          <% if @customer.company_id %>
-            <%= link_to @customer.company, :anchor => "#Kundenstatus" do %>
-              <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
-            <% end %>
-          <% end %>
-          <% if @customer.user_id %>
-            <%= link_to @scustomer.user, :anchor => "#Kundenstatus" do %>
-              <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
-            <% end %>
+          <%= link_to customer_advisor_index2_path :partner_id => @customer.partner_id, :page => session[:page] do %>
+            <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
           <% end %>
           KUNDENBERATER für Kunde <%= @name %>
           <span class="badge"><%= @usanz %></span>

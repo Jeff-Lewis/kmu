@@ -15,7 +15,6 @@ class CustomerAdvisorController < ApplicationController
     end
     @users = User.where('id IN (SELECT user_id FROM advisors WHERE service_id IN (?))',@array).page(params[:page]).per_page(20)
     @usanz = @users.count
-    
     if params[:customer_advisor_id]
       @customer.advisor_id  = params[:customer_advisor_id]
       @customer.save
@@ -25,13 +24,18 @@ class CustomerAdvisorController < ApplicationController
       @customer.save
     end
     if params[:customer_advisor_id] or params[:delete_customer_advisor_id]
-      if @customer.company_id
-        redirect_to @customer.company, :anchor => "#"
-      end
-      if @customer.user_id
-        redirect_to @customer.user, :anchor => "#"
-      end
+        redirect_to customer_advisor_index2_path :page => session[:page], :anchor => "#"
     end
     
+  end
+  
+  def index2
+    if params[:search]
+      session[:search] = params[:search]
+    end
+    @company = Company.find(params[:partner_id])
+    @customers = Customer.where('partner_id=?', params[:partner_id]).page(params[:page]).per_page(10)
+    @cusanz = @customers.count
+    #User.search(false, session[:search]).page(params[:page]).per_page(10)
   end
 end

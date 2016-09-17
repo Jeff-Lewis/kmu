@@ -93,7 +93,10 @@
 	        <%= link_to new_webmaster_path :object_name => "Company", :object_id => @company.id, :user_id => current_user.id do %>
             <i class="btn btn-warning btn-lg pull-right glyphicon glyphicon-eye-open"></i>
           <% end %>
-          <% if current_user.id == @company.user.id or current_user.superuser %>
+          <% if (current_user.id == @company.user.id or current_user.superuser) and @company.partner %>
+            <%= link_to customer_advisor_index2_path :partner_id => @company.id do %>
+              <i class="btn btn-primary btn-lg glyphicon glyphicon-user"></i>
+            <% end %>
             <%= link_to edit_company_path(@company) do %>
               <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
             <% end %>
