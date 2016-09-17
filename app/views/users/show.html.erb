@@ -15,7 +15,7 @@
         <br>
 
         <% if @user.advisors.count > 0 %>
-          <%= link_to "#kundenberater" do %>
+          <%= link_to "#Kundenberater" do %>
             <%= image_tag('kundenberater_a.png', :size => "50x50") %>
           <% end %>
         <% end %>
@@ -1032,11 +1032,6 @@
                     <%= @advisor.name +  " " + @advisor.lastname %>
                     </ntext>
                     <br><br>
-                <% end %>
-                <% if current_user.id == p.user.id %>
-                  <%= link_to customer_advisor_index_path :customer_id => @customer.id do %>
-                    <i class="btn btn-primary btn btn-lg glyphicon glyphicon-user"></i>
-                  <% end %>
                 <% end %>
                 <%= link_to accounts_path :customer_id => @customer.id do %>
                   <i class="btn btn-primary btn btn-lg glyphicon glyphicon-book"></i>

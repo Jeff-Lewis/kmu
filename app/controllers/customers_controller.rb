@@ -1,6 +1,6 @@
 class CustomersController < ApplicationController
   before_action :set_customer, only: [:show, :edit, :update, :destroy]
-  permits :customer_number, :partner_id, :user_id, :company_id, :tickets, :newsletter
+  permits :customer_number, :partner_id, :user_id, :company_id, :tickets, :advisor_id, :newsletter
 
   # GET /customers
   def index
@@ -14,6 +14,14 @@ class CustomersController < ApplicationController
 
   # GET /customers/new
   def new
+
+    @services = Service.where('company_id=?', params[:partner_id])
+    @array=[]
+    @services.each do |s|
+      @array << s.id
+    end
+    @users = User.where('id IN (SELECT user_id FROM advisors WHERE service_id IN (?))',@array).page(params[:page]).per_page(20)
+
     @customer = Customer.new
     @customer.user_id = params[:user_id]
     @customer.company_id = params[:company_id]
@@ -22,6 +30,12 @@ class CustomersController < ApplicationController
 
   # GET /customers/1/edit
   def edit
+    @services = Service.where('company_id=?', @customer.partner_id)
+    @array=[]
+    @services.each do |s|
+      @array << s.id
+    end
+    @users = User.where('id IN (SELECT user_id FROM advisors WHERE service_id IN (?))',@array).page(params[:page]).per_page(20)
   end
 
   # POST /customers

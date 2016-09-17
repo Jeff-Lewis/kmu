@@ -40,6 +40,10 @@
                        <%= f.text_field :customer_number, class:"form-control" %>
                     </div>
                     <div class="form-group">
+                      <%= f.label "Kundenberater xConnect" %><br/>
+                        <%= f.collection_select :advisor_id, @users, :id, :fullname, {}, class:"form-control" %>
+                    </div>
+                    <div class="form-group">
                       <%= f.label "Newsletter" %>
                       <%= f.check_box :newsletter, class:"form-control"%>
                     </div>

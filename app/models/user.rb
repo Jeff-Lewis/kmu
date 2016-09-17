@@ -49,5 +49,9 @@ class User < ActiveRecord::Base
     def update_geo_address
       self.geo_address = self.address1 + " " + address2 + " " + address3
     end
+    
+    def fullname
+        [name, lastname, email].join(' ')        
+    end
 
 end
