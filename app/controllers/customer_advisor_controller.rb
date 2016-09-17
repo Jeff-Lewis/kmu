@@ -24,7 +24,7 @@ class CustomerAdvisorController < ApplicationController
       @customer.save
     end
     if params[:customer_advisor_id] or params[:delete_customer_advisor_id]
-        redirect_to customer_advisor_index2_path :page => session[:page], :anchor => "#"
+        redirect_to customer_advisor_index2_path :partner_id => @customer.id, :page => session[:page], :anchor => "#"
     end
     
   end
