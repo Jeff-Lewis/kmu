@@ -805,6 +805,28 @@
                   <i class="btn btn-primary btn btn-lg glyphicon glyphicon-pencil"> Kundeneröffnung</i>
                 <% end %>
               <% else %>
+                <% if @customer.advisor_id != nil %>
+                  <% @advisor = User.find(@customer.advisor_id) %>
+                  <% if @advisor %>
+                      <%= link_to @advisor do %>
+                        <% if !@advisor.avatar_file_name %>
+                          <%= image_tag("user_a.png", :size => "200x200" , class:"img-rounded") %>
+                        <% else %>
+                          <%= image_tag @advisor.avatar(:medium), class:"img-rounded"%>
+                        <% end %><br>
+                      <% end %>
+                      <ntext>
+                      Ihr xConnect Ansprechpartner<br>
+                      <%= @advisor.name +  " " + @advisor.lastname %>
+                      </ntext>
+                      <br><br>
+                  <% end %>
+                <% end %> 
+                <% if current_user.id == @company.user_id %> 
+                  <%= link_to customer_advisor_index_path :customer_id => @customer.id do %>
+                    <i class="btn btn-primary btn btn-lg glyphicon glyphicon-user"></i>
+                  <% end %>
+                <% end %>
                 <%= link_to accounts_path :customer_id => @customer.id do %>
                   <i class="btn btn-primary btn btn-lg glyphicon glyphicon-book"></i>
                 <% end %>

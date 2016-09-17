@@ -4,32 +4,6 @@
       <div class="row">
         <div class="col-md-12">
           <li_header>
-          über xConnect...<br>
-          </li_header>
-        </div>
-      </div>
-    </div>
-    <div class="panel-body">
-      <div class="row">
-        <div class="col-md-12">
-          <div class='container' align='center'>
-            <%= image_tag("marketplace.png", :size => "200x200") %><br>
-            <ntext>
-            <b>Version 0.91</b><br><br>
-            <i class="glyphicon glyphicon-copyright-mark"></i> 2016, alle Rechte vorbehalten
-            WUSOFT Horst Wurm
-            <br><br>
-            <i class="glyphicon glyphicon-info-sign"></i> Dies ist eine freie Testversion zu Demozwecken, sämtliche Daten, Personen, Firmen, Services, etc. sind frei erfunden, jegliche Haftung ist ausgeschlossen!
-            </ntext>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel-heading">
-      <div class="row">
-        <div class="col-md-12">
-          <li_header>
           xConnect - Funktionen<br>
           </li_header>
         </div>
@@ -548,4 +522,80 @@
       </div>
       <br>
     </div>
+    <br>
+    
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-md-12">
+          <li_header>
+          über xConnect...<br>
+          </li_header>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class='container' align='center'>
+            <%= image_tag("marketplace.png", :size => "200x200") %><br>
+            <ntext>
+            <b>Version 0.91</b><br><br>
+            <i class="glyphicon glyphicon-copyright-mark"></i> 2016, alle Rechte vorbehalten
+            <br><br>
+            <i class="glyphicon glyphicon-info-sign"></i> Dies ist eine freie Testversion zu Demozwecken, sämtliche Daten, Personen, Firmen, Services, etc. sind frei erfunden, jegliche Haftung ist ausgeschlossen!
+            </ntext>
+          </div>
+        </div>
+      </div>
+      <br>
+    
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel-heading header">
+            <li_header>
+              REGISTRATIONSVERLAUF Privatkunden
+            </li_header>
+          </div>
+          <div class="panel-body">
+            <%= content_tag :div, "", id: "reports_chart_user",  data: {reports: @stat_user} %>
+          </div>
+        </div>
+      </div>
+      <br>
+    
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel-heading header">
+            <li_header>
+              REGISTRATIONSVERLAUF Firmen-/Gewerbekunden
+            </li_header>
+          </div>
+          <div class="panel-body">
+            <%= content_tag :div, "", id: "reports_chart_company",  data: {reports: @stat_company} %>
+          </div>
+        </div>  
+      </div>
+    </div>
+    <br>
+    
 </div>
+
+<script>
+new Morris.Line({
+        element: 'reports_chart_user',
+        data: $('#reports_chart_user').data('reports'),
+        xkey: 'datum', 
+        ykeys: ['summe'], 
+        labels: ['Anzahl']
+});
+</script>
+
+<script>
+new Morris.Line({
+        element: 'reports_chart_company',
+        data: $('#reports_chart_company').data('reports'),
+        xkey: 'datum', 
+        ykeys: ['summe'], 
+        labels: ['Anzahl']
+});
+</script>

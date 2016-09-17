@@ -1,6 +1,9 @@
 class HomeController < ApplicationController
 
 def index
+    @stat_user = User.select("date(created_at) as datum, count(id) as summe").group("date(created_at)")
+    @stat_company = Company.select("date(created_at) as datum, count(id) as summe").group("date(created_at)")
+    
   if user_signed_in?
     #redirect_to current_user
   end

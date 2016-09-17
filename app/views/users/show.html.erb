@@ -109,6 +109,9 @@
   	        <%= link_to edit_user_path(@user) do %>
               <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
             <% end %>
+            <%= link_to appointments_path :user_id1 => @user.id do %>
+              <i class="btn btn-primary btn-lg glyphicon glyphicon-calendar"></i>
+            <% end %>
   	        <%= link_to @user, method: :delete, data: { confirm: 'Are you sure?' } do %>
               <i class="btn btn-danger btn-lg pull-right glyphicon glyphicon-trash"></i>
             <% end %>
@@ -149,7 +152,7 @@
           <% end %>
           <br>
           <b>Geburtsdatum</b><br>
-          <%= @user.dateofbirth.strftime("%d.%m.%Y") %><br>
+          <%= @user.dateofbirth.strftime("%d.%m.%Y") if @user.dateofbirth %><br>
           <% if user_signed_in? %>
   	        <%= link_to new_email_path :m_from_id => current_user.id, :m_to_id => @user.id, :back_url => request.original_url do %>
               <i class="btn btn-default glyphicon glyphicon-envelope"></i>
@@ -172,9 +175,6 @@
     <div class="col-md-12">
       <div class="panel-heading header">
         <li_header>
-          <%= link_to appointments_path :user_id1 => @user.id do %>
-            <i class="btn btn-primary btn-lg glyphicon glyphicon-calendar"></i>
-          <% end %>
             KUNDENBERATER
         </li_header>
         <%= link_to "#user" do %>
@@ -1018,6 +1018,21 @@
                   <i class="btn btn-primary btn btn-lg glyphicon glyphicon-pencil"> Kundeneröffnung</i>
                 <% end %>
               <% else %>
+                <% @advisor = User.find(@customer.advisor_id) if @customer.advisor_id != nil %>
+                <% if @advisor %>
+                    <%= link_to @advisor do %>
+                      <% if !@advisor.avatar_file_name %>
+                        <%= image_tag("user_a.png", :size => "200x200" , class:"img-rounded") %>
+                      <% else %>
+                        <%= image_tag @advisor.avatar(:medium), class:"img-rounded"%>
+                      <% end %><br>
+                    <% end %>
+                    <ntext>
+                    Ihr xConnect Ansprechpartner<br>
+                    <%= @advisor.name +  " " + @advisor.lastname %>
+                    </ntext>
+                    <br><br>
+                <% end %>
                 <%= link_to accounts_path :customer_id => @customer.id do %>
                   <i class="btn btn-primary btn btn-lg glyphicon glyphicon-book"></i>
                 <% end %>

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'customer_advisor/index'
+
   get 'listaccounts/index'
 
   get 'statement/index'

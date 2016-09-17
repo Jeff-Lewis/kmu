@@ -39,7 +39,7 @@ class ShowcalController < ApplicationController
   end
 
   def bid
-   if params[:cw]
+    if params[:cw]
       session[:cw] = Date.today.cweek.to_i
     end
     if !session[:year]
