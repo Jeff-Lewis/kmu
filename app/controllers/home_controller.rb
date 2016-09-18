@@ -40,6 +40,23 @@ def index4
 end
 
 def index5
+  @test = DonationStat.select("date(created_at) as datum, count(amount) as summe").group("date(created_at)")
+
+  @array = []
+  @cat = Category.all
+  @cat.each do |c|
+    anz = Company.where('category_id=?', c.id).count
+    if anz > 0
+      hash = Hash.new
+      hash = {"label" => c.name, "value" => anz}
+      @array << hash
+    end
+  end
+  
+  @array.each do |a|
+    puts a.to_s
+  end
+  
 end
 
 end
