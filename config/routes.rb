@@ -41,7 +41,7 @@ Rails.application.routes.draw do
   get 'home/index3'
   get 'home/index4'
   get 'home/index5'
-  
+  get 'home/index6'  
   resources :webmasters
   resources :bid_details
   resources :bids

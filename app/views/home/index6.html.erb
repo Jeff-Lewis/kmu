@@ -1,0 +1,197 @@
+<% @user = User.first %>
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel-header header">
+        <li_header>Account</li_header>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel-body">
+        <%= link_to home_index6_path :topic => "User" do %>
+          <%= image_tag('user_a.png', :size => "30x30") %>
+        <% end %>
+        <%= link_to home_index6_path :topic => "Kundenberater" do %>
+          <%= image_tag('kundenberater_a.png', :size => "30x30") %>
+        <% end %>
+        <%= link_to home_index6_path :topic => "Service" do %>
+          <%= image_tag('service_a.png', :size => "30x30") %>
+        <% end %>
+      </div>
+    </div>
+      
+    <div class="col-xs-12">
+      <div class="panel-body">
+        <%= link_to users_path :page => session[:page] do %>
+          <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+        <% end %>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+      <% case @topic %>
+        <% when "User" %>
+          <div class="panel-heading header">
+            <li_header>
+                ACCOUNT
+            </li_header>
+            <%= link_to "#user" do %>
+              <%= image_tag('user_a.png', :size => "50x50", class: "pull-right") %>
+            <% end %>
+          </div>
+          <div class="panel-body">
+    				<% if @user.anonymous or @user.avatar_file_name == nil %>
+              <%= image_tag("user_a.png", :size => "200x200", class:"img-rounded" ) %>
+            <% else %>
+              <%= image_tag @user.avatar(:medium), class:"img-rounded"  %>
+              <br><br>
+              <b><i class="glyphicon glyphicon-home"></i> Adresse</b><br>
+              <% if !@user.anonymous and @user.address1 != nil and @user.address1 != "" %>
+                <%= @user.address1 %><br> 
+              <% end %>
+              <% if !@user.anonymous and @user.address2 != nil and @user.address2 != "" %>
+                <%= @user.address2 %><br> 
+              <% end %>
+              <% if !@user.anonymous and @user.address3 != nil and @user.address3 != "" %>
+                <%= @user.address3 %><br> 
+              <% end %>
+              <br>
+              <b><i class="glyphicon glyphicon-phone"></i> Telefon</b><br>
+              <% if !@user.anonymous and @user.phone1 != nil and @user.phone1 != "" %>
+                <%= @user.phone1 %><br> 
+              <% end %>
+              <% if !@user.anonymous and @user.phone2 != nil and @user.phone2 != "" %>
+                <%= @user.phone2 %><br> 
+              <% end %>
+              <br>
+              <b>Geburtsdatum</b><br>
+              <%= @user.dateofbirth.strftime("%d.%m.%Y") if @user.dateofbirth %><br>
+              <% if user_signed_in? %>
+      	        <%= link_to new_email_path :m_from_id => current_user.id, :m_to_id => @user.id, :back_url => request.original_url do %>
+                  <i class="btn btn-default glyphicon glyphicon-envelope"></i>
+                <% end %>
+              <% else %>
+                  <i class="glyphicon glyphicon-envelope"></i>
+              <% end %>
+              <%= @user.email %><br>
+            <% end %>
+          </div>
+        <% when "Kundenberater" %>
+          <div class="panel-heading header">
+            <li_header>
+                KUNDENBERATER
+            </li_header>
+            <%= link_to "#user" do %>
+              <%= image_tag('user_a.png', :size => "50x50", class: "pull-right") %>
+            <% end %>
+          </div>
+          <div class="panel-body">
+          		<% @user.advisors.each do |us| %>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                  <div class="thumbnail" align="center">
+                    <%= link_to us.service do %>
+                      <% if us.service.avatar_file_name == nil %>
+                        <%= image_tag("service_a.png", :size => "200x200", class:"img-rounded" ) %>
+                      <% else %>
+                        <%= image_tag us.service.avatar(:medium), class:"img-rounded"  %>
+                      <% end %>
+                    <% end %>
+                    <br>
+                    <anzeigetext>
+          						<%= us.service.name %>
+                    </anzeigetext>
+                    <br>
+                    <ntext>angeboten von</ntext><br><br>
+                    <% if us.service.user_id %>
+                      <%= link_to us.service.user do %>
+                        <% if us.service.user.avatar_file_name == nil %>
+                          <%= image_tag("user_a.png", :size => "50x50", class:"img-rounded" ) %>
+                        <% else %>
+                          <%= image_tag us.service.user.avatar(:thumb), class:"img-rounded"  %>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                    <% if us.service.company_id %>
+                      <%= link_to us.service.company do %> 
+                        <% if us.service.company.avatar_file_name == nil %>
+                          <%= image_tag("company_a.png", :size => "50x50", class:"img-rounded" ) %>
+                        <% else %>
+                          <%= image_tag us.service.company.avatar(:thumb), class:"img-rounded"  %>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                    <p>
+                    <ntext>
+        						<%= align_text(us.service.description) %>
+                    </ntext>
+                    <br>
+              		</div>
+            		</div>
+          		<% end %>
+          </div>
+          
+        <% when "Service" %>
+          <div class="panel-heading header">
+            <li_header>
+              <% if user_signed_in? %>
+                <% if current_user.id == @user.id %>
+                  <%= link_to new_service_path :user_id => @user.id, :stype => "regular" do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+                  <% end %>
+                <% end %>
+              <% end %>
+                ANGEBOTE
+            </li_header>
+            <%= link_to "#user" do %>
+              <%= image_tag('user_a.png', :size => "50x50", class: "pull-right") %>
+            <% end %>
+          </div>
+          <div class="panel-body">
+          		<% @user.services.each do |us| %>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                  <div class="thumbnail" align="center">
+                    <%= link_to us do %>
+                      <% if us.avatar_file_name == nil %>
+                        <%= image_tag("service_a.png", :size => "200x200", class:"img-rounded" ) %>
+                      <% else %>
+                        <%= image_tag us.avatar(:medium), class:"img-rounded"  %>
+                      <% end %>
+                    <% end %>
+                    <br>
+                    <anzeigetext>
+          						<%= us.name %>
+                    </anzeigetext>
+                    <p>
+                    <ntext>
+        						<%= align_text(us.description) %>
+                    </ntext>
+        						</p>
+                    <br>
+                    <% if user_signed_in? %>
+                      <% if current_user.id == @user.id %>
+              	        <%= link_to edit_service_path(us) do %>
+                          <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                        <% end %>
+              	        <%= link_to us, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                    <br><br>
+              		</div>
+            		</div>
+          		<% end %>
+          </div>
+          
+          
+        <% end %>
+        
+        
+      </div>
+
+  </div>
+</div>
