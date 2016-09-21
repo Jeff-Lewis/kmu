@@ -261,126 +261,126 @@ def navigate(item)
     html_string = "<div class='col-xs-12'><div class='panel-body'>"
     if item
       html_string = html_string + link_to(home_index6_path :topic => "User") do
-        content_tag(:i, nil, class:"btn btn-lg btn-active glyphicon glyphicon-user")
+        content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-user")
       end
     end
     html_string = html_string + link_to(home_index6_path :topic => "Kundenberater") do
         if item.advisors.count > 0
-            content_tag(:i, nil, class:"btn btn-lg btn-active glyphicon glyphicon-question-sign")
+            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-question-sign")
         else
-            content_tag(:i, nil, class:"btn btn-lg btn-passive glyphicon glyphicon-question-sign")
+            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-question-sign")
        end
     end
     html_string = html_string + link_to(home_index6_path :topic => "Service") do
     if item.services.count > 0
-            content_tag(:i, nil, class:"btn btn-lg btn-active glyphicon glyphicon-shopping-cart")
+            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-shopping-cart")
         else
-            content_tag(:i, nil, class:"btn btn-lg btn-passive glyphicon glyphicon-shopping-cart")
+            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-shopping-cart")
        end
     end
     html_string = html_string + link_to(home_index6_path :topic => "Company") do
     if item.companies.count > 0
-            content_tag(:i, nil, class:"btn btn-lg btn-active glyphicon glyphicon-copyright-mark")
+            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-copyright-mark")
         else
-            content_tag(:i, nil, class:"btn btn-lg btn-passive glyphicon glyphicon-copyright-mark")
+            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-copyright-mark")
        end
     end
     html_string = html_string + link_to(home_index6_path :topic => "Request") do
     if item.requests.count > 0
-            content_tag(:i, nil, class:"btn btn-lg btn-active glyphicon glyphicon-pushpin")
+            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-pushpin")
         else
-            content_tag(:i, nil, class:"btn btn-lg btn-passive glyphicon glyphicon-pushpin")
+            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-pushpin")
        end
     end
     html_string = html_string + link_to(home_index6_path :topic => "Vehicle") do
     if item.vehicles.count > 0
-            content_tag(:i, nil, class:"btn btn-lg btn-active glyphicon glyphicon-road")
+            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-road")
         else
-            content_tag(:i, nil, class:"btn btn-lg btn-passive glyphicon glyphicon-road")
+            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-road")
        end
     end
     html_string = html_string + link_to(home_index6_path :topic => "Event") do
     if item.events.count > 0
-            content_tag(:i, nil, class:"btn btn-lg btn-active glyphicon glyphicon-calendar")
+            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-calendar")
         else
-            content_tag(:i, nil, class:"btn btn-lg btn-passive glyphicon glyphicon-calendar")
+            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-calendar")
        end
     end
     html_string = html_string + link_to(home_index6_path :topic => "Ticket") do
     if item.user_tickets.count > 0
-            content_tag(:i, nil, class:"btn btn-lg btn-active glyphicon glyphicon-barcode")
+            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-barcode")
         else
-            content_tag(:i, nil, class:"btn btn-lg btn-passive glyphicon glyphicon-barcode")
+            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-barcode")
        end
     end
     html_string = html_string + link_to(home_index6_path :topic => "Hotspot") do
     if item.hotspots.count > 0
-            content_tag(:i, nil, class:"btn btn-lg btn-active glyphicon glyphicon-camera")
+            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-camera")
         else
-            content_tag(:i, nil, class:"btn btn-lg btn-passive glyphicon glyphicon-camera")
+            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-camera")
        end
     end
     html_string = html_string + link_to(home_index6_path :topic => "Bid") do
     if item.bids.count > 0
-            content_tag(:i, nil, class:"btn btn-lg btn-active glyphicon glyphicon-pencil")
+            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-pencil")
         else
-            content_tag(:i, nil, class:"btn btn-lg btn-passive glyphicon glyphicon-pencil")
+            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-pencil")
        end
     end
     html_string = html_string + link_to(home_index6_path :topic => "Reward") do
     if item.donations.where('dtype=?',"Reward").count > 0
-            content_tag(:i, nil, class:"btn btn-lg btn-active glyphicon glyphicon-gift")
+            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-gift")
         else
-            content_tag(:i, nil, class:"btn btn-lg btn-passive glyphicon glyphicon-gift")
+            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-gift")
        end
     end
     html_string = html_string + link_to(home_index6_path :topic => "Loan") do
     if item.donations.where('dtype=?',"Loan").count > 0
-            content_tag(:i, nil, class:"btn btn-lg btn-active glyphicon glyphicon-refresh")
+            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-refresh")
         else
-            content_tag(:i, nil, class:"btn btn-lg btn-passive glyphicon glyphicon-refresh")
+            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-refresh")
        end
     end
     html_string = html_string + link_to(home_index6_path :topic => "Stat") do
     if item.donation_stats.count > 0
-            content_tag(:i, nil, class:"btn btn-lg btn-active glyphicon glyphicon-fullscreen")
+            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-fullscreen")
         else
-            content_tag(:i, nil, class:"btn btn-lg btn-passive glyphicon glyphicon-fullscreen")
+            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-fullscreen")
        end
     end
     html_string = html_string + link_to(home_index6_path :topic => "Rating") do
     if item.ratings.count > 0
-            content_tag(:i, nil, class:"btn btn-lg btn-active glyphicon glyphicon-star")
+            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-star")
         else
-            content_tag(:i, nil, class:"btn btn-lg btn-passive glyphicon glyphicon-star")
+            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-star")
        end
     end
     html_string = html_string + link_to(home_index6_path :topic => "Favourit") do
     if item.favourits.count > 0
-            content_tag(:i, nil, class:"btn btn-lg btn-active glyphicon glyphicon-heart")
+            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-heart")
         else
-            content_tag(:i, nil, class:"btn btn-lg btn-passive glyphicon glyphicon-heart")
+            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-heart")
        end
     end
     html_string = html_string + link_to(home_index6_path :topic => "Customer") do
     if Customer.where('user_id=?',item.id).count > 0
-            content_tag(:i, nil, class:"btn btn-lg btn-active glyphicon glyphicon-tag")
+            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-tag")
         else
-            content_tag(:i, nil, class:"btn btn-lg btn-passive glyphicon glyphicon-tag")
+            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-tag")
        end
     end
     html_string = html_string + link_to(home_index6_path :topic => "Transaction") do
     if item.transactions.count > 0
-            content_tag(:i, nil, class:"btn btn-lg btn-active glyphicon glyphicon-list")
+            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-list")
         else
-            content_tag(:i, nil, class:"btn btn-lg btn-passive glyphicon glyphicon-list")
+            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-list")
        end
     end
     html_string = html_string + link_to(home_index6_path :topic => "Location") do
     if item.geo_address
-            content_tag(:i, nil, class:"btn btn-lg btn-active glyphicon glyphicon-record")
+            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-record")
         else
-            content_tag(:i, nil, class:"btn btn-lg btn-passive glyphicon glyphicon-record")
+            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-record")
        end
     end
     
