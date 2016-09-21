@@ -2,48 +2,25 @@
 <div class="container-fluid">
 
   <div class="row">
-    <div class="col-xs-12">
-      <div class="panel-header header">
-        <li_header>Account</li_header>
-      </div>
-    </div>
+    <%= header(@user.fullname) %>
   </div>
   
   <div class="row">
-    <div class="col-xs-12">
-      <div class="panel-body">
-        <%= link_to home_index6_path :topic => "User" do %>
-          <%= image_tag('user_a.png', :size => "30x30") %>
-        <% end %>
-        <%= link_to home_index6_path :topic => "Kundenberater" do %>
-          <%= image_tag('kundenberater_a.png', :size => "30x30") %>
-        <% end %>
-        <%= link_to home_index6_path :topic => "Service" do %>
-          <%= image_tag('service_a.png', :size => "30x30") %>
-        <% end %>
-      </div>
-    </div>
+    <%= navigate(@user) %>
+  </div>
       
-    <div class="col-xs-12">
-      <div class="panel-body">
-        <%= link_to users_path :page => session[:page] do %>
-          <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
-        <% end %>
-        </div>
-    </div>
+  <div class="row">
+    <%= action_buttons(@user, @topic) %>
+  </div>
 
-    <div class="col-xs-12">
+  <div class="row">
+
       <% case @topic %>
         <% when "User" %>
-          <div class="panel-heading header">
-            <li_header>
-                ACCOUNT
-            </li_header>
-            <%= link_to "#user" do %>
-              <%= image_tag('user_a.png', :size => "50x50", class: "pull-right") %>
-            <% end %>
-          </div>
-          <div class="panel-body">
+
+          <%= header("Kontaktdaten") %>
+          
+          <div class='col-xs-12'><div class="panel-body">
     				<% if @user.anonymous or @user.avatar_file_name == nil %>
               <%= image_tag("user_a.png", :size => "200x200", class:"img-rounded" ) %>
             <% else %>
@@ -79,27 +56,17 @@
               <% end %>
               <%= @user.email %><br>
             <% end %>
-          </div>
+          </div></div>
+    
         <% when "Kundenberater" %>
-          <div class="panel-heading header">
-            <li_header>
-                KUNDENBERATER
-            </li_header>
-            <%= link_to "#user" do %>
-              <%= image_tag('user_a.png', :size => "50x50", class: "pull-right") %>
-            <% end %>
-          </div>
-          <div class="panel-body">
+
+          <%= header("Kundenberater") %>
+
+          <div class='col-xs-12'><div class="panel-body">
           		<% @user.advisors.each do |us| %>
                 <div class="col-sm-6 col-md-4 col-lg-3">
                   <div class="thumbnail" align="center">
-                    <%= link_to us.service do %>
-                      <% if us.service.avatar_file_name == nil %>
-                        <%= image_tag("service_a.png", :size => "200x200", class:"img-rounded" ) %>
-                      <% else %>
-                        <%= image_tag us.service.avatar(:medium), class:"img-rounded"  %>
-                      <% end %>
-                    <% end %>
+                    <%= showImage("Service", :medium, us.service) %>
                     <br>
                     <anzeigetext>
           						<%= us.service.name %>
@@ -107,22 +74,10 @@
                     <br>
                     <ntext>angeboten von</ntext><br><br>
                     <% if us.service.user_id %>
-                      <%= link_to us.service.user do %>
-                        <% if us.service.user.avatar_file_name == nil %>
-                          <%= image_tag("user_a.png", :size => "50x50", class:"img-rounded" ) %>
-                        <% else %>
-                          <%= image_tag us.service.user.avatar(:thumb), class:"img-rounded"  %>
-                        <% end %>
-                      <% end %>
+                      <%= showImage("User", :thumb, us.service.user) %>
                     <% end %>
                     <% if us.service.company_id %>
-                      <%= link_to us.service.company do %> 
-                        <% if us.service.company.avatar_file_name == nil %>
-                          <%= image_tag("company_a.png", :size => "50x50", class:"img-rounded" ) %>
-                        <% else %>
-                          <%= image_tag us.service.company.avatar(:thumb), class:"img-rounded"  %>
-                        <% end %>
-                      <% end %>
+                      <%= showImage("User", :thumb, us.service.company) %>
                     <% end %>
                     <p>
                     <ntext>
@@ -132,35 +87,19 @@
               		</div>
             		</div>
           		<% end %>
-          </div>
+          </div></div>
           
         <% when "Service" %>
-          <div class="panel-heading header">
-            <li_header>
-              <% if user_signed_in? %>
-                <% if current_user.id == @user.id %>
-                  <%= link_to new_service_path :user_id => @user.id, :stype => "regular" do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
-                  <% end %>
-                <% end %>
-              <% end %>
-                ANGEBOTE
-            </li_header>
-            <%= link_to "#user" do %>
-              <%= image_tag('user_a.png', :size => "50x50", class: "pull-right") %>
-            <% end %>
-          </div>
-          <div class="panel-body">
+
+          <%= header("Angebote") %>
+
+            <div class='col-xs-12'><div class="panel-body">
           		<% @user.services.each do |us| %>
                 <div class="col-sm-6 col-md-4 col-lg-3">
                   <div class="thumbnail" align="center">
-                    <%= link_to us do %>
-                      <% if us.avatar_file_name == nil %>
-                        <%= image_tag("service_a.png", :size => "200x200", class:"img-rounded" ) %>
-                      <% else %>
-                        <%= image_tag us.avatar(:medium), class:"img-rounded"  %>
-                      <% end %>
-                    <% end %>
+
+                    <%= showImage("Service", :medium, us) %>
+
                     <br>
                     <anzeigetext>
           						<%= us.name %>
@@ -185,13 +124,592 @@
               		</div>
             		</div>
           		<% end %>
-          </div>
+          </div></div>
           
+        <% when "Company" %>
+
+          <%= header("Institutionen") %>
+
+          <div class='col-xs-12'><div class="panel-body">
+        		<% @user.companies.each do |uc| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+
+                  <%= showImage("Company", :medium, uc) %>
+
+                  <br>
+                  <anzeigetext>
+        						<%= uc.name %><br>
+                  </anzeigetext>
+                  <ntext>
+      						<%= uc.category.name %>
+      						<br>
+      						<%= align_text(uc.description) %>
+      						</p>
+      						</ntext>
+      						<br>
+        			  </div>
+        			</div>
+        		<% end %>
+    	    </div></div>
+    	    
+    	 <% when "Request" %>
+
+          <%= header("Kleinanzeigen") %>
+
+          <div class='col-xs-12'><div class="panel-body">
+        		<% @user.requests.order(created_at: :desc).each do |ur| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+
+                  <%= link_to ur do %>
+                    <% if ur.request_details != nil %>
+                          <%= carousel(ur.request_details, "medium") %>
+                        <% else %>
+                          <%= image_tag("request_a.png", :size => "200x200", class:"img-rounded" ) %>
+                		<% end %><br>
+                	<% end %>
+                  <anzeigetext>
+        						<%= ur.rtype + " " + ur.name %>
+                  </anzeigetext>
+                  <br>
+                  <ntext>
+      						<%= ur.description %>
+      						</ntext>
+        			    <br><br>
+        			 </div>
+        			</div>
+        		<% end %>
+        	</div></div>
+
+    	 <% when "Vehicle" %>
+
+          <%= header("Mobilien") %>
+
+          <div class='col-xs-12'><div class="panel-body">
+        		<% @user.vehicles.each do |uv| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+
+                  <%= showImage("Vehicle", :medium, uv) %>
+
+                  <br>
+                  <anzeigetext>
+        						<%= uv.name %><br>
+                  </anzeigetext>
+                  <ntext>
+        						<%= uv.mob_category.name %>
+        						<br>
+        						<%= align_text(uv.description) %>
+        						<br>
+      						</ntext>
+                  <br><br>
+        			  </div>
+        			 </div>
+        		<% end %>
+          </div></div>
+
+    	 <% when "Event" %>
           
+          <%= header("Events") %>
+
+          <div class='col-xs-12'><div class="panel-body">
+          
+            <% @user.events.each do |ue| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+                  <%= link_to ue do %>
+                    <% if ue.event_details.count > 0 %>
+                      <%= carousel(ue.event_details, "medium") %>
+                    <% else %>
+                      <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
+              			<% end %>
+              		<% end %>
+            			<br>
+                  <anzeigetext>
+        						<%= ue.name %><br>
+                  </anzeigetext>
+                  <br>
+                  <ntext>
+        						<%= ue.ev_category.name %>
+        						<br>
+        						<%= align_text(ue.description) %>
+                  </ntext>
+      						<br><br>
+        			  </div>
+        			 </div>
+      		  <% end %>
+      		</div></div>
+
+    	 <% when "Ticket" %>
+          
+          <%= header("Tickets") %>
+
+          <div class='col-xs-12'><div class="panel-body">
+          
+            <% @user.user_tickets.where('status<>? and status<>?',"zurückgegeben", "Filter Kampagne").each do |ut| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+                  <anzeigetext>
+                    <%= ut.ticket.ticket_category.name %><br>
+          					<%= ut.ticket.name %><br>
+          				</anzeigetext>
+          				<ticketstatuss><b>
+          				<%= ut.status %>
+                  </b></ticketstatuss><br><br>
+                  
+                  <%= showImage("User", :small, ut) %>
+                  
+                  <%= ut.user.name + " " + ut.user.lastname %><br>
+                  <ntext><br>
+                  <b>Veranstaltung</b><br>
+                  <%= link_to ut.ticket.sponsor.event do %>
+                    <%= carousel(ut.ticket.sponsor.event.event_details, "medium") %><br>
+                  <% end %>
+                  <%= ut.ticket.sponsor.event.name %><br>
+                  <%= ut.ticket.sponsor.event.date_from.strftime("%d.%m.%Y") + " - " + ut.ticket.sponsor.event.date_to.strftime("%d.%m.%Y")  %><br>
+                  <br>
+                  <b>überreicht von</b><br>
+                  
+                  <%= showImage("Company", :small, ut.ticket.sponsor.company) %>
+                  
+                  <%= ut.ticket.sponsor.company.name %>
+                  </ntext>
+                  <div class="caption">
+                      <ntext>
+            				  <%= ut.ticket.description %>
+                      </ntext>
+            			</div>
+                  <ntext>
+            		  <%= ut.ticket.created_at.strftime("%d.%b.%Y %H:%M Uhr") %>
+            		  <% if ut.ticket.created_at.to_date == Date.today %>
+            		    Heute
+            		  <% end %>
+            		  <% if (Date.today - ut.ticket.created_at.to_date) == 1 %>
+            		    Gestern
+            		  <% end %>
+            		  <% if Date.today - ut.ticket.created_at.to_date > 1 %>
+                    <% anz = (Date.today.to_date - ut.ticket.created_at.to_date).to_i %>
+                    Vor <%= anz %> Tagen
+            		  <% end %>
+                  </ntext>    		  
+                  </p>
+            			<p>
+            			<% case ut.status %>
+            			  <% when "persönlich", "übergeben" %>
+                      <%= link_to users_ticketstatus_path :userticket_id => ut.id, :status => "zurückgeben" do %>
+                        <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-down"> Ticket zurückgeben</i>
+                      <% end %><br><br>
+                      <%= link_to users_ticketstatus_path :userticket_id => ut.id, :status => "aktivieren" do %>
+                        <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-up"> Ticket aktivieren</i>
+                      <% end %>
+            			  <% when "zurückgegeben" %>
+                      <% link_to users_ticketstatus_path :userticket_id => ut.id, :status => "zurückgeben" do %>
+                        <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-down"> Ticket zurückgegeben</i>
+                      <% end %><br><br>
+            			  <% when "aktiv" %>
+                      <%= link_to users_ticketstatus_path :userticket_id => ut.id, :status => "einlösen" do %>
+                        <i class="btn btn-primary btn btn-lg glyphicon glyphicon-shopping-cart"> Ticket einlösen</i>
+                      <% end %>
+            			  <% when "eingelöst" %>
+                      <% link_to users_ticketstatus_path :userticket_id => ut.id, :status => "einlösen" do %>
+                        <i class="btn btn-primary btn btn-lg glyphicon glyphicon-shopping-cart"> Ticket eingelöst</i>
+                      <% end %>
+                  <% end %>
+            		</div>
+          		</div>
+            <% end %>
+          </div></div>
+            
+    	 <% when "Hotspot" %>
+          <%= header("Ausflugsziele") %>
+          <div class='col-xs-12'><div class="panel-body">
+        		<% @user.hotspots.each do |uh| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+                  <%= link_to uh do %>
+                    <% if uh.hotspot_details != nil %>
+                          <%= carousel(uh.hotspot_details, "medium") %>
+                        <% else %>
+                          <%= image_tag("hotspot_a.png", :size => "200x200", class:"img-rounded" ) %>
+                		<% end %>
+                	<% end %>
+              		<br>
+                  <anzeigetext>
+        						<%= uh.name %><br>
+                  </anzeigetext>
+                  <br>
+              		<ntext>
+      						<%= align_text(uh.description) %>
+                  </ntext>
+                  <br><br>
+        			  </div>
+        			 </div>
+        		<% end %>
+          </div></div>
+          
+    	 <% when "Bid" %>
+          <%= header("Ausschreibungen") %>
+          <div class='col-xs-12'><div class="panel-body">
+      		<% @user.bids.each do |ub| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+                  <%= link_to ub do %>
+                    <% if ub.bid_details != nil %>
+                          <%= carousel(ub.bid_details, "medium") %>
+                        <% else %>
+                          <%= image_tag("bid_a.png", :size => "200x200", class:"img-rounded" ) %>
+                		<% end %>
+                	<% end %>
+                	<br>
+                  <anzeigetext>
+                    <%= ub.name %><br>
+                  </anzeigetext>
+                  <br>
+                  <ntext>
+        				  <%= align_text(ub.description) %>
+                  </ntext>
+                  <br><br>
+        			  </div>
+        			 </div>
+        		<% end %>
+          </div></div>
+
+    	 <% when "Reward" %>
+          <%= header("Crowdfunding Belohnung") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <% @user.donations.where('dtype=?',"Reward").each do |cds| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+                  <%= link_to cds do %>
+                    <% if cds.donation_details != nil %>
+                          <%= carousel(cds.donation_details, "medium") %>
+                        <% else %>
+                          <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
+                		<% end %>
+                	<% end %>
+                  <br>
+                  <anzeigetext>
+        						<%= cds.name %><br>
+                  </anzeigetext>
+                  <ntext>
+      						<%= align_text(cds.description) %>
+      						<br>
+                  </ntext>
+                  <ntext>Ziel <br></ntext><preis><%= sprintf("%05.2f CHF", cds.amount) %></preis>
+                  <br><br>
+                  <ntext>Unterstützungsbetrag <br></ntext><preis><%= sprintf("%05.2f CHF", cds.donation_stats.sum(:amount)) %></preis>
+                  <br><br>
+                </div>
+              </div>
+            <% end %>
+          </div></div>
+
+    	 <% when "Loan" %>
+          <%= header("Crowdfunding Kredit") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <% @user.donations.where('dtype=?',"Loan").each do |cds| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+                  <%= link_to cds do %>
+                    <% if cds.donation_details != nil %>
+                          <%= carousel(cds.donation_details, "medium") %>
+                        <% else %>
+                          <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
+                		<% end %>
+                	<% end %>
+                  <br>
+                  <anzeigetext>
+        						<%= cds.name %><br>
+                  </anzeigetext>
+                  <ntext>
+      						<%= align_text(cds.description) %>
+      						<br>
+                  </ntext>
+                  <ntext>Ziel <br></ntext><preis><%= sprintf("%05.2f CHF", cds.amount) %></preis>
+                  <br><br>
+                  <ntext>Kreditbetrag <br></ntext><preis><%= sprintf("%05.2f CHF", cds.donation_stats.sum(:amount)) %></preis>
+                  <br><br>
+                </div>
+              </div>
+            <% end %>
+          </div></div>
+
+    	 <% when "Stat" %>
+          <%= header("Crowdfunding Transaktionen") %>
+          <div class='col-xs-12'><div class="panel-body">
+      	    <% @user.donation_stats.each do |uds| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+                  <%= link_to uds.donation do %>
+                    <% if uds.donation.donation_details != nil %>
+                          <%= carousel(uds.donation.donation_details, "medium") %>
+                        <% else %>
+                          <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
+                		<% end %>
+                	<% end %>
+              		<br>
+                  <anzeigetext>
+        						<%= uds.donation.name %><br>
+                  </anzeigetext>
+                  <ntext>
+                    <%= align_text(uds.donation.description) %><br>
+          					<%= uds.donation.company.name if uds.donation.company_id %><br>
+          					<%= uds.donation.user.name + " " + uds.donation.user.lastname if uds.donation.user_id %><br>
+                  </ntext>
+                  <br>
+        	        <% if uds.donation.dtype == "Donation" %>
+                    <ntext>Spendenbetrag</ntext><br><preis><%= sprintf("%05.2f CHF", uds.amount) %></preis><ntext><br> am <%= uds.created_at.strftime("%d.%m.%Y") %></ntext>
+                    <br><br>
+                  <% end %>
+        	        <% if uds.donation.dtype == "Reward" %>
+                    <ntext>Unterstützungsbetrag</ntext><br><preis><%= sprintf("%05.2f CHF", uds.amount) %></preis><ntext><br> am <%= uds.created_at.strftime("%d.%m.%Y") %></ntext>
+                    <br><br>
+                    <anzeigetext><%= uds.donation.reward %></anzeigetext>
+                    <br>
+                  <% end %>
+        	        <% if uds.donation.dtype == "Loan" %>
+                    <ntext>Kreditbetrag</ntext><br><preis><%= sprintf("%05.2f CHF", uds.amount) %></preis><ntext><br> am <%= uds.created_at.strftime("%d.%m.%Y") %></ntext>
+                    <br><br>
+                    <anzeigetext><%= uds.donation.interest_rate %>%</anzeigetext>
+                    <br>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div></div>
+
+    	 <% when "Rating" %>
+          <%= header("Bewertungen") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <% @user.ratings.each do |ur| %>
+              <% if ur.service != nil %>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                  <div class="thumbnail" align="center">
+                    <%= showImage("Service", :medium, ur.service) %>
+                    <br>
+                    <anzeigetext>
+          						<%= ur.service.name %><br>
+                    </anzeigetext>
+                    <ntext>
+                    <% if ur.service.company_id != nil %>
+            					<%= ur.service.company.name %>
+                    <% end %>
+                    <% if ur.service.user_id != nil %>
+            					<%= ur.service.user.name + " " + ur.service.user.lastname %>
+                    <% end %>
+                    <br>
+        						<%= align_text(ur.service.description) %>
+        						<br>
+        						</ntext>
+                    <br><br>
+                    <% ur.user_rating.times do %>
+                      <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                      <i class="glyphicon glyphicon-star"></i>
+                    <% end %>
+                    <br>
+                    <ntext>
+                    <%= ur.user_comment %>
+                    </ntext>
+                    <br><br>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div></div>
+
+    	 <% when "Favourit" %>
+          <%= header("Favoriten") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <% @user.favourits.each do |f| %>
+              <% @item = Object.const_get(f.object_name).find(f.object_id) %>
+              <% if @item != nil %>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                  <div class="thumbnail" align="center">
+                    <% if f.object_name == "User" or f.object_name == "Company" %>
+                      <%= link_to @item do %>
+                        <% if @item.avatar != nil %>
+                          <%= image_tag @item.avatar(:medium), class:"img-rounded" %>
+                        <% else %>
+                          <%= image_tag("nopic.jpg", :size => "200x200" , class:"img-rounded") %>
+                        <% end %>
+                      <% end %>
+                      <anzeigetext>
+                      <% if f.object_name == "User" %>
+                        <%= @item.name + " " + @item.lastname %>
+                      <% else %>
+                        <%= @item.name %>
+                      <% end %>
+                      </anzeigetext>
+                      <br><br>
+                      <% if f.active %>
+                        <% image_tag("icon_active.jpg", :size => "50x50" , class:"img-rounded") %>
+                         <i class="glyphicon glyphicon-ok-sign"></i> aktiv
+                      <% else %>
+                        <% image_tag("icon_inactive.jpg",:size => "50x50", class:"img-rounded") %>
+                         <i class="glyphicon lg glyphicon-remove-sign"></i> inaktiv
+                      <% end %>
+                      <% if f.email %>
+                        <% image_tag("icon_active.jpg", :size => "50x50" , class:"img-rounded") %>
+                         <i class="glyphicon glyphicon-ok-sign"></i> eMail
+                      <% end %>
+                      <% if f.ticker %>
+                        <% image_tag("icon_active.jpg", :size => "50x50" , class:"img-rounded") %>
+                         <i class="glyphicon glyphicon-ok-sign"></i> Ticker
+                      <% end %>
+                      <br><br>
+                      <% if user_signed_in? %>
+                        <% if @user.id == current_user.id %>
+                	        <%= link_to f, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                            <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                      <br><br>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div></div>
+
+    	 <% when "Customer" %>
+          <%= header("Kundenstatus") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <% @partners = Company.where('partner=?',true) %>
+            <% @partners.each do |p| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+                  <%= showImage("Company", :medium, p) %>
+                  <anzeigetext>
+                    <%= p.name %>
+                  </anzeigetext>
+                  <br><br>
+                  <% @customer = Customer.where("user_id=? AND partner_id=?", @user.id, p.id).first %>
+                  <% if @customer == nil %>
+                    <%= link_to new_customer_path :partner_id => p.id, :user_id => @user.id do %>
+                      <i class="btn btn-primary btn btn-lg glyphicon glyphicon-pencil"> Kundeneröffnung</i>
+                    <% end %>
+                  <% else %>
+                    <% @advisor = User.find(@customer.advisor_id) if @customer.advisor_id != nil %>
+                    <% if @advisor %>
+                      <%= showImage("User", :medium, @advisor) %>
+                        <ntext>
+                        Ihr xConnect Ansprechpartner<br>
+                        <%= @advisor.name +  " " + @advisor.lastname %>
+                        </ntext>
+                        <br><br>
+                    <% end %>
+                    <%= link_to accounts_path :customer_id => @customer.id do %>
+                      <i class="btn btn-primary btn btn-lg glyphicon glyphicon-book"></i>
+                    <% end %>
+                    <%= link_to edit_customer_path(@customer) do %>
+                      <i class="btn btn-primary btn btn-lg glyphicon glyphicon-wrench"></i>
+                    <% end %>
+          	        <%= link_to @customer, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                      <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                    <% end %>
+                  <% end %>
+                  <br><br>
+                </div>
+              </div>
+            <% end %>
+          </div></div>
+
+    	 <% when "Transaction" %>
+          <%= header("Transaktionen") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <% @trx = Transaction.where('ttype=? and user_id=?', "Payment", current_user.id).order(trx_date: :desc) %>
+            <% @trx.each do |t| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+                  
+                  <% ac_ver = Account.find(t.account_ver) %>
+                  <% if ac_ver %>
+                    <% if ac_ver.customer.user_id %>
+                      <%= showImage("User", :medium, ac_ver.customer.user) %>
+                      <anzeigetext>
+                        <%= ac_ver.customer.user.name + " " + ac_ver.customer.user.lastname %>
+                      </anzeigetext>
+                    <% end %>
+                    <% if ac_ver.customer.company_id %>
+                      <%= showImage("Company", :medium, ac_ver.customer.company) %>
+                      <anzeigetext>
+                        <%= ac_ver.customer.company.name %>
+                      </anzeigetext>
+                    <% end %>
+                  <% end %>
+                  <br><br>
+                  <b>Referenz</b>
+                  <% @item = Object.const_get(t.object_name).find(t.object_id) %>
+                  <% if @item %>
+                    <%= link_to @item do %>
+                      <%= @item.name %>
+                    <% end %>
+                    <br>
+                  <% end %>
+                  <br>
+                  <b>Betrag</b>
+                  <%= sprintf("%05.2f CHF",t.amount) if t.amount != nil %>
+                  <br><br>
+                  <b>Mitteilung</b><br>
+                  <%= t.text %>
+                  <br><br>
+                  <b>Status</b>
+                  <%= t.status if t.amount != nil %>
+                  <br><br>
+                  <% if t.status == "erfasst" %>
+                    <%= link_to user_path(current_user, :trx_status_ok_id => t.id) do %>
+                      <i class="btn btn-primary btn btn-lg glyphicon glyphicon-ok"></i>
+                    <% end %>
+                    <%= link_to edit_transaction_path(t, :user_id => current_user.id) do %>
+                      <i class="btn btn-primary btn btn-lg glyphicon glyphicon-wrench"></i>
+                    <% end %>
+          	        <%= link_to t, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                      <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                    <% end %>
+                  <% end %>
+                  <% if t.status == "freigegeben" %>
+                    <%= link_to user_path(current_user, :trx_status_ausgefuehrt_id => t.id) do %>
+                      <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-up"></i>
+                    <% end %>
+                  <% end %>
+                  <br><br>
+                </div>
+              </div>
+            <% end %>
+          </div></div>
+
+    	 <% when "Location" %>
+          <%= header("Ort (Karte)") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <div id="map">
+              <div id="map-canvas"></div>
+            </div>
+          </div></div>
+
         <% end %>
         
-        
       </div>
-
   </div>
 </div>
+
+<script>
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers([
+        {
+          "lat": <%= @user.latitude %>,
+          "lng": <%= @user.longitude %>,
+          "infowindow": "<%= @user.name + " " + @user.lastname %>",
+            <% if @user.avatar != nil %>
+              "picture": {"url": "<%= url_for @user.avatar(:small) %>", "width": 50, "height": 50},
+            <% else %>
+              "picture": {"url": "<%= image-url('user_a.png') %>", "width": 50, "height": 50},
+            <% end %>
+        }
+      ]);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+});
+</script>
