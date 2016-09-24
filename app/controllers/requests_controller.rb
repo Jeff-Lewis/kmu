@@ -16,6 +16,11 @@ class RequestsController < ApplicationController
     if params[:rtype]
       session[:rtype] = params[:rtype]
     end 
+     if params[:topic]
+       @topic = params[:topic]
+     else 
+       @topic = "User"
+     end 
   end
 
   # GET /requests/new

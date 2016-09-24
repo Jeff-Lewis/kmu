@@ -1,143 +1,68 @@
 <div class="container-fluid">
+  <div class="row">
+    <%= action_buttons("Bid", @bid, @topic) %>
+  </div>
 
   <div class="row">
-    <div class="col-md-12">
-        <div class="panel-heading header header">
-          <li_header>
-              AUSSCHREIBUNG <%= @bid.name %>
-          </li_header>
-        </div>
-        <div class="panel-body">
-          <%= link_to bids_path :page => session[:page] do %>
-            <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
-          <% end %>
-          <% if user_signed_in? %>
-            <% if current_user.id == @bid.user.id %>
-    	        <%= link_to edit_bid_path(@bid) do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-              <% end %>
-    	        <%= link_to @bid, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                <i class="btn btn-danger btn-lg pull-right glyphicon glyphicon-trash"></i>
-              <% end %>
+    <%= header(@bid.name) %>
+  </div>
+  
+  <div class="row">
+    <%= navigate("Bid", @bid) %>
+  </div>
+      
+  <div class="row">
+
+      <% case @topic %>
+        <% when "Bidinformation" %>
+          <%= header("Informationen") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <% if @bid.bid_details.first != nil %>
+              <%= carousel(@bid.bid_details, "medium") %>
+              <br><br>
             <% end %>
-  	        <%= link_to new_webmaster_path :object_name => "Bid", :object_id => @bid.id, :user_id => current_user.id do %>
-              <i class="btn btn-warning btn-lg pull-right glyphicon glyphicon-eye-open"></i>
-            <% end %>
-          <% end %>
-        </div>
-        <div class="panel-body">
-          <% if @bid.bid_details.first != nil %>
-            <%= carousel(@bid.bid_details, "medium") %>
+            <b>Ausführungsort</b><br>
+            <%= @bid.address1 if @bid.address1 != nil %>
+            <%= @bid.address2 if @bid.address2 != nil %>
+            <%= @bid.address3 if @bid.address3 != nil %>
             <br><br>
-          <% end %>
-          <b>Ausführungsort</b><br>
-          <%= @bid.address1 if @bid.address1 != nil %>
-          <%= @bid.address2 if @bid.address2 != nil %>
-          <%= @bid.address3 if @bid.address3 != nil %>
-          <br><br>
-          <b>Ausführungsdatum von-bis:</b><br>
-          <%= @bid.date_from.strftime("%d.%m.%Y") %> - <%= @bid.date_to.strftime("%d.%m.%Y") %>
-          <br><br>
-          <b>Beschreibung</b><br>
-    			<%= @bid.description %>
-          <br><br>
-          <b>ausgeschrieben von:</b><br>
-          <%= link_to @bid.user do %>
-            <% if !@bid.user.avatar_file_name %>
-              <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
-            <% else %>
-              <%= image_tag @bid.user.avatar(:thumb), class:"img-rounded" %>
-            <% end %><br>
-            <%= @bid.user.name + " " + @bid.user.lastname %>
-          <% end %>
-    			<br><br>
-          <%= @bid.created_at.strftime("%d.%m.%Y") %>
-        </div>
-    </div>
-  </div>
-  <br>
+            <b>Ausführungsdatum von-bis:</b><br>
+            <%= @bid.date_from.strftime("%d.%m.%Y") %> - <%= @bid.date_to.strftime("%d.%m.%Y") %>
+            <br><br>
+            <b>Beschreibung</b><br>
+      			<%= @bid.description %>
+            <br><br>
+            <b>ausgeschrieben von:</b><br>
+            <%= link_to @bid.user do %>
+              <% if !@bid.user.avatar_file_name %>
+                <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
+              <% else %>
+                <%= image_tag @bid.user.avatar(:thumb), class:"img-rounded" %>
+              <% end %><br>
+              <%= @bid.user.name + " " + @bid.user.lastname %>
+            <% end %>
+      			<br><br>
+            <%= @bid.created_at.strftime("%d.%m.%Y") %>
+          </div></div>
+      <% end %>
 
-  <div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-          <% if user_signed_in? %>
-            <% if current_user.id == @bid.user_id %>
-              <%= link_to new_bid_detail_path :bid_id => @bid.id do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
-              <% end %>
-            <% end %>
-          <% end %>
-            ZUSATZINFORMATIONEN
-        </li_header>
-      </div>
-      <div class="panel-body">
-      		<% @bid.bid_details.each do |bd| %>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="thumbnail" align="center">
-        				<% if bd.avatar_file_name == nil %>
-                  <%= image_tag("bid_a.png", :size => "200x200", class:"img-rounded" ) %>
-                <% else %>
-                  <%= image_tag bd.avatar(:medium), class:"img-rounded"  %>
-                <% end %>
-                <br>
-                <anzeigetext>
-      						<%= bd.name %>
-                </anzeigetext><br>
-    						<%= bd.description %>
-    						<br>
-                <% if user_signed_in? %>
-                  <% if current_user.id == @bid.user_id %>
-          	        <%= link_to edit_bid_detail_path(bd) do %>
-                      <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                    <% end %>
-          	        <%= link_to bd, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                      <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
-                    <% end %>
-                  <% end %>
-                <% end %>
-                <br><br>
-      			  </div>
-      			</div>
-      		<% end %>
-    	</div>
-    </div>
-  </div>
-  <br>
-        
-  <div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-          <% if user_signed_in? %>
-            <% if current_user.id == @bid.user_id %>
-              <%= link_to new_bid_document_path :bid_id => @bid.id, :mode => "user" do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
-              <% end %>
-            <% end %>
-          <% end %>
-            AUSSCHREIBUNGSDOKUMENTE
-        </li_header>
-      </div>
-      <div class="panel-body">
-      		<% @bid.bid_documents.each do |bd| %>
-            <% if bd.company_id == nil %>
+      <% case @topic %>
+        <% when "Biddetail" %>
+          <%= header("Informationen") %>
+          <div class='col-xs-12'><div class="panel-body">
+        		<% @bid.bid_details.each do |bd| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
-                  <%= image_tag("pdf.jpg", :size => "200x200", class:"img-rounded" ) %>
+                  <%= showImage("Bid", :medium, bd) %>
                   <br>
                   <anzeigetext>
-        						<%= bd.name %><br>
-                  </anzeigetext>
-                  <p>
+        						<%= bd.name %>
+                  </anzeigetext><br>
       						<%= bd.description %>
-      						</p>
+      						<br>
                   <% if user_signed_in? %>
                     <% if current_user.id == @bid.user_id %>
-            	        <%= link_to bd.document.url, target: "_blank" do %>
-                        <i class="btn btn-primary btn-lg glyphicon glyphicon-cloud-download"></i>
-                      <% end %>
-            	        <%= link_to edit_bid_document_path(bd) do %>
+            	        <%= link_to edit_bid_detail_path(bd) do %>
                         <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
                       <% end %>
             	        <%= link_to bd, method: :delete, data: { confirm: 'Are you sure?' } do %>
@@ -149,61 +74,30 @@
         			  </div>
         			</div>
         		<% end %>
-      		<% end %>
-    	</div>
-    </div>
-  </div>
-  <br>
-        
-  <div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-          <% if user_signed_in? %>
-            <% if current_user.id == @bid.user_id %>
-              <% if current_user.companies != nil %>
-                <%= link_to new_bid_document_path :bid_id => @bid.id, :mode => "company" do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
-                <% end %>
-              <% end %>
-            <% end %>
-          <% end %>
-            ANGEBOTSDOKUMENTE
-        </li_header>
-      </div>
-      <div class="panel-body">
-      		<% @bid.bid_documents.each do |bd| %>
-            <% if bd.company_id != nil %>
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="thumbnail" align="center">
-                  <anzeigetext>
-        						<%= bd.company.name %>
-                  </anzeigetext><br>
-                    <% if !bd.company.avatar_file_name %>
-                      <%= image_tag("company_a.png", :size => "200x200" , class:"img-rounded") %>
-                    <% else %>
-                      <%= image_tag bd.company.avatar(:medium), class:"img-rounded" %>
-                    <% end %>
-                  <%= bd.name %>
-                  <br>
-                  <p>
-      						<%= bd.description %>
-      						</p>
-                  <% if user_signed_in? %>
-                    <% download = false %>
-                    <% if current_user.id == @bid.user_id %>
-                    
-                      <%= link_to listaccounts_index_path :user_id => current_user.id, :user_id_ver => nil, :company_id_ver => bd.company.id, :ref => "Vergütung an "+ bd.company.name, :object_name => "Bid", :object_id => @bid.id, :amount => nil do %>
-                        <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
-                      <% end %>
+          </div></div>
+      <% end %>
 
-            	        <%= link_to bd.document.url, target: "_blank" do %>
-                        <i class="btn btn-primary btn-lg glyphicon glyphicon-cloud-download"></i>
-                      <% end %>
-                      <% download = true %>
-                    <% end %>
-                    <% if bd.company_id != nil %>
-                      <% if current_user.id == bd.company.user_id %>
+      <% case @topic %>
+        <% when "Biddokument" %>
+          <%= header("Dokumente") %>
+          <div class='col-xs-12'><div class="panel-body">
+        		<% @bid.bid_documents.each do |bd| %>
+              <% if bd.company_id == nil %>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                  <div class="thumbnail" align="center">
+                    <%= image_tag("pdf.jpg", :size => "200x200", class:"img-rounded" ) %>
+                    <br>
+                    <anzeigetext>
+          						<%= bd.name %><br>
+                    </anzeigetext>
+                    <p>
+        						<%= bd.description %>
+        						</p>
+                    <% if user_signed_in? %>
+                      <% if current_user.id == @bid.user_id %>
+              	        <%= link_to bd.document.url, target: "_blank" do %>
+                          <i class="btn btn-primary btn-lg glyphicon glyphicon-cloud-download"></i>
+                        <% end %>
               	        <%= link_to edit_bid_document_path(bd) do %>
                           <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
                         <% end %>
@@ -212,36 +106,26 @@
                         <% end %>
                       <% end %>
                     <% end %>
-                  <% end %>
-                  <br><br>
-        			  </div>
-        			</div>
+                    <br><br>
+          			  </div>
+          			</div>
+          		<% end %>
         		<% end %>
-      		<% end %>
-    	</div>
-    </div>
-  </div>
-  <br>
-        
-  <div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-            ORTSANGABE
-        </li_header>
-      </div>
-    </div>
-    <div class="col-md-12">
-      <div class="panel-body">
-        <div id="map">
-          <div id="map-canvas"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <br>
-</div>
+          </div></div>
+      <% end %>
 
+      <% case @topic %>
+        <% when "Bidstandort" %>
+          <%= header("Standort") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <div id="map">
+              <div id="map-canvas"></div>
+            </div>
+          </div></div>
+      <% end %>
+  </div>
+</div>
+  
 <script>
     handler = Gmaps.build('Google');
     handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){

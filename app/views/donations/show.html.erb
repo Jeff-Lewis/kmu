@@ -1,6 +1,215 @@
 <div class="container-fluid">
 
   <div class="row">
+    <%= action_buttons("Donation", @donation, @topic) %>
+  </div>
+
+  <div class="row">
+    <% case @dtype %>
+      <% when "Donation" %>
+        <%= header("Crwodfunding (Spende) " + @donation.name) %>
+      <% when "Reward" %>
+        <%= header("Crowdfunding (Reward) " + @donation.name) %>
+      <% when "Loan" %>
+        <%= header("Crowdfunding (Kredit) " + @donation.name) %>
+    <% end %>
+  </div>
+  
+  <div class="row">
+    <%= navigate("Donation", @donation) %>
+  </div>
+      
+  <div class="row">
+
+      <% case @topic %>
+        <% when "Donationinformation" %>
+          <%= header("Informationen") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <% if @donation.donation_details.count > 0 %>
+                <%= carousel(@donation.donation_details, "medium") %>
+              <% else %>
+                <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
+      			<% end %>
+      			</p>
+            <b>Beschreibung</b><br>
+      			<%= @donation.description %>
+            <br><br>
+            <% case @donation.dtype %>
+              <% when "Donation" %>
+                <b>Spendenziel</b><br>
+                <%= sprintf("%05.2f CHF", @donation.amount) %>
+                <br>
+              <% when "Reward" %>
+                <b>Projektziel</b><br>
+                <%= sprintf("%05.2f CHF", @donation.amount) %>
+                <br><br>
+                <b>Stückelung</b><br>
+                <%= sprintf("%05.2f CHF", @donation.price) %>
+                <br><br>
+                <b>Belohnung</b><br>
+                <%= @donation.reward %>
+                <br>
+              <% when "Loan" %>
+                <b>Kreditsumme</b><br>
+                <%= sprintf("%05.2f CHF", @donation.amount) %>
+                <br><br>
+                <b>Zinssatz</b><br>
+                <%= @donation.interest_rate %>%
+                <br><br>
+                Rückzahlung am <%= @donation.due_date.strftime("%d.%m.%Y") %>
+                <br>
+            <% end %>
+            <br>
+            <b>initialisiert von:</b><br>
+            <% if @donation.company_id %>
+              <%= link_to @donation.company do %>
+                <% if !@donation.company.avatar_file_name %>
+                  <%= image_tag("company_a.png", :size => "100x100" , class:"img-rounded") %>
+                <% else %>
+                  <%= image_tag @donation.company.avatar(:thumb), class:"img-rounded" %>
+                <% end %><br>
+                <%= @donation.company.name %>
+              <% end %>
+            <% end %>
+            <% if @donation.user_id %>
+              <%= link_to @donation.user do %>
+                <% if !@donation.user.avatar_file_name %>
+                  <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
+                <% else %>
+                  <%= image_tag @donation.user.avatar(:thumb), class:"img-rounded" %>
+                <% end %><br>
+                <%= @donation.user.name + " " + @donation.user.lastname %>
+              <% end %>
+            <% end %>
+      			<br><br>
+            <%= @donation.created_at.strftime("%d.%m.%Y") %>
+          </div></div>
+      <% end %>
+
+      <% case @topic %>
+        <% when "Donationdetail" %>
+          <%= header("Informationen") %>
+          <div class='col-xs-12'><div class="panel-body">
+        		<% @donation.donation_details.each do |bd| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+          				<% if bd.avatar_file_name == nil %>
+                    <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
+                  <% else %>
+                    <%= image_tag bd.avatar(:medium), class:"img-rounded"  %>
+                  <% end %>
+                  <br>
+                  <anzeigetext>
+        						<%= bd.name %><br>
+                  </anzeigetext>
+                  <ntext>
+      						<%= bd.description %>
+                  </ntext>
+                  <br>
+                  <% if user_signed_in? %>
+                  <% if (@donation.company_id and current_user.id == @donation.company.user_id) or (@donation.user_id and current_user.id == @donation.user_id) %>
+            	        <%= link_to edit_donation_detail_path(bd) do %>
+                        <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                      <% end %>
+            	        <%= link_to bd, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                        <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <br><br>
+        			  </div>
+        			</div>
+        		<% end %>
+          </div></div>
+      <% end %>
+
+      <% case @topic %>
+        <% when "Donationstatistikanz" %>
+          <%= header("Statistik (Anzahl)") %>
+          <div class='col-xs-12'><div class="panel-body">
+              <%= content_tag :div, "", id: "reports_chart_anz",  data: {reports: @donstats_anz} %>
+          </div></div>
+      <% end %>
+
+      <% case @topic %>
+        <% when "Donationstatistiksum" %>
+          <%= header("Statistik (Betrag)") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <%= content_tag :div, "", id: "reports_chart_bet",  data: {reports: @donstats_bet} %>
+          </div></div>
+      <% end %>
+
+      <% case @topic %>
+        <% when "Donationstat" %>
+          <%= header("Transaktionen") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <% @donation.donation_stats.order(amount: :desc).each do |ds| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+        				  <% if ds.company_id != nil %>
+                    <%= link_to ds.company do %>
+              				<% if ds.company.avatar_file_name == nil %>
+                        <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
+                      <% else %>
+                        <%= image_tag ds.company.avatar(:medium), class:"img-rounded"  %>
+                      <% end %><br>
+                    <% end %>
+          				  <%= ds.company.name %>
+          				<% end %>
+          				<% if ds.user_id != nil %>
+          				  <%= link_to ds.user do %>
+              				<% if ds.user.avatar_file_name == nil %>
+                        <%= image_tag("user_a.png", :size => "200x200", class:"img-rounded" ) %>
+                      <% else %>
+                        <%= image_tag ds.user.avatar(:medium), class:"img-rounded"  %>
+                      <% end %><br>
+                    <% end %>
+          				  <%= ds.user.name + " " + ds.user.lastname  %>
+          				<% end %>
+          				<br><br>
+          				<% if !ds.anonymous %>
+          	        <% if ds.donation.dtype == "Donation" %>
+                      <ntext>Spendenbetrag</ntext><br><preis><%= sprintf("%05.2f CHF", ds.amount) %></preis><ntext><br> am <%= ds.created_at.strftime("%d.%m.%Y") %></ntext>
+                      <br><br>
+                    <% end %>
+          	        <% if ds.donation.dtype == "Reward" %>
+                      <ntext>Unterstützungsbetrag</ntext><br><preis><%= sprintf("%05.2f CHF", ds.amount) %></preis><ntext><br> am <%= ds.created_at.strftime("%d.%m.%Y") %></ntext>
+                      <br><br>
+                    <% end %>
+          	        <% if ds.donation.dtype == "Loan" %>
+                      <ntext>Kreditbetrag</ntext><br><preis><%= sprintf("%05.2f CHF", ds.amount) %></preis><ntext><br> am <%= ds.created_at.strftime("%d.%m.%Y") %></ntext>
+                      <br><br>
+                    <% end %>
+                  <% else %>
+                      <betrag>*****.** CHF</betrag>
+                  <% end %>
+                  <br><br>
+                  <%= ds.created_at.strftime("%d.%m.%Y") %>
+                  <br><br>
+                  <% if user_signed_in? %>
+                    <% if (ds.user_id and current_user.id == ds.user_id) or (ds.company_id and current_user.id == ds.company.user_id) %>
+    
+                      <%= link_to listaccounts_index_path :user_id => current_user.id, :user_id_ver => nil, :company_id_ver => @donation.company_id, :ref => "Vergütung an "+ @donation.name, :object_name => "Donation", :object_id => @donation.id, :amount => ds.amount do %>
+                        <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
+                      <% end %>
+    
+            	        <%= link_to edit_donation_stat_path(ds) do %>
+                        <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                      <% end %>
+            	        <%= link_to ds, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                        <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <br><br>
+                </div>
+              </div>
+            <% end %>
+          </div></div>
+      <% end %>
+  </div>
+
+  <div class="row">
     <div class="col-md-12">
         <div class="panel-heading header">
           <li_header>
@@ -36,64 +245,6 @@
         </div>
         <div class="panel-body">
           <p>
-          <% if @donation.donation_details.count > 0 %>
-              <%= carousel(@donation.donation_details, "medium") %>
-            <% else %>
-              <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
-    			<% end %>
-    			</p>
-          <b>Beschreibung</b><br>
-    			<%= @donation.description %>
-          <br><br>
-          <% case @donation.dtype %>
-            <% when "Donation" %>
-              <b>Spendenziel</b><br>
-              <%= sprintf("%05.2f CHF", @donation.amount) %>
-              <br>
-            <% when "Reward" %>
-              <b>Projektziel</b><br>
-              <%= sprintf("%05.2f CHF", @donation.amount) %>
-              <br><br>
-              <b>Stückelung</b><br>
-              <%= sprintf("%05.2f CHF", @donation.price) %>
-              <br><br>
-              <b>Belohnung</b><br>
-              <%= @donation.reward %>
-              <br>
-            <% when "Loan" %>
-              <b>Kreditsumme</b><br>
-              <%= sprintf("%05.2f CHF", @donation.amount) %>
-              <br><br>
-              <b>Zinssatz</b><br>
-              <%= @donation.interest_rate %>%
-              <br><br>
-              Rückzahlung am <%= @donation.due_date.strftime("%d.%m.%Y") %>
-              <br>
-          <% end %>
-          <br>
-          <b>initialisiert von:</b><br>
-          <% if @donation.company_id %>
-            <%= link_to @donation.company do %>
-              <% if !@donation.company.avatar_file_name %>
-                <%= image_tag("company_a.png", :size => "100x100" , class:"img-rounded") %>
-              <% else %>
-                <%= image_tag @donation.company.avatar(:thumb), class:"img-rounded" %>
-              <% end %><br>
-              <%= @donation.company.name %>
-            <% end %>
-          <% end %>
-          <% if @donation.user_id %>
-            <%= link_to @donation.user do %>
-              <% if !@donation.user.avatar_file_name %>
-                <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
-              <% else %>
-                <%= image_tag @donation.user.avatar(:thumb), class:"img-rounded" %>
-              <% end %><br>
-              <%= @donation.user.name + " " + @donation.user.lastname %>
-            <% end %>
-          <% end %>
-    			<br><br>
-          <%= @donation.created_at.strftime("%d.%m.%Y") %>
         </div>
     </div>
   </div>
@@ -114,36 +265,6 @@
         </li_header>
       </div>
       <div class="panel-body">
-    		<% @donation.donation_details.each do |bd| %>
-          <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="thumbnail" align="center">
-      				<% if bd.avatar_file_name == nil %>
-                <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
-              <% else %>
-                <%= image_tag bd.avatar(:medium), class:"img-rounded"  %>
-              <% end %>
-              <br>
-              <anzeigetext>
-    						<%= bd.name %><br>
-              </anzeigetext>
-              <ntext>
-  						<%= bd.description %>
-              </ntext>
-              <br>
-              <% if user_signed_in? %>
-              <% if (@donation.company_id and current_user.id == @donation.company.user_id) or (@donation.user_id and current_user.id == @donation.user_id) %>
-        	        <%= link_to edit_donation_detail_path(bd) do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                  <% end %>
-        	        <%= link_to bd, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                    <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
-                  <% end %>
-                <% end %>
-              <% end %>
-              <br><br>
-    			  </div>
-    			</div>
-    		<% end %>
     	</div>
     </div>
   </div>
@@ -155,9 +276,6 @@
         <li_header>
           STATISTIK Anzahl
         </li_header>
-      </div>
-      <div class="panel-body">
-        <%= content_tag :div, "", id: "reports_chart_anz",  data: {reports: @donstats_anz} %>
       </div>
     </div>  
   </div>
@@ -171,7 +289,6 @@
         </li_header>
       </div>
       <div class="panel-body">
-        <%= content_tag :div, "", id: "reports_chart_bet",  data: {reports: @donstats_bet} %>
       </div>
     </div>  
   </div>
@@ -212,68 +329,6 @@
         </li_header>
       </div>
       <div class="panel-body">
-        <% @donation.donation_stats.order(amount: :desc).each do |ds| %>
-          <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="thumbnail" align="center">
-    				  <% if ds.company_id != nil %>
-                <%= link_to ds.company do %>
-          				<% if ds.company.avatar_file_name == nil %>
-                    <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
-                  <% else %>
-                    <%= image_tag ds.company.avatar(:medium), class:"img-rounded"  %>
-                  <% end %><br>
-                <% end %>
-      				  <%= ds.company.name %>
-      				<% end %>
-      				<% if ds.user_id != nil %>
-      				  <%= link_to ds.user do %>
-          				<% if ds.user.avatar_file_name == nil %>
-                    <%= image_tag("user_a.png", :size => "200x200", class:"img-rounded" ) %>
-                  <% else %>
-                    <%= image_tag ds.user.avatar(:medium), class:"img-rounded"  %>
-                  <% end %><br>
-                <% end %>
-      				  <%= ds.user.name + " " + ds.user.lastname  %>
-      				<% end %>
-      				<br><br>
-      				<% if !ds.anonymous %>
-      	        <% if ds.donation.dtype == "Donation" %>
-                  <ntext>Spendenbetrag</ntext><br><preis><%= sprintf("%05.2f CHF", ds.amount) %></preis><ntext><br> am <%= ds.created_at.strftime("%d.%m.%Y") %></ntext>
-                  <br><br>
-                <% end %>
-      	        <% if ds.donation.dtype == "Reward" %>
-                  <ntext>Unterstützungsbetrag</ntext><br><preis><%= sprintf("%05.2f CHF", ds.amount) %></preis><ntext><br> am <%= ds.created_at.strftime("%d.%m.%Y") %></ntext>
-                  <br><br>
-                <% end %>
-      	        <% if ds.donation.dtype == "Loan" %>
-                  <ntext>Kreditbetrag</ntext><br><preis><%= sprintf("%05.2f CHF", ds.amount) %></preis><ntext><br> am <%= ds.created_at.strftime("%d.%m.%Y") %></ntext>
-                  <br><br>
-                <% end %>
-              <% else %>
-                  <betrag>*****.** CHF</betrag>
-              <% end %>
-              <br><br>
-              <%= ds.created_at.strftime("%d.%m.%Y") %>
-              <br><br>
-              <% if user_signed_in? %>
-                <% if (ds.user_id and current_user.id == ds.user_id) or (ds.company_id and current_user.id == ds.company.user_id) %>
-
-                  <%= link_to listaccounts_index_path :user_id => current_user.id, :user_id_ver => nil, :company_id_ver => @donation.company_id, :ref => "Vergütung an "+ @donation.name, :object_name => "Donation", :object_id => @donation.id, :amount => ds.amount do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
-                  <% end %>
-
-        	        <%= link_to edit_donation_stat_path(ds) do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                  <% end %>
-        	        <%= link_to ds, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                    <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
-                  <% end %>
-                <% end %>
-              <% end %>
-              <br><br>
-            </div>
-          </div>
-        <% end %>
       </div>
     </div>
   </div>

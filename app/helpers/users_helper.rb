@@ -246,227 +246,586 @@ def showImage(type, size, item)
             case type
                 when "Service"
                     image_tag("service_a.png", :size => si, class:"img-rounded" )
+                else
+                    image_tag("no_pic.jpg", :size => si, class:"img-rounded" )
             end
         end
     end
 end
 
 def header(header)
-    html_string = "<div class='col-xs-12'><div class='panel-heading header'><li_header>" + header + "</li_header></div></div>"
+    html_string = "<header><div class='col-xs-12'><div class='panel-heading header'><li_header>" + header + "</li_header></div></div></header>"
     return html_string.html_safe
 end
 
-def navigate(item)
-    si = "100x100"
-    html_string = "<div class='col-xs-12'><div class='panel-body'>"
-    if item
-      html_string = html_string + link_to(home_index6_path :topic => "User") do
-        content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-user")
-      end
-    end
-    html_string = html_string + link_to(home_index6_path :topic => "Kundenberater") do
-        if item.advisors.count > 0
-            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-question-sign")
-        else
-            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-question-sign")
-       end
-    end
-    html_string = html_string + link_to(home_index6_path :topic => "Service") do
-    if item.services.count > 0
-            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-shopping-cart")
-        else
-            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-shopping-cart")
-       end
-    end
-    html_string = html_string + link_to(home_index6_path :topic => "Company") do
-    if item.companies.count > 0
-            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-copyright-mark")
-        else
-            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-copyright-mark")
-       end
-    end
-    html_string = html_string + link_to(home_index6_path :topic => "Request") do
-    if item.requests.count > 0
-            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-pushpin")
-        else
-            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-pushpin")
-       end
-    end
-    html_string = html_string + link_to(home_index6_path :topic => "Vehicle") do
-    if item.vehicles.count > 0
-            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-road")
-        else
-            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-road")
-       end
-    end
-    html_string = html_string + link_to(home_index6_path :topic => "Event") do
-    if item.events.count > 0
-            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-calendar")
-        else
-            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-calendar")
-       end
-    end
-    html_string = html_string + link_to(home_index6_path :topic => "Ticket") do
-    if item.user_tickets.count > 0
-            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-barcode")
-        else
-            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-barcode")
-       end
-    end
-    html_string = html_string + link_to(home_index6_path :topic => "Hotspot") do
-    if item.hotspots.count > 0
-            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-camera")
-        else
-            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-camera")
-       end
-    end
-    html_string = html_string + link_to(home_index6_path :topic => "Bid") do
-    if item.bids.count > 0
-            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-pencil")
-        else
-            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-pencil")
-       end
-    end
-    html_string = html_string + link_to(home_index6_path :topic => "Reward") do
-    if item.donations.where('dtype=?',"Reward").count > 0
-            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-gift")
-        else
-            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-gift")
-       end
-    end
-    html_string = html_string + link_to(home_index6_path :topic => "Loan") do
-    if item.donations.where('dtype=?',"Loan").count > 0
-            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-refresh")
-        else
-            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-refresh")
-       end
-    end
-    html_string = html_string + link_to(home_index6_path :topic => "Stat") do
-    if item.donation_stats.count > 0
-            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-fullscreen")
-        else
-            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-fullscreen")
-       end
-    end
-    html_string = html_string + link_to(home_index6_path :topic => "Rating") do
-    if item.ratings.count > 0
-            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-star")
-        else
-            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-star")
-       end
-    end
-    html_string = html_string + link_to(home_index6_path :topic => "Favourit") do
-    if item.favourits.count > 0
-            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-heart")
-        else
-            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-heart")
-       end
-    end
-    html_string = html_string + link_to(home_index6_path :topic => "Customer") do
-    if Customer.where('user_id=?',item.id).count > 0
-            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-tag")
-        else
-            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-tag")
-       end
-    end
-    html_string = html_string + link_to(home_index6_path :topic => "Transaction") do
-    if item.transactions.count > 0
-            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-list")
-        else
-            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-list")
-       end
-    end
-    html_string = html_string + link_to(home_index6_path :topic => "Location") do
-    if item.geo_address
-            content_tag(:i, nil, class:"btn btn-xs btn-active glyphicon glyphicon-record")
-        else
-            content_tag(:i, nil, class:"btn btn-xs btn-passive glyphicon glyphicon-record")
-       end
+def navigate(object,item)
+    
+    html_string = "<navigate><div class='col-xs-12'><div class='panel-body'>"
+    
+    case object
+      when "User"
+        html_string = html_string + build_nav("User",item,"User","user",item)
+        html_string = html_string + build_nav("User",item,"Kundenberater","question-sign",item.advisors.count > 0)
+        html_string = html_string + build_nav("User",item,"Service","shopping-cart",item.services.count > 0)
+        html_string = html_string + build_nav("User",item,"Company","copyright-mark",item.companies.count > 0)
+        html_string = html_string + build_nav("User",item,"Request","pushpin",item.requests.count > 0)
+        html_string = html_string + build_nav("User",item,"Vehicle","retweet",item.vehicles.count > 0)
+        html_string = html_string + build_nav("User",item,"Event","calendar",item.events.count > 0)
+        html_string = html_string + build_nav("User",item,"Ticket","barcode",item.user_tickets.count > 0)
+        html_string = html_string + build_nav("User",item,"Hotspot","camera",item.hotspots.count > 0)
+        html_string = html_string + build_nav("User",item,"Bid","pencil",item.bids.count > 0)
+        html_string = html_string + build_nav("User",item,"Reward","gift", item.donations.where('dtype=?',"Reward").count > 0)
+        html_string = html_string + build_nav("User",item,"Loan","signal", item.donations.where('dtype=?',"Loan").count > 0)
+        html_string = html_string + build_nav("User",item,"Stat","tree-deciduous", item.donation_stats.count > 0)
+        html_string = html_string + build_nav("User",item,"Rating","star-empty", item.ratings.count > 0)
+        html_string = html_string + build_nav("User",item,"Favourit","star", item.favourits.count > 0)
+        html_string = html_string + build_nav("User",item,"Customer","check", Customer.where('user_id=?',item.id).count > 0)
+        html_string = html_string + build_nav("User",item,"Transaction","list", Transaction.where('ttype=? and user_id=?', "Payment", item.id).count > 0)
+        html_string = html_string + build_nav("User",item,"Location","record", item.geo_address)
+        html_string = html_string + build_nav("User",item,"Email","envelope", Email.where('m_to=? or m_from=?', item.id, item.id).count > 0)
+      
+      when "Company"
+        html_string = html_string + build_nav("Company",item,"Company","copyright-mark",item)
+        html_string = html_string + build_nav("Company",item,"Service","shopping-cart",item.services.where("stype=?","regular").count > 0)
+        html_string = html_string + build_nav("Company",item,"Aktion","time",item.services.where("stype=?","action").count > 0)
+        html_string = html_string + build_nav("Company",item,"Vehicle","retweet",item.vehicles.count > 0)
+        html_string = html_string + build_nav("Company",item,"Bid","pencil",item.bid_documents.count > 0)
+        html_string = html_string + build_nav("Company",item,"Job","user",item.jobs.count > 0)
+        html_string = html_string + build_nav("Company",item,"Event","calendar",item.events.count > 0)
+        html_string = html_string + build_nav("Company",item,"Sponsor","certificate",item.sponsors.count > 0)
+        html_string = html_string + build_nav("Company",item,"Donation","heart",item.donations.where('dtype=?',"Donation").count > 0)
+        html_string = html_string + build_nav("Company",item,"Reward","gift",item.donations.where('dtype=?',"Reward").count > 0)
+        html_string = html_string + build_nav("Company",item,"Loan","signal",item.donations.where('dtype=?',"Loan").count > 0)
+        html_string = html_string + build_nav("Company",item,"Stat","tree-deciduous", item.donation_stats.count > 0)
+        html_string = html_string + build_nav("Company",item,"Favourit","star", item.user.favourits.count > 0)
+        html_string = html_string + build_nav("Company",item,"Customer","check", Customer.where('company_id=?',item.id).count > 0)
+        html_string = html_string + build_nav("Company",item,"Transaction","list", Transaction.where('ttype=? and company_id=?', "Payment", item.id).count > 0)
+        html_string = html_string + build_nav("Company",item,"Link", "globe", PartnerLink.where('company_id=?', item.id).count > 0)
+        html_string = html_string + build_nav("Company",item,"Location","record", item.geo_address)
+        html_string = html_string + build_nav("Company",item,"Email","envelope", Email.where('m_to=? or m_from=?', item.user.id, item.user.id).count > 0)
+        
+      when "Service"
+        html_string = html_string + build_nav("Service",item,"Service","shopping-cart",item)
+        html_string = html_string + build_nav("Service",item,"Servicedokument","book",item.service_documents.count > 0)
+        html_string = html_string + build_nav("Service",item,"Servicekundenberater","user",item.advisors.count > 0)
+        html_string = html_string + build_nav("Service",item,"Servicerating","star",item.ratings.count > 0)
+
+      when "Vehicle"
+        html_string = html_string + build_nav("Vehicle",item,"Vehicleinformation","retweet",item)
+        html_string = html_string + build_nav("Vehicle",item,"Vehiclekalender","calendar",item.calenders.count > 0)
+        html_string = html_string + build_nav("Vehicle",item,"Vehicleuser","user",item.calenders.count > 0)
+        html_string = html_string + build_nav("Vehicle",item,"Vehiclestandort","record",item.geo_address)
+
+      when "Bid"
+        html_string = html_string + build_nav("Bid",item,"Bidinformation","pencil",item)
+        html_string = html_string + build_nav("Bid",item,"Biddetail","search",item.bid_details.count > 0)
+        html_string = html_string + build_nav("Bid",item,"Biddokument","book",item.bid_documents.count > 0)
+        html_string = html_string + build_nav("Bid",item,"Bidstandort","record",item.geo_address)
+
+      when "Job"
+        html_string = html_string + build_nav("Job",item,"Jobinformation","pencil",item)
+        html_string = html_string + build_nav("Job",item,"Jobdetail","search",item)
+
+      when "Event"
+        html_string = html_string + build_nav("Event",item,"Eventinformation","calendar",item)
+        html_string = html_string + build_nav("Event",item,"Eventdetail","search",item.event_details.count > 0)
+        html_string = html_string + build_nav("Event",item,"Eventsponsor","heart",item.sponsors.count > 0)
+        html_string = html_string + build_nav("Event",item,"Eventstandort","record",item.geo_address)
+
+      when "Hotspot"
+        html_string = html_string + build_nav("Hotspot",item,"Hotspotinformation","camera",item)
+        html_string = html_string + build_nav("Hotspot",item,"Hotspotdetail","search",item.hotspot_details.count > 0)
+        html_string = html_string + build_nav("Hotspot",item,"Hotspotbewertung","star",item.hs_ratings.count > 0)
+        html_string = html_string + build_nav("Hotspot",item,"Hotspotstandort","record",item.geo_address)
+
+      when "Donation"
+        html_string = html_string + build_nav("Donation",item,"Donationinformation","gift",item)
+        html_string = html_string + build_nav("Donation",item,"Donationdetail","search",item.donation_details.count > 0)
+        html_string = html_string + build_nav("Donation",item,"Donationstatistikanz","stats",item.donation_stats.count > 0)
+        html_string = html_string + build_nav("Donation",item,"Donationstatistiksum","stats",item.donation_stats.count > 0)
+        html_string = html_string + build_nav("Donation",item,"Donationstat","tree-deciduous",item.donation_stats.count > 0)
+
+      when "Request"
+        html_string = html_string + build_nav("Request",item,"Requestinformation","gift",item)
+        html_string = html_string + build_nav("Request",item,"Requestdetail","search",item.request_details.count > 0)
+
     end
     
-    html_string = html_string + "</div></div>"
+    html_string = html_string + "</div></div></navigate>"
     return html_string.html_safe
     
 end
 
-def action_buttons(item, topic)
+def build_nav(object, item, topic, glyphicon, condition)
+  if condition
+    btn = "active"
+  else
+    btn = "inactive"
+  end
+  case object
+    when "User"
+      html_string = link_to(user_path(item, :topic => topic)) do
+        content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
+      end
+    when "Company"
+      html_string = link_to(company_path(item, :topic => topic)) do
+        content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
+      end
+    when "Service"
+      html_string = link_to(service_path(item, :topic => topic)) do
+        content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
+      end
+    when "Vehicle"
+      html_string = link_to(vehicle_path(item, :topic => topic)) do
+        content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
+      end
+    when "Bid"
+      html_string = link_to(bid_path(item, :topic => topic)) do
+        content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
+      end
+    when "Job"
+      html_string = link_to(job_path(item, :topic => topic)) do
+        content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
+      end
+    when "Event"
+      html_string = link_to(event_path(item, :topic => topic)) do
+        content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
+      end
+    when "Hotspot"
+      html_string = link_to(hotspot_path(item, :topic => topic)) do
+        content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
+      end
+    when "Donation"
+      html_string = link_to(donation_path(item, :topic => topic)) do
+        content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
+      end
+    when "Request"
+      html_string = link_to(request_path(item, :topic => topic)) do
+        content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
+      end
+  end
+  return html_string.html_safe
+end
+
+def action_buttons(object, item, topic)
     
     html_string = "<div class='col-xs-12'><div class='panel-body'>"
     
-    html_string = html_string + link_to(users_path :page => session[:page]) do
-      content_tag(:i, nil, class: "btn btn-primary btn-lg glyphicon glyphicon-list")
-    end
-    if user_signed_in?
-      html_string = html_string + link_to(new_favourit_path :object_name => "User", :object_id => @user.id, :user_id => current_user.id) do
-        content_tag(:i, nil, class: "btn btn-primary btn-lg glyphicon glyphicon-star")
-      end
-      if current_user.id == item.id or current_user.superuser
-          html_string = html_string + link_to(edit_user_path(item)) do
-          content_tag(:i, nil, class: "btn btn-primary btn-lg glyphicon glyphicon-wrench")
+    case object 
+      when "User"
+        html_string = html_string + link_to(users_path :page => session[:page]) do
+          content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-list")
         end
-        html_string = html_string + link_to(appointments_path :user_id1 => item.id) do
-            content_tag(:i, nil, class: "btn btn-primary btn-lg glyphicon glyphicon-calendar")
+        if user_signed_in?
+          html_string = html_string + link_to(new_favourit_path :object_name => "User", :object_id => item.id, :user_id => current_user.id) do
+            content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-star")
+          end
+          if current_user.id == item.id or current_user.superuser
+              html_string = html_string + link_to(edit_user_path(item)) do
+              content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-wrench")
+            end
+            html_string = html_string + link_to(appointments_path :user_id1 => item.id) do
+                content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-calendar")
+            end
+              html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do
+                content_tag(:i, nil, class: "btn btn-danger pull-right glyphicon glyphicon-trash")
+            end
+          end
+          html_string = html_string + link_to(new_webmaster_path :object_name => "User", :object_id => item.id, :user_id => current_user.id) do
+            content_tag(:i, nil, class: "btn btn-warning pull-right glyphicon glyphicon-eye-open")
+          end
+          html_string = html_string + link_to(listaccounts_index_path :user_id => current_user.id, :user_id_ver => item.id, :company_id_ver => nil, :ref => "Vergütung an "+item.name + " " + item.lastname, :object_name => "User", :object_id => item.id, :amount => nil) do
+            content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-euro")
+          end
         end
-          html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do
-            content_tag(:i, nil, class: "btn btn-danger btn-lg pull-right glyphicon glyphicon-trash")
+      
+      when "Company"
+        html_string = html_string + link_to(companies_path :page => session[:page]) do
+          content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-list")
         end
-      end
-      html_string = html_string + link_to(new_webmaster_path :object_name => "User", :object_id => item.id, :user_id => current_user.id) do
-        content_tag(:i, nil, class: "btn btn-warning btn-lg pull-right glyphicon glyphicon-eye-open")
-      end
-      html_string = html_string + link_to(listaccounts_index_path :user_id => current_user.id, :user_id_ver => item.id, :company_id_ver => nil, :ref => "Vergütung an "+item.name + " " + item.lastname, :object_name => "User", :object_id => item.id, :amount => nil) do
-        content_tag(:i, nil, class: "btn btn-primary btn-lg glyphicon glyphicon-euro")
-      end
+        if user_signed_in?
+          html_string = html_string + link_to(new_favourit_path :object_name => "Company", :object_id => item.id, :user_id => current_user.id) do
+            content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-star")
+          end
+          if current_user.id == item.user.id or current_user.superuser
+            if item.partner
+              html_string = html_string + link_to(customer_advisor_index2_path :partner_id => item.id) do
+                content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-user")
+              end
+            end
+            html_string = html_string + link_to(edit_company_path(item)) do
+              content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-wrench")
+            end
+            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do
+              content_tag(:i, nil, class: "btn btn-danger pull-right glyphicon glyphicon-trash")
+            end
+          end
+          html_string = html_string + link_to(new_webmaster_path :object_name => "Company", :object_id => item.id, :user_id => current_user.id) do
+            content_tag(:i, nil, class: "btn btn-warning pull-right glyphicon glyphicon-eye-open")
+          end
+          html_string = html_string + link_to(listaccounts_index_path :user_id => current_user.id, :user_id_ver => nil, :company_id_ver => item.id, :ref => "Vergütung an "+item.name, :object_name => "Company", :object_id => item.id, :amount => nil) do
+            content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-euro")
+          end
+        end
+
+      when "Service"
+          if item.stype == "action"
+            html_string = html_string + link_to(offer_index_path :page => session[:page], :stype => "action") do
+              content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-list")
+            end
+          else
+            html_string = html_string + link_to(offer_index_path :page => session[:page], :stype => "regular") do
+              content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-list")
+            end
+          end
+          if user_signed_in?
+            if (item.user_id and item.user_id == current_user.id) or (item.company_id and item.company.user.id == current_user.id)
+      	        html_string = html_string + link_to(edit_service_path(item)) do
+                  content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-wrench")
+                end
+      	        html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do
+                  content_tag(:i, nil, class: "btn btn-danger pull-right glyphicon glyphicon-trash")
+                end
+                if item.price_new
+                  price = item.price_new
+                else
+                  price = item.price_reg
+                end
+                html_string = html_string + link_to(listaccounts_index_path :user_id => current_user.id, :user_id_ver => item.user_id, :company_id_ver => item.company_id, :ref => "Vergütung an "+ item.name, :object_name => "Service", :object_id => item.id, :amount => price) do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-euro")
+                end
+      	        html_string = html_string + link_to(new_webmaster_path :object_name => "Service", :object_id => item.id, :user_id => current_user.id) do
+                  content_tag(:i, nil, class:"btn btn-warning pull-right glyphicon glyphicon-eye-open")
+                end
+            end
+          end
+            
+          case topic
+            when "Servicedokument"
+              if user_signed_in?
+                if (item.user_id and current_user.id == item.user_id) or (item.company_id and current_user.id == item.company.user.id)
+                    html_string = html_string + link_to(new_service_document_path :service_id => item.id) do
+                      content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                    end
+                end
+              end
+              
+            when "Servicekundenberater"
+              if user_signed_in?
+                if (item.user_id and current_user.id == item.user_id) or (item.company_id and current_user.id == item.company.user_id)
+                  html_string = html_string + link_to(advisors_path :service_id => item.id) do
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                  end
+                end
+              end
+
+            when "Servicerating"
+              if user_signed_in?
+                if (item.user_id and current_user.id == item.user_id) or (item.company_id and current_user.id == item.company.user_id)
+                  html_string = html_string + link_to(new_rating_path :service_id => item.id) do
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                  end
+                end
+              end
+          end
+
+      when "Vehicle"
+         html_string = html_string + link_to(vehicles_path :page => session[:page]) do
+           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
+         end
+         html_string = html_string + link_to(calenders_path :vehicle_id => item.id) do
+           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-calendar")
+         end
+         if user_signed_in?
+           if (item.user_id and current_user.id == item.user.id) or (item.company_id and current_user.id == item.company.user.id) 
+     	        html_string = html_string + link_to(edit_vehicle_path(item)) do
+                 content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
+               end
+     	        html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do
+                 content_tag(:i, nil, class:"btn btn-danger pull-right glyphicon glyphicon-trash")
+               end
+           end
+           html_string = html_string + link_to(listaccounts_index_path :user_id => current_user.id, :user_id_ver => item.user_id, :company_id_ver => item.company_id, :ref => "Vergütung an "+ item.name, :object_name => "Vehicle", :object_id => item.id, :amount => 0) do
+             content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-euro")
+           end
+           html_string = html_string + link_to(new_webmaster_path :object_name => "Vehicle", :object_id => item.id, :user_id => current_user.id) do
+             content_tag(:i, nil, class:"btn btn-warning pull-right glyphicon glyphicon-eye-open")
+           end
+         end
+         
+         case topic
+            when "Vehiclekalender", "Vehicleuser"
+              html_string = html_string + link_to(new_calender_path(:user_id => current_user.id, :vehicle_id => session[:verhicle_id])) do
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+              end
+              html_string = html_string + link_to(vehicle_path(:vehicle_id => item.id, :dir => "<", :topic => topic)) do
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-chevron-left")
+              end
+              html_string = html_string + link_to(vehicle_path(:vehicle_id => item.id, :dir => ">", :topic => topic)) do
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-chevron-right")
+              end
+         end
+         
+      when "Bid"
+         html_string = html_string + link_to(bids_path :page => session[:page]) do
+           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
+         end
+         if user_signed_in?
+           if (item.user_id and current_user.id == item.user.id)
+     	        html_string = html_string + link_to(edit_bid_path(item)) do
+                 content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
+               end
+     	        html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do
+                 content_tag(:i, nil, class:"btn btn-danger pull-right glyphicon glyphicon-trash")
+               end
+           end
+           html_string = html_string + link_to(new_webmaster_path :object_name => "Bid", :object_id => item.id, :user_id => current_user.id) do
+             content_tag(:i, nil, class:"btn btn-warning pull-right glyphicon glyphicon-eye-open")
+           end
+         end
+         
+         case topic
+            when "Biddetail"
+              html_string = html_string + link_to(new_bid_detail_path(:bid_id => item.id)) do
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+              end
+            when "Biddokument"
+              html_string = html_string + link_to(new_bid_document_path(:bid_id => item.id)) do
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+              end
+         end
+         
+      when "Job"
+         html_string = html_string + link_to(jobs_path :page => session[:page]) do
+           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
+         end
+         if user_signed_in?
+           if current_user.id == item.company.user.id
+     	        html_string = html_string + link_to(edit_job_path(item)) do
+                 content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
+               end
+     	        html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do
+                 content_tag(:i, nil, class:"btn btn-danger pull-right glyphicon glyphicon-trash")
+               end
+           end
+           html_string = html_string + link_to(new_webmaster_path :object_name => "Job", :object_id => item.id, :user_id => current_user.id) do
+             content_tag(:i, nil, class:"btn btn-warning pull-right glyphicon glyphicon-eye-open")
+           end
+         end
+
+      when "Event"
+         html_string = html_string + link_to(events_path :page => session[:page]) do
+           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
+         end
+         if user_signed_in?
+           if (item.user_id and current_user.id == item.user.id) or (item.company_id and current_user.id == item.company.user.id) 
+     	        html_string = html_string + link_to(edit_event_path(item)) do
+                 content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
+               end
+     	        html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do
+                 content_tag(:i, nil, class:"btn btn-danger pull-right glyphicon glyphicon-trash")
+               end
+           end
+           html_string = html_string + link_to(new_webmaster_path :object_name => "Event", :object_id => item.id, :user_id => current_user.id) do
+             content_tag(:i, nil, class:"btn btn-warning pull-right glyphicon glyphicon-eye-open")
+           end
+         end
+         
+         case topic
+            when "Eventdetail"
+              html_string = html_string + link_to(new_event_detail_path(:event_id => item.id)) do
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+              end
+            when "Eventsponsor"
+              html_string = html_string + link_to(new_sponsor_path(:event_id => item.id)) do
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+              end
+         end
+         
+      when "Hotspot"
+         html_string = html_string + link_to(hotspots_path :page => session[:page]) do
+           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
+         end
+         if user_signed_in?
+           if item.user_id and current_user.id == item.user.id
+     	        html_string = html_string + link_to(edit_hotspot_path(item)) do
+                 content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
+               end
+     	        html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do
+                 content_tag(:i, nil, class:"btn btn-danger pull-right glyphicon glyphicon-trash")
+               end
+           end
+           html_string = html_string + link_to(new_webmaster_path :object_name => "Hotspot", :object_id => item.id, :user_id => current_user.id) do
+             content_tag(:i, nil, class:"btn btn-warning pull-right glyphicon glyphicon-eye-open")
+           end
+         end
+         
+         case topic
+            when "Hotspotdetail"
+              html_string = html_string + link_to(new_hotspot_detail_path(:hotspot_id => item.id)) do
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+              end
+            when "Hotspotbewertung"
+              html_string = html_string + link_to(new_hs_rating_path(:hotspot_id => item.id, :user_id => current_user.id)) do
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+              end
+         end
+
+      when "Donation"
+         html_string = html_string + link_to(donations_path :dtype => topic, :page => session[:page]) do
+           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
+         end
+         if user_signed_in?
+           if (item.user_id and current_user.id == item.user.id) or (item.company_id and current_user.id == item.company.user.id) 
+     	        html_string = html_string + link_to(edit_donation_path(item)) do
+                 content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
+               end
+     	        html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do
+                 content_tag(:i, nil, class:"btn btn-danger pull-right glyphicon glyphicon-trash")
+               end
+           end
+           html_string = html_string + link_to(new_webmaster_path :object_name => "Donation", :object_id => item.id, :user_id => current_user.id) do
+             content_tag(:i, nil, class:"btn btn-warning pull-right glyphicon glyphicon-eye-open")
+           end
+         end
+         
+         case topic
+            when "Donationdetail"
+              html_string = html_string + link_to(new_donation_detail_path(:donation_id => item.id)) do
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+              end
+            when "Donationstat"
+              if item.donation_stats.sum(:amount) < item.amount
+                html_string = html_string + link_to(new_donation_stat_path(:donation_id => item.id, :dontype => "User")) do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-user")
+                end
+                html_string = html_string + link_to(new_donation_stat_path(:donation_id => item.id, :dontype => "Company")) do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-copyright-mark")
+                end
+            else
+              if (@donation.company_id and current_user.id == @donation.company.user_id) or (@donation.user_id and current_user.id == @donation.user_id) and @donation.dtype == "Reward"
+                html_string = html_string + link_to(donation_path(:dtype => topic, :donation_trx_id => item.id)) do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-euro")
+                end
+              end
+            end
+         end
+  
+        when "Request"
+         html_string = html_string + link_to(requests_path :rtype => topic, :page => session[:page]) do
+           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
+         end
+         if user_signed_in?
+           if item.user_id and current_user.id == item.user.id 
+     	        html_string = html_string + link_to(edit_request_path(item)) do
+                 content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
+               end
+     	        html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do
+                 content_tag(:i, nil, class:"btn btn-danger pull-right glyphicon glyphicon-trash")
+               end
+           end
+           html_string = html_string + link_to(new_webmaster_path :object_name => "request", :object_id => item.id, :user_id => current_user.id) do
+             content_tag(:i, nil, class:"btn btn-warning pull-right glyphicon glyphicon-eye-open")
+           end
+         end
+         
+         case topic
+            when "Requestdetail"
+              html_string = html_string + link_to(new_request_detail_path(:request_id => item.id)) do
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+              end
+
+         end
+  
     end
 
     case topic
         when "Service"
           if user_signed_in?
-            if current_user.id == item.id
-              html_string = html_string + link_to(new_service_path :user_id => item.id, :stype => "regular") do
-                content_tag(:i, nil, class:"btn btn-primary btn-lg glyphicon glyphicon-plus")
+            if object == "User"
+              if current_user.id == item.id
+                html_string = html_string + link_to(new_service_path :user_id => item.id, :stype => "regular") do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
+              end
+            end
+            if object == "Company"
+              if current_user.id == item.user.id
+                html_string = html_string + link_to(new_service_path :company_id => item.id, :stype => "regular") do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
+              end
+            end
+          end
+
+
+        when "Aktion"
+          if user_signed_in?
+            if object == "Company"
+              if current_user.id == item.user.id
+                html_string = html_string + link_to(new_service_path :company_id => item.id, :stype => "action") do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
               end
             end
           end
           
         when "Company"
-          if user_signed_in?
+          if object == "User" and user_signed_in?
             if current_user.id == item.id
               html_string = html_string + link_to(new_company_path :user_id => item.id) do
-                content_tag(:i, nil, class:"btn btn-primary btn-lg glyphicon glyphicon-plus")
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
               end
             end
           end
 
         when "Request"
-          if user_signed_in?
+          if object == "User" and user_signed_in?
             if current_user.id == item.id
               html_string = html_string + link_to(new_request_path :user_id => item.id) do
-                content_tag(:i, nil, class:"btn btn-primary btn-lg glyphicon glyphicon-plus")
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
               end
             end
           end
 
         when "Vehicle"
           if user_signed_in?
-            if current_user.id == item.id
-              html_string = html_string + link_to(new_vehicle_path :user_id => item.id) do
-                content_tag(:i, nil, class:"btn btn-primary btn-lg glyphicon glyphicon-plus")
+            if object == "User"
+              if current_user.id == item.id
+                html_string = html_string + link_to(new_vehicle_path :user_id => item.id) do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
+              end
+            end
+            if object == "Company"
+              if current_user.id == item.user.id
+                html_string = html_string + link_to(new_vehicle_path :company_id => item.id) do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
               end
             end
           end
 
         when "Event"
           if user_signed_in?
-            if current_user.id == item.id
-              html_string = html_string + link_to(new_event_path :user_id => item.id) do
-                content_tag(:i, nil, class:"btn btn-primary btn-lg glyphicon glyphicon-plus")
+            if object == "User"
+              if current_user.id == item.id
+                html_string = html_string + link_to(new_event_path :user_id => item.id) do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
+              end
+            end
+            if object == "Company"
+              if current_user.id == item.user.id
+                html_string = html_string + link_to(new_event_path :company_id => item.id) do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
               end
             end
           end
 
-        when "Tickets"
-          if user_signed_in?
+        when "Ticket"
+          if object = "User" and user_signed_in?
             found = false
             com = Company.where('user_id=?',current_user.id)
             com.each do |c|
@@ -478,43 +837,94 @@ def action_buttons(item, topic)
             end
             if found
               html_string = html_string + link_to(ticketuserview_index2_path :user_id => item.id) do
-                content_tag(:i, nil, class:"btn btn-primary btn-lg glyphicon glyphicon-plus")
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
               end
             end
           end
 
         when "Hotspot"
-          if user_signed_in?
+          if object == "User" and user_signed_in?
             if current_user.id == item.id
               html_string = html_string + link_to(new_hotspot_path :user_id => item.id) do
-                content_tag(:i, nil, class:"btn btn-primary btn-lg glyphicon glyphicon-plus")
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
               end
             end
           end
 
         when "Bid"
-          if user_signed_in?
+          if object == "User" and user_signed_in?
             if current_user.id == item.id
               html_string = html_string + link_to(new_bid_path :user_id => item.id) do
-                content_tag(:i, nil, class:"btn btn-primary btn-lg glyphicon glyphicon-plus")
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+              end
+            end
+          end
+
+        when "Donation"
+          if user_signed_in?
+            if object == "Company"
+              if current_user.id == item.user.id and item.social
+                html_string = html_string + link_to(new_donation_path :company_id => item.id, :dtype => "Donation") do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
+              end
+            end
+          end
+
+        when "Link"
+          if user_signed_in?
+            if object == "Company"
+              if current_user.id == item.user.id
+                html_string = html_string + link_to(new_partner_link_path :company_id => item.id) do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
+              end
+            end
+          end
+
+        when "Job"
+          if user_signed_in?
+            if object == "Company"
+              if current_user.id == item.user.id
+                html_string = html_string + link_to(new_job_path :company_id => item.id) do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
               end
             end
           end
 
         when "Reward"
           if user_signed_in?
-            if current_user.id == item.id
-              html_string = html_string + link_to(new_donation_path :user_id => item.id, :dtype => "Reward") do
-                content_tag(:i, nil, class:"btn btn-primary btn-lg glyphicon glyphicon-plus")
+            if object == "User"
+              if current_user.id == item.id
+                html_string = html_string + link_to(new_donation_path :user_id => item.id, :dtype => "Reward") do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
+              end
+            end
+            if object == "Company"
+              if current_user.id == item.user.id
+                html_string = html_string + link_to(new_donation_path :company_id => item.id, :dtype => "Reward") do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
               end
             end
           end
 
         when "Loan"
           if user_signed_in?
-            if current_user.id == item.id
-              html_string = html_string + link_to(new_donation_path :user_id => item.id, :dtype => "Loan") do
-                content_tag(:i, nil, class:"btn btn-primary btn-lg glyphicon glyphicon-plus")
+            if object == "User"
+              if current_user.id == item.id
+                html_string = html_string + link_to(new_donation_path :user_id => item.id, :dtype => "Loan") do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
+              end
+            end
+            if object == "Company"
+              if current_user.id == item.user.id
+                html_string = html_string + link_to(new_donation_path :company_id => item.id, :dtype => "Loan") do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
               end
             end
           end
@@ -522,6 +932,9 @@ def action_buttons(item, topic)
     end
     html_string = html_string + "</div></div>"
     return html_string.html_safe
+end
+
+def build_act()
 end
 
 end    

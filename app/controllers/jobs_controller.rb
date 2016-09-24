@@ -30,6 +30,11 @@ class JobsController < ApplicationController
 
   # GET /jobs/1
   def show
+    if params[:topic]
+      @topic = params[:topic]
+    else
+      @topic = "Jobinformation"
+    end
   end
 
   # GET /jobs/new

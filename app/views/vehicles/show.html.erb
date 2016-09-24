@@ -1,106 +1,171 @@
 <div class="container-fluid">
+  <div class="row">
+    <%= action_buttons("Vehicle", @vehicle, @topic) %>
+  </div>
 
   <div class="row">
-    <div class="col-md-12">
-        <div class="panel-heading header">
-          <li_header>
-              MOBILIEN <%= @vehicle.name %>
-          </li_header>
-        </div>
-        <div class="panel-body">
-          <%= link_to vehicles_path :page => session[:page] do %>
-            <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
-          <% end %>
-          <%= link_to calenders_path :vehicle_id => @vehicle.id do %>
-            <i class="btn btn-primary btn-lg glyphicon glyphicon-calendar"></i>
-          <% end %>
-          <% if user_signed_in? %>
-            <% if (@vehicle.user_id != nil and current_user.id == @vehicle.user.id) or (@vehicle.company_id != nil and current_user.id == @vehicle.company.user.id) %>
-                <%= link_to new_vehicle_path :user_id => current_user.id do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
-                <% end %>
-      	        <%= link_to edit_vehicle_path(@vehicle) do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                <% end %>
-      	        <%= link_to @vehicle, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                  <i class="btn btn-danger btn-lg pull-right glyphicon glyphicon-trash"></i>
-                <% end %>
-            <% end %>
-            <% @user_id2 = @vehicle.user_id if @vehicle.user_id != nil %>
-            <% @company_id = @vehicle.company.id if @vehicle.company_id != nil %>
-            <%= link_to listaccounts_index_path :user_id => current_user.id, :user_id_ver => @vehicle.user_id, :company_id_ver => @vehicle.company_id, :ref => "Vergütung an "+ @vehicle.name, :object_name => "Vehicle", :object_id => @vehicle.id, :amount => 0 do %>
-              <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
-            <% end %>
-  	        <%= link_to new_webmaster_path :object_name => "Vehicle", :object_id => @vehicle.id, :user_id => current_user.id do %>
-              <i class="btn btn-warning btn-lg pull-right glyphicon glyphicon-eye-open"></i>
-            <% end %>
-          <% end %>
-        </div>
-        <div class="panel-body">
-  				<% if @vehicle.avatar_file_name == nil %>
-            <%= image_tag("vehicle_a.png", :size => "200x200", class:"img-rounded" ) %>
-          <% else %>
-            <%= image_tag @vehicle.avatar(:medium), class:"img-rounded"  %>
-          <% end %>
-      		<%= @vehicle.description %>
-      		<br><br>
-          <b>Mobilienkategorie</b><br>
-          <%= @vehicle.mob_category.name %>
-          <br><br>
-          <b>Mietzeiten</b><br>
-          <%= @vehicle.time_from %> - 
-          <%= @vehicle.time_to %> Uhr
-          <br><br>
-          <b>Standort</b><br>
-          <%= @vehicle.address1 %><br>
-          <%= @vehicle.address2 %><br>
-          <%= @vehicle.address3 %><br>
-          <br>
-          <b>vermietet von</b><br>
-          <% if @vehicle.user_id != nil %>
-            <%= link_to @vehicle.user do %>
-      				<% if @vehicle.user.avatar_file_name == nil %>
-                <%= image_tag("user_a.png", :size => "100x100", class:"img-rounded" ) %>
-              <% else %>
-                <%= image_tag @vehicle.user.avatar(:thumb), class:"img-rounded"  %>
-              <% end %>
-              <%= @vehicle.user.name + " " + @vehicle.user.lastname %>
-            <% end %>
-          <% end %>
-          <% if @vehicle.company_id != nil %>
-            <%= link_to @vehicle.company do %>
-      				<% if @vehicle.company.avatar_file_name == nil %>
-                <%= image_tag("user_a.png", :size => "100x100", class:"img-rounded" ) %>
-              <% else %>
-                <%= image_tag @vehicle.company.avatar(:thumb), class:"img-rounded"  %>
-              <% end %>
-              <%= @vehicle.company.name %>
-            <% end %>
-          <% end %>
-          <br><br>
-          <cite> <%= @vehicle.created_at.strftime("%d.%m.%Y") %></cite>        
-        </div>
-    </div>
+    <%= header(@vehicle.name) %>
   </div>
-  <br>
   
   <div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-            ORTSANGABE
-        </li_header>
-      </div>
-    </div>
-    <div class="col-md-12">
-      <div class="panel-body">
-        <div id="map">
-          <div id="map-canvas"></div>
-        </div>
-      </div>
-    </div>
+    <%= navigate("Vehicle", @vehicle) %>
   </div>
-  <br>
+      
+  <div class="row">
+
+      <% case @topic %>
+        <% when "Vehicleinformation" %>
+          <%= header("Informationen") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <%= showImage("Vehicle", :medium, @vehicle) %>
+        		<%= @vehicle.description %>
+        		<br><br>
+            <b>Mobilienkategorie</b><br>
+            <%= @vehicle.mob_category.name %>
+            <br><br>
+            <b>Mietzeiten</b><br>
+            <%= @vehicle.time_from %> - 
+            <%= @vehicle.time_to %> Uhr
+            <br><br>
+            <b>Standort</b><br>
+            <%= @vehicle.address1 %><br>
+            <%= @vehicle.address2 %><br>
+            <%= @vehicle.address3 %><br>
+            <br>
+            <b>vermietet von</b><br>
+            <% if @vehicle.user_id != nil %>
+              <%= showImage("User", :thumb, @vehicle.user) %>
+              <%= @vehicle.user.name + " " + @vehicle.user.lastname %>
+            <% end %>
+            <% if @vehicle.company_id != nil %>
+              <%= showImage("Company", :thumb, @company.user) %>
+            <% end %>
+            <br><br>
+            <cite> <%= @vehicle.created_at.strftime("%d.%m.%Y") %></cite>        
+          </div></div>
+
+        <% when "Vehiclekalender" %>
+          <%= header("Kalender KW "+ session[:cw].to_s) %>
+          <div class='col-xs-12'><div class="panel-body">
+        		<table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Uhrzeit</th>
+                  <% for i in 0..6 %>
+                    <th>
+                      <%= $wochentage[i] %><br>
+                      <small_cal>
+                      <%= (@start+i).strftime("%d.%m") %>
+                      </small_cal>
+                    </th>
+                  <% end %>
+                </tr>
+              </thead>
+              
+              <tbody>
+      
+                  <% @items = CalItem(@calenders,@start) %>
+                  <% for hour in 0..@anz_stunden-1 %>
+                    <tr>
+                      <td><%= (@vehicle.time_from + hour).to_s + " Uhr" %></td>
+                    <% for day in 0..@anz_tage-1 %>
+                        <% if @array[hour][day] != 0 %>
+                          <td class="blocked">
+                        <% else %>
+                          <td class="free">
+                        <% end %>
+                        <% @array[hour][day] %>
+                        </td>                
+                    <% end %>
+                    </tr>
+                  <% end %>
+      
+                  <% if true == false %>
+                  <% end %>
+                    
+                  <% if true == false %>
+                    <td>
+          				    <% if user_signed_in? %>
+            				    <% if ca.user_id == current_user.id %>
+                          <%= link_to listaccounts_index_path :user_id => current_user.id, :user_id_ver => @vehicle.user_id, :company_id_ver => @vehicle.company_id, :ref => "Vergütung an "+ @vehicle.name, :object_name => "Vehicle", :object_id => @vehicle.id, :amount => 0 do %>
+                            <i class="btn btn-primary btn-xs glyphicon glyphicon-euro"></i>
+                          <% end %>
+          				        <%= link_to edit_calender_path(ca) do %>
+                            <i class="btn btn-default glyphicon glyphicon-wrench"></i>
+                          <% end %>
+          				        <%= link_to ca, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                            <i class="btn btn-danger glyphicon glyphicon-trash"></i>
+                          <% end %>
+              				  <% end %>
+              				<% end %>
+                    </td>
+                  <% end %>
+      
+              </tbody>
+            </table>
+          </div></div>
+
+        <% when "Vehicleuser" %>
+          <%= header("Kalender KW "+ session[:cw].to_s) %>
+          <div class='col-xs-12'><div class="panel-body">
+          	<table class="table table-striped">
+              <thead>
+                <tr>
+                  <th colspan=3>gemietet von</th>
+                  <th>von</th>
+                  <th>bis</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <body>
+                <% @calenders.each do |ca| %>
+                  <tr>
+                    <td>
+          				    <% if user_signed_in? %>
+            				    <% if ca.user_id == current_user.id %>
+                          <%= link_to listaccounts_index_path :user_id => current_user.id, :user_id_ver => ca.vehicle.user_id, :company_id_ver => ca.vehicle.company_id, :ref => "Vergütung an "+ ca.vehicle.name + " " + ca.date_from.strftime("%d.%m.%Y") + " " + ca.time_from.to_s + "Uhr -" + ca.date_to.strftime("%d.%m.%Y") + " " + ca.time_to.to_s + " Uhr", :object_name => "Vehicle", :object_id => ca.vehicle.id, :amount => 0 do %>
+                            <i class="btn btn-primary btn-xs glyphicon glyphicon-euro"></i>
+                          <% end %>
+          				        <%= link_to edit_calender_path(ca) do %>
+                            <i class="btn btn-primary btn-xs glyphicon glyphicon-wrench"></i>
+                          <% end %>
+          				        <%= link_to ca, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                            <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
+                          <% end %>
+              				  <% end %>
+              				<% end %>
+                    </td>
+                    <td>
+                    <% if !ca.user.avatar_file_name %>
+                      <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
+                    <% else %>
+                      <%= image_tag ca.user.avatar(:small), class:"img-rounded" %>
+                    <% end %>
+                    </td>
+                      <td>
+                        <anzeigetext>
+                        <%= ca.user.name + " " + ca.user.lastname %><br>
+                        </anzeigetext>
+                        <ntext><%= ca.user.address2 %></ntext>
+                      </td>
+                    <td><%= ca.date_from.strftime("%d.%m.%Y")+"  "+ca.time_from.to_s+" Uhr"%></td>
+                    <td><%= ca.date_to.strftime("%d.%m.%Y")+"  "+ca.time_to.to_s+" Uhr"%></td>
+                  </tr>
+                <% end %>
+              </body>
+           	</table>
+          </div></div>
+
+        <% when "Vehiclestandort" %>
+          <%= header("Standort") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <div id="map">
+              <div id="map-canvas"></div>
+            </div>
+          </div></div>
+          
+      <% end %>
+  </div>
 </div>
 
 <script>

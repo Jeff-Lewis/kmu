@@ -1,122 +1,96 @@
 <div class="container-fluid">
-
+  
   <div class="row">
-    <div class="col-md-12">
-        <div class="panel-heading header">
-          <li_header>
-              KLEINANZEIGE <%= @request.name %>
-          </li_header>
-        </div>
-        <div class="panel-body">
-          <%= link_to requests_path :rtype => session[:rtype], :page => session[:page] do %>
-            <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
-          <% end %>
-          <% if user_signed_in? %>
-  	        <%= link_to new_webmaster_path :object_name => "Request", :object_id => @request.id, :user_id => current_user.id do %>
-              <i class="btn btn-warning btn-lg glyphicon glyphicon-eye-open pull-right"></i>
-            <% end %>
-            <% if current_user.id == @request.user_id %>
-    	        <%= link_to edit_request_path(@request) do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-              <% end %>
-    	        <%= link_to @request, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                <i class="btn btn-danger btn-lg glyphicon glyphicon-trash pull-right"></i>
-              <% end %>
-            <% end %>
-            <% if @request.rtype == "biete" %>
-              <%= link_to listaccounts_index_path :user_id => current_user.id, :user_id_ver => @request.user_id, :company_id_ver => nil, :ref => "Vergütung an "+ @request.user.name + " " + @request.user.lastname, :object_name => "Request", :object_id => @request.id, :amount => @request.price do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
-              <% end %>
-            <% end %>
-          <% end %>
-        </div>
-        <div class="panel-body">
-          <% if @request.request_details != nil %>
-            <%= carousel(@request.request_details, "medium") %>
-          <% else %>
-            <%= image_tag("request_a.png", :size => "200x200", class:"img-rounded" ) %>
-          <% end %>
-          <br><br>
-          
-				  <% if !@request.social and @request.price %>
-            <preiss><b><%= sprintf("%05.2f CHF", @request.price) %></b></preiss>
-					<% else %>
-					  <preiss><b><i class='glyphicon glyphicon-heart'></i></b></preiss>
-					<% end %>
-          <br><br>
-
-          <% if @request.date_to != nil %>
-              <b><ntext>noch </ntext></b><restlaufzeits><%= (@request.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeits> <b><ntext> Tage</ntext></b>
-          <% end %>
-          <br><br>
-          
-          <b>Beschreibung</b><br>
-    			<%= @request.description %>
-          <br><br>
-          <b>aufgegeben von:</b><br>
-          <%= link_to @request.user do %>
-            <% if !@request.user.avatar_file_name %>
-              <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
-            <% else %>
-              <%= image_tag @request.user.avatar(:thumb), class:"img-rounded" %>
-            <% end %><br>
-            <%= @request.user.name + " " + @request.user.lastname %>
-          <% end %>
-    			<br><br>
-          <%= @request.created_at.strftime("%d.%m.%Y") %>
-        </div>
-    </div>
+    <%= action_buttons("Request", @request, @topic) %>
   </div>
-  <br>
 
   <div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-          <% if user_signed_in? %>
-            <% if current_user.id == @request.user_id %>
-              <%= link_to new_request_detail_path :request_id => @request.id do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
-              <% end %>
+    <%= header("Anzeige "+ @request.name) %>
+  </div>
+  
+  <div class="row">
+    <%= navigate("Request", @request) %>
+  </div>
+      
+  <div class="row">
+
+      <% case @topic %>
+        <% when "Requestinformation" %>
+          <%= header("Informationen") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <% if @request.request_details != nil %>
+              <%= carousel(@request.request_details, "medium") %>
+            <% else %>
+              <%= image_tag("request_a.png", :size => "200x200", class:"img-rounded" ) %>
             <% end %>
-          <% end %>
-          ZUSATZINFORMATIONEN
-        </li_header>
-      </div>
-      <div class="panel-body">
-      		<% @request.request_details.each do |bd| %>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="thumbnail" align="center">
-        				<% if bd.avatar_file_name == nil %>
-                  <%= image_tag("no_pic.jpg", :size => "200x200", class:"img-rounded" ) %>
-                <% else %>
-                  <%= image_tag bd.avatar(:medium), class:"img-rounded"  %>
-                <% end %>
-                <br>
-                <anzeigetext>
-      						<%= bd.name %>
-                </anzeigetext>
-                <br>
-                <ntext>
-    						<%= bd.description %>
-    						</ntext>
-    						<br>
-                <% if user_signed_in? %>
-                  <% if current_user.id == @request.user_id %>
-          	        <%= link_to edit_request_detail_path(bd) do %>
-                      <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                    <% end %>
-          	        <%= link_to bd, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                      <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+            <br><br>
+            
+  				  <% if !@request.social and @request.price %>
+              <preiss><b><%= sprintf("%05.2f CHF", @request.price) %></b></preiss>
+  					<% else %>
+  					  <preiss><b><i class='glyphicon glyphicon-heart'></i></b></preiss>
+  					<% end %>
+            <br><br>
+  
+            <% if @request.date_to != nil %>
+                <b><ntext>noch </ntext></b><restlaufzeits><%= (@request.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeits> <b><ntext> Tage</ntext></b>
+            <% end %>
+            <br><br>
+            
+            <b>Beschreibung</b><br>
+      			<%= @request.description %>
+            <br><br>
+            <b>aufgegeben von:</b><br>
+            <%= link_to @request.user do %>
+              <% if !@request.user.avatar_file_name %>
+                <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
+              <% else %>
+                <%= image_tag @request.user.avatar(:thumb), class:"img-rounded" %>
+              <% end %><br>
+              <%= @request.user.name + " " + @request.user.lastname %>
+            <% end %>
+      			<br><br>
+            <%= @request.created_at.strftime("%d.%m.%Y") %>
+          </div></div>
+      <% end %>
+
+      <% case @topic %>
+        <% when "Requestdetail" %>
+          <%= header("Details") %>
+          <div class='col-xs-12'><div class="panel-body">
+       		<% @request.request_details.each do |bd| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+          				<% if bd.avatar_file_name == nil %>
+                    <%= image_tag("no_pic.jpg", :size => "200x200", class:"img-rounded" ) %>
+                  <% else %>
+                    <%= image_tag bd.avatar(:medium), class:"img-rounded"  %>
+                  <% end %>
+                  <br>
+                  <anzeigetext>
+        						<%= bd.name %>
+                  </anzeigetext>
+                  <br>
+                  <ntext>
+      						<%= bd.description %>
+      						</ntext>
+      						<br>
+                  <% if user_signed_in? %>
+                    <% if current_user.id == @request.user_id %>
+            	        <%= link_to edit_request_detail_path(bd) do %>
+                        <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                      <% end %>
+            	        <%= link_to bd, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                        <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                      <% end %>
                     <% end %>
                   <% end %>
-                <% end %>
-                <br><br>
-      			  </div>
-      			</div>
-      		<% end %>
-    	</div>
-    </div>
-  </div>
-  <br>
+                  <br><br>
+        			  </div>
+        			</div>
+        		<% end %>
+          </div></div>
+      <% end %>
+  </div>  
+
 </div>

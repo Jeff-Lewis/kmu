@@ -1,34 +1,28 @@
 <div class="container-fluid">
-  
-	<div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-		    <% if user_signed_in? %>
-		        <%= link_to searches_path :search_domain => "Ausschreibungen", :controller_name => controller_name do %>
-		          <i class="btn btn-primary glyphicon glyphicon-filter"></i>
-		        <% end %>
-		    <% end %>
-        AUSSCHREIBUNGEN
-        <span class="badge"><%= @bidanz %></span>
-        </li_header>
-      </div>
-    </div>
-  </div>
+
 	<div class="row">
     <div class="col-md-12">
       <div class="panel-body">
+		    <% if user_signed_in? %>
+		        <%= link_to searches_path :search_domain => "Ausschreibungen", :controller_name => controller_name do %>
+		          <i class="btn btn-primary btn-xs glyphicon glyphicon-filter"></i>
+		        <% end %>
+		    <% end %>
         <%= link_to showcal_bid_path(:page => session[:page], :dir => "<")  do %>
-          <i class="btn btn-primary glyphicon glyphicon-chevron-left"></i>
+          <i class="btn btn-primary btn-xs glyphicon glyphicon-arrow-left"></i>
         <% end %>
-        <ntext> Kalenderwoche <%= session[:cw].to_s + " / " + session[:year].to_s %></ntext>
         <%= link_to showcal_bid_path(:page => session[:page], :dir => ">")  do %>
-          <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
+          <i class="btn btn-primary btn-xs glyphicon glyphicon-arrow-right"></i>
         <% end %>
+        <ntext>Kalenderwoche <%= session[:cw].to_s + " / " + session[:year].to_s %></ntext>
       </div>
     </div>
   </div>
-  
+
+  <div class="row">
+      <%= header("Ausschreibungen " + "<span class='badge'>" + @bidanz.to_s + "</span>") %>
+  </div>
+
 	<div class="row">
     <div class="col-md-12">
       <div class="panel-body">

@@ -25,6 +25,11 @@ class BidsController < ApplicationController
 
   # GET /bids/1
   def show
+    if params[:topic]
+      @topic = params[:topic]
+    else
+      @topic = "Bidinformation"
+    end
   end
 
   # GET /bids/new

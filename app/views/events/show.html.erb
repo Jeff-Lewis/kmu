@@ -1,252 +1,185 @@
 <div class="container-fluid">
-
-  <div class="row">
-    <div class="col-md-12">
-        <div class="panel-heading header">
-          <li_header>
-              VERANSTALTUNG <%= @event.name %>
-          </li_header>
-        </div>
-        <div class="panel-body">
-          <%= link_to events_path :page => session[:page] do %>
-            <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
-          <% end %>
-          <% if user_signed_in? %>
-            <% if @event.user_id != nil %>
-              <% if current_user.id == @event.user_id %>
-      	        <%= link_to edit_event_path(@event) do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                <% end %>
-      	        <%= link_to @event, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                  <i class="btn btn-danger btn-lg pull-right glyphicon glyphicon-trash"></i>
-                <% end %>
-              <% end %>
-            <% end %>
-            <% if @event.company_id != nil %>
-              <% if current_user.id == @event.company.user_id %>
-      	        <%= link_to edit_event_path(@event) do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                <% end %>
-      	        <%= link_to @event, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                  <i class="btn btn-danger btn-lg pull-right glyphicon glyphicon-trash"></i>
-                <% end %>
-              <% end %>
-            <% end %>
-  	        <%= link_to new_webmaster_path :object_name => "Event", :object_id => @event.id, :user_id => current_user.id do %>
-              <i class="btn btn-warning btn-lg pull-right glyphicon glyphicon-eye-open"></i>
-            <% end %>
-          <% end %>
-        </div>
-        <div class="panel-body">
-          <p>
-          <% if @event.event_details.count > 0 %>
-              <%= carousel(@event.event_details, "medium") %>
-            <% else %>
-              <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
-    			<% end %>
-    			</p>
-          <br><br>
-          <b>Veranstaltungssdatum von-bis:</b><br>
-          <%= @event.date_from.strftime("%d.%m.%Y") %> - <%= @event.date_to.strftime("%d.%m.%Y") %>
-          <br><br>
-          <b>Beschreibung</b><br>
-    			<%= @event.description %>
-          <br><br>
-          <b>Kategorie</b><br>
-    			<%= @event.ev_category.name %>
-          <br><br>
-          <% if @event.homepage != nil %>
-            <%= link_to url_with_protocol(@event.homepage), :target => '_blank' do %>
-              <i class="glyphicon glyphicon-home"></i> <%= url_with_protocol(@event.homepage) %>
-            <% end %>
-          <% end %>
-          <br><br>
-          <b>durchgeführt von:</b><br>
-          <% if @event.user_id != nil %>
-            <%= link_to @event.user do %>
-              <% if !@event.user.avatar_file_name %>
-                <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
-              <% else %>
-                <%= image_tag @event.user.avatar(:thumb), class:"img-rounded" %>
-              <% end %><br>
-              <%= @event.user.name + " " + @event.user.lastname %>
-            <% end %>
-          <% end %>
-          <% if @event.company_id != nil %>
-            <%= link_to @event.company do %>
-              <% if !@event.company.avatar_file_name %>
-                <%= image_tag("company_a.png", :size => "100x100" , class:"img-rounded") %>
-              <% else %>
-                <%= image_tag @event.company.avatar(:thumb), class:"img-rounded" %>
-              <% end %><br>
-              <%= @event.company.name %>
-            <% end %>
-          <% end %>
-    			<br><br>
-          <%= @event.created_at.strftime("%d.%m.%Y") %>
-        </div>
-    </div>
-  </div>
-  <br>
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-          <% if user_signed_in? %>
-            <% if @event.user_id != nil %>
-              <% if current_user.id == @event.user_id %>
-                <%= link_to new_event_detail_path :event_id => @event.id do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
-                <% end %>
-              <% end %>
-            <% end %>
-            <% if @event.company_id != nil %>
-              <% if current_user.id == @event.company.user_id %>
-                <%= link_to new_event_detail_path :event_id => @event.id do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
-                <% end %>
-              <% end %>
-            <% end %>
-          <% end %>
-            ZUSATZINFORMATIONEN
-        </li_header>
-      </div>
-      <div class="panel-body">
-    		<% @event.event_details.each do |ed| %>
-          <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="thumbnail" align="center">
-      				<% if ed.avatar_file_name == nil %>
-                <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
-              <% else %>
-                <%= image_tag ed.avatar(:medium), class:"img-rounded"  %>
-              <% end %>
-              <br>
-              <anzeigetext>
-    						<%= ed.name %><br>
-              </anzeigetext>
-              <br>
-              <ntext>
-  						<%= ed.description %>
-              </ntext>
-              <br><br>
-              <% if user_signed_in? %>
-                <% if @event.user_id != nil %>
-                  <% if current_user.id == @event.user_id %>
-          	        <%= link_to edit_event_detail_path(ed) do %>
-                      <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                    <% end %>
-          	        <%= link_to ed, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                      <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
-                    <% end %>
-                  <% end %>
-                <% end %>
-                <% if @event.company_id != nil %>
-                  <% if current_user.id == @event.company.user_id %>
-          	        <%= link_to edit_event_detail_path(ed) do %>
-                      <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                    <% end %>
-          	        <%= link_to ed, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                      <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
-                    <% end %>
-                  <% end %>
-                <% end %>
-              <% end %>
-              <br><br>
-    			  </div>
-    			</div>
-    		<% end %>
-    	</div>
-    </div>
-  </div>
-  <br>
   
-  <% if $activeapps.include?("Sponsoring") %>
+ <div class="row">
+    <%= action_buttons("Event", @event, @topic) %>
+  </div>
+
   <div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-          <% if user_signed_in? %>
-            <% if current_user.companies.count > 0 %>
-                <%= link_to new_sponsor_path :event_id => @event.id do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
-                <% end %>
+    <%= header("Veranstaltung " + @event.name) %>
+  </div>
+  
+  <div class="row">
+    <%= navigate("Event", @event) %>
+  </div>
+      
+  <div class="row">
+
+      <% case @topic %>
+        <% when "Eventinformation" %>
+          <%= header("Informationen") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <% if @event.event_details.count > 0 %>
+                <%= carousel(@event.event_details, "medium") %>
+              <% else %>
+                <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
+      			<% end %>
+      			</p>
+            <br><br>
+            <b>Veranstaltungssdatum von-bis:</b><br>
+            <%= @event.date_from.strftime("%d.%m.%Y") %> - <%= @event.date_to.strftime("%d.%m.%Y") %>
+            <br><br>
+            <b>Beschreibung</b><br>
+      			<%= @event.description %>
+            <br><br>
+            <b>Kategorie</b><br>
+      			<%= @event.ev_category.name %>
+            <br><br>
+            <% if @event.homepage != nil %>
+              <%= link_to url_with_protocol(@event.homepage), :target => '_blank' do %>
+                <i class="glyphicon glyphicon-home"></i> <%= url_with_protocol(@event.homepage) %>
+              <% end %>
             <% end %>
-          <% end %>
-            SPONSOREN
-        </li_header>
-      </div>
-      <div class="panel-body">
-          <% @event.sponsors.each do |cs| %>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="thumbnail" align="center">
-                <%= link_to cs.company do %>
-          				<% if cs.company.avatar_file_name == nil %>
-                    <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
+            <br><br>
+            <b>durchgeführt von:</b><br>
+            <% if @event.user_id != nil %>
+              <%= link_to @event.user do %>
+                <% if !@event.user.avatar_file_name %>
+                  <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
+                <% else %>
+                  <%= image_tag @event.user.avatar(:thumb), class:"img-rounded" %>
+                <% end %><br>
+                <%= @event.user.name + " " + @event.user.lastname %>
+              <% end %>
+            <% end %>
+            <% if @event.company_id != nil %>
+              <%= link_to @event.company do %>
+                <% if !@event.company.avatar_file_name %>
+                  <%= image_tag("company_a.png", :size => "100x100" , class:"img-rounded") %>
+                <% else %>
+                  <%= image_tag @event.company.avatar(:thumb), class:"img-rounded" %>
+                <% end %><br>
+                <%= @event.company.name %>
+              <% end %>
+            <% end %>
+      			<br><br>
+            <%= @event.created_at.strftime("%d.%m.%Y") %>
+          </div></div>
+      <% end %>
+
+      <% case @topic %>
+        <% when "Eventdetail" %>
+          <%= header("Details") %>
+          <div class='col-xs-12'><div class="panel-body">
+        		<% @event.event_details.each do |ed| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+          				<% if ed.avatar_file_name == nil %>
+                    <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
                   <% else %>
-                    <%= image_tag cs.company.avatar(:medium), class:"img-rounded"  %>
+                    <%= image_tag ed.avatar(:medium), class:"img-rounded"  %>
                   <% end %>
-                <% end %>
-                <br>
-                <anzeigetext>
-      						<%= cs.company.name %><br>
-                </anzeigetext>
-                <br>
-                <ntext>
-                <%= cs.company.category.name %>
-                </ntext>
-                <br>
-        				<% case cs.slevel %>
-        				  <% when "1" %>
-                    <%= image_tag("Sponsor_gold.jpg", :size => "200x200", class:"img-rounded" ) %>
-        				  <% when "2" %>
-                    <%= image_tag("Sponsor_silver.jpg", :size => "200x200", class:"img-rounded" ) %>
-        				  <% when "3" %>
-                    <%= image_tag("Sponsor_bronze.jpg", :size => "200x200", class:"img-rounded" ) %>
-                <% end %>
-    						<br><br>
-                <% if user_signed_in? %>
-                  <% if cs.company.user_id != nil %>
-                    <% if current_user.id == cs.company.user_id %>
-                      <%= link_to tickets_path :sponsor_id => cs.id do %>
-                        <i class="btn btn-primary btn-lg glyphicon glyphicon-credit-card"></i>
+                  <br>
+                  <anzeigetext>
+        						<%= ed.name %><br>
+                  </anzeigetext>
+                  <br>
+                  <ntext>
+      						<%= ed.description %>
+                  </ntext>
+                  <br><br>
+                  <% if user_signed_in? %>
+                    <% if @event.user_id != nil %>
+                      <% if current_user.id == @event.user_id %>
+              	        <%= link_to edit_event_detail_path(ed) do %>
+                          <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                        <% end %>
+              	        <%= link_to ed, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                        <% end %>
                       <% end %>
-            	        <%= link_to edit_sponsor_path(cs) do %>
-                        <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                      <% end %>
-            	        <%= link_to cs, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                        <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                    <% end %>
+                    <% if @event.company_id != nil %>
+                      <% if current_user.id == @event.company.user_id %>
+              	        <%= link_to edit_event_detail_path(ed) do %>
+                          <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                        <% end %>
+              	        <%= link_to ed, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                        <% end %>
                       <% end %>
                     <% end %>
                   <% end %>
-                <% end %>
-                <br><br>
-              </div>
-            </div>
-          <% end %>
-      </div>
-    </div>
-  </div>
-  <br>
-  <% end %>
+                  <br><br>
+        			  </div>
+        			</div>
+        		<% end %>
+          </div></div>
+      <% end %>
 
-  <div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-            ORTSANGABE
-        </li_header>
-      </div>
-    </div>
-    <div class="col-md-12">
-      <div class="panel-body">
-        <div id="map">
-          <div id="map-canvas"></div>
-        </div>
-      </div>
-    </div>
+      <% case @topic %>
+        <% when "Eventsponsor" %>
+          <%= header("Sponsoren") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <% @event.sponsors.each do |cs| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+                  <%= link_to cs.company do %>
+            				<% if cs.company.avatar_file_name == nil %>
+                      <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
+                    <% else %>
+                      <%= image_tag cs.company.avatar(:medium), class:"img-rounded"  %>
+                    <% end %>
+                  <% end %>
+                  <br>
+                  <anzeigetext>
+        						<%= cs.company.name %><br>
+                  </anzeigetext>
+                  <br>
+                  <ntext>
+                  <%= cs.company.category.name %>
+                  </ntext>
+                  <br>
+          				<% case cs.slevel %>
+          				  <% when "1" %>
+                      <%= image_tag("Sponsor_gold.jpg", :size => "200x200", class:"img-rounded" ) %>
+          				  <% when "2" %>
+                      <%= image_tag("Sponsor_silver.jpg", :size => "200x200", class:"img-rounded" ) %>
+          				  <% when "3" %>
+                      <%= image_tag("Sponsor_bronze.jpg", :size => "200x200", class:"img-rounded" ) %>
+                  <% end %>
+      						<br><br>
+                  <% if user_signed_in? %>
+                    <% if cs.company.user_id != nil %>
+                      <% if current_user.id == cs.company.user_id %>
+                        <%= link_to tickets_path :sponsor_id => cs.id do %>
+                          <i class="btn btn-primary btn-lg glyphicon glyphicon-credit-card"></i>
+                        <% end %>
+              	        <%= link_to edit_sponsor_path(cs) do %>
+                          <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                        <% end %>
+              	        <%= link_to cs, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <br><br>
+                </div>
+              </div>
+            <% end %>
+          </div></div>
+      <% end %>
+
+      <% case @topic %>
+        <% when "Eventstandort" %>
+          <%= header("Standort") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <div id="map">
+              <div id="map-canvas"></div>
+            </div>
+          </div></div>
+      <% end %>
   </div>
-  <br>
 </div>
 
 <script>

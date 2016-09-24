@@ -44,6 +44,11 @@ class DonationsController < ApplicationController
 
       end
     end
+     if params[:topic]
+       @topic = params[:topic]
+     else 
+       @topic = "Donationinformation"
+     end 
     
   end
 

@@ -31,7 +31,7 @@
   				    <li class="divider">
 				    <li><%= link_to "Stellenanzeigen", jobs_path if $activeapps.include?("Stellenanzeigen") %></li>
 				    <li class="divider">
-                    <li><%= link_to "Immobilien newhome.ch", url_with_protocol("www.newhome.ch"), :target => '_blank' %></li>
+                    <li><% link_to "Immobilien newhome.ch", url_with_protocol("www.newhome.ch"), :target => '_blank' %></li>
 				</ul>
 			</li>
 			<li class="dropdown">
@@ -51,7 +51,7 @@
 				  <li class="divider">
 					  <% if user_signed_in? %>
 						   <% if current_user.superuser %>
-	                  <li><%= link_to "Test (find me)", home_index4_path if $activeapps.include?("Wer ist wo") %></li>
+	                  <li><% link_to "Test (find me)", home_index4_path if $activeapps.include?("Wer ist wo") %></li>
 	             <% end %>
 	          <% end %>
 	    		</ul>
@@ -82,8 +82,8 @@
 	 					    <li class="divider">
 							<li><%= link_to "App Parameter", appparams_path  %></li>
 							<li><%= link_to "User Statistik", home_index2_path  %></li>
-	  	                   <li><%= link_to "Index5", home_index5_path %></li>
-	  	                   <li><%= link_to "Index6", home_index6_path %></li>
+	  	                   <li><% link_to "Index5", home_index5_path %></li>
+	  	                   <li><% link_to "Index6", home_index6_path %></li>
 					   <% end %>
 					  <li class="divider">
 		               <li><%= link_to "Passwort ändern", edit_user_registration_path %></li>

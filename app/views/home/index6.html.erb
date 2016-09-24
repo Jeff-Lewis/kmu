@@ -2,6 +2,10 @@
 <div class="container-fluid">
 
   <div class="row">
+    <%= action_buttons(@user, @topic) %>
+  </div>
+
+  <div class="row">
     <%= header(@user.fullname) %>
   </div>
   
@@ -9,10 +13,6 @@
     <%= navigate(@user) %>
   </div>
       
-  <div class="row">
-    <%= action_buttons(@user, @topic) %>
-  </div>
-
   <div class="row">
 
       <% case @topic %>
@@ -258,7 +258,7 @@
           				<%= ut.status %>
                   </b></ticketstatuss><br><br>
                   
-                  <%= showImage("User", :small, ut) %>
+                  <%= showImage("User", :small, ut.user) %>
                   
                   <%= ut.user.name + " " + ut.user.lastname %><br>
                   <ntext><br>
@@ -688,6 +688,23 @@
             </div>
           </div></div>
 
+    	 <% when "Email" %>
+          <%= header("Kommunikation") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <% emails = Email.where('m_to=? or m_from=?', @user.id, @user.id).order(created_at: :desc) %>
+            <% emails.each do |e| %>
+              <% if e.m_to == @user.id %>
+                <% @u = User.find(e.m_from) %>
+                <%= showImage("User",:small, @u) if @u %>
+              <% end %>
+              <% if e.m_from == @user.id %>
+                <% @u = User.find(e.m_to) %>
+                <%= showImage("User",:small, @u) if @u %>
+              <% end %>
+              <%= e.header + e.body %><br>
+            <% end %>
+          </div></div>
+
         <% end %>
         
       </div>
@@ -713,3 +730,15 @@
       handler.fitMapToBounds();
 });
 </script>
+
+<script>
+$(document).ready(function(){
+  $("header").dblclick(function() {
+    $("navigate").show();
+  });
+})
+$(document).ready(function(){
+  $("header").click(function() {
+    $("navigate").hide();
+  });
+})</script>

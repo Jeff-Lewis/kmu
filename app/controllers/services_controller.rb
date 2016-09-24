@@ -37,6 +37,11 @@ class ServicesController < ApplicationController
   # GET /workorders/1
   # GET /workorders/1.json
   def show
+    if params[:topic]
+      @topic = params[:topic]
+    else
+      @topic = "Service"
+    end
   end
 
   # GET /workorders/new

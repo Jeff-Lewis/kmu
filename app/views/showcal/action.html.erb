@@ -2,33 +2,27 @@
   
 	<div class="row">
     <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
+      <div class="panel-body">
 		    <% if user_signed_in? %>
 		        <%= link_to searches_path :search_domain => "Aktionen", :controller_name => controller_name do %>
-		          <i class="btn btn-primary glyphicon glyphicon-filter"></i>
+		          <i class="btn btn-primary btn-xs glyphicon glyphicon-filter"></i>
 		        <% end %>
 		    <% end %>
-        AKTIONEN
-        <span class="badge"><%= @seranz %></span>
-        </li_header>
-      </div>
-    </div>
-  </div>
-	<div class="row">
-    <div class="col-md-12">
-      <div class="panel-body">
         <%= link_to showcal_action_path(:page => session[:page], :dir => "<")  do %>
-          <i class="btn btn-primary glyphicon glyphicon-chevron-left"></i>
+          <i class="btn btn-primary btn-xs glyphicon glyphicon-arrow-left"></i>
+        <% end %>
+        <%= link_to showcal_action_path(:page => session[:page], :dir => ">")  do %>
+          <i class="btn btn-primary btn-xs glyphicon glyphicon-arrow-right"></i>
         <% end %>
         <ntext>Kalenderwoche <%= session[:cw].to_s + " / " + session[:year].to_s %></ntext>
-        <%= link_to showcal_action_path(:page => session[:page], :dir => ">")  do %>
-          <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
-        <% end %>
       </div>
     </div>
   </div>
 
+  <div class="row">
+      <%= header("Aktionen " + "<span class='badge'>" + @seranz.to_s + "</span>") %>
+  </div>
+  
 	<div class="row">
     <div class="col-md-12">
       <div class="panel-body">

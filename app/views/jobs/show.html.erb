@@ -1,123 +1,107 @@
 <div class="container-fluid">
+  
+  <div class="row">
+    <%= action_buttons("Job", @job, @topic) %>
+  </div>
 
   <div class="row">
-    <div class="col-md-12">
-        <div class="panel-heading header">
-          <li_header>
-              STELLENANZEIGE <%= @job.name %>
-          </li_header>
-        </div>
-        <div class="panel-body">
-          <%= link_to jobs_path :rtype => session[:rtype], :page => session[:page] do %>
-            <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
-          <% end %>
-          <% if user_signed_in? %>
-  	        <%= link_to new_webmaster_path :object_name => "Job", :object_id => @job.id, :user_id => current_user.id do %>
-              <i class="btn btn-warning btn-lg glyphicon glyphicon-eye-open"></i>
-            <% end %>
-            <% if current_user.id == @job.company.user_id %>
-    	        <%= link_to edit_job_path(@job) do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-              <% end %>
-    	        <%= link_to @job, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+    <%= header("Stellenanzeige " + @job.name) %>
+  </div>
+  
+  <div class="row">
+    <%= navigate("Job", @job) %>
+  </div>
+      
+  <div class="row">
+
+      <% case @topic %>
+        <% when "Jobinformation" %>
+          <%= header("Informationen") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <%= link_to @job.company do %>
+      				<% if @job.company.avatar_file_name == nil %>
+                <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
+              <% else %>
+                <%= image_tag @job.company.avatar(:medium), class:"img-rounded"  %>
               <% end %>
             <% end %>
-          <% end %>
-        </div>
-        <div class="panel-body">
-          <%= link_to @job.company do %>
-    				<% if @job.company.avatar_file_name == nil %>
-              <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
-            <% else %>
-              <%= image_tag @job.company.avatar(:medium), class:"img-rounded"  %>
-            <% end %>
-          <% end %>
-          <br><br>
-          <% if @job.date_from != nil or @job.date_to != nil %>
-            <b>Datum von-bis:</b><br>
-            <%= @job.date_from if @job.date_from != nil %>
-            <%= @job.date_to if @job.date_to != nil %>
             <br><br>
-          <% end %>
-          <b>aufgegeben von:</b><br>
-          <%= @job.company.name %><br>
-          <%= @job.company.category.name %><br>
-          <% if @job.company.homepage != nil %>
-              <%= link_to url_with_protocol(@job.company.homepage), :target => '_blank' do %>
-                <i class="glyphicon glyphicon-home"></i> <%= url_with_protocol(@job.company.homepage) %>
-              <% end %>
-          <% end %>
-          <br><br>
-          <%= @job.created_at.strftime("%d.%m.%Y") %>
-        </div>
-    </div>
+            <% if @job.date_from != nil or @job.date_to != nil %>
+              <b>Datum von-bis:</b><br>
+              <%= @job.date_from if @job.date_from != nil %>
+              <%= @job.date_to if @job.date_to != nil %>
+              <br><br>
+            <% end %>
+            <b>aufgegeben von:</b><br>
+            <%= @job.company.name %><br>
+            <%= @job.company.category.name %><br>
+            <% if @job.company.homepage != nil %>
+                <%= link_to url_with_protocol(@job.company.homepage), :target => '_blank' do %>
+                  <i class="glyphicon glyphicon-home"></i> <%= url_with_protocol(@job.company.homepage) %>
+                <% end %>
+            <% end %>
+            <br><br>
+            <%= @job.created_at.strftime("%d.%m.%Y") %>
+          </div></div>
+      
+        <% when "Jobdetail" %>
+          <%= header("Stellenanzeige") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="thumbnail" align="center">
+                <anzeigetext>
+      						Ihre Aufgaben
+                </anzeigetext>
+                <p>
+                  <ntext>
+      						<%= @job.tasks %>
+      						</ntext>
+      					</p>
+              </div>
+            </div>
+            
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="thumbnail" align="center">
+                <anzeigetext>
+      						wir erwarten
+                </anzeigetext>
+                <p>
+                  <ntext>
+      						<%= @job.skills %>
+      						</ntext>
+      					</p>
+              </div>
+            </div>
+    
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="thumbnail" align="center">
+                <anzeigetext>
+      						wir bieten
+                </anzeigetext>
+                <p>
+                  <ntext>
+      						<%= @job.offers %>
+      						</ntext>
+      					</p>
+              </div>
+            </div>
+    
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="thumbnail" align="center">
+                <anzeigetext>
+      						Ihr Kontakt
+                </anzeigetext>
+                <p>
+                  <ntext>
+      						<%= @job.contacts %>
+      						</ntext>
+      					</p>
+              </div>
+            </div>
+          </div></div>
+
+      <% end %>
+
   </div>
-  <br>
 
-  <div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-            ZUSATZINFORMATIONEN
-        </li_header>
-      </div>
-      <div class="panel-body">
-        
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="thumbnail" align="center">
-            <anzeigetext>
-  						Ihre Aufgaben
-            </anzeigetext>
-            <p>
-              <ntext>
-  						<%= @job.tasks %>
-  						</ntext>
-  					</p>
-          </div>
-        </div>
-        
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="thumbnail" align="center">
-            <anzeigetext>
-  						wir erwarten
-            </anzeigetext>
-            <p>
-              <ntext>
-  						<%= @job.skills %>
-  						</ntext>
-  					</p>
-          </div>
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="thumbnail" align="center">
-            <anzeigetext>
-  						wir bieten
-            </anzeigetext>
-            <p>
-              <ntext>
-  						<%= @job.offers %>
-  						</ntext>
-  					</p>
-          </div>
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="thumbnail" align="center">
-            <anzeigetext>
-  						Ihr Kontakt
-            </anzeigetext>
-            <p>
-              <ntext>
-  						<%= @job.contacts %>
-  						</ntext>
-  					</p>
-          </div>
-        </div>
-
-    	</div>
-    </div>
-  </div>
-  <br>
 </div>

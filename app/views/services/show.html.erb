@@ -1,308 +1,214 @@
 <div class="container-fluid">
+  
+  <div class="row">
+    <%= action_buttons("Service", @service, @topic) %>
+  </div>
 
   <div class="row">
-    <div class="col-md-12">
-        <div class="panel-heading header">
-          <li_header>
-            <% if @service.stype == "action" %>
-              AKTION
-            <% else %>
-              ANGEBOT 
-            <% end %>
-            <%= @service.name %>
-          </li_header>
-        </div>
-        <div class="panel-body">
-          <% if @service.stype == "action" %>
-            <%= link_to offer_index_path :page => session[:page], :stype => "action" do %>
-              <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
-            <% end %>
-          <% else %>
-            <%= link_to offer_index_path :page => session[:page], :stype => "regular" do %>
-              <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
-            <% end %>
-          <% end %>
-          <% if user_signed_in? %>
-              <% if (@service.user_id !=nil and @service.user_id == current_user.id) or (@service.company_id !=nil and @service.company.user.id == current_user.id) %>
-      	        <%= link_to edit_service_path(@service) do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                <% end %>
-      	        <%= link_to @service, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                  <i class="btn btn-danger btn-lg pull-right glyphicon glyphicon-trash"></i>
-                <% end %>
-              <% end %>
-              <% if @service.price_new %>
-                <% price = @service.price_new %>
-              <% else %>
-                <% price = @service.price_reg %>
-              <% end %>
-              <%= link_to listaccounts_index_path :user_id => current_user.id, :user_id_ver => @service.user_id, :company_id_ver => @service.company_id, :ref => "Vergütung an "+ @service.name, :object_name => "Service", :object_id => @service.id, :amount => price do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
-              <% end %>
-    	        <%= link_to new_webmaster_path :object_name => "Service", :object_id => @service.id, :user_id => current_user.id do %>
-                <i class="btn btn-warning btn-lg pull-right glyphicon glyphicon-eye-open"></i>
-              <% end %>
-          <% end %>
-        </div>
-        <div class="panel-body">
-  				<% if @service.avatar_file_name == nil %>
-            <%= image_tag("service_a.png", :size => "200x200", class:"img-rounded" ) %>
-          <% else %>
-            <%= image_tag @service.avatar(:medium), class:"img-rounded"  %>
-          <% end %>
-          <br><br>
-          <b>Bewertung</b><br>
-          <% avg_rating(@service.id).times do %>
-            <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
-            <i class="glyphicon glyphicon-star"></i>
-          <% end %>
-          <br><br>
-          <% if @service.social %>
-              <% image_tag("heart.png", :size => "50x50", class:"img-rounded" ) %>
-              <i class="glyphicon glyphicon-heart"></i> soziales Engagement
-              <br>
-          <% end %>
-          <br><br>
-          <% if @service.stype == "action" %>
-            <b>Angebot gültig von-bis:</b><br>
-            <%= @service.date_from.strftime("%d.%m.%Y") %> - <%= @service.date_to.strftime("%d.%m.%Y") %>
-            <br><br>
-            <b>Preisinformation</b><br>
-            Preis <%= sprintf("%05.2f CHF", @service.price_new) if @service.price_new != nil %> statt <%= sprintf("%05.2f CHF", @service.price_reg) if @service.price_reg != nil %>            
-            <br><br>
-          <% end %>
-          <b>Beschreibung</b><br>
-    			<%= @service.description %>
-          <br><br>
-          <b>angeboten von:</b><br>
-          <% if @service.company_id != nil %>
-            <%= link_to @service.company do %>
-              <% if !@service.company.avatar_file_name %>
-                <%= image_tag("company_a.png", :size => "100x100" , class:"img-rounded") %>
-              <% else %>
-                <%= image_tag @service.company.avatar(:thumb), class:"img-rounded" %>
-              <% end %>
-              <%= @service.company.name %>
-            <% end %>
-          <% end %>
-          <% if @service.user_id != nil %>
-            <%= link_to @service.user do %> 
-              <% if !@service.user.avatar_file_name %>
-                <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
-              <% else %>
-                <%= image_tag @service.user.avatar(:thumb), class:"img-rounded" %>
-              <% end %>
-              <%= @service.user.name + " " + @service.user.lastname %>
-            <% end %>
-          <% end %>
-    			<br><br>
-          <%= @service.created_at.strftime("%d.%m.%Y") %>
-        </div>
-      </div>
-    </div>
-    <br>
-
-  <% if $activeapps.include?("Dokumente") or true %>
+    <% if @service.stype == "regular" %>
+      <%= header("Angebot " + @service.name) %>
+    <% end %>
+    <% if @service.stype == "action" %>
+      <%= header("Aktion " + @service.name) %>
+    <% end %>
+  </div>
+  
   <div class="row">
-    <div class="col-md-12">
-        <div class="panel-heading header">
-          <li_header>
-            <% if user_signed_in? %>
-              <% if @service.user_id != nil and current_user.id == @service.user_id %>
-                <%= link_to new_service_document_path :service_id => @service.id do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
-                <% end %>
-              <% end %>
-              <% if @service.company_id != nil and current_user.id == @service.company.user_id %>
-                <%= link_to new_service_document_path :service_id => @service.id do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
-                <% end %>
-              <% end %>
-            <% end %>
-            SERVICE DOKUMENTE
-          </li_header>
-        </div>
-        <div class="panel-body">
-          <% @service.service_documents.each do |sd| %>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="thumbnail" align="center">
-                <% if sd.avatar != nil %>
-                  <%= image_tag sd.avatar(:medium), class:"img-rounded" %>
-                <% else %>
-                  <%= image_tag("service_a.png", :size => "200x200" , class:"img-rounded") %>
-                <% end %>
-                <br>
-                <anzeigetext>
-                <%= sd.name %><br>
-                </anzeigetext>
-                <ntext>
-                <%= sd.description %>
-                <br><br>
-                </ntext>
-      	        <%= link_to sd.document.url, target: "_blank" do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-cloud-download"></i>
-                <% end %>
-                <% if user_signed_in? %>
-                  <% if (@service.user_id and current_user.id == @service.user_id) or (@service.company_id and current_user.id == @service.company.user_id) %>
-          	        <%= link_to edit_service_document_path(sd) do %>
-                      <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                    <% end %>
-          	        <%= link_to sd, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                      <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
-                    <% end %>
-                  <% end %>
-                <% end %>
-                <br><br>
-              </div>
-            </div>
-  				<% end %>
-        </div>
-    </div>
+    <%= navigate("Service", @service) %>
   </div>
-  <br>
-  <% end %>          
-
-  <% if $activeapps.include?("Kundenberater") %>
-    <a id="Kundenberater">
-    <div class="row">
-    <div class="col-md-12">
-        <div class="panel-heading header">
-          <li_header>
-            <% if user_signed_in? %>
-              <% if (@service.user_id != nil and current_user.id == @service.user_id) or (@service.company_id != nil and current_user.id == @service.company.user_id) %>
-                <%= link_to advisors_path :service_id => @service.id do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
-                <% end %>
-              <% end %>
-            <% end %>
-            KUNDENBERATER
-          </li_header>
-        </div>
-        <div class="panel-body">
-          <% @service.advisors.each do |sa| %>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="thumbnail" align="center">
-                <%= link_to sa.user do %>
-                  <% if sa.user.avatar != nil %>
-                    <%= image_tag sa.user.avatar, :size => 200, class:"img-rounded" %>
-                  <% else %>
-                    <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
-                  <% end %>
-                <% end %>
-                <br>
-                <anzeigetext>
-                <%= sa.user.name + " " + sa.user.lastname %><br>
-                </anzeigetext>
-                <ntext>
-                <%= sa.grade %>
-                <br><br>
-                <% if sa.user.phone1 != nil %>
-                  <%= sa.user.phone1 %><br>
-                <% end %>
-                <% if sa.user.phone2 != nil %>
-                  <%= sa.user.phone2 %><br>
-                <% end %>
-                <% if sa.user.address1 != nil %>
-                  <%= sa.user.address1 %><br>
-                <% end %>
-                <% if sa.user.address2 != nil %>
-                  <%= sa.user.address2 %><br>
-                <% end %>
-                <% if sa.user.address3 != nil %>
-                  <%= sa.user.address3 %><br>
-                <% end %>
-                </ntext>
-                <% if user_signed_in? %>
-                  <% if sa.service.user_id != nil and current_user.id == sa.service.user_id %>
-          	        <% link_to edit_advisor_path(sa) do %>
-                      <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                    <% end %>
-          	        <%= link_to sa, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                      <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
-                    <% end %>
-                  <% end %>
-                  <% if sa.service.company.user_id != nil and current_user.id == sa.service.company.user_id %>
-          	        <% link_to edit_advisor_path(sa) do %>
-                      <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                    <% end %>
-          	        <%= link_to sa, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                      <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
-                    <% end %>
-                  <% end %>
-                <% end %>
-      	        <%= link_to sa.service do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-envelope"></i>
-                <% end %>
-      	        <%= link_to appointments_path(:user_id1 => sa.user_id, :subject => @service.name) do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-calendar"></i>
-                <% end %>
-                <br><br>
-              </div>
-            </div>
-  				<% end %>
-        </div>
-    </div>
-  </div>
-  <br>
-  <% end %>          
-
-  <% if $activeapps.include?("Bewertungen") %>
+      
   <div class="row">
-    <div class="col-md-12">
-        <div class="panel-heading header">
-          <li_header>
-            <% if user_signed_in? %>
-              <%= link_to new_rating_path(:user_id => current_user.id, :service_id => @service.id) do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
+
+      <% case @topic %>
+        <% when "Service" %>
+          <%= header("Serviceinformationen") %>
+          <div class='col-xs-12'><div class="panel-body">
+              <%= showImage("Service", :medium, @service) %>
+              <br><br>
+              <b>Bewertung</b><br>
+              <% avg_rating(@service.id).times do %>
+                <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                <i class="glyphicon glyphicon-star"></i>
               <% end %>
-            <% end %>
-            Bewertungen
-          </li_header>
-        </div>
-        <div class="panel-body">
-          <% @service.ratings.each do |sr| %>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="thumbnail" align="center">
-                <% if sr.user.avatar == nil or sr.user.anonymous %>
-                  <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
-                <% else %>
-                  <%= image_tag sr.user.avatar, :size => 200, class:"img-rounded" %>
-                <% end %>
-                <br>
-                <ntext>
-                <% sr.user_rating.times do %>
-                  <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
-                  <i class="glyphicon glyphicon-star"></i>
-                <% end %>
-                </ntext>
-                <br>
-                <br>
-                <anzeigetext>
-                <%= sr.user.name + " " + sr.user.lastname %><br>
-                </anzeigetext>
-                <ntext>
-                <%= sr.user_comment %>
+              <br><br>
+              <% if @service.social %>
+                  <% image_tag("heart.png", :size => "50x50", class:"img-rounded" ) %>
+                  <i class="glyphicon glyphicon-heart"></i> soziales Engagement
+                  <br>
+              <% end %>
+              <br><br>
+              <% if @service.stype == "action" %>
+                <b>Angebot gültig von-bis:</b><br>
+                <%= @service.date_from.strftime("%d.%m.%Y") %> - <%= @service.date_to.strftime("%d.%m.%Y") %>
                 <br><br>
-                <%= sr.created_at.strftime("%d.%m.%Y") %>
+                <b>Preisinformation</b><br>
+                Preis <%= sprintf("%05.2f CHF", @service.price_new) if @service.price_new != nil %> statt <%= sprintf("%05.2f CHF", @service.price_reg) if @service.price_reg != nil %>            
                 <br><br>
-                </ntext>
-                <% if user_signed_in? %>
-                  <% if current_user.id == sr.user_id %>
-          	        <%= link_to edit_rating_path(sr) do %>
-                      <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+              <% end %>
+              <b>Beschreibung</b><br>
+        			<%= @service.description %>
+              <br><br>
+              <b>angeboten von:</b><br>
+              <% if @service.company_id != nil %>
+                  <%= showImage("Company", :thumb, @service.company) %>
+                  <%= @service.company.name %>
+              <% end %>
+              <% if @service.user_id != nil %>
+                  <%= showImage("User", :thumb, @service.user) %>
+                  <%= @service.user.name + " " + @service.user.lastname %>
+              <% end %>
+        			<br><br>
+              <%= @service.created_at.strftime("%d.%m.%Y") %>
+           </div></div>
+
+        <% when "Servicedokument" %>
+          <%= header("Dokumentationen") %>
+          <div class='col-xs-12'><div class="panel-body">
+              <% @service.service_documents.each do |sd| %>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                  <div class="thumbnail" align="center">
+                    <% if sd.avatar != nil %>
+                      <%= image_tag sd.avatar(:medium), class:"img-rounded" %>
+                    <% else %>
+                      <%= image_tag("service_a.png", :size => "200x200" , class:"img-rounded") %>
                     <% end %>
-          	        <%= link_to sr, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                      <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                    <br>
+                    <anzeigetext>
+                    <%= sd.name %><br>
+                    </anzeigetext>
+                    <ntext>
+                    <%= sd.description %>
+                    <br><br>
+                    </ntext>
+          	        <%= link_to sd.document.url, target: "_blank" do %>
+                      <i class="btn btn-primary btn-lg glyphicon glyphicon-cloud-download"></i>
                     <% end %>
-                  <% end %>
-                <% end %>
-                <br><br>
-              </div>
-            </div>
-  				<% end %>
-        </div>
-    </div>
-  </div>
-  <br>
-  <% end %>
+                    <% if user_signed_in? %>
+                      <% if (@service.user_id and current_user.id == @service.user_id) or (@service.company_id and current_user.id == @service.company.user_id) %>
+              	        <%= link_to edit_service_document_path(sd) do %>
+                          <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                        <% end %>
+              	        <%= link_to sd, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                    <br><br>
+                  </div>
+                </div>
+      				<% end %>
+            </div></div>
+
+        <% when "Servicekundenberater" %>
+          <%= header("Kundenberater") %>
+          <div class='col-xs-12'><div class="panel-body">
+              <% @service.advisors.each do |sa| %>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                  <div class="thumbnail" align="center">
+                    <%= link_to sa.user do %>
+                      <% if sa.user.avatar != nil %>
+                        <%= image_tag sa.user.avatar, :size => 200, class:"img-rounded" %>
+                      <% else %>
+                        <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
+                      <% end %>
+                    <% end %>
+                    <br>
+                    <anzeigetext>
+                    <%= sa.user.name + " " + sa.user.lastname %><br>
+                    </anzeigetext>
+                    <ntext>
+                    <%= sa.grade %>
+                    <br><br>
+                    <% if sa.user.phone1 != nil %>
+                      <%= sa.user.phone1 %><br>
+                    <% end %>
+                    <% if sa.user.phone2 != nil %>
+                      <%= sa.user.phone2 %><br>
+                    <% end %>
+                    <% if sa.user.address1 != nil %>
+                      <%= sa.user.address1 %><br>
+                    <% end %>
+                    <% if sa.user.address2 != nil %>
+                      <%= sa.user.address2 %><br>
+                    <% end %>
+                    <% if sa.user.address3 != nil %>
+                      <%= sa.user.address3 %><br>
+                    <% end %>
+                    </ntext>
+                    <% if user_signed_in? %>
+                      <% if sa.service.user_id != nil and current_user.id == sa.service.user_id %>
+              	        <% link_to edit_advisor_path(sa) do %>
+                          <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                        <% end %>
+              	        <%= link_to sa, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                        <% end %>
+                      <% end %>
+                      <% if sa.service.company.user_id != nil and current_user.id == sa.service.company.user_id %>
+              	        <% link_to edit_advisor_path(sa) do %>
+                          <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                        <% end %>
+              	        <%= link_to sa, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+          	        <%= link_to sa.service do %>
+                      <i class="btn btn-primary btn-lg glyphicon glyphicon-envelope"></i>
+                    <% end %>
+          	        <%= link_to appointments_path(:user_id1 => sa.user_id, :subject => @service.name) do %>
+                      <i class="btn btn-primary btn-lg glyphicon glyphicon-calendar"></i>
+                    <% end %>
+                    <br><br>
+                  </div>
+                </div>
+      				<% end %>
+            </div></div>
+          
+        <% when "Servicerating" %>
+          <%= header("Bewertungen") %>
+          <div class='col-xs-12'><div class="panel-body">
+             <% @service.ratings.each do |sr| %>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                  <div class="thumbnail" align="center">
+                    <% if sr.user.avatar == nil or sr.user.anonymous %>
+                      <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
+                    <% else %>
+                      <%= image_tag sr.user.avatar, :size => 200, class:"img-rounded" %>
+                    <% end %>
+                    <br>
+                    <ntext>
+                    <% sr.user_rating.times do %>
+                      <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                      <i class="glyphicon glyphicon-star"></i>
+                    <% end %>
+                    </ntext>
+                    <br>
+                    <br>
+                    <anzeigetext>
+                    <%= sr.user.name + " " + sr.user.lastname %><br>
+                    </anzeigetext>
+                    <ntext>
+                    <%= sr.user_comment %>
+                    <br><br>
+                    <%= sr.created_at.strftime("%d.%m.%Y") %>
+                    <br><br>
+                    </ntext>
+                    <% if user_signed_in? %>
+                      <% if current_user.id == sr.user_id %>
+              	        <%= link_to edit_rating_path(sr) do %>
+                          <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                        <% end %>
+              	        <%= link_to sr, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                    <br><br>
+                  </div>
+                </div>
+      				<% end %>
+          </div></div>
+      <% end %>
+  </div>  
 </div>

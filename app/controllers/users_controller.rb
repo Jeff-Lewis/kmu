@@ -67,6 +67,12 @@ class UsersController < ApplicationController
          @trx.save
        end
      end
+     if params[:topic]
+       @topic = params[:topic]
+     else 
+       @topic = "User"
+     end 
+    
   end
 
   # GET /users/new

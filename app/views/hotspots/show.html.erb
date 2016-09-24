@@ -1,201 +1,157 @@
 <div class="container-fluid">
 
   <div class="row">
-    <div class="col-md-12">
-        <div class="panel-heading header">
-          <li_header>
-              SEHENSWÜRDIGKEIT 
-              <%= @hotspot.name %>
-          </li_header>
-        </div>
-        <div class="panel-body">
-            <%= link_to hotspots_path :page => session[:page] do %>
-              <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
-            <% end %>
-            <% if  user_signed_in? %>
-                <% if @hotspot.user_id == current_user.id %>
-        	        <%= link_to edit_hotspot_path(@hotspot) do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                  <% end %>
-        	        <%= link_to @hotspot, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                    <i class="btn btn-danger btn-lg pull-right glyphicon glyphicon-trash"></i>
-                  <% end %>
-                <% end %>
-      	        <%= link_to new_webmaster_path :object_name => "Hotspot", :object_id => @hotspot.id, :user_id => current_user.id do %>
-                  <i class="btn btn-warning btn-lg pull-right glyphicon glyphicon-eye-open"></i>
-                <% end %>
-            <% end %>
-        </div>
-        <div class="panel-body">
-          <p>
-          <% if @hotspot.hotspot_details.count > 0 %>
-              <%= carousel(@hotspot.hotspot_details, "medium") %>
-            <% else %>
-              <%= image_tag("hotspot_a.png", :size => "200x200", class:"img-rounded" ) %>
-    			<% end %>
-    			</p>
-          <br><br>
-          <b>Bewertung</b><br>
-          <% HsRating.avg_rating(@hotspot.id).to_i.times do %>
-            <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
-            <i class="glyphicon glyphicon-star"></i>
-          <% end %>
-          <br><br>
-          <b>Beschreibung</b><br>
-    			<%= @hotspot.description %>
-          <br><br>
-          <b>Kategorie</b><br>
-    			<%= @hotspot.hs_category.name %>
-          <br><br>
-          <% if @hotspot.homepage != nil %>
-            <b>Kategorie</b><br>
-            <%= link_to url_with_protocol(@hotspot.homepage), :target => '_blank' do %>
-              <i class="glyphicon glyphicon-home"></i> <%= url_with_protocol(@hotspot.homepage) %>
-            <% end %>
-            <br><br>          
-          <% end %>
-          <b>aufgenommen von:</b><br>
-          <%= link_to @hotspot.user do %>
-            <% if !@hotspot.user.avatar_file_name %>
-              <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
-            <% else %>
-              <%= image_tag @hotspot.user.avatar(:thumb), class:"img-rounded" %>
-            <% end %><br>
-            <%= @hotspot.user.name + " " + @hotspot.user.lastname %>
-          <% end %>
-    			<br><br>
-          <%= @hotspot.created_at.strftime("%d.%m.%Y") %>
-        </div>
-      </div>
-    </div>
-    <br>
+    <%= action_buttons("Hotspot", @hotspot, @topic) %>
+  </div>
 
   <div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-          <% if user_signed_in? %>
-            <% if current_user.id == @hotspot.user_id %>
-              <%= link_to new_hotspot_detail_path :hotspot_id => @hotspot.id do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
-              <% end %>
-            <% end %>
-          <% end %>
-            ZUSATZINFORMATIONEN
-        </li_header>
-      </div>
-      <div class="panel-body">
-    		<% @hotspot.hotspot_details.each do |bd| %>
-          <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="thumbnail" align="center">
-      				<% if bd.avatar_file_name == nil %>
-                <%= image_tag("hotspot_a.png", :size => "200x200", class:"img-rounded" ) %>
-              <% else %>
-                <%= image_tag bd.avatar(:medium), class:"img-rounded"  %>
-              <% end %>
-              <br>
-              <anzeigetext>
-    						<%= bd.name %><br>
-              </anzeigetext>
-              <br>
-              <ntext>
-  						<%= bd.description %>
-  						</ntext>
-  						<br>
-              <% if user_signed_in? %>
-                <% if current_user.id == @hotspot.user_id %>
-        	        <%= link_to edit_hotspot_detail_path(bd) do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                  <% end %>
-        	        <%= link_to bd, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                    <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
-                  <% end %>
-                <% end %>
-              <% end %>
-              <br><br>
-    			  </div>
-    			</div>
-    		<% end %>
-    	</div>
-    </div>
+    <%= header("Ausflugsziel " + @hotspot.name) %>
   </div>
-  <br>
-          
-  <% if $activeapps.include?("Bewertungen") %>
-  <div class="row">
-    <div class="col-md-12">
-        <div class="panel-heading header">
-          <li_header>
-            <% if user_signed_in? %>
-              <%= link_to new_hs_rating_path(:user_id => current_user.id, :hotspot_id => @hotspot.id) do %>
-                <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
-              <% end %>
-            <% end %>
-            Bewertungen
-          </li_header>
-        </div>
-        <div class="panel-body">
-          <% @hotspot.hs_ratings.each do |sr| %>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="thumbnail" align="center">
-                <%= link_to sr.user do %>
-                  <% if sr.user.avatar == nil or sr.user.anonymous %>
-                    <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
-                  <% else %>
-                    <%= image_tag sr.user.avatar(:medium), class:"img-rounded" %>
-                  <% end %>
-                <% end %>
-                <br>
-                <anzeigetext>
-                <%= sr.user.name + " " + sr.user.lastname %>
-                </anzeigetext>
-                <br><br>
-                <% sr.user_rating.times do %>
-                  <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
-                  <i class="glyphicon glyphicon-star"></i>
-                <% end %>
-                <br><br>
-                <%= sr.user_comment %>
-                <br><br>
-                <%= sr.created_at.strftime("%d.%m.%Y") %>
-                <br><br>
-                <% if user_signed_in? %>
-                  <% if current_user.id == sr.user_id %>
-          	        <%= link_to edit_hs_rating_path(sr) do %>
-                      <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                    <% end %>
-          	        <%= link_to sr, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                      <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
-                    <% end %>
-                  <% end %>
-                <% end %>
-                <br><br>
-              </div>
-            </div>
-  				<% end %>
-        </div>
-    </div>
-  </div>
-  <br>
-  <% end %>
   
   <div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-            ORTSANGABE
-        </li_header>
-      </div>
-    </div>
-    <div class="col-md-12">
-      <div class="panel-body">
-        <div id="map">
-          <div id="map-canvas"></div>
-        </div>
-      </div>
-    </div>
+    <%= navigate("Hotspot", @hotspot) %>
   </div>
-  <br>
+      
+  <div class="row">
+
+      <% case @topic %>
+        <% when "Hotspotinformation" %>
+          <%= header("Informationen") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <% if @hotspot.hotspot_details.count > 0 %>
+                <%= carousel(@hotspot.hotspot_details, "medium") %>
+              <% else %>
+                <%= image_tag("hotspot_a.png", :size => "200x200", class:"img-rounded" ) %>
+      			<% end %>
+      			</p>
+            <br><br>
+            <b>Bewertung</b><br>
+            <% HsRating.avg_rating(@hotspot.id).to_i.times do %>
+              <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+              <i class="glyphicon glyphicon-star"></i>
+            <% end %>
+            <br><br>
+            <b>Beschreibung</b><br>
+      			<%= @hotspot.description %>
+            <br><br>
+            <b>Kategorie</b><br>
+      			<%= @hotspot.hs_category.name %>
+            <br><br>
+            <% if @hotspot.homepage != nil %>
+              <b>Kategorie</b><br>
+              <%= link_to url_with_protocol(@hotspot.homepage), :target => '_blank' do %>
+                <i class="glyphicon glyphicon-home"></i> <%= url_with_protocol(@hotspot.homepage) %>
+              <% end %>
+              <br><br>          
+            <% end %>
+            <b>aufgenommen von:</b><br>
+            <%= link_to @hotspot.user do %>
+              <% if !@hotspot.user.avatar_file_name %>
+                <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
+              <% else %>
+                <%= image_tag @hotspot.user.avatar(:thumb), class:"img-rounded" %>
+              <% end %><br>
+              <%= @hotspot.user.name + " " + @hotspot.user.lastname %>
+            <% end %>
+      			<br><br>
+            <%= @hotspot.created_at.strftime("%d.%m.%Y") %>
+          </div></div>
+      <% end %>
+
+      <% case @topic %>
+        <% when "Hotspotdetail" %>
+          <%= header("Details") %>
+          <div class='col-xs-12'><div class="panel-body">
+        		<% @hotspot.hotspot_details.each do |bd| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+          				<% if bd.avatar_file_name == nil %>
+                    <%= image_tag("hotspot_a.png", :size => "200x200", class:"img-rounded" ) %>
+                  <% else %>
+                    <%= image_tag bd.avatar(:medium), class:"img-rounded"  %>
+                  <% end %>
+                  <br>
+                  <anzeigetext>
+        						<%= bd.name %><br>
+                  </anzeigetext>
+                  <br>
+                  <ntext>
+      						<%= bd.description %>
+      						</ntext>
+      						<br>
+                  <% if user_signed_in? %>
+                    <% if current_user.id == @hotspot.user_id %>
+            	        <%= link_to edit_hotspot_detail_path(bd) do %>
+                        <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                      <% end %>
+            	        <%= link_to bd, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                        <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <br><br>
+        			  </div>
+        			</div>
+        		<% end %>
+          </div></div>
+      <% end %>
+
+      <% case @topic %>
+        <% when "Hotspotbewertung" %>
+          <%= header("Bewertungen") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <% @hotspot.hs_ratings.each do |sr| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+                  <%= link_to sr.user do %>
+                    <% if sr.user.avatar == nil or sr.user.anonymous %>
+                      <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
+                    <% else %>
+                      <%= image_tag sr.user.avatar(:medium), class:"img-rounded" %>
+                    <% end %>
+                  <% end %>
+                  <br>
+                  <anzeigetext>
+                  <%= sr.user.name + " " + sr.user.lastname %>
+                  </anzeigetext>
+                  <br><br>
+                  <% sr.user_rating.times do %>
+                    <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                    <i class="glyphicon glyphicon-star"></i>
+                  <% end %>
+                  <br><br>
+                  <%= sr.user_comment %>
+                  <br><br>
+                  <%= sr.created_at.strftime("%d.%m.%Y") %>
+                  <br><br>
+                  <% if user_signed_in? %>
+                    <% if current_user.id == sr.user_id %>
+            	        <%= link_to edit_hs_rating_path(sr) do %>
+                        <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                      <% end %>
+            	        <%= link_to sr, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                        <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <br><br>
+                </div>
+              </div>
+    				<% end %>
+          </div></div>
+      <% end %>
+
+      <% case @topic %>
+        <% when "Hotspotstandort" %>
+          <%= header("Standort") %>
+          <div class='col-xs-12'><div class="panel-body">
+            <div id="map">
+              <div id="map-canvas"></div>
+            </div>
+          </div></div>
+      <% end %>
+  </div>
+
 </div>
 
 <script>

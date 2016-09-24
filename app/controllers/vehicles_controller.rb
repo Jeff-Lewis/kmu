@@ -21,6 +21,41 @@ class VehiclesController < ApplicationController
 
   # GET /vehicles/1
   def show
+     if params[:topic]
+       @topic = params[:topic]
+     else 
+       @topic = "Vehicleinformation"
+     end 
+     
+    if !session[:cw]
+      session[:cw] = Date.today.cweek.to_i
+    end
+    if !session[:year]
+      session[:year] = Date.today.year.to_i
+    end
+    if params[:dir]
+      case params[:dir]
+        when ">"
+          if session[:cw] == 52
+            session[:cw] = 1
+            session[:year] = session[:year].to_i + 1
+          else
+            session[:cw] = session[:cw].to_i + 1
+          end
+        when "<"
+          if session[:cw] == 1
+            session[:cw] = 52
+            session[:year] = session[:year].to_i - 1
+          else
+            session[:cw] = session[:cw].to_i - 1
+          end
+      end
+    end
+    @start = Date.commercial(session[:year],session[:cw],1)
+    @calenders = Calender.search(@vehicle.id, session[:cw], session[:year]).order(date_from: :asc)
+    @calanz = @calenders.count
+     
+     
   end
 
   # GET /vehicles/new

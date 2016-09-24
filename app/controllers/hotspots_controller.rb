@@ -23,6 +23,11 @@ class HotspotsController < ApplicationController
 
   # GET /hotspots/1
   def show
+    if params[:topic]
+      @topic = params[:topic]
+    else
+      @topic = "Hotspotinformation"
+    end
   end
 
   # GET /hotspots/new

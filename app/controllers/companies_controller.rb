@@ -31,6 +31,11 @@ class CompaniesController < ApplicationController
 
   # GET /companies/1
   def show
+    if params[:topic]
+      @topic = params[:topic]
+    else
+      @topic = "Company"
+    end
   end
 
   # GET /companies/new

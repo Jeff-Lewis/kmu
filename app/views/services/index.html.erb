@@ -1,38 +1,36 @@
 <div class="container-fluid">
-	<div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-		    <% if user_signed_in? %>
-		        <% if @stype == "regular" %>
-  		        <%= link_to searches_path :search_domain => "Angebote", :controller_name => controller_name do %>
-  		          <i class="btn btn-primary glyphicon glyphicon-filter"></i>
-  		        <% end %>
-	            ANGEBOTE
-	  		    <% end %>
-		        <% if @stype == "action" %>
-  		        <%= link_to searches_path :search_domain => "Aktionen", :controller_name => controller_name do %>
-  		          <i class="btn btn-primary glyphicon glyphicon-filter"></i>
-  		        <% end %>
-	            AKTIONEN
-	  		    <% end %>
-		    <% end %>
-        <span class="badge"><%= @seranz %></span>
-        </li_header>
-      </div>
-    </div>
-  </div>
-
-  <div class="panel-body">
+  
+    <div class="panel-body">
     <div class="row">
       <div class="col-md-12">
         <div class="digg_pagination">
+    		    <% if user_signed_in? %>
+    		        <% if @stype == "regular" %>
+      		        <%= link_to searches_path :search_domain => "Angebote", :controller_name => controller_name do %>
+      		          <i class="btn btn-primary btn-xs glyphicon glyphicon-filter"></i>
+      		        <% end %>
+    	  		    <% end %>
+    		        <% if @stype == "action" %>
+      		        <%= link_to searches_path :search_domain => "Aktionen", :controller_name => controller_name do %>
+      		          <i class="btn btn-primary btn-xs glyphicon glyphicon-filter"></i>
+      		        <% end %>
+    	  		    <% end %>
+    		    <% end %>
             <%= will_paginate @services, :container => false, previous_label: "<", next_label: ">" %>
         </div>
       </div>
     </div>
   </div>
-        
+
+  <div class="row">
+    <% if @stype == "regular" %>
+      <%= header("Angebote " + "<span class='badge'>" + @seranz.to_s + "</span>") %>
+    <% end %>
+    <% if @stype == "action" %>
+      <%= header("Aktionen " + "<span class='badge'>" + @seranz.to_s + "</span>") %>
+    <% end %>
+  </div>
+
   <%= build_medialist("col-sm-6 col-md-4 col-lg-3", @services, "services", true) %>
 
   <div class="panel-body">

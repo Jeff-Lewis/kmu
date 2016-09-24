@@ -1,30 +1,26 @@
 <div class="container-fluid">
-	<div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-		    <% if user_signed_in? %>
-		        <%= link_to searches_path :search_domain => "Institutionen", :controller_name => controller_name do %>
-		          <i class="btn btn-primary glyphicon glyphicon-filter"></i>
-		        <% end %>
-		    <% end %>
-        INSTITUTIONEN
-        <span class="badge"><%= @companz %></span>
-        </li_header>
-      </div>
-    </div>
-  </div>
-
-  <div class="panel-body">
+  
+    <div class="panel-body">
     <div class="row">
       <div class="col-md-12">
         <div class="digg_pagination">
+    		    <% if user_signed_in? %>
+  		        <%= link_to searches_path :search_domain => "Institutionen", :controller_name => controller_name do %>
+  		          <i class="btn btn-primary btn-xs glyphicon glyphicon-filter"></i>
+  		        <% end %>
+    		    <% end %>
             <%= will_paginate @companies, :container => false, previous_label: "<", next_label: ">" %>
         </div>
       </div>
     </div>
   </div>
-        
+
+  <div class="row">
+      <%= header("Institutionen " + "<span class='badge'>" + @companz.to_s + "</span>") %>
+  </div>
+  
+  
+
   <%= build_medialist("col-sm-6 col-md-4 col-lg-3",@companies,"companies", true) %>
 
   <div class="panel-body">
