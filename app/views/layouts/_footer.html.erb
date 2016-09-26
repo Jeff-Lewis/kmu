@@ -1,54 +1,44 @@
 <br>
 <footer>
-    <div class="panel-body">
-        <div class="row">
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <%= image_tag ('connect.jpg'), :size => "250x140" %>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <footer_header>
-                XCONNECT
-            </footer_header>
-            <br><br>
-            <footer_text>
-                <%= link_to "Über uns", url_with_protocol("xConnect_ueber_uns.html"), :target => '_blank' %><br>
-                <%= link_to "Rechtliches & Impressum", url_with_protocol("xConnect_rechtliches_und.impressum"), :target => '_blank' %><br>
-                <% if !user_signed_in? %>
-                    <%= link_to "Anmelden", new_user_session_path %><br>
-                    <%= link_to "Registrieren", new_user_registration_path %><br>
-                <% else %>
-                    <%= link_to "Abmelden", destroy_user_session_path, method: :delete %><br>
-		            <%= link_to "Passwort ändern", edit_user_registration_path %><br><br>
-		            <%= link_to "Account löschen", registration_path(current_user), data: { confirm: "Are you sure?" }, method: :delete, class:"btn btn-danger btn-xs" %><br>
-                <% end %>
-            </footer_text>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-              <i class="glyphicon glyphicon-copyright-mark"></i> 2016, alle Rechte vorbehalten
-        </div>
-        </div>
-        <br>
-        <div class="row">
-        <% @partners = Company.where('partner=?','t') %>
-        <% @partners.each do |p| %>
+
+    <div class="row">
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <footer_header>
-            		<% if p.avatar_file_name == nil %>
-                      <%= image_tag("company_a.png", :size => "50x50", class:"img-rounded" ) %>
-                    <% else %>
-                      <%= image_tag p.avatar(:medium), class:"img-rounded"  %>
-                    <% end %>
-                    <%= p.name %>
+                    XCONNECT
                 </footer_header>
                 <br><br>
-                <% p.partner_links.each do |pl| %>
-                    <footer_text>
-	      				<li><%= link_to pl.name, url_with_protocol(pl.link), :target => "_blank" %></li>
-                    </footer_text>
-			 	<% end %>
+                <footer_text>
+                    <%= link_to "Über uns", url_with_protocol("xConnect_ueber_uns.html"), :target => '_blank' %><br>
+                    <%= link_to "Rechtliches & Impressum", url_with_protocol("xConnect_rechtliches_und.impressum"), :target => '_blank' %><br>
+                    <% if !user_signed_in? %>
+                        <%= link_to "Anmelden", new_user_session_path %><br>
+                        <%= link_to "Registrieren", new_user_registration_path %><br>
+                    <% else %>
+                        <%= link_to "Abmelden", destroy_user_session_path, method: :delete %><br>
+    		            <%= link_to "Passwort ändern", edit_user_registration_path %><br><br>
+    		            <%= link_to "Account löschen", registration_path(current_user), data: { confirm: "Are you sure?" }, method: :delete, class:"btn btn-danger btn-xs" %><br>
+                    <% end %>
+                </footer_text>
             </div>
-        <% end %>
-        </div>
 
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <footer_header>
+                    xConnect Partner
+                </footer_header>
+                <br><br>
+                <footer_text>
+                <% @partners = Company.where('partner=?','t') %>
+                <% @partners.each do |p| %>
+                    <%= link_to p do %>
+                        <%= p.name %><br>
+                    <% end %>
+                <% end %>
+                </footer_text>
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                  <i class="glyphicon glyphicon-copyright-mark"></i> 2016, alle Rechte vorbehalten
+            </div>
     </div>
+
 </footer>

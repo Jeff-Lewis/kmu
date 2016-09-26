@@ -1,17 +1,16 @@
 <div class="container-fluid">
 
   <div class="row">
-    <%= header("Kontoübersicht " + @user.full_name) %>
+    <% @item = Object.const_get(@object_name).find(@object_id) %>
+    <%= action_buttons("Account", @item, nil) %>
+  </div>
+
+  <div class="row">
+    <%= header("Kontoübersicht " + @user.fullname) %>
   </div>
   
   <div class="row">
-    <%= navigate("Account", @user) %>
-  </div>
-      
-  <div class="row">
 
-      <% case @topic %>
-        <% when "Accountuser" %>
           <%= header("Kontoübersicht (privat)") %>
           <div class='col-xs-12'><div class="panel-body">
             <% @ali = [] %>
@@ -23,7 +22,11 @@
                   <div class="col-sm-6 col-md-4 col-lg-3">
                     <div class="thumbnail" align="center">
                       <%= link_to new_transaction_path(:user_id => @user.id, :ref => @ref, :object_name => @object_name, :object_id => @object_id, :amount => @amount, :user_id_ver => @user_id_ver, :company_id_ver => @company_id_ver, :account_bel => ca.id) do %>
-                        <%= showImage("Company", :medium, p) %>
+                       <% if p.avatar_file_name %>
+                        <%= image_tag p.avatar(:medium), class:"img-rounded" %>
+                       <% else %>
+                        <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
+                       <% end %>
                       <% end %>
                       <br><br>
                       <%= p.name %><br>
@@ -36,32 +39,35 @@
             <% end %>
           </div></div>
 
-        <% when "Accountcompany" %>
-          <%= header("Kontoübersicht (Institutionen)") %>
-          <div class='col-xs-12'><div class="panel-body">
-            <% @ali = [] %>
-            <% @partners = Company.where('partner=?',true) %>
-            <% @partners.each do |p| %>
-              <% @customer = Customer.where("company_id=? AND partner_id=?", c.id, p.id).first %>
-              <% if @customer %>
-                <% @customer.accounts.each do |ca| %>
-                  <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="thumbnail" align="center">
-                      <%= link_to new_transaction_path(:company_id => c.id, :ref => @ref, :object_name => @object_name, :object_id => @object_id, :amount => @amount, :user_id_ver => @user_id_ver, :company_id_ver => @company_id_ver, :account_bel => ca.id) do %>
-                        <%= showImage("Company", :medium, p) %>
-                      <% end %>
-                      <br><br>
-                      <%= p.name %><br>
-                      <anzeigetext><%= ca.name %></anzeigetext><br>
-                      <ntext><%= ca.iban %></ntext>
+          <% @user.companies.each do |c| %>
+            <%= header("Kontoübersicht "+c.name) %>
+            <div class='col-xs-12'><div class="panel-body">
+              <% @ali = [] %>
+              <% @partners = Company.where('partner=?',true) %>
+              <% @partners.each do |p| %>
+                <% @customer = Customer.where("company_id=? AND partner_id=?", c.id, p.id).first %>
+                <% if @customer %>
+                  <% @customer.accounts.each do |ca| %>
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                      <div class="thumbnail" align="center">
+                        <%= link_to new_transaction_path(:company_id => c.id, :ref => @ref, :object_name => @object_name, :object_id => @object_id, :amount => @amount, :user_id_ver => @user_id_ver, :company_id_ver => @company_id_ver, :account_bel => ca.id) do %>
+                         <% if p.avatar_file_name %>
+                          <%= image_tag p.avatar(:medium), class:"img-rounded" %>
+                         <% else %>
+                          <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
+                         <% end %>
+                        <% end %>
+                        <br><br>
+                        <%= p.name %><br>
+                        <anzeigetext><%= ca.name %></anzeigetext><br>
+                        <ntext><%= ca.iban %></ntext>
+                      </div>
                     </div>
-                  </div>
+                  <% end %>
                 <% end %>
               <% end %>
-            <% end %>
-          </div></div>
-
-      <% end %>
+            </div></div>
+          <% end %>
 
   </div>
 
@@ -89,7 +95,11 @@
                 <div class="col-sm-6 col-md-4 col-lg-3">
                   <div class="thumbnail" align="center">
                     <%= link_to new_transaction_path(:user_id => @user.id, :ref => @ref, :object_name => @object_name, :object_id => @object_id, :amount => @amount, :user_id_ver => @user_id_ver, :company_id_ver => @company_id_ver, :account_bel => ca.id) do %>
-                      <%= showImage("Company", :medium, p) %>
+                      <% if p.avatar_file_name %>
+                        <%= image_tag p.avatar(:medium), class:"img-rounded" %>
+                      <% else %>
+                        <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
+                      <% end %>
                     <% end %>
                     <br><br>
                     <%= p.name %><br>
@@ -125,7 +135,11 @@
                 <div class="col-sm-6 col-md-4 col-lg-3">
                   <div class="thumbnail" align="center">
                     <%= link_to new_transaction_path(:company_id => c.id, :ref => @ref, :object_name => @object_name, :object_id => @object_id, :amount => @amount, :user_id_ver => @user_id_ver, :company_id_ver => @company_id_ver, :account_bel => ca.id) do %>
-                      <%= showImage("Company", :medium, p) %>
+                      <% if p.avatar_file_name %>
+                        <%= image_tag p.avatar(:medium), class:"img-rounded" %>
+                      <% else %>
+                        <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
+                      <% end %>
                     <% end %>
                     <br><br>
                     <%= p.name %><br>

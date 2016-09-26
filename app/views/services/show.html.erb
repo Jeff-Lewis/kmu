@@ -144,7 +144,7 @@
                           <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
                         <% end %>
                       <% end %>
-                      <% if sa.service.company.user_id != nil and current_user.id == sa.service.company.user_id %>
+                      <% if sa.service.company_id != nil and current_user.id == sa.service.company.user_id %>
               	        <% link_to edit_advisor_path(sa) do %>
                           <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
                         <% end %>

@@ -72,7 +72,50 @@ class UsersController < ApplicationController
      else 
        @topic = "User"
      end 
-    
+     
+   if !session[:cw]
+      session[:cw] = Date.today.cweek.to_i
+    end
+    if !session[:year]
+      session[:year] = Date.today.year.to_i
+    end
+    if params[:dir]
+      case params[:dir]
+        when ">"
+          if session[:cw] == 52
+            session[:cw] = 1
+            session[:year] = session[:year].to_i + 1
+          else
+            session[:cw] = session[:cw].to_i + 1
+          end
+        when "<"
+          if session[:cw] == 1
+            session[:cw] = 52
+            session[:year] = session[:year].to_i - 1
+          else
+            session[:cw] = session[:cw].to_i - 1
+          end
+      end
+    end
+    if params[:confirm_id]
+      @appoint = Appointment.find(params[:confirm_id])
+      if @appoint
+        @appoint.status = "bestaetigt"
+        @appoint.save
+      end
+    end
+    if params[:deny_id]
+      @appoint = Appointment.find(params[:deny_id])
+      if @appoint
+        @appoint.status = "leider nicht möglich"
+        @appoint.save
+      end
+    end
+    @start = Date.commercial(session[:year],session[:cw],1)
+    @appointments = Appointment.search(@user.id, session[:cw], session[:year]).order(app_date: :asc)
+    @appanz = @appointments.count
+    @subject = params[:subject]
+
   end
 
   # GET /users/new

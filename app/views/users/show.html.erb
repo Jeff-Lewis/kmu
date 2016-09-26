@@ -57,10 +57,126 @@
             <% end %>
           </div></div>
     
+        <% when "Userkalender" %>
+          <%= header("Kalender") %>
+          <div class='col-xs-12'><div class="panel-body">
+        		<table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Uhrzeit</th>
+                  <% for i in 0..6 %>
+                    <th>
+                      <%= $wochentage[i] %><br>
+                      <small_cal>
+                      <%= (@start+i).strftime("%d.%m") %>
+                      </small_cal>
+                    </th>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <%= AppItem(@user, @appointments, @start) %>
+              </tbody>
+            </table>
+            <angefragt>angefragt</angefragt><abgelehnt>leider nicht möglich</abgelehnt><bestaetigt>bestätigt</bestaetigt><geblockt>nicht verfügbar</geblockt><br><br>
+          </div></div>
+
+          <%= header("Kalendereinträge") %>
+          <div class='col-xs-12'><div class="panel-body">
+          	<table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Betreff</th>
+                  <th colspan=2>Dokumente</th>
+                  <th colspan=2>gebucht von</th>
+                  <th>Datum/Uhrzeit</th>
+                </tr>
+              </thead>
+              <body>
+              	<% if user_signed_in? %>
+                  <% @appointments.each do |ca| %>
+              			<% if ca.user_id1 == current_user.id or ca.user_id2 == current_user.id %>
+                      <tr>
+                        <td>
+                          <% case ca.status %>
+                            <% when "angefragt" %>
+                               <angefragt><%= ca.status %></angefragt>
+                            <% when "geht leider nicht" %>
+                               <abgelehnt><%= ca.status %></abgelehnt>
+                            <% when "bestaetigt" %>
+                               <bestaetigt><%= ca.status %></bestaetigt>
+                            <% when "nicht verfügbar" %>
+                              <geblockt><%= ca.status %></geblockt>
+                            <% else %>
+                          <% end %>
+                          <br>
+                          <%= link_to edit_appointment_path(ca) do %>
+                            <i class="btn btn-primary btn-xs glyphicon glyphicon-wrench"></i>
+                          <% end %>
+                				  <% if ca.user_id1 == current_user.id and ca.status == "angefragt" %>
+                              <%= link_to user_path(:id => @user.id, :confirm_id => ca.id, :subject => @subject, :topic => "Userkalender") do %>
+                                <i class="btn btn-primary btn-xs glyphicon glyphicon-ok"></i>
+                              <% end %>
+                              <%= link_to user_path(:id => @user.id, :deny_id => ca.id, :subject => @subject, :topic => "Userkalender") do %>
+                                <i class="btn btn-primary btn-xs glyphicon glyphicon-remove"></i>
+                              <% end %>
+                          <% end %>
+          				        <% link_to edit_appointment_path(ca) do %>
+                            <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
+                          <% end %>
+          				        <%= link_to ca, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                            <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
+                          <% end %>
+                        </td>
+                        <td>
+                          <%= ca.channel + " " + ca.channel_detail %><br>
+                          <%= ca.subject %>
+                        </td>
+              				  <td>
+                          <%= link_to new_appointment_document_path(:appointment_id => ca.id) do %>
+                            <i class="btn btn-primary btn-xs glyphicon glyphicon-cloud-upload"></i><br>
+                          <% end %>
+                        </td>
+                        <td>
+                          <% ca.appointment_documents.each do |ad| %>
+                  	        <%= link_to ad.document.url, target: "_blank" do %>
+                              <i class="btn btn-primary btn-xs glyphicon glyphicon-cloud-download"></i>
+                            <% end %>
+            				        <%= link_to ad, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                              <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
+                            <% end %>
+                            <%= ad.name %><br>  
+                          <% end %>
+                        </td>
+                        <td>
+                          <% @user2 = User.find(ca.user_id2) %>
+                          <% if @user2.avatar_file_name %>
+                            <%= image_tag @user2.avatar(:small), class:"img-rounded" %>
+                          <% else %>
+                            <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
+                          <% end %>
+                        </td>
+                        <td>
+                          <anzeigetext>
+                          <%= @user2.name + " " + @user2.lastname %><br>
+                          </anzeigetext>
+                          <ntext><%= @user2.address2 %></ntext>
+                        </td>
+                        <td>
+                          <%= ca.app_date.strftime("%d.%m.%Y") %><br>
+                          <%= ca.time_from.to_s+"-"+ca.time_to.to_s+" Uhr"%>
+                        </td>
+                      </tr>
+                    <% end %>
+                  <% end %>
+                <% end %>          
+              </body>
+           	</table>
+          </div></div>
+
         <% when "Kundenberater" %>
-
           <%= header("Kundenberater") %>
-
           <div class='col-xs-12'><div class="panel-body">
           		<% @user.advisors.each do |us| %>
                 <div class="col-sm-6 col-md-4 col-lg-3">

@@ -266,11 +266,12 @@ def navigate(object,item)
       when "User"
         html_string = html_string + build_nav("User",item,"User","user",item)
         html_string = html_string + build_nav("User",item,"Kundenberater","question-sign",item.advisors.count > 0)
+        html_string = html_string + build_nav("User",item,"Userkalender","calendar",Appointment.where('user_id1=? or user_id2=?',item,item).count > 0)
         html_string = html_string + build_nav("User",item,"Service","shopping-cart",item.services.count > 0)
         html_string = html_string + build_nav("User",item,"Company","copyright-mark",item.companies.count > 0)
         html_string = html_string + build_nav("User",item,"Request","pushpin",item.requests.count > 0)
         html_string = html_string + build_nav("User",item,"Vehicle","retweet",item.vehicles.count > 0)
-        html_string = html_string + build_nav("User",item,"Event","calendar",item.events.count > 0)
+        html_string = html_string + build_nav("User",item,"Event","glass",item.events.count > 0)
         html_string = html_string + build_nav("User",item,"Ticket","barcode",item.user_tickets.count > 0)
         html_string = html_string + build_nav("User",item,"Hotspot","camera",item.hotspots.count > 0)
         html_string = html_string + build_nav("User",item,"Bid","pencil",item.bids.count > 0)
@@ -291,7 +292,7 @@ def navigate(object,item)
         html_string = html_string + build_nav("Company",item,"Vehicle","retweet",item.vehicles.count > 0)
         html_string = html_string + build_nav("Company",item,"Bid","pencil",item.bid_documents.count > 0)
         html_string = html_string + build_nav("Company",item,"Job","user",item.jobs.count > 0)
-        html_string = html_string + build_nav("Company",item,"Event","calendar",item.events.count > 0)
+        html_string = html_string + build_nav("Company",item,"Event","glass",item.events.count > 0)
         html_string = html_string + build_nav("Company",item,"Sponsor","certificate",item.sponsors.count > 0)
         html_string = html_string + build_nav("Company",item,"Donation","heart",item.donations.where('dtype=?',"Donation").count > 0)
         html_string = html_string + build_nav("Company",item,"Reward","gift",item.donations.where('dtype=?',"Reward").count > 0)
@@ -349,10 +350,6 @@ def navigate(object,item)
         html_string = html_string + build_nav("Request",item,"Requestinformation","gift",item)
         html_string = html_string + build_nav("Request",item,"Requestdetail","search",item.request_details.count > 0)
 
-      when "Account"
-        html_string = html_string + build_nav("Account",item,"Accountuser","user", true)
-        html_string = html_string + build_nav("Account",item,"Accountcompany","copyright-mark", true)
-
     end
     
     html_string = html_string + "</div></div></navigate>"
@@ -407,10 +404,6 @@ def build_nav(object, item, topic, glyphicon, condition)
       html_string = link_to(request_path(item, :topic => topic)) do
         content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
       end
-    when "Account"
-      html_string = link_to(listaccounts_index_path(:topic => topic)) do
-        content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
-      end
   end
   return html_string.html_safe
 end
@@ -432,10 +425,7 @@ def action_buttons(object, item, topic)
               html_string = html_string + link_to(edit_user_path(item)) do
               content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-wrench")
             end
-            html_string = html_string + link_to(appointments_path :user_id1 => item.id) do
-                content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-calendar")
-            end
-              html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do
+            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do
                 content_tag(:i, nil, class: "btn btn-danger pull-right glyphicon glyphicon-trash")
             end
           end
@@ -746,10 +736,10 @@ def action_buttons(object, item, topic)
          end
 
         when "Account"
-         html_string = html_string + link_to(user_path(:id => item.id, :topic => "Customer") ) do
-           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-user")
-         end
-  
+           html_string = html_string + link_to(item) do
+             content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
+           end
+           
     end
 
     case topic
@@ -940,6 +930,19 @@ def action_buttons(object, item, topic)
                 end
               end
             end
+          end
+          
+        when "Userkalender"
+          if user_signed_in?
+              html_string = html_string + link_to(new_appointment_path(:user_id1 => item.id, :user_id2 => current_user.id)) do
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+              end
+          end
+          html_string = html_string + link_to(user_path(:id => item.id, :dir => "<", :topic => topic)) do
+            content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-chevron-left")
+          end
+          html_string = html_string + link_to(user_path(:id => item.id, :dir => ">", :topic => topic)) do
+            content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-chevron-right")
           end
 
     end

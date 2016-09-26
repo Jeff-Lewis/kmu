@@ -1,8 +1,7 @@
 <div class="container-fluid">
 	<div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
+    <div class="col-xs-12">
+      <div class="panel-body">
         <% if session[:sponsor_id] != nil %>
           <%= link_to tickets_path :sponsor_id => session[:sponsor_id] do %>
             <i class="btn btn-primary glyphicon glyphicon-list"></i>
@@ -33,16 +32,17 @@
 		    <%= link_to new_search_path(:user_id => current_user.id, :search_domain => @search_domain, :controller_name => @controller_name, :ticket_id => session[:ticket_id]) do %>
           <i class="btn btn-primary glyphicon glyphicon-plus"></i>
         <% end %>
-        SUCHEN <%= @search_domain %>
-        <% if @ticket != nil %>
-          für <%= @ticket.sponsor.event.name + " " + @ticket.name %>
-        <% end %>
-        <span class="badge"><%= @seranz %></span>
-        </li_header>
       </div>
     </div>
   </div>
-  <br>
+    
+  <div class="row">
+      <% if @ticket %>
+        <%= header("Suchen " + @search_domain + " " + @ticket.sponsor.ebent.name + " " + @ticket.name + " <span class='badge'>" + @seranz.to_s + "</span>") %>
+      <% else %>
+        <%= header("Suchen " + @search_domain + " <span class='badge'>" + @seranz.to_s + "</span>") %>
+      <% end %>
+  </div>
 
 	<div class="row">
     <div class="col-md-12">
@@ -50,14 +50,6 @@
     		<!--<table class="table table-striped table-hover-->
     		<table class="table table-striped">
           <thead>
-            <tr>
-              <td colspan="3">
-                <div class="digg_pagination">
-                    <%= will_paginate @searches, :container => false, previous_label: "<", next_label: ">" %>
-                </div>	  
-              </td>
-            </tr>
-            
             <tr>
               <th></th>
               <th>Bezeichnung</th>
@@ -73,51 +65,51 @@
                 <% case s.search_domain %>
                 <% when "Privatpersonen" %>
                   <%= link_to users_path :filter_id => s.id do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                    <i class="btn btn-primary glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% when "Institutionen" %>
                   <%= link_to companies_path :filter_id => s.id do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                    <i class="btn btn-primary glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% when "Angebote", "Aktionen" %>
                   <%= link_to offer_index_path :filter_id => s.id  do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                    <i class="btn btn-primary glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% when "Mobilien" %>
                   <%= link_to vehicles_path :filter_id => s.id  do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                    <i class="btn btn-primary glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% when "Ausschreibungen" %>
                   <%= link_to bids_path :filter_id => s.id  do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                    <i class="btn btn-primary glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% when "Kleinanzeigen" %>
                   <%= link_to requests_path :filter_id => s.id , :rtype => s.rtype do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                    <i class="btn btn-primary glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% when "Stellenanzeigen" %>
                   <%= link_to jobs_path :filter_id => s.id do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                    <i class="btn btn-primary glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% when "Veranstaltungen" %>
                   <%= link_to events_path :filter_id => s.id  do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                    <i class="btn btn-primary glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% when "Sehenswuerdigkeiten" %>
                   <%= link_to hotspots_path :filter_id => s.id do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                    <i class="btn btn-primary glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% when "Spendeninitiativen", "Rewardinitiativen" %>
                   <%= link_to donations_path :filter_id => s.id, :dtype => @dtype  do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-filter"></i>
+                    <i class="btn btn-primary glyphicon glyphicon-filter"></i>
                   <% end %>
                 <% end %>
 
       	        <%= link_to edit_search_path(s, :ticket_id => ticket_id) do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                  <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
                 <% end %>
       	        <%= link_to s, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                  <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                  <i class="btn btn-danger glyphicon glyphicon-trash"></i>
                 <% end %>
                 </td>
                 <td>
