@@ -5,7 +5,9 @@
   </div>
 
   <div class="row">
+    <header>
     <%= header(@user.fullname) %>
+    </header>
   </div>
   
   <div class="row">
@@ -837,12 +839,12 @@
 
 <script>
 $(document).ready(function(){
-  $("header").dblclick(function() {
+  $("header").mouseenter(function() {
     $("navigate").show();
   });
 })
 $(document).ready(function(){
-  $("header").click(function() {
-    $("navigate").hide();
+  $("navigate").mouseleave(function() {
+    $("navigate").hide()
   });
 })</script>

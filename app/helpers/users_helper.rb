@@ -254,7 +254,7 @@ def showImage(type, size, item)
 end
 
 def header(header)
-    html_string = "<header><div class='col-xs-12'><div class='panel-heading header'><li_header>" + header + "</li_header></div></div></header>"
+    html_string = "<div class='col-xs-12'><div class='panel-heading header'><li_header>" + header + "</li_header></div></div>"
     return html_string.html_safe
 end
 
