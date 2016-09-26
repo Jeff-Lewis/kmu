@@ -19,7 +19,7 @@ class RequestsController < ApplicationController
      if params[:topic]
        @topic = params[:topic]
      else 
-       @topic = "User"
+       @topic = "Requestinformation"
      end 
   end
 

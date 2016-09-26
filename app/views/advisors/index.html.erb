@@ -1,28 +1,22 @@
 <div class="container-fluid">
-	<div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-          <%= link_to @service, :anchor => "#Kundenberater" do %>
-            <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
-          <% end %>
-          KUNDENBERATER für SERVICE <%= @service.name %>
-          <span class="badge"><%= @adpanz %></span>
-        </li_header>
-      </div>
-    </div>
-  </div>
-
+  
   <div class="panel-body">
     <div class="row">
       <div class="col-md-12">
         <div class="digg_pagination">
+            <%= link_to(service_path(@service, :topic => "Servicekundenberater")) do %>
+              <i class="btn btn-primary btn-xs glyphicon glyphicon-list"></i>
+            <% end %>
             <%= will_paginate @users, :container => false, previous_label: "<", next_label: ">" %>
         </div>
       </div>
     </div>
   </div>
 
+  <div class="row">
+      <%= header("Kundenberater Service " + @service.name + "<span class='badge'>" + @adpanz.to_s + "</span>") %>
+  </div>
+  
 	<div class="row">
     <div class="col-md-12">
   		<table class="table table-striped">

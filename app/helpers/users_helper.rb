@@ -349,6 +349,10 @@ def navigate(object,item)
         html_string = html_string + build_nav("Request",item,"Requestinformation","gift",item)
         html_string = html_string + build_nav("Request",item,"Requestdetail","search",item.request_details.count > 0)
 
+      when "Account"
+        html_string = html_string + build_nav("Account",item,"Accountuser","user", true)
+        html_string = html_string + build_nav("Account",item,"Accountcompany","copyright-mark", true)
+
     end
     
     html_string = html_string + "</div></div></navigate>"
@@ -401,6 +405,10 @@ def build_nav(object, item, topic, glyphicon, condition)
       end
     when "Request"
       html_string = link_to(request_path(item, :topic => topic)) do
+        content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
+      end
+    when "Account"
+      html_string = link_to(listaccounts_index_path(:topic => topic)) do
         content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
       end
   end
@@ -712,7 +720,7 @@ def action_buttons(object, item, topic)
          end
   
         when "Request"
-         html_string = html_string + link_to(requests_path :rtype => topic, :page => session[:page]) do
+         html_string = html_string + link_to(requests_path :rtype => item.rtype, :page => session[:page]) do
            content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
          end
          if user_signed_in?
@@ -735,6 +743,11 @@ def action_buttons(object, item, topic)
                 content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
               end
 
+         end
+
+        when "Account"
+         html_string = html_string + link_to(user_path(:id => item.id, :topic => "Customer") ) do
+           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-user")
          end
   
     end
@@ -825,7 +838,7 @@ def action_buttons(object, item, topic)
           end
 
         when "Ticket"
-          if object = "User" and user_signed_in?
+          if object == "User" and user_signed_in?
             found = false
             com = Company.where('user_id=?',current_user.id)
             com.each do |c|

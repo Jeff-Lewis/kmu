@@ -7,5 +7,10 @@ class ListaccountsController < ApplicationController
     @object_name = params[:object_name]
     @object_id = params[:object_id]
     @amount = params[:amount]
+    if params[:topic]
+      @topic = params[:topic]
+    else
+      @topic = "Accountuser"
+    end
   end
 end
