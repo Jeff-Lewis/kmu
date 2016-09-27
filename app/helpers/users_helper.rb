@@ -496,8 +496,11 @@ def action_buttons(object, item, topic)
                   content_tag(:i, nil, class:"btn btn-warning pull-right glyphicon glyphicon-eye-open")
                 end
             end
+  	        html_string = html_string + link_to(new_rating_path :service_id => item.id, :user_id => current_user.id) do
+              content_tag(:i, nil, class:"btn btn-warning pull-right glyphicon glyphicon-plus")
+            end
           end
-            
+
           case topic
             when "Servicedokument"
               if user_signed_in?
