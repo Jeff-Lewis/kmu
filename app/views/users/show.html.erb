@@ -620,6 +620,15 @@
                     <%= ur.user_comment %>
                     </ntext>
                     <br><br>
+                    <% if ur.user_id == current_user.id %>
+                      <%= link_to edit_rating_path(ur) do %>
+                        <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
+                      <% end %>
+      				        <%= link_to ur, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                        <i class="btn btn-danger glyphicon glyphicon-trash"></i>
+                      <% end %>
+                      <br><br>
+                    <% end %>
                   </div>
                 </div>
               <% end %>
@@ -668,6 +677,9 @@
                       <br><br>
                       <% if user_signed_in? %>
                         <% if @user.id == current_user.id %>
+                	        <%= link_to edit_favourit_path(f) do %>
+                            <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                          <% end %>
                 	        <%= link_to f, method: :delete, data: { confirm: 'Are you sure?' } do %>
                             <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
                           <% end %>

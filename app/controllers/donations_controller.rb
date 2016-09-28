@@ -82,9 +82,13 @@ class DonationsController < ApplicationController
   # POST /donations
   def create(donation)
     @donation = Donation.new(donation)
-
     if @donation.save
-      redirect_to @donation, :page => session[:page], notice: 'Donation was successfully created.'
+      if @donation.user_id
+        redirect_to user_path(:id => @donation.user_id, :topic => @donation.dtype), notice: 'Reward was successfully created.'
+      end
+      if @donation.company_id
+        redirect_to company_path(:id => @donation.company_id, :topic => @donation.dtype), notice: 'Reward was successfully created.'
+      end
     else
       render :new
     end
@@ -93,7 +97,7 @@ class DonationsController < ApplicationController
   # PUT /donations/1
   def update(donation)
     if @donation.update(donation)
-      redirect_to @donation, :page => session[:page], notice: 'Donation was successfully updated.'
+      redirect_to @donation, :page => session[:page], notice: 'Crowd Initiative was successfully updated.'
     else
       render :edit
     end
@@ -102,8 +106,15 @@ class DonationsController < ApplicationController
   # DELETE /donations/1
   def destroy
     @dtype = @donation.dtype
+    @us = @donation.user_id
+    @comp = @donation.company_id
     @donation.destroy
-    redirect_to donations_path :dtype => @dtype, :page => session[:page], notice: 'Donation was successfully destroyed.'
+    if @us
+      redirect_to user_path(:id => @us, :topic => @donation.dtype), notice: 'Crowd Initiative was successfully destroyed.'
+    end
+    if @comp
+      redirect_to company_path(:id => @comp, :topic => @donation.dtype), notice: 'Crowd Initiative was successfully destroyed.'
+    end
   end
 
   private

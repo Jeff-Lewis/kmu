@@ -42,10 +42,10 @@ class CustomersController < ApplicationController
   def create(customer)
     @customer = Customer.new(customer)
     if @customer.save
-      if @customer.user 
-        redirect_to @customer.user, notice: 'Customer was successfully created.'
+      if @customer.user_id 
+        redirect_to user_path(:id => @customer.user, :topic => "Customer"), notice: 'Customer was successfully created.'
       else
-        redirect_to @customer.company, notice: 'Customer was successfully created.'
+        redirect_to company_path(:id => @customer.company, :topic => "Customer"), notice: 'Customer was successfully created.'
       end
     else
       render :new
@@ -55,10 +55,10 @@ class CustomersController < ApplicationController
   # PUT /customers/1
   def update(customer)
     if @customer.update(customer)
-      if @customer.user 
-        redirect_to @customer.user, notice: 'Customer was successfully updated.'
+      if @customer.user_id 
+        redirect_to user_path(:id => @customer.user, :topic => "Customer"), notice: 'Customer was successfully created.'
       else
-        redirect_to @customer.company, notice: 'Customer was successfully updated.'
+        redirect_to company_path(:id => @customer.company, :topic => "Customer"), notice: 'Customer was successfully created.'
       end
     else
       render :edit
@@ -67,13 +67,19 @@ class CustomersController < ApplicationController
 
   # DELETE /customers/1
   def destroy
-    if @customer.user 
-      @item = @customer.user
-    else
-      @item = @customer.company
+    if @customer.user_id
+      @us = @customer.user_id
+    end
+    if @customer.company_id
+      @comp = @customer.company_id
     end
     @customer.destroy
-    redirect_to @item
+      if @us 
+        redirect_to user_path(:id => @us, :topic => "Customer"), notice: 'Customer was successfully created.'
+      end
+      if @comp
+        redirect_to company_path(:id => @comp, :topic => "Customer"), notice: 'Customer was successfully created.'
+      end
   end
 
   private

@@ -74,10 +74,10 @@ class ServicesController < ApplicationController
     @service = Service.new(service)
     if @service.save
       if @service.company_id != nil
-          redirect_to @service.company, notice: 'service was successfully created.'
+          redirect_to company_path(:id => @service.company, :topic => "Service"), notice: 'service was successfully created.'
       end
       if @service.user_id != nil
-          redirect_to @service.user, notice: 'service was successfully created.'
+          redirect_to user_path(:id => @service.user, :topic => "Service"), notice: 'service was successfully created.'
       end
     end
   end
@@ -98,14 +98,18 @@ class ServicesController < ApplicationController
   # DELETE /workorders/1
   # DELETE /workorders/1.json
   def destroy
-    back1 = @service.company_id
-    back2 = @service.user_id
-    @service.destroy
-    if back1 != nil
-        redirect_to @service.company, notice: 'service was successfully destroyed.'
+    if @service.company_id
+      @comp = @service.company_id
     end
-    if back2 != nil
-        redirect_to @service.user, notice: 'service was successfully destroyed.'
+    if @service.user_id
+      @us = @service.user_id
+    end
+    @service.destroy
+    if @comp
+        redirect_to company_path(:id => @comp, :topic => "Service"), notice: 'service was successfully created.'
+    end
+    if @us
+        redirect_to user_path(:id => @us, :topic => "Service"), notice: 'service was successfully created.'
     end
   end
 

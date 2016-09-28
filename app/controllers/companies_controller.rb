@@ -56,7 +56,7 @@ class CompaniesController < ApplicationController
   def create(company)
     @company = Company.new(company)
     if @company.save
-      redirect_to @company, notice: 'Company was successfully created'
+      redirect_to user_path(:id => @company.user_id, :topic => "Company"), notice: 'Company was successfully created'
       # redirect_to @company, notice: 'Company was successfully created.'
     else
       render :new
@@ -74,8 +74,9 @@ class CompaniesController < ApplicationController
 
   # DELETE /companies/1
   def destroy
+    @us = @company.user_id
     @company.destroy
-    redirect_to companies_path :page => session[:page],  notice: 'Company was successfully destroyed.'
+    redirect_to user_path(:id => @us, :topic => "Company"),  notice: 'Company was successfully destroyed.'
   end
 
   private

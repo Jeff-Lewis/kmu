@@ -44,7 +44,7 @@ class RequestsController < ApplicationController
     @request = Request.new(request)
 
     if @request.save
-      redirect_to @request, notice: 'Request was successfully created.'
+      redirect_to user_path(:id => @request.user_id, :topic => "Request"), notice: 'Request was successfully created.'
     else
       render :new
     end
@@ -61,8 +61,9 @@ class RequestsController < ApplicationController
 
   # DELETE /requests/1
   def destroy
+    @us = @request.user_id
     @request.destroy
-    redirect_to requests_path :page => session[:page], :rtype => session[:rtype], notice: 'Request was successfully destroyed.'
+    redirect_to user_path(:id => @us, :topic => "Request"), notice: 'Request was successfully destroyed.'
   end
 
   private

@@ -91,9 +91,13 @@ class VehiclesController < ApplicationController
   # POST /vehicles
   def create(vehicle)
     @vehicle = Vehicle.new(vehicle)
-
     if @vehicle.save
-      redirect_to @vehicle, notice: 'Vehicle was successfully created.'
+      if @vehicle.user_id
+        redirect_to user_path(:id => @vehicle.user_id, :topic => "Vehicle"), notice: 'Vehicle was successfully created.'
+      end
+      if @vehicle.company_id
+        redirect_to company_path(:id => @vehicle.company_id, :topic => "Vehicle"), notice: 'Vehicle was successfully created.'
+      end
     else
       render :new
     end
@@ -110,9 +114,19 @@ class VehiclesController < ApplicationController
 
   # DELETE /vehicles/1
   def destroy
+    if @vehicle.company_id
+      @comp = @vehicle.company_id
+    end
+    if @vehicle.user_id
+      @us = @vehicle.user_id
+    end
     @vehicle.destroy
-
-    redirect_to vehicles_path :page => session[:page], notice: 'Vehicle was successfully destroyed.'
+    if @us
+      redirect_to user_path(:id => @us, :topic => "Vehicle"), notice: 'Vehicle was successfully destroyed.'
+    end
+    if @comp
+      redirect_to company_path(:id => @comp, :topic => "Vehicle"), notice: 'Vehicle was successfully destroyed.'
+    end
   end
 
   private

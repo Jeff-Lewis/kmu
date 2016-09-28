@@ -171,11 +171,7 @@
              <% @service.ratings.each do |sr| %>
                 <div class="col-sm-6 col-md-4 col-lg-3">
                   <div class="thumbnail" align="center">
-                    <% if sr.user.avatar == nil or sr.user.anonymous %>
-                      <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
-                    <% else %>
-                      <%= image_tag sr.user.avatar, :size => 200, class:"img-rounded" %>
-                    <% end %>
+                    <%= showImage("User", :medium, sr.user) %>
                     <br>
                     <ntext>
                     <% sr.user_rating.times do %>
@@ -194,17 +190,6 @@
                     <%= sr.created_at.strftime("%d.%m.%Y") %>
                     <br><br>
                     </ntext>
-                    <% if user_signed_in? %>
-                      <% if current_user.id == sr.user_id %>
-              	        <%= link_to edit_rating_path(sr) do %>
-                          <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                        <% end %>
-              	        <%= link_to sr, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
-                        <% end %>
-                      <% end %>
-                    <% end %>
-                    <br><br>
                   </div>
                 </div>
       				<% end %>

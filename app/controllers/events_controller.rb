@@ -63,9 +63,13 @@ class EventsController < ApplicationController
   # POST /events
   def create(event)
     @event = Event.new(event)
-
     if @event.save
-      redirect_to @event, notice: 'Event was successfully created.'
+      if @event.user_id
+        redirect_to user_path(:id => @event.user_id, :topic => "Event"), notice: 'Event was successfully created.'
+      end
+      if @event.company_id
+        redirect_to company_path(:id => @event.company_id, :topic => "Event"), notice: 'Event was successfully created.'
+      end
     else
       render :new
     end
@@ -74,7 +78,7 @@ class EventsController < ApplicationController
   # PUT /events/1
   def update(event)
     if @event.update(event)
-      redirect_to @event, notice: 'Event was successfully updated.'
+        redirect_to @event, notice: 'Event was successfully updated.'
     else
       render :edit
     end
@@ -82,9 +86,19 @@ class EventsController < ApplicationController
 
   # DELETE /events/1
   def destroy
+    if @event.company_id
+      @comp = @event.company_id
+    end
+    if @event.user_id
+      @us = @event.user_id
+    end
     @event.destroy
-
-    redirect_to events_path :page => session[:page], notice: 'Event was successfully destroyed.'
+    if @us
+      redirect_to user_path(:id => @us, :topic => "Event"), notice: 'Event was successfully destroyed.'
+    end
+    if @comp
+      redirect_to company_path(:id => @comp, :topic => "Event"), notice: 'Event was successfully destroyed.'
+    end
   end
 
   private

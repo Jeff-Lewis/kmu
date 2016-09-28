@@ -301,7 +301,9 @@ def navigate(object,item)
         html_string = html_string + build_nav("Company",item,"Favourit","star", item.user.favourits.count > 0)
         html_string = html_string + build_nav("Company",item,"Customer","check", Customer.where('company_id=?',item.id).count > 0)
         html_string = html_string + build_nav("Company",item,"Transaction","list", Transaction.where('ttype=? and company_id=?', "Payment", item.id).count > 0)
-        html_string = html_string + build_nav("Company",item,"Link", "globe", PartnerLink.where('company_id=?', item.id).count > 0)
+        if item.partner
+          html_string = html_string + build_nav("Company",item,"Link", "globe", PartnerLink.where('company_id=?', item.id).count > 0)
+        end
         html_string = html_string + build_nav("Company",item,"Location","record", item.geo_address)
         html_string = html_string + build_nav("Company",item,"Email","envelope", Email.where('m_to=? or m_from=?', item.user.id, item.user.id).count > 0)
         
@@ -880,7 +882,7 @@ def action_buttons(object, item, topic)
         when "Link"
           if user_signed_in?
             if object == "Company"
-              if current_user.id == item.user.id
+              if current_user.id == item.user_id and item.partner
                 html_string = html_string + link_to(new_partner_link_path :company_id => item.id) do
                   content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
                 end

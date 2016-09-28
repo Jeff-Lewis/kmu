@@ -33,9 +33,8 @@ class RatingsController < ApplicationController
   # POST /ratings
   def create(rating)
     @rating = Rating.new(rating)
-
     if @rating.save
-      redirect_to @rating.service, notice: 'Rating was successfully created.'
+      redirect_to service_path(:id => @rating.service, :topic => "Servicerating"), notice: 'Rating was successfully created.'
     else
       render :new
     end
@@ -44,7 +43,7 @@ class RatingsController < ApplicationController
   # PUT /ratings/1
   def update(rating)
     if @rating.update(rating)
-      redirect_to @rating.service, notice: 'Rating was successfully updated.'
+      redirect_to user_path(:id => @rating.user_id, :topic => "Rating"), notice: 'Rating was successfully updated.'
     else
       render :edit
     end
@@ -52,9 +51,9 @@ class RatingsController < ApplicationController
 
   # DELETE /ratings/1
   def destroy
+    @us = @rating.user_id
     @rating.destroy
-
-    redirect_to @rating.service, notice: 'Rating was successfully destroyed.'
+    redirect_to user_path(:id => @us, :topic => "Rating"), notice: 'Rating was successfully destroyed.'
   end
 
   private

@@ -55,7 +55,7 @@ class BidsController < ApplicationController
   def create(bid)
     @bid = Bid.new(bid)
     if @bid.save
-      redirect_to @bid, notice: 'Bid was successfully created.'
+      redirect_to user_path(:id => @bid.user_id, :topic => "Bid"), notice: 'Bid was successfully created.'
     else
       render :new
     end
@@ -72,9 +72,9 @@ class BidsController < ApplicationController
 
   # DELETE /bids/1
   def destroy
-    @user = @bid.user
+    @us = @bid.user_id
     @bid.destroy
-    redirect_to @user, notice: 'Bid was successfully destroyed.'
+    redirect_to user_path(:id => @us, :topic => "Bid"), notice: 'Bid was successfully destroyed.'
   end
 
   private

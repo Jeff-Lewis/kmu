@@ -45,12 +45,12 @@ class HotspotsController < ApplicationController
   # POST /hotspots
   def create(hotspot)
     @hotspot = Hotspot.new(hotspot)
-
     if @hotspot.save
-      redirect_to @hotspot, notice: 'Hotspot was successfully created.'
+        redirect_to user_path(:id => @hotspot.user_id, :topic => "Hotspot"), notice: 'Hotspot was successfully created.'
     else
       render :new
     end
+
   end
 
   # PUT /hotspots/1
@@ -64,9 +64,9 @@ class HotspotsController < ApplicationController
 
   # DELETE /hotspots/1
   def destroy
+    @us = @hotspot.user_id
     @hotspot.destroy
-
-    redirect_to hotspots_path :page => session[:page], notice: 'Hotspot was successfully destroyed.'
+    redirect_to user_path(:id => @us, :topic => "Hotspot"), notice: 'Hotspot was successfully destroyed.'
   end
 
   private
