@@ -115,7 +115,7 @@ class UsersController < ApplicationController
     @appointments = Appointment.search(@user.id, session[:cw], session[:year]).order(app_date: :asc)
     @appanz = @appointments.count
     @subject = params[:subject]
-
+    
   end
 
   # GET /users/new

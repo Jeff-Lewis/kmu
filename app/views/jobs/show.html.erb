@@ -1,11 +1,15 @@
 <div class="container-fluid">
   
   <div class="row">
+    <action>
     <%= action_buttons("Job", @job, @topic) %>
+    </action>
   </div>
 
   <div class="row">
+    <header>
     <%= header("Stellenanzeige " + @job.name) %>
+    </header>
   </div>
   
   <div class="row">
@@ -105,3 +109,16 @@
   </div>
 
 </div>
+<script>
+$(document).ready(function(){
+  $("header").mouseenter(function() {
+    $("navigate").show();
+    $("action").show();
+  });
+})
+$(document).ready(function(){
+  $("navigate").mouseleave(function() {
+    $("navigate").hide()
+    $("action").hide();
+  });
+})</script>

@@ -1,18 +1,22 @@
 <div class="container-fluid">
 
   <div class="row">
+    <action>
     <%= action_buttons("Donation", @donation, @topic) %>
+    </action>
   </div>
 
   <div class="row">
+    <header>
     <% case @dtype %>
       <% when "Donation" %>
-        <%= header("Crwodfunding (Spende) " + @donation.name) %>
+        <%= header("Crowdfunding (Spende) " + @donation.name) %>
       <% when "Reward" %>
         <%= header("Crowdfunding (Reward) " + @donation.name) %>
       <% when "Loan" %>
         <%= header("Crowdfunding (Kredit) " + @donation.name) %>
     <% end %>
+    </header>
   </div>
   
   <div class="row">
@@ -230,3 +234,17 @@ new Morris.Line({
         labels: ['Anzahl']
 });
 </script>
+
+<script>
+$(document).ready(function(){
+  $("header").mouseenter(function() {
+    $("navigate").show();
+    $("action").show();
+  });
+})
+$(document).ready(function(){
+  $("navigate").mouseleave(function() {
+    $("navigate").hide()
+    $("action").hide();
+  });
+})</script>

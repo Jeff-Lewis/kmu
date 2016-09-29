@@ -265,6 +265,7 @@ def navigate(object,item)
     case object
       when "User"
         html_string = html_string + build_nav("User",item,"User","user",item)
+        html_string = html_string + build_nav("User",item,"Dashboard","dashboard",true)
         html_string = html_string + build_nav("User",item,"Kundenberater","question-sign",item.advisors.count > 0)
         html_string = html_string + build_nav("User",item,"Userkalender","calendar",Appointment.where('user_id1=? or user_id2=?',item,item).count > 0)
         html_string = html_string + build_nav("User",item,"Service","shopping-cart",item.services.count > 0)
@@ -955,7 +956,17 @@ def action_buttons(object, item, topic)
     return html_string.html_safe
 end
 
-def build_act()
+def build_stats(array, records, label)
+  if records != nil
+    anz = records.count
+    if anz > 0
+      hash = Hash.new
+      hash = {"label" => label, "value" => anz}
+      array << hash
+      return array
+    end
+  end
+  return array
 end
 
 end    

@@ -1,16 +1,18 @@
 <div class="container-fluid">
   
   <div class="row">
-    <%= action_buttons("Service", @service, @topic) %>
+    <action><%= action_buttons("Service", @service, @topic) %></action>
   </div>
 
   <div class="row">
+    <header>
     <% if @service.stype == "regular" %>
       <%= header("Angebot " + @service.name) %>
     <% end %>
     <% if @service.stype == "action" %>
       <%= header("Aktion " + @service.name) %>
     <% end %>
+    </header>
   </div>
   
   <div class="row">
@@ -197,3 +199,17 @@
       <% end %>
   </div>  
 </div>
+
+<script>
+$(document).ready(function(){
+  $("header").mouseenter(function() {
+    $("navigate").show();
+    $("action").show();
+  });
+})
+$(document).ready(function(){
+  $("navigate").mouseleave(function() {
+    $("navigate").hide()
+    $("action").hide();
+  });
+})</script>

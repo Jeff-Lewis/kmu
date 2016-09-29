@@ -59,8 +59,26 @@
               <% end %>
               <%= @user.email %><br>
             <% end %>
-          </div></div>
-    
+            
+          <% @array = [] %>
+          <% @array = build_stats(@array, @user.companies, "Institutionen" ) %>
+          <% @array = build_stats(@array, @user.advisors, "Kundenberater" ) %>
+          <% @array = build_stats(@array, Appointment.where('user_id1=? or user_id2=?',@user.id,@user.id), "Kalendereinträge" ) %>
+          <% @array = build_stats(@array, @user.services, "Services" ) %>
+          <% @array = build_stats(@array, @user.requests, "Kleinanzeigen" ) %>
+          <% @array = build_stats(@array, @user.vehicles, "Mobilien" ) %>
+          <% @array = build_stats(@array, @user.events, "Veranstaltungen" ) %>
+          <% @array = build_stats(@array, @user.user_tickets, "Tickets" ) %>
+          <% @array = build_stats(@array, @user.hotspots, "Ausflugsziele" ) %>
+          <% @array = build_stats(@array, @user.bids, "Ausschreibungen" ) %>
+          <% @array = build_stats(@array, @user.donations.where('dtype=?',"Reward"), "Crowdfunding Initiativen (Reward)" ) %>
+          <% @array = build_stats(@array, @user.donations.where('dtype=?',"Loan"), "Crowdfunding Initiativen (Kredit)" ) %>
+          <% @array = build_stats(@array, @user.donation_stats, "Crowdfunding Beiträge" ) %>
+          <% @array = build_stats(@array, @user.ratings, "Bewertungen" ) %>
+          <% @array = build_stats(@array, @user.favourits, "Favoriten" ) %>
+          <% @array = build_stats(@array, Transaction.where('ttype=? and user_id=?', "Payment", @user.id), "Transaktionen" ) %>
+          <%= content_tag :div, "", id: "donut-example0", data: {reports: @array} %>
+
         <% when "Userkalender" %>
           <%= header("Kalender KW " + session[:cw].to_s) %>
           <div class='col-xs-12'><div class="panel-body">
@@ -864,3 +882,10 @@ $(document).ready(function(){
     $("action").hide();
   });
 })</script>
+
+<script>
+Morris.Donut({
+  element: 'donut-example0',
+  data: $('#donut-example0').data('reports'),
+});
+</script>

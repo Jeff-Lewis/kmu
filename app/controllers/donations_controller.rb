@@ -17,7 +17,7 @@ class DonationsController < ApplicationController
     
     @donstats_bet = DonationStat.select("date(created_at) as datum, sum(amount) as summe").where('donation_id = ?', @donation.id).group("date(created_at)")
     
-    puts @donation.to_s
+    @dtype = @donation.dtype
     
     if params[:donation_trx_id]
       @donation = Donation.find(params[:donation_trx_id])

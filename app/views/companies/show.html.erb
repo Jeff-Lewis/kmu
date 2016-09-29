@@ -33,7 +33,22 @@
             <% else %>
                 <i class="glyphicon glyphicon-envelope"></i>
             <% end %>
-            <%= @company.user.email %><br>
+            <%= @company.user.email %><br><br>
+          <% @array = [] %>
+          <% @array = build_stats(@array, @company.services.where("stype=?","regular"), "Services" ) %>
+          <% @array = build_stats(@array, @company.services.where("stype=?","action"), "Aktionen" ) %>
+          <% @array = build_stats(@array, @company.vehicles, "Mobilien" ) %>
+          <% @array = build_stats(@array, @company.bid_documents, "Ausschreibungs-Angebote" ) %>
+          <% @array = build_stats(@array, @company.jobs, "Stellenanzeigen" ) %>
+          <% @array = build_stats(@array, @company.events, "Veranstaltungen" ) %>
+          <% @array = build_stats(@array, @company.sponsors, "Sponsorengagement" ) %>
+          <% @array = build_stats(@array, @company.donations.where('dtype=?',"Donation"), "Crowdfunding Initiativen (Spenden)" ) %>
+          <% @array = build_stats(@array, @company.donations.where('dtype=?',"Reward"), "Crowdfunding Initiativen (Reward)" ) %>
+          <% @array = build_stats(@array, @company.donations.where('dtype=?',"Loan"), "Crowdfunding Initiativen (Kredit)" ) %>
+          <% @array = build_stats(@array, @company.donation_stats, "Crowdfunding Beiträge" ) %>
+          <% @array = build_stats(@array, Transaction.where('ttype=? and company_id=?', "Payment", @company.id), "Transaktionen" ) %>
+          <%= content_tag :div, "", id: "donut-example0", data: {reports: @array} %>
+            
           </div></div>
 
         <% when "Service" %>
@@ -650,3 +665,10 @@ $(document).ready(function(){
     $("action").hide();
   });
 })</script>
+
+<script>
+Morris.Donut({
+  element: 'donut-example0',
+  data: $('#donut-example0').data('reports'),
+});
+</script>

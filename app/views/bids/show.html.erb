@@ -1,10 +1,14 @@
 <div class="container-fluid">
   <div class="row">
+    <action>
     <%= action_buttons("Bid", @bid, @topic) %>
+    </action>
   </div>
 
   <div class="row">
+    <header>
     <%= header(@bid.name) %>
+    </header>
   </div>
   
   <div class="row">
@@ -140,3 +144,17 @@
       handler.fitMapToBounds();
 });
 </script>
+
+<script>
+$(document).ready(function(){
+  $("header").mouseenter(function() {
+    $("navigate").show();
+    $("action").show();
+  });
+})
+$(document).ready(function(){
+  $("navigate").mouseleave(function() {
+    $("navigate").hide()
+    $("action").hide();
+  });
+})</script>

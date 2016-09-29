@@ -1,0 +1,36 @@
+<div class="container-fluid">
+	<tkb>
+	<div class="row">
+		<div class='col-xs-12'><div class="panel-body">
+			<% @p = Company.where('partner=?',true) %>
+			<% @p.each do |p| %>
+				<%= showImage("Company", :small, p) %>
+			<% end %>
+		</div</div>
+	</div>
+	</tkb>
+	<advertise>
+	<div class="row">
+		<div class='col-xs-12'><div class="panel-body">
+			<% @p = Company.where('name=?',"Thurgauer Kantonalbank").first %>
+			<% @p.partner_links.each do |pl| %>
+				<%= showImage("Link", :medium, pl) %>
+			<% end %>
+		<%= showImage("Company", :medium, Company.first) %>
+		</div</div>
+	</div>
+	</advertise>
+</div>
+
+
+<script>
+$(document).ready(function(){
+  $("tkb").mouseenter(function() {
+    $("advertise").show();
+  });
+})
+$(document).ready(function(){
+  $("advertise").mouseleave(function() {
+    $("advertise").hide()
+  });
+})</script>
