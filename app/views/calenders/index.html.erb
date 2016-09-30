@@ -1,5 +1,23 @@
 <div class="container-fluid">
 	<div class="row">
+    <div class="col-xs-12">
+      <div class="panel-body">
+        <% if user_signed_in? %>
+          <%= link_to new_calender_path(:user_id => current_user.id, :vehicle_id => session[:verhicle_id]) do %>
+            <i class="btn btn-primary glyphicon glyphicon-plus"></i>
+          <% end %>
+        <% end %>
+        <%= link_to calenders_path(:vehicle_id => @vehicle.id, :dir => "<")  do %>
+          <i class="btn btn-primary glyphicon glyphicon-chevron-left"></i>
+        <% end %>
+        <%= link_to calenders_path(:vehicle_id => @vehicle.id, :dir => ">")  do %>
+          <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  
+	<div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
         <li_header>

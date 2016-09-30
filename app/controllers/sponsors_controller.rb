@@ -34,7 +34,7 @@ class SponsorsController < ApplicationController
     @sponsor = Sponsor.new(sponsor)
 
     if @sponsor.save
-      redirect_to @sponsor.event, notice: 'Sponsor was successfully created.'
+      redirect_to event_path(:id => @sponsor.event.id, :topic => "Eventsponsor"), notice: 'Sponsor was successfully created.'
     else
       render :new
     end
@@ -51,9 +51,9 @@ class SponsorsController < ApplicationController
 
   # DELETE /sponsors/1
   def destroy
+    @id = @sponsor.event.id
     @sponsor.destroy
-
-    redirect_to  @sponsor.event, notice: 'Sponsor was successfully destroyed.'
+    redirect_to event_path(:id => @id, :topic => "Eventsponsor"), notice: 'Sponsor was successfully destroyed.'
   end
 
   private

@@ -265,7 +265,6 @@ def navigate(object,item)
     case object
       when "User"
         html_string = html_string + build_nav("User",item,"User","user",item)
-        html_string = html_string + build_nav("User",item,"Dashboard","dashboard",true)
         html_string = html_string + build_nav("User",item,"Kundenberater","question-sign",item.advisors.count > 0)
         html_string = html_string + build_nav("User",item,"Userkalender","calendar",Appointment.where('user_id1=? or user_id2=?',item,item).count > 0)
         html_string = html_string + build_nav("User",item,"Service","shopping-cart",item.services.count > 0)
@@ -536,9 +535,6 @@ def action_buttons(object, item, topic)
       when "Vehicle"
          html_string = html_string + link_to(vehicles_path :page => session[:page]) do
            content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
-         end
-         html_string = html_string + link_to(calenders_path :vehicle_id => item.id) do
-           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-calendar")
          end
          if user_signed_in?
            if (item.user_id and current_user.id == item.user.id) or (item.company_id and current_user.id == item.company.user.id) 
