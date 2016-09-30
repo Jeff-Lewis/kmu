@@ -15,7 +15,7 @@
           <div class="media">
             <div class="media-left">
               <%= link_to users_path do %>
-                <%= image_tag('user_a.png', :size => "50x50") %>
+                <i class="btn btn-active glyphicon glyphicon-user"></i>
               <% end %>
             </div>
             <div class="media-body">
@@ -29,7 +29,7 @@
           <div class="media">
             <div class="media-left">
               <%= link_to companies_path do %>
-                <%= image_tag('company_a.png', :size => "50x50") %>
+                <i class="btn btn-active glyphicon glyphicon-copyright-mark"></i>
               <% end %>
             </div>
             <div class="media-body">
@@ -43,7 +43,7 @@
           <div class="media">
             <div class="media-left">
               <%= link_to services_path :stype => "regular" do %>
-                <%= image_tag('service_a.png', :size => "50x50") %>
+                <i class="btn btn-active glyphicon glyphicon-shopping-cart"></i>
               <% end %>
             </div>
             <div class="media-body">
@@ -56,13 +56,13 @@
         <div class="col-sm-6 col-md-4 col-lg-3">          
           <div class="media">
             <div class="media-left">
-              <%= link_to services_path :stype => "regular" do %>
-                <%= image_tag('kundenberater_a.png', :size => "50x50") %>
+              <%= link_to services_path :stype => "action" do %>
+                <i class="btn btn-active glyphicon glyphicon-time"></i>
               <% end %>
             </div>
             <div class="media-body">
-              <h4 class="media-heading">Kundenberater</h4>
-                Ermöglichen Sie Connect Nutzern den Zugriff auf Kalender Ihrer Kundenberater...
+              <h4 class="media-heading">Sonderaktionen</h4>
+                Suchen und Finden Sie Sonderaktionen von Privatpersonen & Institutionen in Ihrer Umgebung...
             </div>
             <br>
           </div>
@@ -71,7 +71,7 @@
           <div class="media">
             <div class="media-left">
               <%= link_to services_path :stype => "action" do %>
-                <%= image_tag('action_a.png', :size => "50x50") %>
+                <i class="btn btn-active glyphicon glyphicon-time"></i>
               <% end %>
             </div>
             <div class="media-body">
@@ -85,7 +85,7 @@
           <div class="media">
             <div class="media-left">
               <%= link_to bids_path do %>
-                <%= image_tag('bid_a.png', :size => "50x50") %>
+                <i class="btn btn-active glyphicon glyphicon-pencil"></i>
               <% end %>
             </div>
             <div class="media-body">
@@ -100,7 +100,7 @@
           <div class="media">
             <div class="media-left">
               <%= link_to requests_path :rtype => "biete" do %>
-                <%= image_tag('request_a.png', :size => "50x50") %>
+                <i class="btn btn-active glyphicon glyphicon-pushpin"></i>
               <% end %>
             </div>
             <div class="media-body">
@@ -115,7 +115,7 @@
           <div class="media">
             <div class="media-left">
               <%= link_to jobs_path do %>
-                <%= image_tag('request_a.png', :size => "50x50") %>
+                <i class="btn btn-active glyphicon glyphicon-user"></i>
               <% end %>
             </div>
             <div class="media-body">
@@ -130,7 +130,7 @@
           <div class="media">
             <div class="media-left">
               <%= link_to vehicles_path do %>
-                <%= image_tag('vehicle_a.png', :size => "50x50") %>
+                <i class="btn btn-active glyphicon glyphicon-retweet"></i>
               <% end %>
             </div>
             <div class="media-body">
@@ -144,7 +144,7 @@
           <div class="media">
             <div class="media-left">
               <%= link_to events_path do %>
-                <%= image_tag('event_a.png', :size => "50x50") %>
+                <i class="btn btn-active glyphicon glyphicon-glass"></i>
               <% end %>
             </div>
             <div class="media-body">
@@ -159,7 +159,7 @@
           <div class="media">
             <div class="media-left">
               <%= link_to hotspots_path do %>
-                <%= image_tag('hotspot_a.png', :size => "50x50") %>
+                <i class="btn btn-active glyphicon glyphicon-camera"></i>
               <% end %>
             </div>
             <div class="media-body">
@@ -174,7 +174,7 @@
           <div class="media">
             <div class="media-left">
               <%= link_to donations_path :dtype => "Donation" do %>
-                <%= image_tag('donation_a.png', :size => "50x50") %>
+                <i class="btn btn-active glyphicon glyphicon-heart"></i>
               <% end %>
             </div>
             <div class="media-body">
@@ -189,7 +189,7 @@
           <div class="media">
             <div class="media-left">
               <%= link_to donations_path :dtype => "Reward" do %>
-                <%= image_tag('cfr_a.png', :size => "50x50") %>
+                <i class="btn btn-active glyphicon glyphicon-gift"></i>
               <% end %>
             </div>
             <div class="media-body">
@@ -204,7 +204,7 @@
           <div class="media">
             <div class="media-left">
               <%= link_to donations_path :dtype => "Loan" do %>
-                <%= image_tag('cfl_a.png', :size => "50x50") %>
+                <i class="btn btn-active glyphicon glyphicon-signal"></i>
               <% end %>
             </div>
             <div class="media-body">
@@ -218,8 +218,10 @@
         <div class="col-sm-6 col-md-4 col-lg-3">          
           <div class="media">
             <div class="media-left">
-              <%= link_to users_path do %>
-                <%= image_tag('customer_a.png', :size => "50x50") %>
+              <% if user_signed_in? %>
+                <%= link_to user_path(:id => current_user.id, :topic => "Customer") do %>
+                  <i class="btn btn-active glyphicon glyphicon-check"></i>
+                <% end %>
               <% end %>
             </div>
             <div class="media-body">
@@ -233,8 +235,10 @@
          <div class="col-sm-6 col-md-4 col-lg-3">          
           <div class="media">
             <div class="media-left">
-              <%= link_to users_path do %>
-                <%= image_tag('calculator_a.png', :size => "50x50") %>
+              <% if user_signed_in? %>
+                <%= link_to user_path(:id => current_user.id, :topic => "Transaction") do %>
+                  <i class="btn btn-active glyphicon glyphicon-list"></i>
+                <% end %>
               <% end %>
             </div>
             <div class="media-body">

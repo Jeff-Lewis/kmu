@@ -19,11 +19,11 @@ class CompaniesController < ApplicationController
         marker.lat company.latitude
         marker.lng company.longitude
         marker.infowindow "<a href=/companies/" + company.id.to_s + ">" + company.name + "</a>"
-        if company.avatar 
-          marker.picture :url => url_for(company.avatar(:small)), :width => 50, :height => 50
-        else
-          marker.picture :url => "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|", :width => 50, :height => 50
-        end
+#        if company.avatar 
+#          marker.picture :url => url_for(company.avatar(:small)), :width => 50, :height => 50
+#        else
+#          marker.picture :url => "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|", :width => 50, :height => 50
+#        end
       end
      end
     
