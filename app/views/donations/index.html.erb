@@ -29,13 +29,13 @@
 
   <div class="row">
     <% if @dtype == "Donation" %>
-      <%= header("Crowdfunding Spenden " + "<span class='badge'>" + @donanz.to_s + "</span>") %>
+      <%= header("Crowdfunding Spenden " + "<span class='badge'>" + @donanz.to_s + "</span>", true) %>
     <% end %>
     <% if @dtype == "Reward" %>
-      <%= header("Crowdfunding Belohnung " + "<span class='badge'>" + @donanz.to_s + "</span>") %>
+      <%= header("Crowdfunding Belohnung " + "<span class='badge'>" + @donanz.to_s + "</span>", true) %>
     <% end %>
     <% if @dtype == "Loan" %>
-      <%= header("Crowdfunding Kredit " + "<span class='badge'>" + @donanz.to_s + "</span>") %>
+      <%= header("Crowdfunding Kredit " + "<span class='badge'>" + @donanz.to_s + "</span>", true) %>
     <% end %>
   </div>
   

@@ -8,20 +8,20 @@
 
   <div class="row">
     <header>
-    <%= header("Anzeige "+ @request.name) %>
+    <%= header("Anzeige "+ @request.name, true) %>
     </header>
   </div>
   
   <div class="row">
-    <%= navigate("Request", @request) %>
-  </div>
-      
-  <div class="row">
+      <div class='col-xs-2'>
+        <%= navigate("Request", @request) %>
+      </div>
+      <div class='col-xs-10'>
 
       <% case @topic %>
         <% when "Requestinformation" %>
-          <%= header("Informationen") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Informationen", false) %>
+          <div class="panel-body">
             <% if @request.request_details != nil %>
               <%= carousel(@request.request_details, "medium") %>
             <% else %>
@@ -55,13 +55,13 @@
             <% end %>
       			<br><br>
             <%= @request.created_at.strftime("%d.%m.%Y") %>
-          </div></div>
+          </div>
       <% end %>
 
       <% case @topic %>
         <% when "Requestdetail" %>
-          <%= header("Details") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Details", false) %>
+          <div class="panel-body">
        		<% @request.request_details.each do |bd| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -82,10 +82,10 @@
                   <% if user_signed_in? %>
                     <% if current_user.id == @request.user_id %>
             	        <%= link_to edit_request_detail_path(bd) do %>
-                        <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                        <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
                       <% end %>
             	        <%= link_to bd, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                        <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                        <i class="btn btn-danger glyphicon glyphicon-trash"></i>
                       <% end %>
                     <% end %>
                   <% end %>
@@ -93,22 +93,22 @@
         			  </div>
         			</div>
         		<% end %>
-          </div></div>
+          </div>
       <% end %>
   </div>  
 
 </div>
 
-<script>
-$(document).ready(function(){
-  $("header").mouseenter(function() {
-    $("navigate").show();
-    $("action").show();
-  });
-})
-$(document).ready(function(){
-  $("navigate").mouseleave(function() {
-    $("navigate").hide()
-    $("action").hide();
-  });
-})</script>
+<!--<script>-->
+<!--$(document).ready(function(){-->
+<!--  $("header").mouseenter(function() {-->
+<!--    $("navigate").show();-->
+<!--    $("action").show();-->
+<!--  });-->
+<!--})-->
+<!--$(document).ready(function(){-->
+<!--  $("navigate").mouseleave(function() {-->
+<!--    $("navigate").hide()-->
+<!--    $("action").hide();-->
+<!--  });-->
+<!--})</script>-->

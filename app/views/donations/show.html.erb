@@ -10,25 +10,25 @@
     <header>
     <% case @dtype %>
       <% when "Donation" %>
-        <%= header("Crowdfunding (Spende) " + @donation.name) %>
+        <%= header("Crowdfunding (Spende) " + @donation.name, true) %>
       <% when "Reward" %>
-        <%= header("Crowdfunding (Reward) " + @donation.name) %>
+        <%= header("Crowdfunding (Reward) " + @donation.name, true) %>
       <% when "Loan" %>
-        <%= header("Crowdfunding (Kredit) " + @donation.name) %>
+        <%= header("Crowdfunding (Kredit) " + @donation.name, true) %>
     <% end %>
     </header>
   </div>
   
   <div class="row">
-    <%= navigate("Donation", @donation) %>
-  </div>
-      
-  <div class="row">
+      <div class='col-xs-2'>
+        <%= navigate("Donation", @donation) %>
+      </div>
+      <div class='col-xs-10'>
 
       <% case @topic %>
         <% when "Donationinformation" %>
-          <%= header("Informationen") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Informationen", false) %>
+          <div class="panel-body">
             <% if @donation.donation_details.count > 0 %>
                 <%= carousel(@donation.donation_details, "medium") %>
               <% else %>
@@ -87,13 +87,13 @@
             <% end %>
       			<br><br>
             <%= @donation.created_at.strftime("%d.%m.%Y") %>
-          </div></div>
+          </div>
       <% end %>
 
       <% case @topic %>
         <% when "Donationdetail" %>
-          <%= header("Informationen") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Informationen", false) %>
+          <div class="panel-body">
         		<% @donation.donation_details.each do |bd| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -124,29 +124,29 @@
         			  </div>
         			</div>
         		<% end %>
-          </div></div>
+          </div>
       <% end %>
 
       <% case @topic %>
         <% when "Donationstatistikanz" %>
-          <%= header("Statistik (Anzahl)") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Statistik (Anzahl)", false) %>
+          <div class="panel-body">
               <%= content_tag :div, "", id: "reports_chart_anz",  data: {reports: @donstats_anz} %>
-          </div></div>
+          </div>
       <% end %>
 
       <% case @topic %>
         <% when "Donationstatistiksum" %>
-          <%= header("Statistik (Betrag)") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Statistik (Betrag)", false) %>
+          <div class="panel-body">
             <%= content_tag :div, "", id: "reports_chart_bet",  data: {reports: @donstats_bet} %>
-          </div></div>
+          </div>
       <% end %>
 
       <% case @topic %>
         <% when "Donationstat" %>
-          <%= header("Transaktionen") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Transaktionen", false) %>
+          <div class="panel-body">
             <% @donation.donation_stats.order(amount: :desc).each do |ds| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -194,14 +194,14 @@
                     <% if (ds.user_id and current_user.id == ds.user_id) or (ds.company_id and current_user.id == ds.company.user_id) %>
     
                       <%= link_to listaccounts_index_path :user_id => current_user.id, :user_id_ver => nil, :company_id_ver => @donation.company_id, :ref => "Vergütung an "+ @donation.name, :object_name => "Donation", :object_id => @donation.id, :amount => ds.amount do %>
-                        <i class="btn btn-primary btn-lg glyphicon glyphicon-euro"></i>
+                        <i class="btn btn-primary glyphicon glyphicon-euro"></i>
                       <% end %>
     
             	        <%= link_to edit_donation_stat_path(ds) do %>
-                        <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                        <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
                       <% end %>
             	        <%= link_to ds, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                        <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                        <i class="btn btn-danger glyphicon glyphicon-trash"></i>
                       <% end %>
                     <% end %>
                   <% end %>
@@ -209,8 +209,9 @@
                 </div>
               </div>
             <% end %>
-          </div></div>
+          </div>
       <% end %>
+    </div>
   </div>
 
 </div>
@@ -235,16 +236,16 @@ new Morris.Line({
 });
 </script>
 
-<script>
-$(document).ready(function(){
-  $("header").mouseenter(function() {
-    $("navigate").show();
-    $("action").show();
-  });
-})
-$(document).ready(function(){
-  $("navigate").mouseleave(function() {
-    $("navigate").hide()
-    $("action").hide();
-  });
-})</script>
+<!--<script>-->
+<!--$(document).ready(function(){-->
+<!--  $("header").mouseenter(function() {-->
+<!--    $("navigate").show();-->
+<!--    $("action").show();-->
+<!--  });-->
+<!--})-->
+<!--$(document).ready(function(){-->
+<!--  $("navigate").mouseleave(function() {-->
+<!--    $("navigate").hide()-->
+<!--    $("action").hide();-->
+<!--  });-->
+<!--})</script>-->

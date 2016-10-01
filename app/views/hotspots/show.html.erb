@@ -8,20 +8,20 @@
 
   <div class="row">
     <header>
-    <%= header("Ausflugsziel " + @hotspot.name) %>
+    <%= header("Ausflugsziel " + @hotspot.name, true) %>
     </header>
   </div>
   
   <div class="row">
-    <%= navigate("Hotspot", @hotspot) %>
-  </div>
-      
-  <div class="row">
+      <div class='col-xs-2'>
+        <%= navigate("Hotspot", @hotspot) %>
+      </div>
+      <div class='col-xs-10'>
 
       <% case @topic %>
         <% when "Hotspotinformation" %>
-          <%= header("Informationen") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Informationen", false) %>
+          <div class="panel-body">
             <% if @hotspot.hotspot_details.count > 0 %>
                 <%= carousel(@hotspot.hotspot_details, "medium") %>
               <% else %>
@@ -59,13 +59,13 @@
             <% end %>
       			<br><br>
             <%= @hotspot.created_at.strftime("%d.%m.%Y") %>
-          </div></div>
+          </div>
       <% end %>
 
       <% case @topic %>
         <% when "Hotspotdetail" %>
-          <%= header("Details") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Details", false) %>
+          <div class="panel-body">
         		<% @hotspot.hotspot_details.each do |bd| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -97,13 +97,13 @@
         			  </div>
         			</div>
         		<% end %>
-          </div></div>
+          </div>
       <% end %>
 
       <% case @topic %>
         <% when "Hotspotbewertung" %>
-          <%= header("Bewertungen") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Bewertungen", false) %>
+          <div class="panel-body">
             <% @hotspot.hs_ratings.each do |sr| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -142,18 +142,20 @@
                 </div>
               </div>
     				<% end %>
-          </div></div>
+          </div>
       <% end %>
 
       <% case @topic %>
         <% when "Hotspotstandort" %>
-          <%= header("Standort") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Standort", false) %>
+          <div class="panel-body">
             <div id="map">
               <div id="map-canvas"></div>
             </div>
-          </div></div>
+          </div>
       <% end %>
+      
+    </div>
   </div>
 
 </div>
@@ -175,16 +177,16 @@
 });
 </script>
 
-<script>
-$(document).ready(function(){
-  $("header").mouseenter(function() {
-    $("navigate").show();
-    $("action").show();
-  });
-})
-$(document).ready(function(){
-  $("navigate").mouseleave(function() {
-    $("navigate").hide()
-    $("action").hide();
-  });
-})</script>
+<!--<script>-->
+<!--$(document).ready(function(){-->
+<!--  $("header").mouseenter(function() {-->
+<!--    $("navigate").show();-->
+<!--    $("action").show();-->
+<!--  });-->
+<!--})-->
+<!--$(document).ready(function(){-->
+<!--  $("navigate").mouseleave(function() {-->
+<!--    $("navigate").hide()-->
+<!--    $("action").hide();-->
+<!--  });-->
+<!--})</script>-->

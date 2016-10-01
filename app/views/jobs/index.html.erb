@@ -16,7 +16,7 @@
   </div>
 
   <div class="row">
-      <%= header("Stellenanzeigen " + "<span class='badge'>" + @jobanz.to_s + "</span>") %>
+      <%= header("Stellenanzeigen " + "<span class='badge'>" + @jobanz.to_s + "</span>", true) %>
   </div>
 
   <%= build_medialist("col-sm-6 col-md-4 col-lg-3", @jobs, "jobs", true) %>

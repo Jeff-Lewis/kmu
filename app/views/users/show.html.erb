@@ -1,12 +1,12 @@
   <div class="row">
     <action>
-    <% action_buttons("User", @user, @topic) %>
+    <%= action_buttons("User", @user, @topic) %>
     </action>
   </div>
 
   <div class="row">
     <header>
-    <%= header(@user.fullname) %>
+    <%= header(@user.fullname, true) %>
     </header>
   </div>
   
@@ -17,20 +17,18 @@
   <div class="row">
 
       <div class='col-xs-2'>
-        <div class="row">
           <%= navigate("User", @user) %>
-        </div>
       </div>
         
       <div class='col-xs-10'>
-        <div class="panel-body">
       <% case @topic %>
         <% when "User" %>
 
-          <%= header("Kontaktdaten") %>
+          <%= header("Kontaktdaten", false) %>
           
-          <div class='col-xs-12'><div class="panel-body">
-    				<% if @user.anonymous or @user.avatar_file_name == nil %>
+          <!--<div class='col-xs-12'><div class="panel-body">-->
+          <div class="panel-body">
+            <% if @user.anonymous or @user.avatar_file_name == nil %>
               <%= image_tag("user_a.png", :size => "200x200", class:"img-rounded" ) %>
             <% else %>
               <%= image_tag @user.avatar(:medium), class:"img-rounded"  %>
@@ -65,29 +63,30 @@
               <% end %>
               <%= @user.email %><br>
             <% end %>
-            
-          <% @array = [] %>
-          <% @array = build_stats(@array, @user.companies, "Institutionen" ) %>
-          <% @array = build_stats(@array, @user.advisors, "Kundenberater" ) %>
-          <% @array = build_stats(@array, Appointment.where('user_id1=? or user_id2=?',@user.id,@user.id), "Kalendereinträge" ) %>
-          <% @array = build_stats(@array, @user.services, "Services" ) %>
-          <% @array = build_stats(@array, @user.requests, "Kleinanzeigen" ) %>
-          <% @array = build_stats(@array, @user.vehicles, "Mobilien" ) %>
-          <% @array = build_stats(@array, @user.events, "Veranstaltungen" ) %>
-          <% @array = build_stats(@array, @user.user_tickets, "Tickets" ) %>
-          <% @array = build_stats(@array, @user.hotspots, "Ausflugsziele" ) %>
-          <% @array = build_stats(@array, @user.bids, "Ausschreibungen" ) %>
-          <% @array = build_stats(@array, @user.donations.where('dtype=?',"Reward"), "Crowdfunding Initiativen (Reward)" ) %>
-          <% @array = build_stats(@array, @user.donations.where('dtype=?',"Loan"), "Crowdfunding Initiativen (Kredit)" ) %>
-          <% @array = build_stats(@array, @user.donation_stats, "Crowdfunding Beiträge" ) %>
-          <% @array = build_stats(@array, @user.ratings, "Bewertungen" ) %>
-          <% @array = build_stats(@array, @user.favourits, "Favoriten" ) %>
-          <% @array = build_stats(@array, Transaction.where('ttype=? and user_id=?', "Payment", @user.id), "Transaktionen" ) %>
-          <%= content_tag :div, "", id: "donut-example0", data: {reports: @array} %>
+            <% @array = [] %>
+            <% @array = build_stats(@array, @user.companies, "Institutionen" ) %>
+            <% @array = build_stats(@array, @user.advisors, "Kundenberater" ) %>
+            <% @array = build_stats(@array, Appointment.where('user_id1=? or user_id2=?',@user.id,@user.id), "Kalendereinträge" ) %>
+            <% @array = build_stats(@array, @user.services, "Services" ) %>
+            <% @array = build_stats(@array, @user.requests, "Kleinanzeigen" ) %>
+            <% @array = build_stats(@array, @user.vehicles, "Mobilien" ) %>
+            <% @array = build_stats(@array, @user.events, "Veranstaltungen" ) %>
+            <% @array = build_stats(@array, @user.user_tickets, "Tickets" ) %>
+            <% @array = build_stats(@array, @user.hotspots, "Ausflugsziele" ) %>
+            <% @array = build_stats(@array, @user.bids, "Ausschreibungen" ) %>
+            <% @array = build_stats(@array, @user.donations.where('dtype=?',"Reward"), "Crowdfunding Initiativen (Reward)" ) %>
+            <% @array = build_stats(@array, @user.donations.where('dtype=?',"Loan"), "Crowdfunding Initiativen (Kredit)" ) %>
+            <% @array = build_stats(@array, @user.donation_stats, "Crowdfunding Beiträge" ) %>
+            <% @array = build_stats(@array, @user.ratings, "Bewertungen" ) %>
+            <% @array = build_stats(@array, @user.favourits, "Favoriten" ) %>
+            <% @array = build_stats(@array, Transaction.where('ttype=? and user_id=?', "Payment", @user.id), "Transaktionen" ) %>
+            <%= content_tag :div, "", id: "donut-example0", data: {reports: @array} %>
+          </div>
 
         <% when "Userkalender" %>
-          <%= header("Kalender KW " + session[:cw].to_s) %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Kalender KW " + session[:cw].to_s, false) %>
+          <!--<div class='col-xs-12'><div class="panel-body">-->
+          <div class="panel-body">
         		<table class="table table-striped">
               <thead>
                 <tr>
@@ -107,10 +106,11 @@
               </tbody>
             </table>
             <angefragt>angefragt</angefragt><abgelehnt>leider nicht möglich</abgelehnt><bestaetigt>bestätigt</bestaetigt><geblockt>nicht verfügbar</geblockt><br><br>
-          </div></div>
+          <!--</div></div>-->
+          </div>
 
-          <%= header("Kalendereinträge") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Kalendereinträge", false) %>
+          <div class="panel-body">
           	<table class="table table-striped">
               <thead>
                 <tr>
@@ -201,11 +201,11 @@
                 <% end %>          
               </body>
            	</table>
-          </div></div>
+          </div>
 
         <% when "Kundenberater" %>
-          <%= header("Kundenberater") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Kundenberater", false) %>
+          <div class="panel-body">
           		<% @user.advisors.each do |us| %>
                 <div class="col-sm-6 col-md-4 col-lg-3">
                   <div class="thumbnail" align="center">
@@ -230,13 +230,13 @@
               		</div>
             		</div>
           		<% end %>
-          </div></div>
+          </div>
           
         <% when "Service" %>
 
-          <%= header("Angebote") %>
+          <%= header("Angebote", false) %>
 
-            <div class='col-xs-12'><div class="panel-body">
+            <div class="panel-body">
           		<% @user.services.each do |us| %>
                 <div class="col-sm-6 col-md-4 col-lg-3">
                   <div class="thumbnail" align="center">
@@ -256,13 +256,13 @@
               		</div>
             		</div>
           		<% end %>
-          </div></div>
+          </div>
           
         <% when "Company" %>
 
-          <%= header("Institutionen") %>
+          <%= header("Institutionen", false) %>
 
-          <div class='col-xs-12'><div class="panel-body">
+          <div class="panel-body">
         		<% @user.companies.each do |uc| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -283,13 +283,13 @@
         			  </div>
         			</div>
         		<% end %>
-    	    </div></div>
+    	    </div>
     	    
     	 <% when "Request" %>
 
-          <%= header("Kleinanzeigen") %>
+          <%= header("Kleinanzeigen", false) %>
 
-          <div class='col-xs-12'><div class="panel-body">
+          <div class="panel-body">
         		<% @user.requests.order(created_at: :desc).each do |ur| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -312,13 +312,13 @@
         			 </div>
         			</div>
         		<% end %>
-        	</div></div>
+        	</div>
 
     	 <% when "Vehicle" %>
 
-          <%= header("Mobilien") %>
+          <%= header("Mobilien", false) %>
 
-          <div class='col-xs-12'><div class="panel-body">
+          <div class="panel-body">
         		<% @user.vehicles.each do |uv| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -339,13 +339,13 @@
         			  </div>
         			 </div>
         		<% end %>
-          </div></div>
+          </div>
 
     	 <% when "Event" %>
           
-          <%= header("Events") %>
+          <%= header("Events", false) %>
 
-          <div class='col-xs-12'><div class="panel-body">
+          <div class="panel-body">
           
             <% @user.events.each do |ue| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
@@ -371,13 +371,13 @@
         			  </div>
         			 </div>
       		  <% end %>
-      		</div></div>
+      		</div>
 
     	 <% when "Ticket" %>
           
-          <%= header("Tickets") %>
+          <%= header("Tickets", false) %>
 
-          <div class='col-xs-12'><div class="panel-body">
+          <div class="panel-body">
           
             <% @user.user_tickets.where('status<>? and status<>?',"zurückgegeben", "Filter Kampagne").each do |ut| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
@@ -451,11 +451,11 @@
             		</div>
           		</div>
             <% end %>
-          </div></div>
+          </div>
             
     	 <% when "Hotspot" %>
-          <%= header("Ausflugsziele") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Ausflugsziele", false) %>
+          <div class="panel-body">
         		<% @user.hotspots.each do |uh| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -478,11 +478,11 @@
         			  </div>
         			 </div>
         		<% end %>
-          </div></div>
+          </div>
           
     	 <% when "Bid" %>
-          <%= header("Ausschreibungen") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Ausschreibungen", false) %>
+          <div class="panel-body">
       		<% @user.bids.each do |ub| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -505,11 +505,11 @@
         			  </div>
         			 </div>
         		<% end %>
-          </div></div>
+          </div>
 
     	 <% when "Reward" %>
-          <%= header("Crowdfunding Belohnung") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Crowdfunding Belohnung", false) %>
+          <div class="panel-body">
             <% @user.donations.where('dtype=?',"Reward").each do |cds| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -535,11 +535,11 @@
                 </div>
               </div>
             <% end %>
-          </div></div>
+          </div>
 
     	 <% when "Loan" %>
-          <%= header("Crowdfunding Kredit") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Crowdfunding Kredit", false) %>
+          <div class="panel-body">
             <% @user.donations.where('dtype=?',"Loan").each do |cds| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -565,11 +565,11 @@
                 </div>
               </div>
             <% end %>
-          </div></div>
+          </div>
 
     	 <% when "Stat" %>
-          <%= header("Crowdfunding Transaktionen") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Crowdfunding Transaktionen", false) %>
+          <div class="panel-body">
       	    <% @user.donation_stats.each do |uds| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -609,11 +609,11 @@
                 </div>
               </div>
             <% end %>
-          </div></div>
+          </div>
 
     	 <% when "Rating" %>
-          <%= header("Bewertungen") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Bewertungen", false) %>
+          <div class="panel-body">
             <% @user.ratings.each do |ur| %>
               <% if ur.service != nil %>
                 <div class="col-sm-6 col-md-4 col-lg-3">
@@ -657,10 +657,10 @@
                 </div>
               <% end %>
             <% end %>
-          </div></div>
+          </div>
 
     	 <% when "Favourit" %>
-          <%= header("Favoriten") %>
+          <%= header("Favoriten", false) %>
           <div class='col-xs-12'><div class="panel-body">
             <% @user.favourits.each do |f| %>
               <% @item = Object.const_get(f.object_name).find(f.object_id) %>
@@ -715,11 +715,11 @@
                 </div>
               <% end %>
             <% end %>
-          </div></div>
-
+          </div>
+          
     	 <% when "Customer" %>
-          <%= header("Kundenstatus") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Kundenstatus", false) %>
+          <div class="panel-body">
             <% @partners = Company.where('partner=?',true) %>
             <% @partners.each do |p| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
@@ -732,7 +732,7 @@
                   <% @customer = Customer.where("user_id=? AND partner_id=?", @user.id, p.id).first %>
                   <% if @customer == nil %>
                     <%= link_to new_customer_path :partner_id => p.id, :user_id => @user.id do %>
-                      <i class="btn btn-primary btn btn-lg glyphicon glyphicon-pencil"> Kundeneröffnung</i>
+                      <i class="btn btn-primary btn btn-lg glyphicon glyphicon-pencil"></i>
                     <% end %>
                   <% else %>
                     <% @advisor = User.find(@customer.advisor_id) if @customer.advisor_id != nil %>
@@ -758,11 +758,11 @@
                 </div>
               </div>
             <% end %>
-          </div></div>
+          </div>
 
     	 <% when "Transaction" %>
-          <%= header("Transaktionen") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Transaktionen", false) %>
+          <div class="panel-body">
             <% @trx = Transaction.where('ttype=? and user_id=?', "Payment", @user.id).order(trx_date: :desc) %>
             <% @trx.each do |t| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
@@ -822,19 +822,19 @@
                 </div>
               </div>
             <% end %>
-          </div></div>
+          </div>
 
     	 <% when "Location" %>
-          <%= header("Ort (Karte)") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Ort (Karte)", false) %>
+          <div class="panel-body">
             <div id="map">
               <div id="map-canvas"></div>
             </div>
-          </div></div>
+          </div>
 
     	 <% when "Email" %>
-          <%= header("Kommunikation") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Kommunikation", false) %>
+          <div class="panel-body">
             <% emails = Email.where('m_to=? or m_from=?', @user.id, @user.id).order(created_at: :desc) %>
             <% emails.each do |e| %>
               <% if e.m_to == @user.id %>
@@ -845,14 +845,15 @@
                 <% @u = User.find(e.m_to) %>
                 <%= showImage("User",:small, @u) if @u %>
               <% end %>
+              <%= e.created_at.strftime("%d.%M.%Y-%h:%m") %><br>
               <%= e.header + e.body %><br>
             <% end %>
-          </div></div>
+          </div>
 
         <% end %>
         
       </div>
-  </div></div>
+  </div>
   </div>
 
 <script>

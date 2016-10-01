@@ -8,20 +8,20 @@
 
   <div class="row">
     <header>
-    <%= header("Stellenanzeige " + @job.name) %>
+    <%= header("Stellenanzeige " + @job.name, true) %>
     </header>
   </div>
   
   <div class="row">
-    <%= navigate("Job", @job) %>
-  </div>
-      
-  <div class="row">
+      <div class='col-xs-2'>
+        <%= navigate("Job", @job) %>
+      </div>
+      <div class='col-xs-10'>
 
       <% case @topic %>
         <% when "Jobinformation" %>
-          <%= header("Informationen") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Informationen", false) %>
+          <div class="panel-body">
             <%= link_to @job.company do %>
       				<% if @job.company.avatar_file_name == nil %>
                 <%= image_tag("company_a.png", :size => "200x200", class:"img-rounded" ) %>
@@ -46,11 +46,11 @@
             <% end %>
             <br><br>
             <%= @job.created_at.strftime("%d.%m.%Y") %>
-          </div></div>
+          </div>
       
         <% when "Jobdetail" %>
-          <%= header("Stellenanzeige") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Stellenanzeige", false) %>
+          <div class="panel-body">
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <anzeigetext>
@@ -102,23 +102,24 @@
       					</p>
               </div>
             </div>
-          </div></div>
+          </div>
 
       <% end %>
-
+    </div>
   </div>
 
 </div>
-<script>
-$(document).ready(function(){
-  $("header").mouseenter(function() {
-    $("navigate").show();
-    $("action").show();
-  });
-})
-$(document).ready(function(){
-  $("navigate").mouseleave(function() {
-    $("navigate").hide()
-    $("action").hide();
-  });
-})</script>
+
+<!--<script>-->
+<!--$(document).ready(function(){-->
+<!--  $("header").mouseenter(function() {-->
+<!--    $("navigate").show();-->
+<!--    $("action").show();-->
+<!--  });-->
+<!--})-->
+<!--$(document).ready(function(){-->
+<!--  $("navigate").mouseleave(function() {-->
+<!--    $("navigate").hide()-->
+<!--    $("action").hide();-->
+<!--  });-->
+<!--})</script>-->

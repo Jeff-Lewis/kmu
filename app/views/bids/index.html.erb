@@ -16,7 +16,7 @@
   </div>
 
   <div class="row">
-      <%= header("Ausschreibungen " + "<span class='badge'>" + @bidanz.to_s + "</span>") %>
+      <%= header("Ausschreibungen " + "<span class='badge'>" + @bidanz.to_s + "</span>", true) %>
   </div>
 
   <%= build_medialist("col-sm-6 col-md-4 col-lg-3", @bids, "bids", true) %>

@@ -24,10 +24,10 @@
 
   <div class="row">
     <% if @stype == "regular" %>
-      <%= header("Angebote " + "<span class='badge'>" + @seranz.to_s + "</span>") %>
+      <%= header("Angebote " + "<span class='badge'>" + @seranz.to_s + "</span>", true) %>
     <% end %>
     <% if @stype == "action" %>
-      <%= header("Aktionen " + "<span class='badge'>" + @seranz.to_s + "</span>") %>
+      <%= header("Aktionen " + "<span class='badge'>" + @seranz.to_s + "</span>", true) %>
     <% end %>
   </div>
 

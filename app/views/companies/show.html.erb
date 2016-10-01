@@ -7,19 +7,19 @@
   </div>
 
   <div class="row">
-    <header><%= header(@company.name) %></header>
+    <header><%= header(@company.name, true) %></header>
   </div>
   
   <div class="row">
-    <%= navigate("Company", @company) %>
-  </div>
-      
-  <div class="row">
+      <div class='col-xs-2'>
+        <%= navigate("Company", @company) %>
+      </div>
+      <div class='col-xs-10'>
 
       <% case @topic %>
         <% when "Company" %>
-          <%= header("Kontaktdaten") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Kontaktdaten", false) %>
+          <div class="panel-body">
             <%= showImage("Company", :medium, @company) %>
             <br>
             <b>Branche</b>
@@ -49,11 +49,11 @@
           <% @array = build_stats(@array, Transaction.where('ttype=? and company_id=?', "Payment", @company.id), "Transaktionen" ) %>
           <%= content_tag :div, "", id: "donut-example0", data: {reports: @array} %>
             
-          </div></div>
+          </div>
 
         <% when "Service" %>
-          <%= header("Angebote") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Angebote", false) %>
+          <div class="panel-body">
         		<% @company.services.where("stype=?","regular").each do |cs| %>
                 <div class="col-sm-6 col-md-4 col-lg-3">
                   <div class="thumbnail" align="center">
@@ -69,11 +69,11 @@
         			    </div>
         			   </div>
         		<% end %>
-          </div></div>
+          </div>
 
         <% when "Aktion" %>
-          <%= header("Aktionen") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Aktionen", false) %>
+          <div class="panel-body">
             <% @company.services.where("stype=?","action").each do |cs| %>
                 <div class="col-sm-6 col-md-4 col-lg-3">
                   <div class="thumbnail" align="center">
@@ -96,11 +96,11 @@
                   </div>
                 </div>
             <% end %>
-          </div></div>
+          </div>
           
         <% when "Vehicle" %>
-          <%= header("Mobilien") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Mobilien", false) %>
+          <div class="panel-body">
       		<% @company.vehicles.each do |cv| %>
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
@@ -121,11 +121,11 @@
       			  </div>
       			</div>
       		<% end %>
-          </div></div>
+          </div>
           
         <% when "Bid" %>
-          <%= header("Ausschreibungen") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Ausschreibungen", false) %>
+          <div class="panel-body">
         		<% @company.bid_documents.each do |cbd| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -147,11 +147,11 @@
         			  </div>
         			 </div>
         		<% end %>
-          </div></div>
+          </div>
 
         <% when "Job" %>
-          <%= header("Stellenanzeigen") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Stellenanzeigen", false) %>
+          <div class="panel-body">
           		<% @company.jobs.each do |cj| %>
                 <div class="col-sm-6 col-md-4 col-lg-3">
                   <div class="thumbnail" align="center">
@@ -167,11 +167,11 @@
           			  </div>
           			</div>
           		<% end %>
-          </div></div>
+          </div>
 
         <% when "Event" %>
-          <%= header("Veranstaltungen") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Veranstaltungen", false) %>
+          <div class="panel-body">
       		<% @company.events.each do |ce| %>
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
@@ -197,11 +197,11 @@
       			  </div>
       			 </div>
       		<% end %>
-          </div></div>
+          </div>
           
         <% when "Sponsor" %>
-          <%= header("Services") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Services", false) %>
+          <div class="panel-body">
             <% @company.sponsors.each do |cs| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -236,13 +236,13 @@
                   <% if user_signed_in? %>
                     <% if current_user.id == cs.company.user_id %>
                       <%= link_to tickets_path :sponsor_id => cs.id do %>
-                        <i class="btn btn-primary btn-lg glyphicon glyphicon-credit-card"></i>
+                        <i class="btn btn-primary glyphicon glyphicon-credit-card"></i>
                       <% end %>
             	        <%= link_to edit_sponsor_path(cs) do %>
-                        <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                        <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
                       <% end %>
             	        <%= link_to cs, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                        <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                        <i class="btn btn-danger glyphicon glyphicon-trash"></i>
                       <% end %>
                     <% end %>
                   <% end %>
@@ -250,11 +250,11 @@
                 </div>
               </div>
             <% end %>
-           </div></div>
+           </div>
 
         <% when "Donation" %>
-          <%= header("Crowdfunding Spenden") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Crowdfunding Spenden", false) %>
+          <div class="panel-body">
             <% @company.donations.where('dtype=?',"Donation").each do |cds| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -278,11 +278,11 @@
                 </div>
               </div>
             <% end %>
-          </div></div>
+          </div>
 
         <% when "Reward" %>
-          <%= header("Crowdfunding Belohnung") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Crowdfunding Belohnung", false) %>
+          <div class="panel-body">
             <% @company.donations.where('dtype=?',"Reward").each do |cds| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -308,11 +308,11 @@
                 </div>
               </div>
             <% end %>
-          </div></div>
+          </div>
           
         <% when "Loan" %>
-          <%= header("Crowdfunding Kredit") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Crowdfunding Kredit", false) %>
+          <div class="panel-body">
             <% @company.donations.where('dtype=?',"Loan").each do |cds| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -338,10 +338,11 @@
                 </div>
               </div>
             <% end %>
-          </div></div>
+          </div>
 
         <% when "Stat" %>
-          <%= header("Crowdfunding Engagement") %>
+          <%= header("Crowdfunding Engagement", false) %>
+          <div class="panel-body">
       	    <% @company.donation_stats.each do |uds| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -381,12 +382,11 @@
                 </div>
               </div>
             <% end %>
-          <div class='col-xs-12'><div class="panel-body">
-          </div></div>
+          </div>
 
         <% when "Favourit" %>
-          <%= header("Favoriten") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Favoriten", false) %>
+          <div class="panel-body">
             <% @company.user.favourits.each do |f| %>
               <% @item = Object.const_get(f.object_name).find(f.object_id) %>
               <% if @item != nil %>
@@ -427,7 +427,7 @@
                       <% if user_signed_in? %>
                         <% if @company.user_id == current_user.id %>
                 	        <%= link_to f, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                            <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                            <i class="btn btn-danger glyphicon glyphicon-trash"></i>
                           <% end %>
                         <% end %>
                       <% end %>
@@ -437,10 +437,11 @@
                 </div>
               <% end %>
             <% end %>
-          </div></div>
+          </div>
           
         <% when "Customer" %>
-          <%= header("Kundenstatus") %>
+          <%= header("Kundenstatus", false) %>
+            <div class="panel-body">
             <% @partners = Company.where('partner=?',true) %>
             <% @partners.each do |p| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
@@ -459,7 +460,7 @@
                   <% @customer = Customer.where("company_id=? AND partner_id=?", @company.id, p.id).first %>
                   <% if @customer == nil %>
                     <%= link_to new_customer_path :partner_id => p.id, :company_id => @company.id do %>
-                      <i class="btn btn-primary btn btn-lg glyphicon glyphicon-pencil"> Kundeneröffnung</i>
+                      <i class="btn btn-primary glyphicon glyphicon-pencil"></i>
                     <% end %>
                   <% else %>
                     <% if @customer.advisor_id != nil %>
@@ -480,24 +481,24 @@
                       <% end %>
                     <% end %> 
                     <%= link_to accounts_path :customer_id => @customer.id do %>
-                      <i class="btn btn-primary btn btn-lg glyphicon glyphicon-book"></i>
+                      <i class="btn btn-primary glyphicon glyphicon-book"></i>
                     <% end %>
                     <%= link_to edit_customer_path(@customer) do %>
-                      <i class="btn btn-primary btn btn-lg glyphicon glyphicon-wrench"></i>
+                      <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
                     <% end %>
           	        <%= link_to @customer, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                      <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                      <i class="btn btn-danger glyphicon glyphicon-trash"></i>
                     <% end %>
                   <% end %>
                   <br><br>
                 </div>
               </div>
             <% end %>
-            <div class='col-xs-12'><div class="panel-body">
-          </div></div>
+          </div>
           
         <% when "Transaction" %>
-          <%= header("Transaktionen") %>
+          <%= header("Transaktionen", false) %>
+          <div class="panel-body">
             <% @trx = Transaction.where('ttype=? and company_id=?', "Payment", @company.id).order(trx_date: :desc) %>
             <% @trx.each do |t| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
@@ -551,30 +552,29 @@
                   <br><br>
                   <% if t.status == "erfasst" %>
                     <%= link_to company_path(@company, :trx_status_ok_id => t.id) do %>
-                      <i class="btn btn-primary btn btn-lg glyphicon glyphicon-ok"></i>
+                      <i class="btn btn-primary glyphicon glyphicon-ok"></i>
                     <% end %>
                     <%= link_to edit_transaction_path(t, :user_id => current_user.id) do %>
-                      <i class="btn btn-primary btn btn-lg glyphicon glyphicon-wrench"></i>
+                      <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
                     <% end %>
           	        <%= link_to t, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                      <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                      <i class="btn btn-danger glyphicon glyphicon-trash"></i>
                     <% end %>
                   <% end %>
                   <% if t.status == "freigegeben" %>
                     <%= link_to company_path(@company, :trx_status_ausgefuehrt_id => t.id) do %>
-                      <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-up"></i>
+                      <i class="btn btn-primary glyphicon glyphicon-thumbs-up"></i>
                     <% end %>
                   <% end %>
                   <br><br>
                 </div>
               </div>
             <% end %>
-          <div class='col-xs-12'><div class="panel-body">
-          </div></div>
+          </div>
 
         <% when "Link" %>
-          <%= header("Partner Links") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Partner Links", false) %>
+          <div class="panel-body">
             <% @company.partner_links.each do |pl| %>
                 <div class="col-sm-6 col-md-4 col-lg-3">
                   <div class="thumbnail" align="center">
@@ -594,10 +594,10 @@
                       <% if current_user.id == @company.user_id %>
                         <% if @company.partner %>
                           <%= link_to edit_partner_link_path(pl) do %>
-                            <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                            <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
                           <% end %>
                           <%= link_to pl, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                            <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                            <i class="btn btn-danger glyphicon glyphicon-trash"></i>
                           <% end %>
                         <% end %>
                       <% end %>
@@ -606,19 +606,19 @@
                   </div>
                  </div>
             <% end %>
-          </div></div>
+          </div>
           
         <% when "Location" %>
-          <%= header("Ortsangabe") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Ortsangabe", false) %>
+          <div class="panel-body">
             <div id="map">
               <div id="map-canvas"></div>
             </div>
-          </div></div>
+          </div>
 
         <% when "Email" %>
-          <%= header("Emails") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Emails", false) %>
+          <div class="panel-body">
             <% emails = Email.where('m_to=? or m_from=?', @company.user.id, @company.user.id).order(created_at: :desc) %>
             <% emails.each do |e| %>
               <% if e.m_to == @company.user.id %>
@@ -631,9 +631,10 @@
               <% end %>
               <%= e.header + e.body %><br>
             <% end %>
-          </div></div>
+          </div>
 
       <% end %>
+    </div>
   </div>
 </div>
 
@@ -652,19 +653,19 @@
 });
 </script>
 
-<script>
-$(document).ready(function(){
-  $("header").mouseenter(function() {
-    $("navigate").show();
-    $("action").show();
-  });
-})
-$(document).ready(function(){
-  $("navigate").mouseleave(function() {
-    $("navigate").hide()
-    $("action").hide();
-  });
-})</script>
+<!--<script>-->
+<!--$(document).ready(function(){-->
+<!--  $("header").mouseenter(function() {-->
+<!--    $("navigate").show();-->
+<!--    $("action").show();-->
+<!--  });-->
+<!--})-->
+<!--$(document).ready(function(){-->
+<!--  $("navigate").mouseleave(function() {-->
+<!--    $("navigate").hide()-->
+<!--    $("action").hide();-->
+<!--  });-->
+<!--})</script>-->
 
 <script>
 Morris.Donut({

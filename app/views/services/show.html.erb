@@ -7,24 +7,24 @@
   <div class="row">
     <header>
     <% if @service.stype == "regular" %>
-      <%= header("Angebot " + @service.name) %>
+      <%= header("Angebot " + @service.name, true) %>
     <% end %>
     <% if @service.stype == "action" %>
-      <%= header("Aktion " + @service.name) %>
+      <%= header("Aktion " + @service.name, true) %>
     <% end %>
     </header>
   </div>
   
   <div class="row">
-    <%= navigate("Service", @service) %>
-  </div>
-      
-  <div class="row">
+      <div class='col-xs-2'>
+        <%= navigate("Service", @service) %>
+      </div>
+      <div class='col-xs-10'>
 
       <% case @topic %>
         <% when "Service" %>
-          <%= header("Serviceinformationen") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Serviceinformationen", false) %>
+          <div class="panel-body">
               <%= showImage("Service", :medium, @service) %>
               <br><br>
               <b>Bewertung</b><br>
@@ -61,11 +61,11 @@
               <% end %>
         			<br><br>
               <%= @service.created_at.strftime("%d.%m.%Y") %>
-           </div></div>
+           </div>
 
         <% when "Servicedokument" %>
-          <%= header("Dokumentationen") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Dokumentationen", false) %>
+          <div class="panel-body">
               <% @service.service_documents.each do |sd| %>
                 <div class="col-sm-6 col-md-4 col-lg-3">
                   <div class="thumbnail" align="center">
@@ -88,10 +88,10 @@
                     <% if user_signed_in? %>
                       <% if (@service.user_id and current_user.id == @service.user_id) or (@service.company_id and current_user.id == @service.company.user_id) %>
               	        <%= link_to edit_service_document_path(sd) do %>
-                          <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                          <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
                         <% end %>
               	        <%= link_to sd, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                          <i class="btn btn-danger glyphicon glyphicon-trash"></i>
                         <% end %>
                       <% end %>
                     <% end %>
@@ -99,11 +99,11 @@
                   </div>
                 </div>
       				<% end %>
-            </div></div>
+            </div>
 
         <% when "Servicekundenberater" %>
-          <%= header("Kundenberater") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Kundenberater", false) %>
+          <div class="panel-body">
               <% @service.advisors.each do |sa| %>
                 <div class="col-sm-6 col-md-4 col-lg-3">
                   <div class="thumbnail" align="center">
@@ -140,36 +140,36 @@
                     <% if user_signed_in? %>
                       <% if sa.service.user_id != nil and current_user.id == sa.service.user_id %>
               	        <% link_to edit_advisor_path(sa) do %>
-                          <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                          <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
                         <% end %>
               	        <%= link_to sa, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                          <i class="btn btn-danger glyphicon glyphicon-trash"></i>
                         <% end %>
                       <% end %>
                       <% if sa.service.company_id != nil and current_user.id == sa.service.company.user_id %>
               	        <% link_to edit_advisor_path(sa) do %>
-                          <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                          <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
                         <% end %>
               	        <%= link_to sa, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                          <i class="btn btn-danger glyphicon glyphicon-trash"></i>
                         <% end %>
                       <% end %>
                     <% end %>
           	        <%= link_to sa.service do %>
-                      <i class="btn btn-primary btn-lg glyphicon glyphicon-envelope"></i>
+                      <i class="btn btn-primary glyphicon glyphicon-envelope"></i>
                     <% end %>
           	        <%= link_to appointments_path(:user_id1 => sa.user_id, :subject => @service.name) do %>
-                      <i class="btn btn-primary btn-lg glyphicon glyphicon-calendar"></i>
+                      <i class="btn btn-primary glyphicon glyphicon-calendar"></i>
                     <% end %>
                     <br><br>
                   </div>
                 </div>
       				<% end %>
-            </div></div>
+            </div>
           
         <% when "Servicerating" %>
-          <%= header("Bewertungen") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Bewertungen", false) %>
+          <div class="panel-body">
              <% @service.ratings.each do |sr| %>
                 <div class="col-sm-6 col-md-4 col-lg-3">
                   <div class="thumbnail" align="center">
@@ -195,21 +195,22 @@
                   </div>
                 </div>
       				<% end %>
-          </div></div>
+          </div>
       <% end %>
+    </div>
   </div>  
 </div>
 
-<script>
-$(document).ready(function(){
-  $("header").mouseenter(function() {
-    $("navigate").show();
-    $("action").show();
-  });
-})
-$(document).ready(function(){
-  $("navigate").mouseleave(function() {
-    $("navigate").hide()
-    $("action").hide();
-  });
-})</script>
+<!--<script>-->
+<!--$(document).ready(function(){-->
+<!--  $("header").mouseenter(function() {-->
+<!--    $("navigate").show();-->
+<!--    $("action").show();-->
+<!--  });-->
+<!--})-->
+<!--$(document).ready(function(){-->
+<!--  $("navigate").mouseleave(function() {-->
+<!--    $("navigate").hide()-->
+<!--    $("action").hide();-->
+<!--  });-->
+<!--})</script>-->

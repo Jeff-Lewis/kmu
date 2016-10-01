@@ -8,20 +8,20 @@
 
   <div class="row">
     <header>
-    <%= header("Veranstaltung " + @event.name) %>
+    <%= header("Veranstaltung " + @event.name, true) %>
     </header>
   </div>
   
   <div class="row">
-    <%= navigate("Event", @event) %>
-  </div>
-      
-  <div class="row">
+      <div class='col-xs-2'>
+        <%= navigate("Event", @event) %>
+      </div>
+      <div class='col-xs-10'>
 
       <% case @topic %>
         <% when "Eventinformation" %>
-          <%= header("Informationen") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Informationen", false) %>
+          <div class="panel-body">
             <% if @event.event_details.count > 0 %>
                 <%= carousel(@event.event_details, "medium") %>
               <% else %>
@@ -67,13 +67,13 @@
             <% end %>
       			<br><br>
             <%= @event.created_at.strftime("%d.%m.%Y") %>
-          </div></div>
+          </div>
       <% end %>
 
       <% case @topic %>
         <% when "Eventdetail" %>
-          <%= header("Details") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Details", false) %>
+          <div class="panel-body">
         		<% @event.event_details.each do |ed| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -117,13 +117,13 @@
         			  </div>
         			</div>
         		<% end %>
-          </div></div>
+          </div>
       <% end %>
 
       <% case @topic %>
         <% when "Eventsponsor" %>
-          <%= header("Sponsoren") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Sponsoren", false) %>
+          <div class="panel-body">
             <% @event.sponsors.each do |cs| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
@@ -171,18 +171,19 @@
                 </div>
               </div>
             <% end %>
-          </div></div>
+          </div>
       <% end %>
 
       <% case @topic %>
         <% when "Eventstandort" %>
-          <%= header("Standort") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Standort", false) %>
+          <div class="panel-body">
             <div id="map">
               <div id="map-canvas"></div>
             </div>
-          </div></div>
+          </div>
       <% end %>
+    </div>
   </div>
 </div>
 
@@ -201,16 +202,16 @@
 });
 </script>
 
-<script>
-$(document).ready(function(){
-  $("header").mouseenter(function() {
-    $("navigate").show();
-    $("action").show();
-  });
-})
-$(document).ready(function(){
-  $("navigate").mouseleave(function() {
-    $("navigate").hide()
-    $("action").hide();
-  });
-})</script>
+<!--<script>-->
+<!--$(document).ready(function(){-->
+<!--  $("header").mouseenter(function() {-->
+<!--    $("navigate").show();-->
+<!--    $("action").show();-->
+<!--  });-->
+<!--})-->
+<!--$(document).ready(function(){-->
+<!--  $("navigate").mouseleave(function() {-->
+<!--    $("navigate").hide()-->
+<!--    $("action").hide();-->
+<!--  });-->
+<!--})</script>-->
