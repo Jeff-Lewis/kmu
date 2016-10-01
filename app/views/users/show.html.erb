@@ -1,8 +1,6 @@
-<div class="container-fluid">
-
   <div class="row">
     <action>
-    <%= action_buttons("User", @user, @topic) %>
+    <% action_buttons("User", @user, @topic) %>
     </action>
   </div>
 
@@ -13,7 +11,7 @@
   </div>
   
   <div class="row">
-    <%= navigate("User", @user) %>
+    <% navigate("User", @user) %>
   </div>
       
   <div class="row">
@@ -856,7 +854,6 @@
       </div>
   </div></div>
   </div>
-</div>
 
 <script>
     handler = Gmaps.build('Google');
@@ -878,19 +875,19 @@
 });
 </script>
 
-<script>
-$(document).ready(function(){
-  $("header").mouseenter(function() {
-    $("navigate").show();
-    $("action").show();
-  });
-})
-$(document).ready(function(){
-  $("navigate").mouseleave(function() {
-    $("navigate").hide()
-    $("action").hide();
-  });
-})</script>
+<!--<script>-->
+<!--$(document).ready(function(){-->
+<!--  $("header").mouseenter(function() {-->
+<!--    $("navigate").show();-->
+<!--    $("action").show();-->
+<!--  });-->
+<!--})-->
+<!--$(document).ready(function(){-->
+<!--  $("navigate").mouseleave(function() {-->
+<!--    $("navigate").hide()-->
+<!--    $("action").hide();-->
+<!--  });-->
+<!--})</script>-->
 
 <script>
 Morris.Donut({
