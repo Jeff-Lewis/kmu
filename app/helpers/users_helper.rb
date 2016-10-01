@@ -261,6 +261,7 @@ end
 def navigate(object,item)
     
     html_string = "<navigate><div class='col-xs-12'><div class='panel-body'>"
+    html_string = "<navigate><div class='panel-body'>"
     
     case object
       when "User"
@@ -354,7 +355,8 @@ def navigate(object,item)
 
     end
     
-    html_string = html_string + "</div></div></navigate>"
+    #html_string = html_string + "</div></div></navigate>"
+    html_string = html_string + "</div></navigate>"
     return html_string.html_safe
     
 end
