@@ -26,13 +26,13 @@
 
     <%= render 'layouts/header' %>
     
-    <!--<%= render 'layouts/advertise' %>-->
-
     <div class="example1">
       <div class='container-fluid'>
         <% flash.each do |name, msg| %>
           <% content_tag(:div, msg, class:"alert alert-warning") %>
         <% end %>
+
+        <%= render 'layouts/advertise' %>
 
         <%= yield %>
 

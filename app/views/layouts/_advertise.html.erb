@@ -1,25 +1,39 @@
 <div class="container-fluid">
 	<tkb>
 	<div class="row">
-		<div class='col-xs-12'><div class="panel-body">
-			<% @p = Company.where('partner=?',true) %>
-			<% @p.each do |p| %>
-				<%= showImage("Company", :small, p) %>
-			<% end %>
-		</div</div>
+		<div class='col-xs-12'>
+			<div class="panel-body">
+				<% @p = Company.where('partner=?',true) %>
+				<% @p.each do |p| %>
+					<% if p.name == "Thurgauer Kantonalbank" %>
+							<%= showImage("Company", :small, p) %>
+							<% @id = p.id %>
+					<% end %>
+				<% end %>
+			</div>
+		</div>
 	</div>
 	</tkb>
+
 	<advertise>
 	<div class="row">
-		<div class='col-xs-12'><div class="panel-body">
-			<% @p = Company.where('name=?',"Thurgauer Kantonalbank").first %>
-			<% @p.partner_links.each do |pl| %>
-				<%= showImage("Link", :medium, pl) %>
-			<% end %>
-		<%= showImage("Company", :medium, Company.first) %>
-		</div</div>
+		<div class='col-xs-12'>
+			<div class='panel-body'>
+				<% @p = Company.find(@id) %>
+				<% @p.partner_links.each do |pl| %>
+				  <% if pl.link %>
+        	      <%= link_to url_with_protocol(pl.link), :target => '_blank' do %>
+        	      	<% if pl.avatar %>
+						<%= image_tag pl.avatar(:medium), class:'img-rounded' %>
+					<% end %>
+				  <% end %>
+				  <% end %>
+                <% end %>
+			</div>
+		</div>
 	</div>
 	</advertise>
+
 </div>
 
 
@@ -31,6 +45,7 @@ $(document).ready(function(){
 })
 $(document).ready(function(){
   $("advertise").mouseleave(function() {
-    $("advertise").hide()
+    $("advertise").hide();
   });
-})</script>
+})
+</script>
