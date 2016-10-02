@@ -644,7 +644,7 @@
                     <%= ur.user_comment if ur.user_comment %>
                     </ntext>
                     <br><br>
-                    <% if user_signed_in %>
+                    <% if user_signed_in? %>
                       <% if ur.user_id == current_user.id %>
                         <%= link_to edit_rating_path(ur) do %>
                           <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
