@@ -34,26 +34,26 @@ def build_medialist(md_string, items, cname, panel)
                         end
                         case items.table_name
                             when "requests"
-                                html_string = html_string + carousel(item.request_details,"thumb")
+                                html_string = html_string + carousel(item.request_details,"small")
                             when "hotspots"
-                                html_string = html_string + carousel(item.hotspot_details,"thumb")
+                                html_string = html_string + carousel(item.hotspot_details,"small")
                             when "bids"
-                                html_string = html_string + carousel(item.bid_details,"thumb")
+                                html_string = html_string + carousel(item.bid_details,"small")
                             when "events"
-                                html_string = html_string + carousel(item.event_details,"thumb")
+                                html_string = html_string + carousel(item.event_details,"small")
                             when "donations"
-                                html_string = html_string + carousel(item.donation_details,"medium")
+                                html_string = html_string + carousel(item.donation_details,"small")
                             when "jobs"
                                 if item.company.avatar_file_name
-                                    html_string = html_string + (image_tag item.company.avatar(:thumb), class:'img-rounded')
+                                    html_string = html_string + (image_tag item.company.avatar(:small), class:'img-rounded')
                                 else
-                                    html_string = html_string + (image_tag 'company_a.png', :size => '50x50', class:'img-rounded')
+                                    html_string = html_string + (image_tag 'company_a.png', :size => '50x50#', class:'img-rounded')
                                 end
                             else
                                 if item.avatar_file_name
-                                    html_string = html_string + (image_tag item.avatar(:thumb), class:'img-rounded')
+                                    html_string = html_string + (image_tag item.avatar(:small), class:'img-rounded')
                                 else
-                                    html_string = html_string + (image_tag 'user_a.png', :size => '50x50', class:'img-rounded')
+                                    html_string = html_string + (image_tag 'user_a.png', :size => '50x50#', class:'img-rounded')
                                 end
                         end
                         html_string = html_string + "</a>"

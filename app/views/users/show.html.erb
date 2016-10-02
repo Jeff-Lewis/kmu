@@ -661,7 +661,7 @@
 
     	 <% when "Favourit" %>
           <%= header("Favoriten", false) %>
-          <div class='col-xs-12'><div class="panel-body">
+          <div class="panel-body">
             <% @user.favourits.each do |f| %>
               <% @item = Object.const_get(f.object_name).find(f.object_id) %>
               <% if @item != nil %>
@@ -835,19 +835,48 @@
     	 <% when "Email" %>
           <%= header("Kommunikation", false) %>
           <div class="panel-body">
+            <table class="table-striped" width="100%">
             <% emails = Email.where('m_to=? or m_from=?', @user.id, @user.id).order(created_at: :desc) %>
+            <% if emails.count > 0 %>
+              <tr>
+                <th>Wer/Wann?</th>
+                <th>Message</th>
+              </tr>
+            <% end %>
             <% emails.each do |e| %>
+              <tr>
+              <td>
               <% if e.m_to == @user.id %>
                 <% @u = User.find(e.m_from) %>
-                <%= showImage("User",:small, @u) if @u %>
+                <%= showImage("User",:small, @u) if @u %><br>
+              <% else %>
+                <% @u = User.find(e.m_to) %>
+                <%= showImage("User",:small, @u) if @u %><br>
+              <% end %>
+              <%= e.created_at.strftime("%A, %d.%m.%Y-%H:%M:%S") %><br>
+              </td>
+              <% if e.m_from == @user.id %>
+                <td style="text-align:right">
+              <% else %>
+                <td>
+              <% end %>
+              <% if user_signed_in? and e.m_to == current_user.id %>
+      	        <%= link_to new_email_path :m_from_id => current_user.id, :m_to_id => @u.id, :back_url => user_path(:id => @user.id, :topic => "Email") do %>
+                  <i class="btn btn-default btn-xs glyphicon glyphicon-envelope"></i>
+                <% end %>
               <% end %>
               <% if e.m_from == @user.id %>
-                <% @u = User.find(e.m_to) %>
-                <%= showImage("User",:small, @u) if @u %>
+                <ntext>
               <% end %>
-              <%= e.created_at.strftime("%d.%M.%Y-%h:%m") %><br>
-              <%= e.header + e.body %><br>
+              <b><%= e.header %></b><br>
+              <%= e.body %><br>
+              <% if e.m_to == @user.id %>
+                </ntext>
+              <% end %>
+              </td>
+              </tr>
             <% end %>
+            </table>
           </div>
 
         <% end %>

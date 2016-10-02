@@ -9,7 +9,7 @@ def carousel(scope, size)
           when "big"
             html = html + (image_tag "no_pic.jpg", :size => "500x500", class:"img-rounded")
         when "medium"
-            html = html + (image_tag "no_pic.jpg", :size => "200x200", class:"img-rounded")
+            html = html + (image_tag "no_pic.jpg", :size => "250x250", class:"img-rounded")
         when "thumb"
             html = html + (image_tag "no_pic.jpg", :size => "100x100", class:"img-rounded")
         when "small"
