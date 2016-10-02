@@ -624,10 +624,10 @@
           						<%= ur.service.name %><br>
                     </anzeigetext>
                     <ntext>
-                    <% if ur.service.company_id != nil %>
+                    <% if ur.service.company_id %>
             					<%= ur.service.company.name %>
                     <% end %>
-                    <% if ur.service.user_id != nil %>
+                    <% if ur.service.user_id %>
             					<%= ur.service.user.name + " " + ur.service.user.lastname %>
                     <% end %>
                     <br>
@@ -641,7 +641,7 @@
                     <% end %>
                     <br>
                     <ntext>
-                    <%= ur.user_comment %>
+                    <%= ur.user_comment if ur.user_comment %>
                     </ntext>
                     <br><br>
                     <% if ur.user_id == current_user.id %>
