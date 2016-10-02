@@ -47,13 +47,13 @@ def build_medialist(md_string, items, cname, panel)
                                 if item.company.avatar_file_name
                                     html_string = html_string + (image_tag item.company.avatar(:small), class:'img-rounded')
                                 else
-                                    html_string = html_string + (image_tag 'company_a.png', :size => '50x50#', class:'img-rounded')
+                                    html_string = html_string + (image_tag 'company_a.png', :size => '50x50x', class:'img-rounded')
                                 end
                             else
                                 if item.avatar_file_name
                                     html_string = html_string + (image_tag item.avatar(:small), class:'img-rounded')
                                 else
-                                    html_string = html_string + (image_tag 'user_a.png', :size => '50x50#', class:'img-rounded')
+                                    html_string = html_string + (image_tag 'user_a.png', :size => '50x50x', class:'img-rounded')
                                 end
                         end
                         html_string = html_string + "</a>"

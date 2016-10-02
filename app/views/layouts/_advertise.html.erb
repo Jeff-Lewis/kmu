@@ -1,4 +1,4 @@
-<div class="container-fluid">
+
 	<tkb>
 	<div class="row">
 		<div class='col-xs-12'>
@@ -20,22 +20,29 @@
 		<div class='col-xs-12'>
 			<div class='panel-body'>
 				<% @p = Company.find(@id) %>
-				<% @p.partner_links.each do |pl| %>
-				  <% if pl.link %>
-        	      <%= link_to url_with_protocol(pl.link), :target => '_blank' do %>
-        	      	<% if pl.avatar %>
-						<%= image_tag pl.avatar(:medium), class:'img-rounded' %>
-					<% end %>
-				  <% end %>
-				  <% end %>
-                <% end %>
+				<% if @p %>
+					<% if @p.partner_links %>
+						<% anz = @p.partner_links.count %>
+						<% random = Random.new(Time.new.to_i) %>
+						<% r = random.rand(anz) + 1 %>
+						<% puts "Anzahl:" + anz.to_s + "    " + "Random: " + r.to_s %>
+						<% counter = 0 %>
+						<% @p.partner_links.each do |pl| %>
+						  <% counter = counter + 1 %>
+						  <% if pl.link and counter == r %>
+			        	      <%= link_to url_with_protocol(pl.link), :target => '_blank' do %>
+			        	      	<% if pl.avatar %>
+									<%= image_tag pl.avatar(:medium), class:'img-rounded' %>
+								<% end %>
+							  <% end %>
+						  <% end %>
+		                <% end %>
+		            <% end %>
+		        <% end %>
 			</div>
 		</div>
 	</div>
 	</advertise>
-
-</div>
-
 
 <script>
 $(document).ready(function(){

@@ -1,4 +1,4 @@
-<div class="container-fluid">
+
 	<div class="row">
     <div class="col-md-12">
       <div class="panel-heading header">
@@ -43,25 +43,7 @@
       </div>
     </div>
   </div>
-</div>
 
-<% if 1>2 %>
-                <% avg_rating(e.id).times do %>
-                  <i class="glyphicon glyphicon-star"></i>
-                <% end %>
-                <% if e.date_to != nil %>
-                  <p>
-                    <b><ntext>noch </ntext></b><restlaufzeit><%= (e.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeit> <b><ntext> Tage</ntext></b>
-                  </p>
-                <% end %>
-                <% if e.company_id != nil %>
-                  <%= e.company.name %>
-                <% end %>
-                <% if e.user_id != nil %>
-                  <%= e.user.name + " " + e.user.lastname %>
-                <% end %>
-                <%= e.date_from.strftime("%d.%m") %>-<%= e.date_to.strftime("%d.%m") %>
-<% end %>
 
 <script>
     handler = Gmaps.build('Google');
