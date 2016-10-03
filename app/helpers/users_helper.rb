@@ -692,7 +692,7 @@ def action_buttons(object, item, topic)
          end
 
       when "Donation"
-         html_string = html_string + link_to(donations_path :dtype => topic) do
+         html_string = html_string + link_to(donations_path :dtype => item.dtype) do
            content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
          end
          if user_signed_in?
