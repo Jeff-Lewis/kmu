@@ -3,13 +3,9 @@
 		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 			 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 		</button>
-		<% if user_signed_in? %>
-			<%= link_to current_user do %>
-		        <%= image_tag("marketplace.png", :size => "50x50") %>
-		    <% end %>
-		<% else %>
-		        <%= image_tag("marketplace.png", :size => "50x50") %>
-		<% end %>
+		<%= link_to home_index_path do %>
+	        <%= image_tag("marketplace.png", :size => "50x50") %>
+	    <% end %>
 	</div>
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		<ul class="nav navbar-nav">

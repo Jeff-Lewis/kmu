@@ -38,9 +38,9 @@
     
   <div class="row">
       <% if @ticket %>
-        <%= header("Suchen " + @search_domain + " " + @ticket.sponsor.event.name + " " + @ticket.name + " <span class='badge'>" + @seranz.to_s + "</span>") %>
+        <%= header("Suchen " + @search_domain + " " + @ticket.sponsor.event.name + " " + @ticket.name + " <span class='badge'>" + @seranz.to_s + "</span>", true) %>
       <% else %>
-        <%= header("Suchen " + @search_domain + " <span class='badge'>" + @seranz.to_s + "</span>") %>
+        <%= header("Suchen " + @search_domain + " <span class='badge'>" + @seranz.to_s + "</span>", true) %>
       <% end %>
   </div>
 
