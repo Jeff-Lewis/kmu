@@ -11,7 +11,7 @@
   
   <div class="row">
 
-          <%= header("Kontoübersicht (privat)") %>
+          <%= header("Kontoübersicht (privat)", true) %>
           <div class='col-xs-12'><div class="panel-body">
             <% @ali = [] %>
             <% @partners = Company.where('partner=?',true) %>
@@ -40,7 +40,7 @@
           </div></div>
 
           <% @user.companies.each do |c| %>
-            <%= header("Kontoübersicht "+c.name) %>
+            <%= header("Kontoübersicht "+c.name, true) %>
             <div class='col-xs-12'><div class="panel-body">
               <% @ali = [] %>
               <% @partners = Company.where('partner=?',true) %>
@@ -72,7 +72,7 @@
   </div>
 
   <div class="row">
-      <%= header("Kontoübersicht") %>
+      <%= header("Kontoübersicht", true) %>
   </div>
 
   <div class="row">
