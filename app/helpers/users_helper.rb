@@ -561,8 +561,10 @@ def action_buttons(object, item, topic)
          
          case topic
             when "Vehiclekalender", "Vehicleuser"
-              html_string = html_string + link_to(new_calender_path(:user_id => current_user.id, :vehicle_id => session[:verhicle_id])) do
-                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+              if user_signed_in?
+                html_string = html_string + link_to(new_calender_path(:user_id => current_user.id, :vehicle_id => session[:verhicle_id])) do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
               end
               html_string = html_string + link_to(vehicle_path(:vehicle_id => item.id, :dir => "<", :topic => topic)) do
                 content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-chevron-left")
@@ -592,12 +594,16 @@ def action_buttons(object, item, topic)
          
          case topic
             when "Biddetail"
-              html_string = html_string + link_to(new_bid_detail_path(:bid_id => item.id)) do
-                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+              if user_signed_in?
+                html_string = html_string + link_to(new_bid_detail_path(:bid_id => item.id)) do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
               end
             when "Biddokument"
-              html_string = html_string + link_to(new_bid_document_path(:bid_id => item.id)) do
-                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+              if user_signed_in?
+                html_string = html_string + link_to(new_bid_document_path(:bid_id => item.id)) do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
               end
          end
          
@@ -639,12 +645,16 @@ def action_buttons(object, item, topic)
          
          case topic
             when "Eventdetail"
-              html_string = html_string + link_to(new_event_detail_path(:event_id => item.id)) do
-                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+              if user_signed_in?
+                html_string = html_string + link_to(new_event_detail_path(:event_id => item.id)) do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
               end
             when "Eventsponsor"
-              html_string = html_string + link_to(new_sponsor_path(:event_id => item.id)) do
-                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+              if user_signed_in?
+                html_string = html_string + link_to(new_sponsor_path(:event_id => item.id)) do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
               end
          end
          
@@ -668,12 +678,16 @@ def action_buttons(object, item, topic)
          
          case topic
             when "Hotspotdetail"
-              html_string = html_string + link_to(new_hotspot_detail_path(:hotspot_id => item.id)) do
-                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+              if user_signed_in?
+                html_string = html_string + link_to(new_hotspot_detail_path(:hotspot_id => item.id)) do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
               end
             when "Hotspotbewertung"
-              html_string = html_string + link_to(new_hs_rating_path(:hotspot_id => item.id, :user_id => current_user.id)) do
-                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+              if user_signed_in?
+                html_string = html_string + link_to(new_hs_rating_path(:hotspot_id => item.id, :user_id => current_user.id)) do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
               end
          end
 
@@ -697,8 +711,10 @@ def action_buttons(object, item, topic)
          
          case topic
             when "Donationdetail"
-              html_string = html_string + link_to(new_donation_detail_path(:donation_id => item.id)) do
-                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+              if user_signed_in?
+                html_string = html_string + link_to(new_donation_detail_path(:donation_id => item.id)) do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
               end
             when "Donationstat"
               if item.donation_stats.sum(:amount) < item.amount
@@ -737,10 +753,11 @@ def action_buttons(object, item, topic)
          
          case topic
             when "Requestdetail"
-              html_string = html_string + link_to(new_request_detail_path(:request_id => item.id)) do
-                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+              if user_signed_in?
+                html_string = html_string + link_to(new_request_detail_path(:request_id => item.id)) do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
               end
-
          end
 
         when "Account"

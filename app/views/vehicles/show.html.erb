@@ -6,20 +6,21 @@
 
   <div class="row">
     <header>
-    <%= header(@vehicle.name) %>
+    <%= header(@vehicle.name, true) %>
     </header>
   </div>
   
   <div class="row">
-    <%= navigate("Vehicle", @vehicle) %>
-  </div>
-      
-  <div class="row">
+      <div class='col-xs-2'>
+        <%= navigate("Vehicle", @vehicle) %>
+      </div>
+        
+      <div class='col-xs-10'>
 
       <% case @topic %>
         <% when "Vehicleinformation" %>
-          <%= header("Informationen") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Informationen", false) %>
+          <div class="panel-body">
             <%= showImage("Vehicle", :medium, @vehicle) %>
         		<%= @vehicle.description %>
         		<br><br>
@@ -45,11 +46,11 @@
             <% end %>
             <br><br>
             <cite> <%= @vehicle.created_at.strftime("%d.%m.%Y") %></cite>        
-          </div></div>
+          </div>
 
         <% when "Vehiclekalender" %>
-          <%= header("Kalender KW "+ session[:cw].to_s) %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Kalender KW "+ session[:cw].to_s, false) %>
+          <div class="panel-body">
         		<table class="table table-striped">
               <thead>
                 <tr>
@@ -106,11 +107,11 @@
       
               </tbody>
             </table>
-          </div></div>
+          </div>
 
         <% when "Vehicleuser" %>
-          <%= header("Kalender KW "+ session[:cw].to_s) %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Kalender KW "+ session[:cw].to_s, false) %>
+          <div class="panel-body">
           	<table class="table table-striped">
               <thead>
                 <tr>
@@ -157,17 +158,18 @@
                 <% end %>
               </body>
            	</table>
-          </div></div>
+          </div>
 
         <% when "Vehiclestandort" %>
-          <%= header("Standort") %>
-          <div class='col-xs-12'><div class="panel-body">
+          <%= header("Standort", false) %>
+          <div class="panel-body">
             <div id="map">
               <div id="map-canvas"></div>
             </div>
-          </div></div>
+          </div>
           
       <% end %>
+    </div>
   </div>
 
 <script>
