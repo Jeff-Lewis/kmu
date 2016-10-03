@@ -42,7 +42,7 @@
               <%= @vehicle.user.name + " " + @vehicle.user.lastname %>
             <% end %>
             <% if @vehicle.company_id != nil %>
-              <%= showImage("Company", :thumb, @company.user) %>
+              <%= showImage("Company", :thumb, @vehicle.company.user) %>
             <% end %>
             <br><br>
             <cite> <%= @vehicle.created_at.strftime("%d.%m.%Y") %></cite>        
