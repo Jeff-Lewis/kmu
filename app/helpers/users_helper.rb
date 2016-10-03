@@ -335,7 +335,7 @@ def navigate(object,item)
         html_string = html_string + build_nav("Job",item,"Jobdetail","search",item)
 
       when "Event"
-        html_string = html_string + build_nav("Event",item,"Eventinformation","calendar",item)
+        html_string = html_string + build_nav("Event",item,"Eventinformation","glass",item)
         html_string = html_string + build_nav("Event",item,"Eventdetail","search",item.event_details.count > 0)
         html_string = html_string + build_nav("Event",item,"Eventsponsor","heart",item.sponsors.count > 0)
         html_string = html_string + build_nav("Event",item,"Eventstandort","record",item.geo_address)
@@ -354,7 +354,7 @@ def navigate(object,item)
         html_string = html_string + build_nav("Donation",item,"Donationstat","tree-deciduous",item.donation_stats.count > 0)
 
       when "Request"
-        html_string = html_string + build_nav("Request",item,"Requestinformation","gift",item)
+        html_string = html_string + build_nav("Request",item,"Requestinformation","pushpin",item)
         html_string = html_string + build_nav("Request",item,"Requestdetail","search",item.request_details.count > 0)
 
     end
