@@ -505,7 +505,7 @@ def action_buttons(object, item, topic)
                 end
             end
   	        html_string = html_string + link_to(new_rating_path :service_id => item.id, :user_id => current_user.id) do
-              content_tag(:i, nil, class:"btn btn-warning pull-right glyphicon glyphicon-plus")
+              content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
             end
           end
 
