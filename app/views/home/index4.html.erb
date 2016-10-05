@@ -1,3 +1,4 @@
+    <%= @text %>
 
     <%= form_for @user do |f| %>
       <%= f.text_field :address1, :id => "lat_field",  class:"form-control" %>
@@ -29,8 +30,8 @@
             };
             infoWindow.setPosition(pos);
             infoWindow.setContent('Location found.'+pos.lat+"/"+pos.lng);
-            $("#lat_field").val(pos.lat);
-            $("#lng_field").val(pos.lng);
+            // $("#lat_field").val(pos.lat);
+            // $("#lng_field").val(pos.lng);
             map.setCenter(pos);
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
@@ -49,9 +50,11 @@
       }
     </script>
     
-<script type="text/javascript">
-   var my_email= "my@email.com"
-   $(document).ready(function(){
-        $("#email_field").val(my_email);
-   });
-</script>
+<!--<script>-->
+<!--   $(document).ready(function(){-->
+<!--    $("#map").click(){-->
+<!--      $("#lat_field").val(pos.lat);-->
+<!--      $("#lng_field").val(pos.lng);-->
+<!--    }-->
+<!--   });-->
+<!--</script>-->
