@@ -37,6 +37,8 @@ def index4
      end
      @hash.push({lat: request.location.latitude, lng: request.location.longitude, infowindow: "img src="+url_for(User.find(1).avatar(:small)) })
 
+@user = current_user
+
 end
 
 def index5
