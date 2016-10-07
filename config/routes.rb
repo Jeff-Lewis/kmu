@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :user_positions
   get 'customer_advisor/index'
   get 'customer_advisor/index2'
   

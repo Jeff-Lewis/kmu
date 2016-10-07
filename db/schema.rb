@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160819164300) do
+ActiveRecord::Schema.define(version: 20161007142213) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "customer_id"
     t.string   "name"
     t.string   "iban"
     t.boolean  "is_account_ver"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "advisors", force: :cascade do |t|
@@ -212,8 +212,8 @@ ActiveRecord::Schema.define(version: 20160819164300) do
     t.date     "date_from"
     t.date     "date_to"
     t.string   "stichworte"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "emails", force: :cascade do |t|
@@ -532,6 +532,15 @@ ActiveRecord::Schema.define(version: 20160819164300) do
     t.decimal  "amount"
     t.string   "object_name"
     t.integer  "object_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "user_positions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "geo_address"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
