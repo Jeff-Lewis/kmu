@@ -14,8 +14,8 @@ class UserPositionsController < ApplicationController
   # GET /user_positions/new
   def new
     @user_position = UserPosition.new
-    @user_position.latitude = request.location.latitude
-    @user_position.longitude = request.location.longitude
+    #@user_position.latitude = request.location.latitude
+    #@user_position.longitude = request.location.longitude
     @user_position.user_id = current_user.id
   end
 
