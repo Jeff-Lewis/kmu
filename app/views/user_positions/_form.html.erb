@@ -51,16 +51,11 @@ function displayOnMap(position){
     lng: position.coords.longitude
   });
    handler.map.centerOn(marker);
-   alert(position.coords.latitude+" "+position.coords.longitude);
    $("#latitude_f").val(position.coords.latitude);
    $("#longitude_f").val(position.coords.longitude);
 };
 </script>
 
-<script>
-$("#latitude_f").val(10.1);
-$("#longitude_f").val(0.5);
-</script>
 
 <script>
 function getLocation() {
