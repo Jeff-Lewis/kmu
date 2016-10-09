@@ -350,7 +350,7 @@ input#email:focus {
     right: auto;
 }
 
-#map {
+#map, #map2, #map3 {
    height: 750px;
    border-radius: 16px 16px;
    border-color: #fff;
@@ -359,7 +359,7 @@ input#email:focus {
    margin-top: 25px;
    border-width: 7px;
  }
-#map-canvas {
+#map-canvas, #map-canvas2, #map-canvas3 {
    height: 384px;
    width: 100%;
  }

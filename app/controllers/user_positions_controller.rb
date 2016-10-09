@@ -14,8 +14,6 @@ class UserPositionsController < ApplicationController
   # GET /user_positions/new
   def new
     @user_position = UserPosition.new
-    #@user_position.latitude = request.location.latitude
-    #@user_position.longitude = request.location.longitude
     @user_position.user_id = current_user.id
   end
 
@@ -26,9 +24,8 @@ class UserPositionsController < ApplicationController
   # POST /user_positions
   def create(user_position)
     @user_position = UserPosition.new(user_position)
-
     if @user_position.save
-      redirect_to @user_position, notice: 'User position was successfully created.'
+      redirect_to home_index3_path, notice: 'User position was successfully created.'
     else
       render :new
     end

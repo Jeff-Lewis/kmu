@@ -836,6 +836,22 @@
             </div>
           </div>
 
+    	 <% when "FavouritMap" %>
+          <%= header("Wo sind meine Favoriten?", false) %>
+          <div class="panel-body">
+            <div id="map2">
+              <div id="map-canvas2"></div>
+              </div>
+          </div>
+
+    	 <% when "MyMap" %>
+          <%= header("Wo war ich?", false) %>
+          <div class="panel-body">
+            <div id="map3">
+              <div id="map-canvas3"></div>
+              </div>
+          </div>
+
     	 <% when "Email" %>
           <%= header("Kommunikation", false) %>
           <div class="panel-body">
@@ -909,6 +925,23 @@
 });
 </script>
 
+<script>
+    handler2 = Gmaps.build('Google');
+    handler2.buildMap({ provider: {}, internal: {id: 'map2'}}, function(){
+      markers = handler2.addMarkers(<%=raw @hash.to_json %>);
+      handler2.bounds.extendWith(markers);
+      handler2.fitMapToBounds();
+});
+</script>
+
+<script>
+    handler3 = Gmaps.build('Google');
+    handler3.buildMap({ provider: {}, internal: {id: 'map3'}}, function(){
+      markers = handler3.addMarkers(<%=raw @hash2.to_json %>);
+      handler3.bounds.extendWith(markers);
+      handler3.fitMapToBounds();
+});
+</script>
 <!--<script>-->
 <!--$(document).ready(function(){-->
 <!--  $("header").mouseenter(function() {-->

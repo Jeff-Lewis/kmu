@@ -115,6 +115,47 @@ class UsersController < ApplicationController
     @appointments = Appointment.search(@user.id, session[:cw], session[:year]).order(app_date: :asc)
     @appanz = @appointments.count
     @subject = params[:subject]
+
+    @ups = []
+    @favourits = Favourit.where('user_id=? and object_name=?', @user.id, "User") 
+    @favourits.each do |f|
+      @p = UserPosition.where('user_id=?',f.object_id).last
+      if @p
+        @tempuser = User.find(f.object_id)
+        ha = Hash.new
+        ha = {:user_id => @p.id, :latitude => @p.latitude, :longitude => @p.longitude, :geo_address => @p.geo_address, :name => @tempuser.name + " " + @tempuser.lastname}
+        @ups << ha
+      end
+    end
+    if !@ups.empty?
+      @hash = Gmaps4rails.build_markers(@ups) do |up, marker|
+        if up[:latitude] != nil and up[:longitude] != nil
+          marker.lat up[:latitude]
+          marker.lng up[:longitude]
+          marker.infowindow "<a href=/users/" + up[:user_id].to_s + ">"+up[:name]+"</a><br>" + up[:geo_address]
+  #        if user.avatar != nil
+  #          marker.picture :url => url_for(user.avatar(:small)), :width => 50, :height => 50
+  #        else
+  #          marker.picture :url => image-url("user_a.png"), :width => 50, :height => 50
+  #        end
+        end
+      end
+    end
+
+    @myups = UserPosition.where('user_id=?', @user.id).limit(20).order(created_at: :desc)
+      @hash2 = Gmaps4rails.build_markers(@myups) do |up, marker|
+        if up.latitude != nil and up.longitude != nil
+          marker.lat up.latitude
+          marker.lng up.longitude
+          marker.infowindow up.geo_address + "<br>" + up.created_at.strftime("%d.%m.%Y-%H:%m")
+  #        if user.avatar != nil
+  #          marker.picture :url => url_for(user.avatar(:small)), :width => 50, :height => 50
+  #        else
+  #          marker.picture :url => image-url("user_a.png"), :width => 50, :height => 50
+  #        end
+        end
+      end
+
     
   end
 
