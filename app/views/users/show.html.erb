@@ -709,6 +709,12 @@
                       <% end %>
                       <br><br>
                     <% end %>
+                    <% if f.object_name == "User" %>
+                        <% @cr = UserPosition.where('user_id=?',@item.id).last %>
+                        <% if @cr %>
+                          <%= @cr.geo_address %>
+                        <% end %>
+                    <% end %>
                   </div>
                 </div>
               <% end %>
