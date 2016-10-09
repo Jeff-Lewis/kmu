@@ -988,4 +988,45 @@ def build_stats(array, records, label)
   return array
 end
 
+def build_kachel(object, path, glyphicon, logon)
+  if logon and !user_signed_in?
+    return
+  else
+    html_string = ""
+    icon_size = "3"
+    
+    case object 
+    when "Angebote"
+      path = services_path(:stype => "regular")
+    when "Aktionen"
+      if glyphicon == "time"
+        path = services_path(:stype => "action")
+      end
+    when "Suchen"
+      path = requests_path(:rtype => "suche")
+    when "Anbieten"
+      path = requests_path(:rtype => "biete")
+    when "Spenden"
+      path = donations_path(:dtype => "Donation")
+    when "Belohnung"
+      path = donations_path(:dtype => "Reward")
+    when "Kredit"
+      path = donations_path(:dtype => "Loan")
+    end
+    
+    html_string = html_string + link_to(path) do
+      content_tag(:div, nil, class:"col-xs-4 col-sm-3 col-md-2 col-lg-1") do 
+        content_tag(:div, nil, class:"thumbnail", align:"center") do
+          content_tag(:span, nil) do
+            content_tag(:i, nil, class:"glyphicon glyphicon-" + glyphicon, style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe+object)
+          end
+        end
+      end
+    end
+
+    return html_string.html_safe
+    
+  end
+end
+
 end    

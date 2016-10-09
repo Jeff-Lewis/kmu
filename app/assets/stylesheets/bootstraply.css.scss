@@ -110,6 +110,12 @@ footer {
     }
  }
  
+main_navigation {
+    background: black!important;
+    border-color: black!important;
+    color: $color5!important;
+}
+
 footer_header {
     font-size:150%!important;
     background: black!important;
@@ -146,6 +152,15 @@ message {
 
 body{
   background-color: white!important;
+}
+
+.row-black {
+  background: black!important;
+  border-color: black!important;
+}
+.panel-black {
+  background: black!important;
+  border-color: black!important;
 }
 
 .panel-top {

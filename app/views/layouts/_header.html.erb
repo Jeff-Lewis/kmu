@@ -1,14 +1,142 @@
+<main_navigation>
+
+	<div class="row row-black">
+		<div class="col-md-12"
+			<div class="panel panel-black">
+				<div class="pull-left">
+					<%= link_to home_index3_path do %>
+					    <%= image_tag("marketplace.png", :size => "50x50") %>
+					<% end %>
+				</div>
+				
+				<div class="pull-left">
+					<% if $controller_list.include?(controller_name) and (action_name == "index") or (controller_name == "showcal" and (action_name == "action" or action_name == "bid" or action_name == "event")) %>
+						<% @items = url_for(action: action_name, controller: controller_name) %>
+						<%= form_tag(@items, method: 'get', class: 'navbar-form navbar-left') do %>
+							<div class="form-group">
+								<div class="col-xs-12">
+									<%= search_field_tag 'search', nil, class: 'form-control', placeholder: 'suchen'  %>
+								</div>
+							    <% submit_tag "Suchen", class: 'btn btn-default', :name => nil %>
+							</div>
+						<% end %>
+					<% end %>
+				</div>
+				
+				<div class="pull-right">
+					<% if user_signed_in? %>
+						<%= link_to current_user do %>
+							<%= showImage("User", :small, current_user) %>
+						<% end %>
+					<% else %>
+					   <%= link_to new_user_session_path do %>
+							<span style="font-size:3em"<i class="glyphicon glyphicon-log-in"></i></span>
+						<% end %> 
+					<% end %>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+			
+	<div class="row row-black">
+		<div class="col-md-12"
+			<div class="panel panel-black">
+				<marquee height="100%" scrolldelay="150"><%= ticker() %></marquee>
+			</div>
+		</div>
+	</div>
+
+	<div class="row row-black">
+		<div class="col-md-12"
+			<div class="panel panel-black">
+				<% flash.each do |name, msg| %>
+				  <% content_tag(:div, msg, class:"alert alert-warning") %>
+				  <message><fade><%= msg %></fade></message> 
+				<% end %>
+			</div>
+		</div>
+	</div>
+
+</main_navigation>
+
+<% if false %>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+ 		<%= link_to home_index3_path do %>
+	        <%= image_tag("marketplace.png", :size => "50x50") %>
+	    <% end %>
+   </div>
+   <% if false %>
+	   <div class="navbar-form navbar-left">
+			<% if $controller_list.include?(controller_name) and (action_name == "index") or (controller_name == "showcal" and (action_name == "action" or action_name == "bid" or action_name == "event")) %>
+				<% @items = url_for(action: action_name, controller: controller_name) %>
+				<%= form_tag(@items, method: 'get', class: 'navbar-form navbar-left') do %>
+					<div class="form-group">
+						<div class="col-xs-4">
+							<%= search_field_tag 'search', nil, class: 'form-control', placeholder: 'suchen'  %>
+						</div>
+					    <% submit_tag "Suchen", class: 'btn btn-default', :name => nil %>
+					</div>
+				<% end %>
+			<% end %>
+	   </div>
+   <% end %>
+   <div class="navbar navbar-right">
+	    <% if user_signed_in? %>
+	    	<%= link_to current_user do %>
+	    		<%= showImage("User", :small, current_user) %>
+	    	<% end %>
+	    <% else %>
+	       <%= link_to new_user_session_path do %>
+	       <% end %> 
+	    <% end %>
+   </div>
+   
+  </div>
+  
+</nav>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="navbar-header">
+		<%= link_to home_index3_path do %>
+	        <%= image_tag("marketplace.png", :size => "50x50") %>
+	    <% end %>
+	</div>
+	<%= form_tag(@items, method: 'get', class: 'navbar-form navbar-left') do %>
+		<div class="form-group">
+			<div class="col-xs-2">
+				<%= search_field_tag 'search', nil, class: 'form-control', placeholder: 'suchen'  %>
+			</div>
+		    <% submit_tag "Suchen", class: 'btn btn-default', :name => nil %>
+		</div>
+	<% end %>
+	<% if $controller_list.include?(controller_name) and (action_name == "index") or (controller_name == "showcal" and (action_name == "action" or action_name == "bid" or action_name == "event")) %>
+		<% @items = url_for(action: action_name, controller: controller_name) %>
+		<%= form_tag(@items, method: 'get', class: 'navbar-form navbar-left') do %>
+			<div class="form-group">
+				<div class="col-xs-4">
+					<%= search_field_tag 'search', nil, class: 'form-control', placeholder: 'suchen'  %>
+				</div>
+			    <% submit_tag "Suchen", class: 'btn btn-default', :name => nil %>
+			</div>
+		<% end %>
+	<% end %>
+<% flash.each do |name, msg| %>
+  <% content_tag(:div, msg, class:"alert alert-warning") %>
+  <message><fade><%= msg %></fade></message> 
+<% end %>
+<marquee height="100%" scrolldelay="150"><%= ticker() %></marquee>
+</nav>
+
+
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="navbar-header">
 		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 			 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 		</button>
-		<% if user_signed_in? %>
-			<%= link_to new_user_position_path do %>
-				<i class="glyphicon glyphicon-globe"></i>
-		    <% end %>
-		<% end %>
-		<%= link_to home_index_path do %>
+		<%= link_to home_index3_path do %>
 	        <%= image_tag("marketplace.png", :size => "50x50") %>
 	    <% end %>
 	</div>
@@ -106,7 +234,8 @@
 	<marquee height="100%" scrolldelay="150"><%= ticker() %></marquee>
 </nav>
 <br><br><br><br><br>
-
+<% end %>
+<br>
 <script>
 $(document).ready(function(){
         $("fade").fadeOut(10000);

@@ -14,11 +14,6 @@ def index2
 end
 
 def index3
-  if user_signed_in?
-    redirect_to current_user
-  else
-    redirect_to home_index_path
-  end
 end
 
 def index4

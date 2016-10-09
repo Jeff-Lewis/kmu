@@ -1,0 +1,32 @@
+
+  <div class="row">
+    <header>
+    <%= header("xConnect", true) %>
+    </header>
+  </div>
+  <div class="row">
+      <div class='col-xs-12'>
+          <div class="panel-body">
+
+            <%= build_kachel("LocateMe",new_user_position_path, "globe", true) %>
+            <%= build_kachel("Privatpersonen",users_path, "user", false) %>
+            <%= build_kachel("Firmen",companies_path, "copyright-mark", false) %>
+            <%= build_kachel("Angebote",services_path, "shopping-cart", false) %>
+            <%= build_kachel("Aktionen",services_path, "time", false) %>
+            <%= build_kachel("ShareMe",vehicles_path, "retweet", false) %>
+            <%= build_kachel("Ausschreibungen",bids_path, "pencil", false) %>
+            <%= build_kachel("Stellenanzeigen",jobs_path, "user", false) %>
+            <%= build_kachel("Veranstaltungen",events_path, "glass", false) %>
+            <%= build_kachel("Ausflugsziele",hotspots_path, "camera", false) %>
+            <%= build_kachel("Suchen",requests_path, "pushpin", false) %>
+            <%= build_kachel("Anbieten",requests_path, "pushpin", false) %>
+            <%= build_kachel("Spenden",donations_path, "heart", false) %>
+            <%= build_kachel("Belohnung",donations_path, "gift", false) %>
+            <%= build_kachel("Kredit",donations_path, "signal", false) %>
+            <%= build_kachel("Aktionen",showcal_action_path, "calendar", false) %>
+            <%= build_kachel("Veranstaltungen",showcal_event_path, "calendar", false) %>
+            <%= build_kachel("Ausschreibungen",showcal_bid_path, "calendar", false) %>
+
+          </div>
+      </div>
+  </div>
