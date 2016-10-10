@@ -1,4 +1,12 @@
 <main_navigation>
+<div class="container-fluid">
+	<div class="row row-black">
+		<div class="col-md-12"
+			<div class="panel panel-black">
+				<marquee height="100%" scrolldelay="150"><%= ticker() %></marquee>
+			</div>
+		</div>
+	</div>
 
 	<div class="row row-black">
 		<div class="col-md-12"
@@ -8,7 +16,7 @@
 					    <%= image_tag("marketplace.png", :size => "50x50") %>
 					<% end %>
 				</div>
-				
+
 				<div class="pull-left">
 					<% if $controller_list.include?(controller_name) and (action_name == "index") or (controller_name == "showcal" and (action_name == "action" or action_name == "bid" or action_name == "event")) %>
 						<% @items = url_for(action: action_name, controller: controller_name) %>
@@ -42,14 +50,6 @@
 	<div class="row row-black">
 		<div class="col-md-12"
 			<div class="panel panel-black">
-				<marquee height="100%" scrolldelay="150"><%= ticker() %></marquee>
-			</div>
-		</div>
-	</div>
-
-	<div class="row row-black">
-		<div class="col-md-12"
-			<div class="panel panel-black">
 				<% flash.each do |name, msg| %>
 				  <% content_tag(:div, msg, class:"alert alert-warning") %>
 				  <message><fade><%= msg %></fade></message> 
@@ -57,7 +57,7 @@
 			</div>
 		</div>
 	</div>
-
+</div>
 </main_navigation>
 
 <% if false %>
