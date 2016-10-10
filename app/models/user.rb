@@ -22,6 +22,7 @@ class User < ActiveRecord::Base
     has_many :advisors, dependent: :destroy 
     has_many :transactions, dependent: :destroy 
     has_many :donations, dependent: :destroy 
+    has_many :user_positions, dependent: :destroy 
     
     # validates :userid, presence: true, :uniqueness => true
     validates :lastname, presence: true    

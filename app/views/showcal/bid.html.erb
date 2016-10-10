@@ -54,11 +54,13 @@
                   <td>
         				    <%= link_to b do %>
         				      <% if b.bid_details != nil %>
-        				        <%= carousel(b.bid_details,"thumb") %>
+        				        <%= carousel(b.bid_details,"small") %>
                       <% else %>
                         <%= image_tag("bid_a.png", :size => "50x50" , class:"img-rounded") %>
                       <% end %>
                     <% end %>
+                    <%= b.name %></br>
+                    <% if false %>
             	      <anzeigetext>
                       <%= b.name %></br>
                     </anzeigetext>
@@ -68,6 +70,7 @@
                     <% end %><br>
                     <% if b.date_to != nil %>
                         <b><ntext>noch </ntext></b><restlaufzeit><%= (b.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeit> <b><ntext> Tage</ntext></b><br>
+                    <% end %>
                     <% end %>
                   </td>
                   <% for i in 0..6 %>

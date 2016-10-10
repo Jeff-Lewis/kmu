@@ -36,7 +36,7 @@
               </td>
             </tr>
             <tr>
-              <th>Sonderaktion</th>
+              <th>Aktion</th>
               <% for i in 0..6 %>
                   <th>
                     <%= $wochentage[i] %><br>
@@ -60,13 +60,9 @@
                       <i class="glyphicon glyphicon-star"></i>
                     <% end %>
                   <% end %><br>
-                  <%= link_to e do %>
-                    <% if !e.avatar_file_name %>
-                      <%= image_tag("action_a.png", :size => "50x50" , class:"img-rounded") %>
-                    <% else %>
-                      <%= image_tag e.avatar(:small), class:"img-rounded" %>
-                    <% end %>
-                  <% end %><br>
+                    <%= showImage("Service", :small, e) %>
+                  <%= e.name %>
+                  <% if false %>
                   <anzeigetext>
                     <%= e.name %>
                   </anzeigetext><br>
@@ -74,6 +70,7 @@
                     <b><ntext>noch </ntext></b><restlaufzeit><%= (e.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeit> <b><ntext> Tage</ntext></b>
                   <% end %>
                   <br>
+                  <% end %> 
                 </td>
                 <% for i in 0..6 %>
                     <% if AktionDatum(@start+i,e) %>

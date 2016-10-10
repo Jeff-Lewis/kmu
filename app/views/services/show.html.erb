@@ -51,11 +51,11 @@
               <br><br>
               <b>angeboten von:</b><br>
               <% if @service.company_id != nil %>
-                  <%= showImage("Company", :thumb, @service.company) %>
+                  <%= showImage("Company", :small, @service.company) %>
                   <%= @service.company.name %>
               <% end %>
               <% if @service.user_id != nil %>
-                  <%= showImage("User", :thumb, @service.user) %>
+                  <%= showImage("User", :small, @service.user) %>
                   <%= @service.user.name + " " + @service.user.lastname %>
               <% end %>
         			<br><br>

@@ -45,24 +45,12 @@
             <br><br>
             <b>durchgeführt von:</b><br>
             <% if @event.user_id != nil %>
-              <%= link_to @event.user do %>
-                <% if !@event.user.avatar_file_name %>
-                  <%= image_tag("user_a.png", :size => "100x100" , class:"img-rounded") %>
-                <% else %>
-                  <%= image_tag @event.user.avatar(:thumb), class:"img-rounded" %>
-                <% end %><br>
-                <%= @event.user.name + " " + @event.user.lastname %>
-              <% end %>
+              <%= showImage("User", :small, @event.user) %>
+              <%= @event.user.name + " " + @event.user.lastname %>
             <% end %>
             <% if @event.company_id != nil %>
-              <%= link_to @event.company do %>
-                <% if !@event.company.avatar_file_name %>
-                  <%= image_tag("company_a.png", :size => "100x100" , class:"img-rounded") %>
-                <% else %>
-                  <%= image_tag @event.company.avatar(:thumb), class:"img-rounded" %>
-                <% end %><br>
-                <%= @event.company.name %>
-              <% end %>
+              <%= showImage("Company", :small, @event.company) %>
+              <%= @event.company.name %>
             <% end %>
       			<br><br>
             <%= @event.created_at.strftime("%d.%m.%Y") %>

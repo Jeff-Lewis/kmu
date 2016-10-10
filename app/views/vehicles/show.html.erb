@@ -38,11 +38,11 @@
             <br>
             <b>vermietet von</b><br>
             <% if @vehicle.user_id != nil %>
-              <%= showImage("User", :thumb, @vehicle.user) %>
+              <%= showImage("User", :small, @vehicle.user) %>
               <%= @vehicle.user.name + " " + @vehicle.user.lastname %>
             <% end %>
             <% if @vehicle.company_id != nil %>
-              <%= showImage("Company", :thumb, @vehicle.company) %>
+              <%= showImage("Company", :small, @vehicle.company) %>
             <% end %>
             <br><br>
             <cite> <%= @vehicle.created_at.strftime("%d.%m.%Y") %></cite>        
