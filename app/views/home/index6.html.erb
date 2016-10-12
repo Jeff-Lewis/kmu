@@ -57,7 +57,7 @@
                       <%= f.text_field :dateofbirth, class:"form-control"%>
                     </div>
                     <div class="form-group">
-                      <%= f.label "Aktiv" %>
+                      <%= f.label "Aktiv" %><input type="checkbox" id="check1", class="js-switch" checked />
                       <%= f.check_box :active, :id => "u_active", class:"form-control" %>
                     </div>
                     <div class="form-group">
@@ -121,7 +121,7 @@ $(document).ready(function(){
 <script>
 $(document).ready(function(){
     $('#check1').change(function(){
-        alert("Schalter ist auf " + document.getElementById('check1').checked);
+        // alert("Schalter ist auf " + document.getElementById('check1').checked);
         if ((document.getElementById('check1').checked) == true)
             { 
                 $("#u_lastname").val("checked");
