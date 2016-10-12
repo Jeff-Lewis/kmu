@@ -49,6 +49,8 @@ gem 'geocoder'
 
 gem 'gmaps4rails'
 
+gem 'switchery-rails'
+
 gem 'will_paginate', '~> 3.0.5'
 #gem 'kaminari'
 

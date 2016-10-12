@@ -59,7 +59,7 @@ def index5
 end
 
   def index6
-    @topic = params[:topic]
+    @user=User.find(current_user.id)
   end
 
 end
