@@ -60,6 +60,7 @@ end
 
   def index6
     @user=User.find(current_user.id)
+    @user = User.find(2)
   end
 
 end

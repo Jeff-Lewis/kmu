@@ -1,9 +1,3 @@
-<h1>Hello</h1>
-
-<link rel="stylesheet" href="dist/switchery.css" />
-<script src="dist/switchery.js"></script>
-
-<input type="checkbox" id="check1", class="js-switch" checked />
 
     <%= form_for @user, html: {multipart: true}  do |f| %>
 
@@ -58,9 +52,9 @@
                     </div>
                     <div class="form-group">
                       <%= f.label "Aktiv" %>
-                      <%= f.check_box :active, :id => "u_active", class:"form-control" %>
+                      <%= f.check_box :active, :id => "active", class:"form-control" %>
+    <input type="checkbox" name="my-checkbox" checked>
                     </div>
-                    <input type="checkbox" id="check1", class="js-switch" checked />
                     <div class="form-group">
                       <%= f.label "Anonym" %>
                       <%= f.check_box :anonymous, class:"form-control"%>
@@ -71,8 +65,9 @@
                     </div>
                     <div class="form-group">
                        <%= f.label "Kalender von-bis" %><br/>
-                       <%= f.number_field :time_from, class:"form-control" %>
-                       <%= f.number_field :time_to, class:"form-control" %>
+    Kalender: <b>00:00 Uhr </b> <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="24" data-slider-step="1" data-slider-value="[<%= @user.time_from %>,<%= @user.time_to %>]"/> <b>24:00 Uhr</b>
+                       <%= f.number_field :time_from, :id => "from",  class:"form-control" %>
+                       <%= f.number_field :time_to, :id => "to", class:"form-control" %>
                     </div>
                     <% if current_user.superuser %>
                         <div class="form-group">
@@ -99,7 +94,7 @@
                     </div>
                 </div>
             </div>
-                
+
             <div class="col-md-6">
                 <div class="panel-body">
                     <div id="map">
@@ -110,29 +105,15 @@
             </div>
         </div>
     <% end %>
-
-
+                       
 <script>
-$(document).ready(function(){
-    var elem = document.querySelector('.js-switch');
-    var init = new Switchery(elem,{color: '#41b7f1', size:'large'});
-})
-</script>
-
-<script>
-$(document).ready(function(){
-    $('#check1').change(function(){
-        // alert("Schalter ist auf " + document.getElementById('check1').checked);
-        if ((document.getElementById('check1').checked) == true)
-            { 
-                $("#u_lastname").val("checked");
-                $("#u_active").prop('checked', true);
-            }
-        else 
-            { 
-                $("#u_lastname").val("unchecked"); 
-                $("#u_active").prop('checked', false);
-            }
+    $("#ex2").slider({});
+    $("#ex2").on("slide", function(slideEvt) {
+    	$("#from").val(slideEvt.value[0]);
+    	$("#to").val(slideEvt.value[1]);
     });
-})
+    $("[name='my-checkbox']").bootstrapSwitch('state',<%= @user.active %>);
+    $("[name='my-checkbox']").on('switchChange.bootstrapSwitch', function () {
+    $("#active").prop('checked',$("[name='my-checkbox']").bootstrapSwitch('state'));
+    });
 </script>

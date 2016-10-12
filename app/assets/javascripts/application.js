@@ -13,7 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui/datepicker
-//= require switchery
+//= require bootstrap-switch  
+//= require bootstrap-slider
 //= require jquery.turbolinks
 //= require raphael
 //= require morris

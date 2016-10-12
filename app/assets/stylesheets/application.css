@@ -11,7 +11,8 @@
  * file per style scope.
  *
  *= require jquery-ui/datepicker
- *= require switchery
+ *= require bootstrap-slider
+ *= require bootstrap3-switch
  *= require_self
  *= require_tree .
  */
