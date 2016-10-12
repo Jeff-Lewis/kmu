@@ -63,12 +63,14 @@
                       <%= f.label "Kalender" %>
                       <%= f.check_box :calendar, class:"form-control"%>
                     </div>
+                    <slider>
                     <div class="form-group">
                        <%= f.label "Kalender von-bis" %><br/>
     Kalender: <b>00:00 Uhr </b> <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="24" data-slider-step="1" data-slider-value="[<%= @user.time_from %>,<%= @user.time_to %>]"/> <b>24:00 Uhr</b>
                        <%= f.number_field :time_from, :id => "from",  class:"form-control" %>
                        <%= f.number_field :time_to, :id => "to", class:"form-control" %>
                     </div>
+                    </slider>
                     <% if current_user.superuser %>
                         <div class="form-group">
                           <%= f.label "Webmaster" %>
@@ -115,5 +117,9 @@
     $("[name='my-checkbox']").bootstrapSwitch('state',<%= @user.active %>);
     $("[name='my-checkbox']").on('switchChange.bootstrapSwitch', function () {
     $("#active").prop('checked',$("[name='my-checkbox']").bootstrapSwitch('state'));
+    if ($("[name='my-checkbox']").bootstrapSwitch('state') == false) 
+        {$("slider").hide()}
+    else
+        {$("slider").show()}
     });
 </script>
