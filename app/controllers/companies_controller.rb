@@ -43,6 +43,7 @@ class CompaniesController < ApplicationController
       @company = Company.new
       @company.user_id = current_user.id
       @company.active = true
+      @company.social = false
       @company.status = "new"
       @company.partner = false
   end

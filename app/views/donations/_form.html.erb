@@ -77,13 +77,13 @@
                 <%= f.text_field :due_date, class:"form-control"%>
               </div>
             <% end %>
-            <div class="field">
-              <%= f.label :Aktiv %><br>
-              <%= f.check_box :active, class:"form-control" %>
-            </div>
             <div class="form-group">
               <%= f.label "Stichworte" %><br/>
               <%= f.text_field :stichworte, class:"form-control"%>
+            </div>
+            <div class="field">
+              <input type="checkbox" name="my-checkbox1" checked>
+              <%= f.label :Aktiv %><br>
             </div>
             <div class="actions">
               <%= f.submit "Speichern", class:"btn btn-primary btn-lg"%>
@@ -92,7 +92,15 @@
             <%= f.hidden_field :user_id, class:"form-control"%>
             <%= f.hidden_field :dtype, class:"form-control"%>
           </div>
+              <%= f.check_box :active, :id => "active", class:"form-control" %>
         </div>
       </div>
       
   <% end %>
+
+<script>
+     $("[name='my-checkbox1']").bootstrapSwitch('state',<%= @donation.active %>);
+     $("[name='my-checkbox1']").on('switchChange.bootstrapSwitch', function () {
+     $("#active").prop('checked',$("[name='my-checkbox1']").bootstrapSwitch('state'));
+     });
+</script>

@@ -29,6 +29,7 @@ class RequestsController < ApplicationController
     @request.rtype = "biete"
     @request.user_id = current_user.id
     @request.active = true
+    @request.social = false
     @request.status = "new"
     @request.date_from = Date.today
     @request.date_to = Date.today + 10

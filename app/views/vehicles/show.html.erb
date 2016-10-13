@@ -84,27 +84,6 @@
                     </tr>
                   <% end %>
       
-                  <% if true == false %>
-                  <% end %>
-                    
-                  <% if true == false %>
-                    <td>
-          				    <% if user_signed_in? %>
-            				    <% if ca.user_id == current_user.id %>
-                          <%= link_to listaccounts_index_path :user_id => current_user.id, :user_id_ver => @vehicle.user_id, :company_id_ver => @vehicle.company_id, :ref => "Vergütung an "+ @vehicle.name, :object_name => "Vehicle", :object_id => @vehicle.id, :amount => 0 do %>
-                            <i class="btn btn-primary btn-xs glyphicon glyphicon-euro"></i>
-                          <% end %>
-          				        <%= link_to edit_calender_path(ca) do %>
-                            <i class="btn btn-default glyphicon glyphicon-wrench"></i>
-                          <% end %>
-          				        <%= link_to ca, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                            <i class="btn btn-danger glyphicon glyphicon-trash"></i>
-                          <% end %>
-              				  <% end %>
-              				<% end %>
-                    </td>
-                  <% end %>
-      
               </tbody>
             </table>
           </div>

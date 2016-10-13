@@ -55,7 +55,6 @@ class VehiclesController < ApplicationController
     @calenders = Calender.search(@vehicle.id, session[:cw], session[:year]).order(date_from: :asc)
     @calanz = @calenders.count
      
-     
   end
 
   # GET /vehicles/new

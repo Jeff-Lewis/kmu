@@ -15,6 +15,7 @@ class PartnerLinksController < ApplicationController
   def new
     @partner_link = PartnerLink.new
     @partner_link.company_id = params[:company_id]
+    @partner_link.active = true
   end
 
   # GET /partner_links/1/edit

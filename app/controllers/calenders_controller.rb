@@ -45,7 +45,7 @@ class CalendersController < ApplicationController
   # GET /calenders/new
   def new
     @calender = Calender.new
-    @calender.vehicle_id = session[:vehicle_id]
+    @calender.vehicle_id = params[:vehicle_id]
     @calender.user_id = current_user.id
     @calender.active = true
     @calender.date_from = Date.today

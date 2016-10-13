@@ -26,6 +26,8 @@ class CustomersController < ApplicationController
     @customer.user_id = params[:user_id]
     @customer.company_id = params[:company_id]
     @customer.partner_id = params[:partner_id]
+    @customer.newsletter = true
+    @customer.tickets = true
   end
 
   # GET /customers/1/edit

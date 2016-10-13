@@ -24,6 +24,7 @@ class DonationStatsController < ApplicationController
         @donation_stat.user_id = current_user.id
     end
     @donation_stat.status = "new"
+    @donation_stat.anonymous = false
   end
 
   # GET /donation_stats/1/edit

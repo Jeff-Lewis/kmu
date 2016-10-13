@@ -31,13 +31,15 @@
             <div class="col-md-6">
                 <div class="panel-body">
                     <div class="form-group">
-                      <%= f.label "Datum_von" %><br/>
+                      <%= f.label "Datum von" %><br/>
                       <%= f.text_field :date_from, class:"form-control"%>
+                      <%= f.label "Uhrzeit von" %><br/>
                       <%= f.number_field :time_from, class:"form-control"%>
                     </div>
                     <div class="form-group">
                       <%= f.label "Datum_bis" %><br/>
                       <%= f.text_field :date_to, class:"form-control"%>
+                      <%= f.label "Uhrzeit bis" %><br/>
                       <%= f.number_field :time_to, class:"form-control"%>
                     </div>
                    <%= f.hidden_field :vehicle_id, class:"form-control" %>

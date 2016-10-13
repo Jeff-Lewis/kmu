@@ -564,7 +564,7 @@ def action_buttons(object, item, topic)
          case topic
             when "Vehiclekalender", "Vehicleuser"
               if user_signed_in?
-                html_string = html_string + link_to(new_calender_path(:user_id => current_user.id, :vehicle_id => session[:verhicle_id])) do
+                html_string = html_string + link_to(new_calender_path(:user_id => current_user.id, :vehicle_id => item.id)) do
                   content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
                 end
               end
