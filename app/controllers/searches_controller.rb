@@ -1,6 +1,6 @@
 class SearchesController < ApplicationController
   before_action :set_search, only: [:show, :edit, :update, :destroy]
-  permits :ticket_id, :rtype, :date_from, :date_to, :search_domain, :controller, :user_id, :name, :description, :status, :category_id, :mob_category_id, :hs_category_id, :ev_category_id, :keywords, :age_from, :age_to, :distance, :geo_address, :address1, :address2, :address3, :date_created_at, :rating, :social, :customer, :amount_from, :amount_to, :amount_from_target, :amount_to_target, :special, :rating
+  permits :counter, :ticket_id, :rtype, :date_from, :date_to, :search_domain, :controller, :user_id, :name, :description, :status, :category_id, :mob_category_id, :hs_category_id, :ev_category_id, :keywords, :age_from, :age_to, :distance, :geo_address, :address1, :address2, :address3, :date_created_at, :rating, :social, :customer, :amount_from, :amount_to, :amount_from_target, :amount_to_target, :special, :rating
 
   # GET /searches
   def index
@@ -152,7 +152,5 @@ class SearchesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_search(id)
       @search = Search.find(id)
-      @count = @search.build_sql if (action_name != "destroy")
-      @search.counter = @count
     end
 end

@@ -298,7 +298,7 @@ def navigate(object,item)
         html_string = html_string + build_nav("Company",item,"Aktion","time",item.services.where("stype=?","action").count > 0)
         html_string = html_string + build_nav("Company",item,"Vehicle","retweet",item.vehicles.count > 0)
         html_string = html_string + build_nav("Company",item,"Bid","pencil",item.bid_documents.count > 0)
-        html_string = html_string + build_nav("Company",item,"Job","user",item.jobs.count > 0)
+        html_string = html_string + build_nav("Company",item,"Job","briefcase",item.jobs.count > 0)
         html_string = html_string + build_nav("Company",item,"Event","glass",item.events.count > 0)
         html_string = html_string + build_nav("Company",item,"Sponsor","certificate",item.sponsors.count > 0)
         html_string = html_string + build_nav("Company",item,"Donation","heart",item.donations.where('dtype=?',"Donation").count > 0)
@@ -373,6 +373,7 @@ def build_nav(object, item, topic, glyphicon, condition)
   else
     btn = "inactive"
   end
+  
   case object
     when "User"
       html_string = link_to(user_path(item, :topic => topic)) do

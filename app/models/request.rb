@@ -7,7 +7,8 @@ class Request < ActiveRecord::Base
     
     def self.search(filter, search, typ)
       if filter
-          where(Search.find(filter).sql_string)
+            @search = Search.find(filter)
+            where(@search.build_sql)
       else
         if search
           where('rtype=? and active=? and (stichworte LIKE ? OR name LIKE ?)', typ, true, "%#{search}%", "%#{search}%")

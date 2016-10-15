@@ -19,7 +19,8 @@ class Hotspot < ActiveRecord::Base
     
     def self.search(filter, search)
       if filter
-        where(Search.find(filter).sql_string)
+            @search = Search.find(filter)
+            where(@search.build_sql)
       else
         if search
             where('active=? and name LIKE ? OR stichworte LIKE ?', true, "%#{search}%","%#{search}%")

@@ -6,7 +6,8 @@ class Donation < ActiveRecord::Base
     
     def self.search(filter, search, dtype)
       if filter
-        where(Search.find(filter).sql_string)
+            @search = Search.find(filter)
+            where(@search.build_sql)
       else
         if search
           where('dtype=? and active=? and stichworte LIKE ? OR name LIKE ?', dtype, true, "%#{search}%", "%#{search}%")

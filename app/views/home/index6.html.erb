@@ -1,1 +1,59 @@
-<h1>Test</h1>
+  <div class="row">
+    <header>
+    <%= header("Meine Abfragen", true) %>
+    </header>
+  </div>
+  <div class="row">
+      <div class='col-xs-12'>
+          <div class="panel-body">
+            <% current_user.searches.order(:search_domain).each do |s| %>
+            
+                <% case s.search_domain %>
+                <% when "Privatpersonen" %>
+                  <% path = users_path(:filter_id => s.id) %>
+                  <% pic = "user" %>
+                <% when "Institutionen" %>
+                  <% path = companies_path(:filter_id => s.id) %>
+                  <% pic = "copyright-mark" %>
+                <% when "Angebote" %>
+                  <% path services_path(:filter_id => s.id, :stype => "regular") %>
+                  <% pic = "shopping-cart" %>
+                <% when "Aktionen" %>
+                  <% path services_path(:filter_id => s.id, :stype => "action") %>
+                  <% pic = "time" %>
+                <% when "Mobilien" %>
+                  <% path = vehicles_path(:filter_id => s.id) %>
+                  <% pic = "retweet" %>
+                <% when "Ausschreibungen" %>
+                  <% path = bids_path(:filter_id => s.id) %>
+                  <% pic = "pencil" %>
+                <% when "Kleinanzeigen" %>
+                  <% path = requests_path(:filter_id => s.id , :rtype => s.rtype) %>
+                  <% pic = "pushpin" %>
+                <% when "Stellenanzeigen" %>
+                  <% path = jobs_path(:filter_id => s.id) %>
+                  <% pic = "briefcase" %>
+                <% when "Veranstaltungen" %>
+                  <% path = events_path(:filter_id => s.id) %>
+                  <% pic = "glass" %>
+                <% when "Sehenswuerdigkeiten" %>
+                  <% path = hotspots_path(:filter_id => s.id) %>
+                  <% pic = "camera" %>
+                <% when "Spendeninitiativen" %>
+                  <% path = donations_path(:filter_id => s.id, :dtype => "Donation") %>
+                  <% pic = "heart" %>
+                <% when "Rewardinitiativen" %>
+                  <% path = donations_path(:filter_id => s.id, :dtype => "Reward") %>>
+                  <% pic = "gift" %>
+                <% when "Kreditinitiativen" %>
+                  <% path = donations_path(:filter_id => s.id, :dtype => "Loan") %>
+                  <% pic = "signal" %>
+                <% end %>
+
+                <%= build_kachel(s.name, path, pic, true) %>
+                
+            <% end %>
+            
+          </div>
+      </div>
+  </div>

@@ -99,7 +99,7 @@
                   <%= link_to hotspots_path :filter_id => s.id do %>
                     <i class="btn btn-primary glyphicon glyphicon-filter"></i>
                   <% end %>
-                <% when "Spendeninitiativen", "Rewardinitiativen" %>
+                <% when "Spendeninitiativen", "Rewardinitiativen", "Kreditinitiativen" %>
                   <%= link_to donations_path :filter_id => s.id, :dtype => @dtype  do %>
                     <i class="btn btn-primary glyphicon glyphicon-filter"></i>
                   <% end %>

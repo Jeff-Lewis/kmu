@@ -20,10 +20,7 @@
                       <%= link_to searches_path :page => session[:page], :search_domain => @search.search_domain, :controller_name => @search.controller do %>
                         <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
                       <% end %>
-                      ABFRAGEN 
-                      <% if @count != nil %>
-                        Einträge gefunden: <%= @count.to_s %><br><% @search.sql_string %>
-                      <% end %>
+                      ABFRAGEN Einträge gefunden: <%= @search.counter.to_s %><br><% @search.sql_string %>
                       </li_header>
                     </div>
                 </div>
@@ -37,6 +34,7 @@
                       <%= f.hidden_field :search_domain %>
                       <%= f.hidden_field :controller %>
                       <%= f.hidden_field :ticket_id %>
+                      <%= f.hidden_field :counter %>
                       <div class="form-group">
                         <%= f.label "Bezeichnung" %><br/>
                         <%= f.text_field :name, autofocus: true, class:"form-control"%>

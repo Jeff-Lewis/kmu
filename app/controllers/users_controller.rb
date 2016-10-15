@@ -31,6 +31,7 @@ class UsersController < ApplicationController
     if params[:page] != nil
       session[:page] = params[:page]
     end
+    @filter = params[:filter_id]
     @users = User.search(params[:filter_id],params[:search]).order(created_at: :desc).page(params[:page]).per_page(16)
     @usanz = @users.count
     @hash = Gmaps4rails.build_markers(@users) do |user, marker|

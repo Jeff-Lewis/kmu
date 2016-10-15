@@ -23,7 +23,8 @@ class Service < ActiveRecord::Base
           where('name LIKE ? and stype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', "%#{search}%", stype, true, start_date, end_date, start_date, end_date, start_date, end_date)
         else
           if filter
-            where(Search.find(filter).sql_string)
+            @search = Search.find(filter)
+            where(@search.build_sql)
           else
             if search
               where('name LIKE ? and active=? and stype=?', "%#{search}%", true, stype)

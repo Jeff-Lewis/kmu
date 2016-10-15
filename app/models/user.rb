@@ -37,7 +37,8 @@ class User < ActiveRecord::Base
     
     def self.search(filter, search)
         if filter
-            where(Search.find(filter).sql_string)
+            @search = Search.find(filter)
+            where(@search.build_sql)
         else
             if search
                 where('anonymous=? and active=? and (name LIKE ? OR lastname LIKE ? OR email LIKE ?)', false, true, "%#{search}%","%#{search}%","%#{search}%")

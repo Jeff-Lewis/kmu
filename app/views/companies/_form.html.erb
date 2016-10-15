@@ -66,8 +66,8 @@
                      <% if user_signed_in? %>
                          <% if current_user.superuser %>
                              <div class="form-group">
+                               <input type="checkbox" name="my-checkbox3" checked>
                                <%= f.label "Partner" %>
-                               <%= f.check_box :partner, class:"form-control" %>
                              </div>
                          <% end %>
                      <% end %>
@@ -99,6 +99,7 @@
                      </div>
                        <%= f.check_box :active, :id => "active", class:"form-control"%>
                        <%= f.check_box :social, :id => "social", class:"form-control"%>
+                       <%= f.check_box :partner, :id => "partner", class:"form-control" %>
                  </div>
              </div>
                 
@@ -138,4 +139,8 @@
      $("[name='my-checkbox2']").on('switchChange.bootstrapSwitch', function () {
      $("#social").prop('checked',$("[name='my-checkbox2']").bootstrapSwitch('state'));
      });
- </script>
+     $("[name='my-checkbox3']").bootstrapSwitch('state',<%= @company.partner %>);
+     $("[name='my-checkbox3']").on('switchChange.bootstrapSwitch', function () {
+     $("#partner").prop('checked',$("[name='my-checkbox3']").bootstrapSwitch('state'));
+     });
+</script>

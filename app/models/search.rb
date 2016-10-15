@@ -80,9 +80,8 @@ class Search < ActiveRecord::Base
                     sql_string << cli
                 end
             end
-
+            self.counter = User.where(sql_string).count
             self.sql_string = sql_string
-            User.where(sql_string).count
 
         when "Institutionen"
             if self.category_id != "" and self.category_id != nil and self.category_id.to_s.length != 0
@@ -109,8 +108,8 @@ class Search < ActiveRecord::Base
                 end
                 sql_string << cli
             end
+            self.counter = Company.where(sql_string).count
             self.sql_string = sql_string
-            Company.where(sql_string).count
 
         when "Ausschreibungen"
             if self.category_id != "" and self.category_id != nil and self.category_id.to_s.length != 0
@@ -140,8 +139,8 @@ class Search < ActiveRecord::Base
                 end
                 sql_string << uli
             end
+            self.counter = Bid.where(sql_string).count
             self.sql_string = sql_string
-            Bid.where(sql_string).count
 
         when "Angebote"
             sql_string[0] = sql_string[0] + "and stype=?"
@@ -183,8 +182,8 @@ class Search < ActiveRecord::Base
                     sql_string << uli
                 end
             end
+            self.counter = Service.where(sql_string).count
             self.sql_string = sql_string
-            Service.where(sql_string).count
 
         when "Aktionen"
             sql_string[0] = sql_string[0] + " and stype=?"
@@ -222,8 +221,8 @@ class Search < ActiveRecord::Base
                     sql_string << uli
                 end
             end
+            self.counter = Service.where(sql_string).count
             self.sql_string = sql_string
-            Service.where(sql_string).count
             
         when "Mobilien"
             if self.mob_category_id != "" and self.mob_category_id != nil and self.mob_category_id.to_s.length != 0
@@ -243,8 +242,8 @@ class Search < ActiveRecord::Base
                 end
                 sql_string << vli
             end
+            self.counter = Vehicle.where(sql_string).count
             self.sql_string = sql_string
-            Vehicle.where(sql_string).count
 
         when "Kleinanzeigen"
             if self.keywords != nil and self.keywords != ""
@@ -268,8 +267,8 @@ class Search < ActiveRecord::Base
                 end
                 sql_string << uli
             end
+            self.counter = Request.where(sql_string).count
             self.sql_string = sql_string
-            Request.where(sql_string).count
 
         when "Stellenanzeigen"
             if self.keywords != nil and self.keywords != ""
@@ -290,8 +289,8 @@ class Search < ActiveRecord::Base
                 end
                 sql_string << cli
             end
+            self.counter = Job.where(sql_string).count
             self.sql_string = sql_string
-            Job.where(sql_string).count
 
         when "Veranstaltungen"
             if self.keywords != nil and self.keywords != ""
@@ -319,8 +318,8 @@ class Search < ActiveRecord::Base
                 end
                 sql_string << eli
             end
+            self.counter = Event.where(sql_string).count
             self.sql_string = sql_string
-            Event.where(sql_string).count
 
         when "Sehenswuerdigkeiten"
             if self.hs_category_id != "" and self.hs_category_id != nil and self.hs_category_id.to_s.length != 0
@@ -340,16 +339,19 @@ class Search < ActiveRecord::Base
                 end
                 sql_string << hli
             end
+            self.counter = Hotspot.where(sql_string).count
             self.sql_string = sql_string
-            Hotspot.where(sql_string).count
             
-        when "Spendeninitiativen", "Rewardinitiativen"
+        when "Spendeninitiativen", "Rewardinitiativen", "Kreditinitiativen"
             sql_string[0] = sql_string[0] + " and dtype=?"
             if self.search_domain == "Spendeninitiativen"
                 sql_string << "Donation"
             end
             if self.search_domain == "Rewardinitiativen"
                 sql_string << "Reward"
+            end
+            if self.search_domain == "Kreditinitiativen"
+                sql_string << "Loan"
             end
             if self.keywords != nil and self.keywords != ""
                 sql_string[0] = sql_string[0] + " and name LIKE ?"
@@ -398,8 +400,8 @@ class Search < ActiveRecord::Base
                     sql_string << cli
                 end
             end
+            self.counter = Donation.where(sql_string).count
             self.sql_string = sql_string
-            Donation.where(sql_string).count
         end
     end
 end
