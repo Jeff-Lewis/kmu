@@ -21,6 +21,12 @@ $color1: $tkb_light_green;
 $color1: $blaugruen;
 $color1: $tkb_light_green;
 
+.nav-panel {
+   background-color: black!important;
+   border-color: black!important;
+   border-radius: 0px!important; 
+}
+
 .btn-active {
    background-color: white!important;
    border-color: white!important;
@@ -348,6 +354,10 @@ input#email:focus {
 .thumbnail:hover {
     border-color: $color1!important;
     box-shadow: 2px 2px 10px $color1;
+}
+
+.thumbnail-navnav {
+   background: transparent!important;
 }
 
 .media-body:hover {

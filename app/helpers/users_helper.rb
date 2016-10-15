@@ -333,7 +333,7 @@ def navigate(object,item)
         html_string = html_string + build_nav("Bid",item,"Bidstandort","record",item.geo_address)
 
       when "Job"
-        html_string = html_string + build_nav("Job",item,"Jobinformation","pencil",item)
+        html_string = html_string + build_nav("Job",item,"Jobinformation","briefcase",item)
         html_string = html_string + build_nav("Job",item,"Jobdetail","search",item)
 
       when "Event"

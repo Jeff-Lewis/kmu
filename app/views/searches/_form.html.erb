@@ -49,18 +49,17 @@
                      <% case @search.search_domain %>
                      <% when "Privatpersonen", "Tickets" %>
                         <div class="form-group">
-                          <%= f.label "Alter von-bis:" %><br/>
-                          <%= f.number_field :age_from, class:"form-control"%>
-                          <%= f.number_field :age_to, class:"form-control"%>
+                          <input type="checkbox" name="my-checkbox1" checked>
+                          <%= f.label "Sozialengagement" %>
                         </div>
                         <div class="form-group">
-                          <%= f.label "Sozialengagement" %>
-                          <%= f.check_box :social, class:"form-control"%>
+                          <input id="ex1" type="text" class="span2" value="" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="[<%= @search.age_from %>,<%= @search.age_to %>]"/> <b> Alter: von-bis</b>
                         </div>
+                        <br>
                         <% if @search.search_domain == "Tickets" %>
                           <div class="form-group">
+                            <input type="checkbox" name="my-checkbox1" checked>
                             <%= f.label "Kunde" %>
-                            <%= f.check_box :customer, class:"form-control"%>
                           </div>
                         <% end %>
 
@@ -70,12 +69,12 @@
                           <%= f.collection_select :category_id, Category.all.order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
                         </div>
                         <div class="form-group">
+                          <input type="checkbox" name="my-checkbox1" checked>
                           <%= f.label "gemeinnützig" %>
-                          <%= f.check_box :social, class:"form-control"%>
                         </div>
                         <div class="form-group">
+                          <input type="checkbox" name="my-checkbox3" checked>
                           <%= f.label "Aktionen" %>
-                          <%= f.check_box :special, class:"form-control"%>
                         </div>
 
                      <% when "Ausschreibungen" %>
@@ -91,8 +90,8 @@
 
                      <% when "Angebote" %>
                           <div class="form-group">
+                            <input type="checkbox" name="my-checkbox1" checked>
                             <%= f.label "gemeinnützig" %>
-                            <%= f.check_box :social, class:"form-control"%>
                           </div>
                           <%= f.label "Bewertung mindestens" %><br/>
                           <% for i in 1..5 %>
@@ -126,8 +125,8 @@
 
                      <% when "Kleinanzeigen" %>
                         <div class="form-group">
+                          <input type="checkbox" name="my-checkbox1" checked>
                           <%= f.label "Sozialengagement" %>
-                          <%= f.check_box :social, class:"form-control"%>
                         </div>
                         <div class="form-group">
                               <%= f.label "Anzeigetyp" %><br>
@@ -160,32 +159,20 @@
 
                      <% when "Spendeninitiativen" %>
                         <div class="form-group">
-                          <%= f.label "Spendenbetrag (Ziel) von-bis:" %><br/>
-                          <%= f.number_field :amount_from_target, class:"form-control"%>
-                          <%= f.number_field :amount_to_target, class:"form-control"%>
+                          <input id="ex3" type="text" class="span2" value="" data-slider-min="0" data-slider-max="100000" data-slider-step="1000" data-slider-value="[<%= @search.amount_from_target %>,<%= @search.amount_to_target %>]"/> <b>Betrag(Ziel)</b>
+                          <br><br>
                         </div>
                         <div class="form-group">
-                          <%= f.label "Spendenbetrag (IST) von-bis:" %><br/>
-                          <%= f.number_field :amount_from, class:"form-control"%>
-                          <%= f.number_field :amount_to, class:"form-control"%>
+                          <input id="ex4" type="text" class="span2" value="" data-slider-min="0" data-slider-max="100000" data-slider-step="1000" data-slider-value="[<%= @search.amount_from %>,<%= @search.amount_to %>]"/> <b>Betrag(IST)</b>
+                          <br><br>
                         </div>
 
-                     <% when "Reserve" %>
-                        <div class="form-group">
-                          <%= f.label "Branche" %><br/>
-                          <%= f.collection_select :category_id, Category.all.order(:name), :id, :name, {}, class:"form-control" %>
-                        </div>
-                        <div class="form-group">
-                          <%= f.label "active" %>
-                          <%= f.check_box :active, class:"form-control"%>
-                        </div>
                      <% end %>
+                     
                       <div class="form-group">
-                        <%= f.label "Umkreis von (km)" %><br/>
-                        <%= f.number_field :distance, class:"form-control"%>
+                        <input id="ex2" data-slider-id='ex2Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="<%= @search.distance %>"/> <b>Umkreissuche km zu Adresse</b>
                       </div>
                       <div class="form-group">
-                         <%= f.label "Adresse" %><br/>
                          <%= f.text_field :address1, class:"form-control" %>
                          <%= f.text_field :address2, class:"form-control" %>
                          <%= f.text_field :address3, class:"form-control" %>
@@ -199,6 +186,16 @@
                          <%= f.submit "Speichern",  class:"btn btn-primary btn-lg"%>
                       </div>
                 </div>
+                <%= f.number_field :age_from, :id => "from", class:"form-control"%>
+                <%= f.number_field :age_to, :id => "to", class:"form-control"%>
+                <%= f.number_field :distance, :id => "distance", class:"form-control"%>
+                <%= f.check_box :social, :id => "social", class:"form-control"%>
+                <%= f.check_box :customer, :id => "customer", class:"form-control"%>
+                <%= f.check_box :special, :id => "special", class:"form-control"%>
+                <%= f.number_field :amount_from_target, :id => "target_from", class:"form-control"%>
+                <%= f.number_field :amount_to_target, :id => "target_to", class:"form-control"%>
+                <%= f.number_field :amount_from, :id => "current_from", class:"form-control"%>
+                <%= f.number_field :amount_to, :id => "current_to", class:"form-control"%>
             </div>
                 
             <div class="col-md-6">
@@ -234,4 +231,38 @@
     { strokeColor: '#FF0000'}
   );
 
+</script>
+
+<script>
+    $("#ex1").slider({});
+    $("#ex1").on("slide", function(slideEvt) {
+    	$("#from").val(slideEvt.value[0]);
+    	$("#to").val(slideEvt.value[1]);
+    });
+    $("#ex2").slider({});
+    $("#ex2").on("slide", function(slideEvt) {
+    	$("#distance").val(slideEvt.value);
+    });
+    $("[name='my-checkbox1']").bootstrapSwitch('state',<%= @search.social %>);
+    $("[name='my-checkbox1']").on('switchChange.bootstrapSwitch', function () {
+    $("#social").prop('checked',$("[name='my-checkbox1']").bootstrapSwitch('state'));
+    });
+    $("[name='my-checkbox2']").bootstrapSwitch('state',<%= @search.customer %>);
+    $("[name='my-checkbox2']").on('switchChange.bootstrapSwitch', function () {
+    $("#customer").prop('checked',$("[name='my-checkbox2']").bootstrapSwitch('state'));
+    });
+    $("[name='my-checkbox3']").bootstrapSwitch('state',<%= @search.special %>);
+    $("[name='my-checkbox3']").on('switchChange.bootstrapSwitch', function () {
+    $("#special").prop('checked',$("[name='my-checkbox3']").bootstrapSwitch('state'));
+    });
+    $("#ex3").slider({});
+    $("#ex3").on("slide", function(slideEvt) {
+    	$("#target_from").val(slideEvt.value[0]);
+    	$("#target_to").val(slideEvt.value[1]);
+    });
+    $("#ex4").slider({});
+    $("#ex4").on("slide", function(slideEvt) {
+    	$("#current_from").val(slideEvt.value[0]);
+    	$("#current_to").val(slideEvt.value[1]);
+    });
 </script>

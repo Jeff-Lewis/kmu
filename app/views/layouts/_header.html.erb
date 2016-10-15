@@ -1,171 +1,54 @@
-<main_navigation>
-<div class="container-fluid">
-	<div class="row row-black">
-		<div class="col-md-12"
-			<div class="panel panel-black">
-				<marquee height="100%" scrolldelay="150"><%= ticker() %></marquee>
-			</div>
-		</div>
-	</div>
-
-	<div class="row row-black">
-		<div class="col-md-12"
-			<div class="panel panel-black">
-				<div class="pull-left">
-					<%= link_to home_index3_path do %>
-					    <%= image_tag("marketplace.png", :size => "50x50") %>
-					<% end %>
-				</div>
-
-				<div class="pull-left">
-					<% if $controller_list.include?(controller_name) and (action_name == "index") or (controller_name == "showcal" and (action_name == "action" or action_name == "bid" or action_name == "event")) %>
-						<% @items = url_for(action: action_name, controller: controller_name) %>
-						<%= form_tag(@items, method: 'get', class: 'navbar-form navbar-left') do %>
-							<div class="form-group">
-								<div class="col-xs-12">
-									<%= search_field_tag 'search', nil, class: 'form-control', placeholder: 'suchen'  %>
-								</div>
-							    <% submit_tag "Suchen", class: 'btn btn-default', :name => nil %>
-							</div>
-						<% end %>
-					<% end %>
-				</div>
-				
-				<div class="pull-right">
-					<% if user_signed_in? %>
-						<%= link_to current_user do %>
-							<%= showImage("User", :small, current_user) %>
-						<% end %>
-					<% else %>
-					   <%= link_to new_user_session_path do %>
-							<span style="font-size:3em"<i class="glyphicon glyphicon-log-in"></i></span>
-						<% end %> 
-					<% end %>
-				</div>
-				
-			</div>
-		</div>
-	</div>
-			
-	<div class="row row-black">
-		<div class="col-md-12"
-			<div class="panel panel-black">
-				<% flash.each do |name, msg| %>
-				  <% content_tag(:div, msg, class:"alert alert-warning") %>
-				  <message><fade><%= msg %></fade></message> 
+<div class="panel nav-panel navbar-fixed-top">
+	<br>
+	<div class="container-fluid">
+		<marquee height="100%" scrolldelay="150"><%= ticker() %></marquee>	
+		<div class="row">
+			<div  class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
+				<%= link_to home_index3_path do %>
+					<div class="thumbnail thumbnail-navnav" align="center">
+			            <i class="glyphicon glyphicon-home" style="font-size:3em"></i><br>
+			            <small_cal>Home</small_cal>
+			        </div>
 				<% end %>
 			</div>
-		</div>
-	</div>
-</div>
-</main_navigation>
 
-<% if false %>
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-	<div class="navbar-header">
-		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-			 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-		</button>
-		<%= link_to home_index3_path do %>
-	        <%= image_tag("marketplace.png", :size => "50x50") %>
-	    <% end %>
-	</div>
-	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		<ul class="nav navbar-nav">
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Angebot<strong class="caret"></strong></a>
-				<ul class="dropdown-menu">
-                    <li><%= link_to "Privatpersonen", users_path(:rtype => "biete") if $activeapps.include?("Privatpersonen") %></li>
-					<li><%= link_to "Institutionen", companies_path(:user_id => nil)  if $activeapps.include?("Institutionen")%></li>
-				    <li class="divider">
-                    <li><%= link_to "Angebote", services_path(:stype => "regular") if $activeapps.include?("Services")%></li>
-				    <li class="divider">
-				    <li><%= link_to "Sonderaktionen", services_path(:stype => "action") if $activeapps.include?("Aktionen")%></li>
-                    <li><%= link_to "Sonderaktionen (Kalender)", showcal_action_path if $activeapps.include?("Aktionen")%></li>
-				    <li class="divider">
-                    <li><%= link_to "Mobilien", vehicles_path if $activeapps.include?("Mobilien") %></li>
-				    <li class="divider">
-                    <li><%= link_to "Ausschreibungen", bids_path if $activeapps.include?("Ausschreibungen") %></li>
-                    <li><%= link_to "Ausschreibungen (Kalender)", showcal_bid_path if $activeapps.include?("Ausschreibungen") %></li>
-  				    <li class="divider">
-				    <li><%= link_to "Stellenanzeigen", jobs_path if $activeapps.include?("Stellenanzeigen") %></li>
-				    <li class="divider">
-                    <li><% link_to "Immobilien newhome.ch", url_with_protocol("www.newhome.ch"), :target => '_blank' %></li>
-				</ul>
-			</li>
-			<li class="dropdown">
-				 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Freizeit/Privat<strong class="caret"></strong></a>
-				<ul class="dropdown-menu">
-                  <li><%= link_to "Veranstaltungen", events_path if $activeapps.include?("Veranstaltungen")%></li>
-                  <li><%= link_to "Veranstaltungen (Kalender)", showcal_event_path if $activeapps.include?("Veranstaltungen")%></li>
-				  <li class="divider">
-                  <li><%= link_to "Sehenswürdigkeiten", hotspots_path if $activeapps.include?("Sehenswürdigkeiten")%></li>
-				  <li class="divider">
-				  <li><%= link_to "Crowdfunding Spenden", donations_path(:dtype => "Donation") if $activeapps.include?("Spendeninitiativen") %></li>
-				  <li><%= link_to "Crowdfunding Belohnung", donations_path(:dtype => "Reward") if $activeapps.include?("Rewardinitiativen") %></li>
-				  <li><%= link_to "Crowdfunding Kredit", donations_path(:dtype => "Loan") if $activeapps.include?("Loaninitiativen") %></li>
-				  <li class="divider">
-                  <li><%= link_to "Kleinanzeigen (Suchen)", requests_path(:rtype => "suche") if $activeapps.include?("Kleinanzeigen") %></li>
-	              <li><%= link_to "Kleinanzeigen (Anbieten)", requests_path(:rtype => "biete") if $activeapps.include?("Kleinanzeigen") %></li>
-				  <li class="divider">
-					  <% if user_signed_in? %>
-						   <% if current_user.superuser %>
-	                  <li><% link_to "Test (find me)", home_index4_path if $activeapps.include?("Wer ist wo") %></li>
-	             <% end %>
-	          <% end %>
-	    		</ul>
-			</li>
-			<% if $controller_list.include?(controller_name) and (action_name == "index") or (controller_name == "showcal" and (action_name == "action" or action_name == "bid" or action_name == "event")) %>
-				<% @items = url_for(action: action_name, controller: controller_name) %>
-				<%= form_tag(@items, method: 'get', class: 'navbar-form navbar-left') do %>
-				  <%= search_field_tag 'search', nil, class: 'form-control', placeholder: 'Search'  %>
-				  <%= submit_tag "Suchen", class: 'btn btn-default', :name => nil %>
+			<div  class="col-xs-4 col-sm-3 col-md-2 col-lg-1">
+				<% if $controller_list.include?(controller_name) and (action_name == "index") or (controller_name == "showcal" and (action_name == "action" or action_name == "bid" or action_name == "event")) %>
+					<% @items = url_for(action: action_name, controller: controller_name) %>
+					<%= form_tag(@items, method: 'get', class: 'navbar-form navbar-left') do %>
+					  <%= search_field_tag 'search', nil, class: 'form-control', placeholder: 'Search'  %>
+					  <% submit_tag "Suchen", class: 'btn btn-default', :name => nil %>
+					<% end %>
 				<% end %>
-			<% end %>
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
-			<li class="dropdown">
+			</div>
+
+			<div  class="col-xs-2 col-sm-2 col-md-1 col-lg-1 pull-right">
 				<% if user_signed_in? %>
-					 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name + " " + current_user.lastname %><strong class="caret"></strong></a>
+					<%= link_to current_user do %>
+						<div class="thumbnail thumbnail-navnav" align="center">
+				            <i class="glyphicon glyphicon-user" style="font-size:3em"></i><br>
+							<small_cal><%= current_user.name[0] + "." + current_user.lastname %></small_cal>
+						</div>
+					<% end %>
 				<% else %>
-					 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Anmelden<strong class="caret"></strong></a>
+					<%= link_to new_user_session_path do %>
+						<div class="thumbnail thumbnail-navnav" align="center">
+			            <i class="glyphicon glyphicon-log-in" style="font-size:3em"></i><br>
+							<small_cal>LogIn</small_cal>
+						</div>
+					<% end %> 
 				<% end %>
-				<ul class="dropdown-menu">
-	                <% if user_signed_in? %>
-	                  <li><%= link_to "Mein Account", current_user %></li>
-					   <% if current_user.webmaster %>
-	  					    <li class="divider">
-							<li><%= link_to "Webmaster", webmasters_path  %></li>
-					   <% end %>
-					   <% if current_user.superuser %>
-	 					    <li class="divider">
-							<li><%= link_to "App Parameter", appparams_path  %></li>
-							<li><%= link_to "User Statistik", home_index2_path  %></li>
-	  	                   <li><%= link_to "ShowMyPos", home_index4_path %></li>
-	  	                   <li><% link_to "Index6", home_index6_path %></li>
-					   <% end %>
-					  <li class="divider">
-		               <li><%= link_to "Passwort ändern", edit_user_registration_path %></li>
-	                   <li><%= link_to "Abmelden", destroy_user_session_path, method: :delete %></li>
-	                <% else %>
-	                   <li><%= link_to "Anmelden", new_user_session_path %></li>
-	                   <li><%= link_to "Registrieren", new_user_registration_path %></li>
-	                <% end %>
-    	 			<li class="divider">
-        			<li><%= link_to "über xConnect", home_index_path %></li>
-				</ul>
-			</li>
-		</ul>
+			</div>
+		</div>
 	</div>
     <% flash.each do |name, msg| %>
       <% content_tag(:div, msg, class:"alert alert-warning") %>
       <message><fade><%= msg %></fade></message> 
     <% end %>
-	<marquee height="100%" scrolldelay="150"><%= ticker() %></marquee>
-</nav>
-<br><br><br><br><br>
-<% end %>
-<br>
+</div>
+
+<br><br><br><br><br><br><br><br>
+
 <script>
 $(document).ready(function(){
         $("fade").fadeOut(10000);

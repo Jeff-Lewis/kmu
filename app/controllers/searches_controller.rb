@@ -65,11 +65,22 @@ class SearchesController < ApplicationController
   # GET /searches/new
   def new
     @search = Search.new
+    @search.name = "Meine Abfrage..."+params[:search_domain]
     @search.sql_string = []
     @search.search_domain = params[:search_domain]
     @search.user_id = params[:user_id]
     @search.controller = params[:controller_name]
     @search.distance = 0
+    @search.age_from = 0
+    @search.age_to = 100
+    @search.social = false
+    @search.distance = 20
+    @search.customer = false
+    @search.special = false
+    @search.amount_from_target = "10000"
+    @search.amount_to_target = "50000"
+    @search.amount_from = "5000"
+    @search.amount_to = "10000"
     if params[:ticket_id] != nil
       @ticket = Ticket.find(params[:ticket_id])
       @search.ticket_id = @ticket.id
