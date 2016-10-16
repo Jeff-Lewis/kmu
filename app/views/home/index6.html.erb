@@ -16,10 +16,10 @@
                   <% path = companies_path(:filter_id => s.id) %>
                   <% pic = "copyright-mark" %>
                 <% when "Angebote" %>
-                  <% path services_path(:filter_id => s.id, :stype => "regular") %>
+                  <% path = services_path(:filter_id => s.id, :stype => "regular") %>
                   <% pic = "shopping-cart" %>
                 <% when "Aktionen" %>
-                  <% path services_path(:filter_id => s.id, :stype => "action") %>
+                  <% path = services_path(:filter_id => s.id, :stype => "action") %>
                   <% pic = "time" %>
                 <% when "Mobilien" %>
                   <% path = vehicles_path(:filter_id => s.id) %>
