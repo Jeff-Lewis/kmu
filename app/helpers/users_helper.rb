@@ -80,15 +80,15 @@ def build_medialist(md_string, items, cname, panel)
                           if item.date_to != nil
                               html_string = html_string + "<b><ntext>noch </ntext></b><restlaufzeits>" + (item.date_to.to_date - DateTime.now.to_date).to_i.to_s + "</restlaufzeits> <b><ntext> Tage</ntext></b>"
                           end
-                          html_string = html_string + "<br>"    					  
-                          if !item.user.anonymous
-                            if item.user.avatar_file_name == nil
-                              html_string = html_string + (image_tag "user_a.png", :size => "50x50", class:"img-rounded")
-                            else
-                              html_string = html_string + (image_tag item.user.avatar(:small), class:"img-rounded") + "<br>"
-                              html_string = html_string + item.user.name + " " + item.user.lastname
-                            end
-                          end
+                          #html_string = html_string + "<br>"    					  
+                          #if !item.user.anonymous
+                          #  if item.user.avatar_file_name == nil
+                          #    html_string = html_string + (image_tag "user_a.png", :size => "50x50", class:"img-rounded")
+                          #  else
+                          #    html_string = html_string + (image_tag item.user.avatar(:small), class:"img-rounded") + "<br>"
+                          #    html_string = html_string + item.user.name + " " + item.user.lastname
+                          #  end
+                          #end
 
                       when "users"
                           html_string = html_string + '<h4 class="media-heading">'+ item.name + " " + item.lastname + " "
