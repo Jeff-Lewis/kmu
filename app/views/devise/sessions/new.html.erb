@@ -16,7 +16,7 @@
       </div>
       <div class="form-group">
         <input type="checkbox" name="my-checkbox" checked>
-        <%= f.hidden_field :remember_me, class:"form-control"  %>
+        <%= f.hidden_field :remember_me, class:"form-control hidden"  %>
         <%= f.label :remember_me %>
       </div>
       </ntext>
@@ -29,6 +29,7 @@
 </div>
 
 <script>
+    $.fn.bootstrapSwitch.defaults.onColor = 'success';
     $("[name='my-checkbox']").bootstrapSwitch('state',true);
     $("[name='my-checkbox']").on('switchChange.bootstrapSwitch', function () {
     $("#remember_me").prop('checked',$("[name='my-checkbox']").bootstrapSwitch('state'));

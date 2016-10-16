@@ -57,8 +57,8 @@
                     <div class="actions">
                       <%= f.submit "Speichern",  class:"btn btn-primary btn-lg"%>
                     </div>
-                      <%= f.check_box :tickets, :id => "tickets", class:"form-control"%>
-                      <%= f.check_box :newsletter, :id => "newsletter", class:"form-control"%>
+                      <%= f.check_box :tickets, :id => "tickets", class:"form-control hidden"%>
+                      <%= f.check_box :newsletter, :id => "newsletter", class:"form-control hidden"%>
                 </div>
             </div>
                 
@@ -66,6 +66,7 @@
     <% end %>
 
 <script>
+     $.fn.bootstrapSwitch.defaults.onColor = 'success';
      $("[name='my-checkbox1']").bootstrapSwitch('state',<%= @customer.newsletter %>);
      $("[name='my-checkbox1']").on('switchChange.bootstrapSwitch', function () {
      $("#newsletter").prop('checked',$("[name='my-checkbox1']").bootstrapSwitch('state'));

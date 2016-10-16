@@ -62,9 +62,9 @@
                 
             </div>
         </div>
-                      <%= f.check_box :reminder, :id => "reminder", class:"form-control"%>
-                       <%= f.number_field :time_from, :id => "from",  class:"form-control" %>
-                       <%= f.number_field :time_to, :id => "to", class:"form-control" %>
+                       <%= f.check_box :reminder, :id => "reminder", class:"form-control hidden"%>
+                       <%= f.number_field :time_from, :id => "from",  class:"form-control hidden" %>
+                       <%= f.number_field :time_to, :id => "to", class:"form-control hidden" %>
     <% end %>                
 
 <script>
@@ -73,6 +73,7 @@
     	$("#from").val(slideEvt.value[0]);
     	$("#to").val(slideEvt.value[1]);
     });
+    $.fn.bootstrapSwitch.defaults.onColor = 'success';
     $("[name='my-checkbox']").bootstrapSwitch('state',<%= @appointment.reminder %>);
     $("[name='my-checkbox']").on('switchChange.bootstrapSwitch', function () {
     $("#reminder").prop('checked',$("[name='my-checkbox']").bootstrapSwitch('state'));

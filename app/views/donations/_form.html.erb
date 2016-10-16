@@ -92,13 +92,14 @@
             <%= f.hidden_field :user_id, class:"form-control"%>
             <%= f.hidden_field :dtype, class:"form-control"%>
           </div>
-              <%= f.check_box :active, :id => "active", class:"form-control" %>
+              <%= f.check_box :active, :id => "active", class:"form-control hidden" %>
         </div>
       </div>
       
   <% end %>
 
 <script>
+     $.fn.bootstrapSwitch.defaults.onColor = 'success';
      $("[name='my-checkbox1']").bootstrapSwitch('state',<%= @donation.active %>);
      $("[name='my-checkbox1']").on('switchChange.bootstrapSwitch', function () {
      $("#active").prop('checked',$("[name='my-checkbox1']").bootstrapSwitch('state'));
