@@ -34,15 +34,20 @@ def build_medialist(md_string, items, cname, panel)
                         end
                         case items.table_name
                             when "requests"
-                                html_string = html_string + carousel(item.request_details,"small")
+                                html_string = html_string + showFirstImage(:small, item, item.request_details)
+                                #html_string = html_string + carousel(item.request_details,"small")
                             when "hotspots"
-                                html_string = html_string + carousel(item.hotspot_details,"small")
+                                html_string = html_string + showFirstImage(:small,item, item.hotspot_details)
+                                #html_string = html_string + carousel(item.hotspot_details,"small")
                             when "bids"
-                                html_string = html_string + carousel(item.bid_details,"small")
+                                html_string = html_string + showFirstImage(:small, item, item.bid_details)
+                                #html_string = html_string + carousel(item.bid_details,"small")
                             when "events"
-                                html_string = html_string + carousel(item.event_details,"small")
+                                html_string = html_string + showFirstImage(:small, item, item.event_details)
+                                #html_string = html_string + carousel(item.event_details,"small")
                             when "donations"
-                                html_string = html_string + carousel(item.donation_details,"small")
+                                html_string = html_string + showFirstImage(:small, item, item.donation_details)
+                                #html_string = html_string + carousel(item.donation_details,"small")
                             when "jobs"
                                 if item.company.avatar_file_name
                                     html_string = html_string + (image_tag item.company.avatar(:small), class:'img-rounded')
@@ -59,7 +64,7 @@ def build_medialist(md_string, items, cname, panel)
                         html_string = html_string + "</a>"
                     html_string = html_string + "</div>"
                     html_string = html_string + "<div class='media-body'>"
-                        if (Date.today - item.created_at.to_date).to_i < 2
+                        if (Date.today - item.created_at.to_date).to_i < 5
                             html_string = html_string + (image_tag 'neu.png', :size => '30x30', class:'img-rounded')
                         else
 #                            if item.updated_at.to_date == Date.today
@@ -141,12 +146,12 @@ def build_medialist(md_string, items, cname, panel)
                           if item.date_to != nil
                             html_string = html_string + "<ntext>noch </ntext><restlaufzeits>" + (item.date_to.to_date - DateTime.now.to_date).to_i.to_s + "</restlaufzeits><ntext> Tage</ntext><br>"
                           end
-                          if item.sponsors.count > 0
-                            html_string = html_string + "Sponsoren:<br>"
-                          end
-                          item.sponsors.each do |s|
-                            html_string = html_string + (image_tag s.company.avatar(:small), class:'img-rounded')
-                          end
+                          #if item.sponsors.count > 0
+                          #  html_string = html_string + "Sponsoren:<br>"
+                          #end
+                          #item.sponsors.each do |s|
+                          #  html_string = html_string + (image_tag s.company.avatar(:small), class:'img-rounded')
+                          #end
 
                       when "vehicles"
                           html_string = html_string + '<h4 class="media-heading">'+ item.name + " "
@@ -226,6 +231,36 @@ def build_medialist(md_string, items, cname, panel)
         html_string = html_string + "</div>"
     end
     html_string.html_safe
+end
+
+def showFirstImage(size, item, details)
+    case size
+        when :small
+            si = "50x50"
+        when :thumb
+            si = "100x100"
+        when :medium
+            si = "200x200"
+        when :big
+            si = "500x500"
+    end
+    if details.count > 0
+      pic = details.first
+      link_to(item) do
+          if pic.avatar_file_name
+              image_tag pic.avatar(size), class:"img-rounded"
+          else
+              case type
+                  when "Service"
+                      image_tag("service_a.png", :size => si, class:"img-rounded" )
+                  else
+                      image_tag("no_pic.jpg", :size => si, class:"img-rounded" )
+              end
+          end
+      end
+    else
+      image_tag("no_pic.jpg", :size => si, class:"img-rounded" )
+    end
 end
 
 def showImage(type, size, item)
