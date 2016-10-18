@@ -41,6 +41,9 @@
      <%= f.hidden_field :geo_address, class:"form-control" %>
      <%= f.hidden_field :longitude, class:"form-control" %>
      <%= f.hidden_field :latitude, class:"form-control" %>
+     <%= f.hidden_field :active, :value => true, class:"form-control" %>
+     <%= f.hidden_field :calendar, :value => true, class:"form-control" %>
+     <%= f.hidden_field :anonymous, :value => true, class:"form-control" %>
       </ntext>
       <div class="actions">
             <%= f.submit "Registrieren", class:"btn btn-primary btn-lg" %>
