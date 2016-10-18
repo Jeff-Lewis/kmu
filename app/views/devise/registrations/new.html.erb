@@ -31,9 +31,9 @@
       </div>
       <div class="form-group">
          <%= f.label "adress" %><br/>
-         <%= f.text_field :address1, class:"form-control" %>
-         <%= f.text_field :address2, class:"form-control" %>
-         <%= f.text_field :address3, class:"form-control" %>
+         <%= f.text_field :address1, :value => "", class:"form-control" %>
+         <%= f.text_field :address2, :value => "", class:"form-control" %>
+         <%= f.text_field :address3, :value: "", class:"form-control" %>
       </div>
      <%= f.hidden_field :status, class:"form-control" %>
      <% @user.active = true %>
@@ -41,9 +41,9 @@
      <%= f.hidden_field :geo_address, class:"form-control" %>
      <%= f.hidden_field :longitude, class:"form-control" %>
      <%= f.hidden_field :latitude, class:"form-control" %>
-     <%= f.hidden_field :active, :value => true, class:"form-control" %>
-     <%= f.hidden_field :calendar, :value => false, class:"form-control" %>
-     <%= f.hidden_field :anonymous, :value => false, class:"form-control" %>
+     <%= f.check_box :active, :input_html => { :value => true }, class:"form-control hidden" %>
+     <%= f.check_box :calendar, :input_html => { :value => false } , class:"form-control hidden" %>
+     <%= f.check_box :anonymous, :input_html => { :value => false } , class:"form-control hidden" %>
       </ntext>
       <div class="actions">
             <%= f.submit "Registrieren", class:"btn btn-primary btn-lg" %>
