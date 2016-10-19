@@ -15,10 +15,7 @@
   </div>
   
   <div class="row">
-      <div class='col-xs-2'>
-        <%= navigate("Service", @service) %>
-      </div>
-      <div class='col-xs-10'>
+       <div class='col-xs-10'>
 
       <% case @topic %>
         <% when "Service" %>
@@ -197,6 +194,9 @@
           </div>
       <% end %>
     </div>
+     <div class='col-xs-2'>
+        <%= navigate("Service", @service) %>
+      </div>
   </div>  
 
 <!--<script>-->

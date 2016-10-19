@@ -12,9 +12,6 @@
   </div>
   
   <div class="row">
-      <div class='col-xs-2'>
-        <%= navigate("Request", @request) %>
-      </div>
       <div class='col-xs-10'>
 
       <% case @topic %>
@@ -89,7 +86,10 @@
           </div>
       <% end %>
   </div>  
-
+      <div class='col-xs-2'>
+        <%= navigate("Request", @request) %>
+      </div>
+</div>
 <!--<script>-->
 <!--$(document).ready(function(){-->
 <!--  $("header").mouseenter(function() {-->
