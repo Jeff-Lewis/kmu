@@ -61,19 +61,19 @@ def build_medialist(md_string, items, cname, panel)
                         case items.table_name
                             when "requests"
                                 html_string = html_string + showFirstImage(:small, item, item.request_details)
-                                #html_string = html_string + carousel(item.request_details,"small")
+                                #html_string = html_string + carousel2(item.request_details,:small)
                             when "hotspots"
                                 html_string = html_string + showFirstImage(:small,item, item.hotspot_details)
-                                #html_string = html_string + carousel(item.hotspot_details,"small")
+                                #html_string = html_string + carousel2(item.hotspot_details,:small)
                             when "bids"
                                 html_string = html_string + showFirstImage(:small, item, item.bid_details)
-                                #html_string = html_string + carousel(item.bid_details,"small")
+                                #html_string = html_string + carousel2(item.bid_details,:small)
                             when "events"
                                 html_string = html_string + showFirstImage(:small, item, item.event_details)
-                                #html_string = html_string + carousel(item.event_details,"small")
+                                #html_string = html_string + carousel2(item.event_details,:small)
                             when "donations"
                                 html_string = html_string + showFirstImage(:small, item, item.donation_details)
-                                #html_string = html_string + carousel(item.donation_details,"small")
+                                #html_string = html_string + carousel2(item.donation_details,:small)
                             when "jobs"
                                 if item.company.avatar_file_name
                                     html_string = html_string + (image_tag item.company.avatar(:small), class:'img-rounded')
@@ -391,6 +391,7 @@ def navigate(object,item)
         html_string = html_string + build_nav("Bid",item,"Bidinformation","pencil",item)
         html_string = html_string + build_nav("Bid",item,"Biddetail","search",item.bid_details.count > 0)
         html_string = html_string + build_nav("Bid",item,"Biddokument","book",item.bid_documents.count > 0)
+        html_string = html_string + build_nav("Bid",item,"Bidangebot","book",item.bid_documents.count > 0)
         html_string = html_string + build_nav("Bid",item,"Bidstandort","record",item.geo_address)
 
       when "Job"
@@ -666,6 +667,12 @@ def action_buttons(object, item, topic)
             when "Biddokument"
               if user_signed_in?
                 html_string = html_string + link_to(new_bid_document_path(:bid_id => item.id)) do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                end
+              end
+            when "Bidangebot"
+              if user_signed_in?
+                html_string = html_string + link_to(new_bid_document_path(:bid_id => item.id, :mode => "company")) do
                   content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
                 end
               end

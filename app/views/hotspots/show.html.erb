@@ -18,11 +18,7 @@
         <% when "Hotspotinformation" %>
           <%= header("Informationen", false) %>
           <div class="panel-body">
-            <% if @hotspot.hotspot_details.count > 0 %>
-                <%= carousel(@hotspot.hotspot_details, "medium") %>
-              <% else %>
-                <%= image_tag("hotspot_a.png", :size => "200x200", class:"img-rounded" ) %>
-      			<% end %>
+            <%= carousel2(@hotspot.hotspot_details, :medium) %>
       			</p>
             <br><br>
             <b>Bewertung</b><br>
@@ -169,6 +165,16 @@
       handler.fitMapToBounds();
 });
 </script>
+
+<script type="text/javascript">
+    $('.bxslider').bxSlider({
+      mode: 'fade',
+      auto: true,
+      speed:1000,
+      controls: false
+  });
+</script>
+
 
 <!--<script>-->
 <!--$(document).ready(function(){-->

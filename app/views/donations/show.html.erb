@@ -25,11 +25,7 @@
         <% when "Donationinformation" %>
           <%= header("Informationen", false) %>
           <div class="panel-body">
-            <% if @donation.donation_details.count > 0 %>
-                <%= carousel(@donation.donation_details, "medium") %>
-              <% else %>
-                <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
-      			<% end %>
+            <%= carousel2(@donation.donation_details, :medium) %>
       			</p>
             <b>Beschreibung</b><br>
       			<%= @donation.description %>
@@ -222,6 +218,16 @@ new Morris.Line({
         labels: ['Anzahl']
 });
 </script>
+
+<script type="text/javascript">
+    $('.bxslider').bxSlider({
+      mode: 'fade',
+      auto: true,
+      speed:1000,
+      controls: false
+  });
+</script>
+
 
 <!--<script>-->
 <!--$(document).ready(function(){-->

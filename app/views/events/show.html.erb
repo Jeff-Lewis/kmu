@@ -18,11 +18,7 @@
         <% when "Eventinformation" %>
           <%= header("Informationen", false) %>
           <div class="panel-body">
-            <% if @event.event_details.count > 0 %>
-                <%= carousel(@event.event_details, "medium") %>
-              <% else %>
-                <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
-      			<% end %>
+            <%= carousel2(@event.event_details, :medium) %>
       			</p>
             <br><br>
             <b>Veranstaltungssdatum von-bis:</b><br>
@@ -189,6 +185,16 @@
       handler.fitMapToBounds();
 });
 </script>
+
+<script type="text/javascript">
+    $('.bxslider').bxSlider({
+      mode: 'fade',
+      auto: true,
+      speed:1000,
+      controls: false
+  });
+</script>
+
 
 <!--<script>-->
 <!--$(document).ready(function(){-->

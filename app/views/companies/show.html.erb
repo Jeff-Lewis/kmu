@@ -126,11 +126,7 @@
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
                   <%= link_to cbd.bid do %>
-                    <% if cbd.bid.bid_details != nil %>
-                          <%= carousel(cbd.bid.bid_details, "medium") %>
-                        <% else %>
-                          <%= image_tag("bid_a.png", :size => "200x200", class:"img-rounded" ) %>
-                		<% end %>
+                    <%= carousel2(cbd.bid.bid_details,:medium) %>
                 	<% end %>
                   <anzeigetext>
         						<%= cbd.bid.name %><br>
@@ -178,11 +174,7 @@
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <%= link_to ce do %>
-                  <% if ce.event_details.count > 0 %>
-                      <%= carousel(ce.event_details, "medium") %>
-                    <% else %>
-                      <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
-            			<% end %>
+                  <%= carousel2(ce.event_details, :medium) %>
             		<% end %>
                 <anzeigetext>
       						<%= ce.name %><br>
@@ -208,11 +200,7 @@
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
                   <%= link_to cs.event do %>
-                    <% if cs.event.event_details.count > 0 %>
-                        <%= carousel(cs.event.event_details, "medium") %>
-                      <% else %>
-                        <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
-              			<% end %>
+                    <%= carousel2(cs.event.event_details,:medium) %>
               		<% end %>
                   <br>
                   <anzeigetext>
@@ -261,11 +249,7 @@
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
                   <%= link_to cds do %>
-                    <% if cds.donation_details != nil %>
-                          <%= carousel(cds.donation_details, "medium") %>
-                        <% else %>
-                          <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
-                		<% end %>
+                    <%= carousel2(cds.donation_details, :medium) %>
                 	<% end %>
                   <br>
                   <anzeigetext>
@@ -289,11 +273,7 @@
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
                   <%= link_to cds do %>
-                    <% if cds.donation_details != nil %>
-                          <%= carousel(cds.donation_details, "medium") %>
-                        <% else %>
-                          <%= image_tag("cfr_a.png", :size => "200x200", class:"img-rounded" ) %>
-                		<% end %>
+                    <%= carousel2(cds.donation_details, :medium) %>
                 	<% end %>
                   <br>
                   <anzeigetext>
@@ -319,11 +299,7 @@
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
                   <%= link_to cds do %>
-                    <% if cds.donation_details != nil %>
-                          <%= carousel(cds.donation_details, "medium") %>
-                        <% else %>
-                          <%= image_tag("cfl_a.png", :size => "200x200", class:"img-rounded" ) %>
-                		<% end %>
+                    <%= carousel2(cds.donation_details, :medium) %>
                 	<% end %>
                   <br>
                   <anzeigetext>
@@ -349,11 +325,7 @@
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
                   <%= link_to uds.donation do %>
-                    <% if uds.donation.donation_details != nil %>
-                          <%= carousel(uds.donation.donation_details, "medium") %>
-                        <% else %>
-                          <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
-                		<% end %>
+                    <%= carousel2(uds.donation.donation_details, :medium) %>
                 	<% end %>
               		<br>
                   <anzeigetext>
@@ -678,4 +650,13 @@ Morris.Donut({
   element: 'donut-example0',
   data: $('#donut-example0').data('reports'),
 });
+</script>
+
+<script type="text/javascript">
+    $('.bxslider').bxSlider({
+      mode: 'fade',
+      auto: true,
+      speed:1000,
+      controls: false
+  });
 </script>

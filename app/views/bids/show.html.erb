@@ -75,7 +75,7 @@
 
       <% case @topic %>
         <% when "Biddokument" %>
-          <%= header("Dokumente", false) %>
+          <%= header("Ausschreibungsdokumente", false) %>
           <div class="panel-body">
         		<% @bid.bid_documents.each do |bd| %>
               <% if bd.company_id == nil %>
@@ -89,11 +89,49 @@
                     <p>
         						<%= bd.description %>
         						</p>
-                    <% if user_signed_in? %>
-                      <% if current_user.id == @bid.user_id %>
+                    <% if user_signed_in? and (current_user.id == @bid.user_id) %>
               	        <%= link_to bd.document.url, target: "_blank" do %>
                           <i class="btn btn-primary glyphicon glyphicon-cloud-download"></i>
                         <% end %>
+              	        <%= link_to edit_bid_document_path(bd) do %>
+                          <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
+                        <% end %>
+              	        <%= link_to bd, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                          <i class="btn btn-danger glyphicon glyphicon-trash"></i>
+                        <% end %>
+                    <% end %>
+                    <br><br>
+          			  </div>
+          			</div>
+          		<% end %>
+        		<% end %>
+          </div>
+      <% end %>
+
+      <% case @topic %>
+        <% when "Bidangebot" %>
+          <%= header("Angebotsdokumente", false) %>
+          <div class="panel-body">
+        		<% @bid.bid_documents.each do |bd| %>
+              <% if bd.company_id  %>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                  <div class="thumbnail" align="center">
+                    <%= image_tag("pdf.jpg", :size => "200x200", class:"img-rounded" ) %>
+                    <br>
+                    <%= showImage("company", :small, bd.company) %>
+                    <anzeigetext>
+          						<%= bd.name %><br>
+                    </anzeigetext>
+                    <p>
+        						<%= bd.description %>
+        						</p>
+                    <% if user_signed_in? %>
+                      <% if current_user.id == @bid.user_id or current_user.id == bd.company.user_id %>
+              	        <%= link_to bd.document.url, target: "_blank" do %>
+                          <i class="btn btn-primary glyphicon glyphicon-cloud-download"></i>
+                        <% end %>
+                      <% end %>
+                      <% if current_user.id == bd.company.user_id %>
               	        <%= link_to edit_bid_document_path(bd) do %>
                           <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
                         <% end %>

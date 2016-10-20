@@ -53,11 +53,7 @@
                 <tr>
                   <td>
         				    <%= link_to b do %>
-        				      <% if b.bid_details != nil %>
-        				        <%= carousel(b.bid_details,"small") %>
-                      <% else %>
-                        <%= image_tag("bid_a.png", :size => "50x50" , class:"img-rounded") %>
-                      <% end %>
+        				      <%= carousel2(b.bid_details,:small) %>
                     <% end %>
                     <%= b.name %></br>
                     <% if false %>

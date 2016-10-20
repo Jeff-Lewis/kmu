@@ -364,11 +364,7 @@
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <%= link_to ur do %>
-                  <% if ur.request_details != nil %>
-                        <%= carousel(ur.request_details, "medium") %>
-                      <% else %>
-                        <%= image_tag("request_a.png", :size => "200x200", class:"img-rounded" ) %>
-              		<% end %><br>
+                        <%= carousel2(ur.request_details, :medium) %>
               	<% end %>
                 <anzeigetext>
       						<%= ur.rtype + " " + ur.name %>
@@ -461,11 +457,7 @@
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <%= link_to ue do %>
-                  <% if ue.event_details.count > 0 %>
-                    <%= carousel(ue.event_details, "medium") %>
-                  <% else %>
-                    <%= image_tag("event_a.png", :size => "200x200", class:"img-rounded" ) %>
-            			<% end %>
+                    <%= carousel2(ue.event_details, :medium) %>
             		<% end %>
           			<br>
                 <anzeigetext>
@@ -623,11 +615,7 @@
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <%= link_to uh do %>
-                  <% if uh.hotspot_details != nil %>
-                        <%= carousel(uh.hotspot_details, "medium") %>
-                      <% else %>
-                        <%= image_tag("hotspot_a.png", :size => "200x200", class:"img-rounded" ) %>
-              		<% end %>
+                        <%= carousel2(uh.hotspot_details, :medium) %>
               	<% end %>
             		<br>
                 <anzeigetext>
@@ -671,11 +659,7 @@
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="thumbnail" align="center">
                 <%= link_to ub do %>
-                  <% if ub.bid_details != nil %>
-                        <%= carousel(ub.bid_details, "medium") %>
-                      <% else %>
-                        <%= image_tag("bid_a.png", :size => "200x200", class:"img-rounded" ) %>
-              		<% end %>
+                        <%= carousel2(ub.bid_details, :medium) %>
               	<% end %>
               	<br>
                 <anzeigetext>
@@ -719,11 +703,7 @@
           <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
               <%= link_to cds do %>
-                <% if cds.donation_details != nil %>
-                      <%= carousel(cds.donation_details, "medium") %>
-                    <% else %>
-                      <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
-            		<% end %>
+                      <%= carousel2(cds.donation_details, :medium) %>
             	<% end %>
               <br>
               <anzeigetext>
@@ -770,11 +750,7 @@
           <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail" align="center">
               <%= link_to cds do %>
-                <% if cds.donation_details != nil %>
-                      <%= carousel(cds.donation_details, "medium") %>
-                    <% else %>
-                      <%= image_tag("donation_a.png", :size => "200x200", class:"img-rounded" ) %>
-            		<% end %>
+                      <%= carousel2(cds.donation_details, :medium) %>
             	<% end %>
               <br>
               <anzeigetext>

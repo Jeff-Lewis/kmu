@@ -29,7 +29,7 @@
         <ntext><br>
         <b>Veranstaltung</b><br>
         <%= link_to ut.ticket.sponsor.event do %>
-          <%= carousel(ut.ticket.sponsor.event.event_details, "medium") %><br>
+          <%= carousel2(ut.ticket.sponsor.event.event_details, :medium) %><br>
         <% end %>
         <%= ut.ticket.sponsor.event.name %><br>
         <%= ut.ticket.sponsor.event.date_from.strftime("%d.%m.%Y") + " - " + ut.ticket.sponsor.event.date_to.strftime("%d.%m.%Y")  %><br>

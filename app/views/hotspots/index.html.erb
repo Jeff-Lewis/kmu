@@ -61,11 +61,7 @@
                 </td>
                 <td>
                   <%= link_to h do %>
-                    <% if h.hotspot_details != nil %>
-                      <%= carousel(h.hotspot_details, "small") %>
-                    <% else %>
-                      <%= image_tag("hotspot_a.png", :size => "100x100", class:"img-rounded") %>
-                		<% end %>
+                    <%= carousel2(h.hotspot_details, :medium) %>
                 	<% end %>
                 </td>
                 <td>
