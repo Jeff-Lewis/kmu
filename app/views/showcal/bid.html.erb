@@ -52,9 +52,7 @@
               <% @bids.each do |b| %>
                 <tr>
                   <td>
-        				    <%= link_to b do %>
-        				      <%= carousel2(b.bid_details,:small) %>
-                    <% end %>
+                    <%= showFirstImage(:small, b, b.bid_details) %>
                     <%= b.name %></br>
                     <% if false %>
             	      <anzeigetext>

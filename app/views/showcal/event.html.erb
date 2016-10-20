@@ -54,10 +54,8 @@
   
                 <tr>
       				    <td>
-        				    <%= link_to e do %>
-                      <%= carousel2(e.event_details, :small) %>
-                    <% end %>
-                      <%= e.name %></br>
+          				  <%= showFirstImage(:small, e, e.event_details) %>
+                    <%= e.name %></br>
                     <% if false %>
             	      <anzeigetext>
                       <%= e.name %></br>

@@ -260,16 +260,6 @@ def build_medialist(md_string, items, cname, panel)
 end
 
 def showFirstImage(size, item, details)
-    case size
-        when :small
-            si = "50x50"
-        when :thumb
-            si = "100x100"
-        when :medium
-            si = "200x200"
-        when :big
-            si = "500x500"
-    end
     if details.count > 0
       pic = details.first
       link_to(item) do
@@ -278,14 +268,14 @@ def showFirstImage(size, item, details)
           else
               case type
                   when "Service"
-                      image_tag("service_a.png", :size => si, class:"img-rounded" )
+                      image_tag("service_a.png", :size => size, class:"img-rounded" )
                   else
-                      image_tag("no_pic.jpg", :size => si, class:"img-rounded" )
+                      image_tag("no_pic.jpg", :size => size, class:"img-rounded" )
               end
           end
       end
     else
-      image_tag("no_pic.jpg", :size => si, class:"img-rounded" )
+      image_tag("no_pic.jpg", :size => size, class:"img-rounded" )
     end
 end
 
