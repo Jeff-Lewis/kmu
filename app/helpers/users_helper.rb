@@ -78,13 +78,13 @@ def build_medialist(md_string, items, cname, panel)
                                 if item.company.avatar_file_name
                                     html_string = html_string + (image_tag item.company.avatar(:small), class:'img-rounded')
                                 else
-                                    html_string = html_string + (image_tag 'company_a.png', :size => '50x50x', class:'img-rounded')
+                                    html_string = html_string + (image_tag 'company_a.png', :size => '50x50', class:'img-rounded')
                                 end
                             else
                                 if item.avatar_file_name
                                     html_string = html_string + (image_tag item.avatar(:small), class:'img-rounded')
                                 else
-                                    html_string = html_string + (image_tag 'user_a.png', :size => '50x50x', class:'img-rounded')
+                                    html_string = html_string + (image_tag 'user_a.png', :size => '50x50', class:'img-rounded')
                                 end
                         end
                         html_string = html_string + "</a>"
@@ -266,16 +266,11 @@ def showFirstImage(size, item, details)
           if pic.avatar_file_name
               image_tag pic.avatar(size), class:"img-rounded"
           else
-              case type
-                  when "Service"
-                      image_tag("service_a.png", :size => size, class:"img-rounded" )
-                  else
-                      image_tag("no_pic.jpg", :size => size, class:"img-rounded" )
-              end
+              image_tag("no_pic.jpg", :size => "50x50", class:"img-rounded" )
           end
       end
     else
-      image_tag("no_pic.jpg", :size => size, class:"img-rounded" )
+      image_tag("no_pic.jpg", :size => "50x50", class:"img-rounded" )
     end
 end
 
