@@ -51,6 +51,7 @@ gem 'gmaps4rails'
 
 gem 'bootstrap-slider-rails'
 gem "bootstrap-switch-rails"
+gem "bxslider-rails"
 
 gem 'will_paginate', '~> 3.0.5'
 #gem 'kaminari'

@@ -1,4 +1,30 @@
 module UsersHelper
+  
+def carousel2(scope, size)
+    html = ""
+    if scope.first == nil
+      html = html + (image_tag "no_pic.jpg", :size => size, class:"img-rounded")
+    
+    else
+      if scope.count == 0
+        html = html + (image_tag "no_pic.jpg", :size => size, class:"img-rounded")
+  
+      else
+  
+        html = html +  "<ul class='bxslider'>"
+        scope.each do |p|
+        	if p.avatar_file_name == nil
+            html = html + (image_tag "no_pic.jpg", :size => size, class:"img-rounded")
+          else
+            html = html + (image_tag p.avatar(size), class:"img-rounded")
+          end
+        end
+        html = html +  "</ul>"
+  
+      end
+    end
+    return html.html_safe
+end
 
 def align_text(txt)
     len = 30

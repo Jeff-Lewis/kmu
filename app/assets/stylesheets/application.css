@@ -13,6 +13,7 @@
  *= require jquery-ui/datepicker
  *= require bootstrap-slider
  *= require bootstrap3-switch
+ *= require bxslider
  *= require_self
  *= require_tree .
  */

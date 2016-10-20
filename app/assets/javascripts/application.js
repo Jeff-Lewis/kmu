@@ -15,6 +15,7 @@
 //= require jquery-ui/datepicker
 //= require bootstrap-switch  
 //= require bootstrap-slider
+//= require bxslider
 //= require jquery.turbolinks
 //= require raphael
 //= require morris
