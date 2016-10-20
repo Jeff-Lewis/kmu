@@ -20,7 +20,7 @@
         <% when "Bidinformation" %>
           <%= header("Informationen", false) %>
           <div class="panel-body">
-            <%= carousel2(@bid.bid_details, :small) %>
+            <%= carousel2(@bid.bid_details, :medium) %>
             <br>
             <b>Ausführungsort</b><br>
             <%= @bid.address1 if @bid.address1 != nil %>
@@ -147,8 +147,8 @@
   $(document).ready(function(){
     $('.bxslider').bxSlider({
       auto: true,
-      mode: 'fade',
-      captions: true
+      speed:1000,
+      controls: false
     });
   });
 </script>
