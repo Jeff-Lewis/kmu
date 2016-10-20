@@ -8,6 +8,7 @@
                 </footer_header>
                 <br><br>
                 <footer_text>
+                    <%= link_to "Info", home_index_path %><br>
                     <%= link_to "Über uns", url_with_protocol("xConnect_ueber_uns.html"), :target => '_blank' %><br>
                     <%= link_to "Rechtliches & Impressum", url_with_protocol("xConnect_rechtliches_und.impressum"), :target => '_blank' %><br>
                     <% if !user_signed_in? %>
