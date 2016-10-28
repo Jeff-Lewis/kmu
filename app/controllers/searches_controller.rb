@@ -74,7 +74,6 @@ class SearchesController < ApplicationController
     @search.age_from = 0
     @search.age_to = 100
     @search.social = false
-    @search.distance = 20
     @search.customer = false
     @search.special = false
     @search.amount_from_target = "10000"
@@ -152,5 +151,6 @@ class SearchesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_search(id)
       @search = Search.find(id)
+      @search.build_sql
     end
 end

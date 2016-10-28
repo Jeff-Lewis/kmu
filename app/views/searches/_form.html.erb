@@ -20,9 +20,9 @@
                       <%= link_to searches_path :page => session[:page], :search_domain => @search.search_domain, :controller_name => @search.controller do %>
                         <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
                       <% end %>
-                      ABFRAGEN Einträge gefunden: <%= @search.counter.to_s %>
+                      ABFRAGEN Einträge gefunden: <%= @search.counter.to_s %><% @result %>
                       <br>
-                      <% @search.sql_string %>
+                      <%= @search.sql_string %>
                       </li_header>
                     </div>
                 </div>
@@ -157,7 +157,7 @@
                           <%= f.collection_select :hs_category_id, HsCategory.all.order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
                         </div>
 
-                     <% when "Spendeninitiativen" %>
+                     <% when "Spendeninitiativen", "Rewardinitiativen", "Kreditinitiativen" %>
                         <div class="form-group">
                           <input id="ex3" type="text" class="span2" value="" data-slider-min="0" data-slider-max="100000" data-slider-step="1000" data-slider-value="[<%= @search.amount_from_target %>,<%= @search.amount_to_target %>]"/> <b>Betrag(Ziel)</b>
                           <br><br>
