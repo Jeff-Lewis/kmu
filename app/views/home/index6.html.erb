@@ -50,8 +50,10 @@
                     <% pic = "signal" %>
                 <% end %>
 
-                <% build_kachel(s.name, path, pic, true) %>
-                <%= build_kachel_color(s.name, path, pic, true) %>
+                <%= build_kachel(s.name, path, pic, true) %>
+                <% if false %>
+                  <%= build_kachel_color(s.name, path, pic, true) %>
+                <% end %>
                 
             <% end %>
             
