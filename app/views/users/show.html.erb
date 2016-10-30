@@ -411,26 +411,28 @@
                   </ntext>    		  
                   </p>
             			<p>
-            			<% case ut.status %>
-            			  <% when "persönlich", "übergeben" %>
-                      <%= link_to users_ticketstatus_path :userticket_id => ut.id, :status => "zurückgeben" do %>
-                        <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-down"> zurückgeben</i>
-                      <% end %><br><br>
-                      <%= link_to users_ticketstatus_path :userticket_id => ut.id, :status => "aktivieren" do %>
-                        <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-up"> aktivieren</i>
-                      <% end %>
-            			  <% when "zurückgegeben" %>
-                      <% link_to users_ticketstatus_path :userticket_id => ut.id, :status => "zurückgeben" do %>
-                        <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-down"> zurückgegeben</i>
-                      <% end %><br><br>
-            			  <% when "aktiv" %>
-                      <%= link_to users_ticketstatus_path :userticket_id => ut.id, :status => "einlösen" do %>
-                        <i class="btn btn-primary btn btn-lg glyphicon glyphicon-shopping-cart"> einlösen</i>
-                      <% end %>
-            			  <% when "eingelöst" %>
-                      <% link_to users_ticketstatus_path :userticket_id => ut.id, :status => "einlösen" do %>
-                        <i class="btn btn-primary btn btn-lg glyphicon glyphicon-shopping-cart"> eingelöst</i>
-                      <% end %>
+            			<% if user_signed_in? and current_user.id == ut.user_id %>
+              			<% case ut.status %>
+              			  <% when "persönlich", "übergeben" %>
+                        <%= link_to users_ticketstatus_path :userticket_id => ut.id, :status => "zurückgeben" do %>
+                          <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-down"> zurückgeben</i>
+                        <% end %><br><br>
+                        <%= link_to users_ticketstatus_path :userticket_id => ut.id, :status => "aktivieren" do %>
+                          <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-up"> aktivieren</i>
+                        <% end %>
+              			  <% when "zurückgegeben" %>
+                        <% link_to users_ticketstatus_path :userticket_id => ut.id, :status => "zurückgeben" do %>
+                          <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-down"> zurückgegeben</i>
+                        <% end %><br><br>
+              			  <% when "aktiv" %>
+                        <%= link_to users_ticketstatus_path :userticket_id => ut.id, :status => "einlösen" do %>
+                          <i class="btn btn-primary btn btn-lg glyphicon glyphicon-shopping-cart"> einlösen</i>
+                        <% end %>
+              			  <% when "eingelöst" %>
+                        <% link_to users_ticketstatus_path :userticket_id => ut.id, :status => "einlösen" do %>
+                          <i class="btn btn-primary btn btn-lg glyphicon glyphicon-shopping-cart"> eingelöst</i>
+                        <% end %>
+                    <% end %>
                   <% end %>
             		</div>
           		</div>
