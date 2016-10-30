@@ -1116,8 +1116,7 @@ def build_kachel_color(object, path, glyphicon, logon)
         content_tag(:div, nil, class:"thumbnail", align:"center") do
           content_tag(:span, nil) do
             #content_tag(:i, nil, class:"glyphicon glyphicon-" + glyphicon, style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe+object)
-
-            image_tag(glyphicon+".png", :size => "50x50") + content_tag(:small_cal, "<br>".html_safe+object)
+            image_tag(glyphicon+".png", :size => "45x45") + content_tag(:small_cal, "<br>".html_safe+object)
           end
         end
       end
