@@ -24,7 +24,7 @@ class UsersController < ApplicationController
       end
       @ut.save
     end
-    redirect_to @ut.user, notice: 'Ticketstatus successfully updated '  
+    redirect_to user_path(:id => @ut.user_id, :topic => "Ticket"), notice: 'Ticketstatus successfully updated '  
   end
   
   def index
