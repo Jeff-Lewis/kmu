@@ -74,7 +74,6 @@
             <% @array = build_stats(@array, Customer.where('user_id=?',@user.id), "Kundenbeziehungen" ) %>
             <% @array = build_stats(@array, Transaction.where('ttype=? and user_id=?', "Payment", @user.id), "Transaktionen" ) %>
             <%= content_tag :div, "", id: "donut-example0", data: {reports: @array} %>
-            <div id="sales-chart" style="height: 250px;"></div>
           </div>
           
         <% when "Userkalender" %>
@@ -936,6 +935,7 @@
 <script>
 Morris.Donut({
   element: 'donut-example0',
+  colors: ["#3c8dbc", "#f56954", "#00a65a", "#0CDE47", "#076ABE", "#998373", "#378238"],
   data: $('#donut-example0').data('reports'),
 }).on('click', function(i, row){
   switch(row.label) {
@@ -1013,26 +1013,6 @@ $(document).ready(function(){
       speed:1000,
       controls: false
   });
-});
-</script>
-
-<script>
-var donut = new Morris.Donut({
-    element: 'sales-chart',
-    resize: true,
-    colors: ["#3c8dbc", "#f56954", "#00a65a", "#0CDE47", "#076ABE", "#998373", "#378238"],
-    data: [
-        {label: "Android", value: 12},
-        {label: "iPhone", value: 30},
-        {label: "Other", value: 20}
-        ],
-        labelColor: '#303641',
-        hideHover: 'auto',
-        formatter: function (x) { 
-            return x + ' % ';
-        }
-}).on('click', function(i, row){
-    alert(row.label);
 });
 </script>
 
