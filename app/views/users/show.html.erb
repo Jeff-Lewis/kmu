@@ -66,15 +66,17 @@
             <% @array = build_stats(@array, @user.user_tickets, "Tickets" ) %>
             <% @array = build_stats(@array, @user.hotspots, "Ausflugsziele" ) %>
             <% @array = build_stats(@array, @user.bids, "Ausschreibungen" ) %>
-            <% @array = build_stats(@array, @user.donations.where('dtype=?',"Reward"), "Crowdfunding Initiativen (Reward)" ) %>
+            <% @array = build_stats(@array, @user.donations.where('dtype=?',"Reward"), "Crowdfunding Initiativen (Belohnung)" ) %>
             <% @array = build_stats(@array, @user.donations.where('dtype=?',"Loan"), "Crowdfunding Initiativen (Kredit)" ) %>
             <% @array = build_stats(@array, @user.donation_stats, "Crowdfunding Beiträge" ) %>
             <% @array = build_stats(@array, @user.ratings, "Bewertungen" ) %>
             <% @array = build_stats(@array, @user.favourits, "Favoriten" ) %>
+            <% @array = build_stats(@array, Customer.where('user_id=?',@user.id), "Kundenbeziehungen" ) %>
             <% @array = build_stats(@array, Transaction.where('ttype=? and user_id=?', "Payment", @user.id), "Transaktionen" ) %>
             <%= content_tag :div, "", id: "donut-example0", data: {reports: @array} %>
+            <div id="sales-chart" style="height: 250px;"></div>
           </div>
-
+          
         <% when "Userkalender" %>
           <%= header("Kalender KW " + session[:cw].to_s, false) %>
           <!--<div class='col-xs-12'><div class="panel-body">-->
@@ -935,6 +937,65 @@
 Morris.Donut({
   element: 'donut-example0',
   data: $('#donut-example0').data('reports'),
+}).on('click', function(i, row){
+  switch(row.label) {
+      case "Institutionen":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Company") %>");
+        break
+      case "Kalendereinträge":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Userkalender") %>");
+        break
+      case "Kundenberater":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Kundenberater") %>");
+        break
+      case "Mobilien":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Vehicle") %>");
+        break
+      case "Services":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Service") %>");
+        break
+      case "Kleinanzeigen":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Request") %>");
+        break
+      case "Veranstaltungen":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Event") %>");
+        break
+      case "Ausschreibungen":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Bid") %>");
+        break
+      case "Tickets":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Ticket") %>");
+        break
+      case "Ausflugsziele":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Hotspot") %>");
+        break
+      case "Tickets":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Ticket") %>");
+        break
+      case "Crowdfunding Initiativen (Belohnung)":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Reward") %>");
+        break
+      case "Crowdfunding Initiativen (Kredit)":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Loan") %>");
+        break
+      case "Crowdfunding Beiträge":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Stat") %>");
+        break
+      case "Bewertungen":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Rating") %>");
+        break
+      case "Favoriten":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Favourit") %>");
+        break
+      case "Kundenbeziehungen":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Customer") %>");
+        break
+      case "Transaktionen":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Transaction") %>");
+        break
+      default:
+        loadUrl("<%= user_path(:id => @user.id, :topic => "User") %>");
+  }
 });
 </script>
 
@@ -953,4 +1014,31 @@ $(document).ready(function(){
       controls: false
   });
 });
+</script>
+
+<script>
+var donut = new Morris.Donut({
+    element: 'sales-chart',
+    resize: true,
+    colors: ["#3c8dbc", "#f56954", "#00a65a", "#0CDE47", "#076ABE", "#998373", "#378238"],
+    data: [
+        {label: "Android", value: 12},
+        {label: "iPhone", value: 30},
+        {label: "Other", value: 20}
+        ],
+        labelColor: '#303641',
+        hideHover: 'auto',
+        formatter: function (x) { 
+            return x + ' % ';
+        }
+}).on('click', function(i, row){
+    alert(row.label);
+});
+</script>
+
+<script type="text/javascript">
+function loadUrl(newLocation)
+{
+  window.location.href = newLocation;
+}
 </script>
