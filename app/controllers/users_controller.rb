@@ -156,11 +156,7 @@ class UsersController < ApplicationController
   #        end
         end
       end
-@url = []
-@url[0] = url_for(User.find(1))
-@url[1] = url_for(User.find(2))
-@url[2] = url_for(User.find(3))
-    
+
   end
 
   # GET /users/new

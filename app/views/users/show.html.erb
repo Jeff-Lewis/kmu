@@ -73,6 +73,8 @@
             <% @array = build_stats(@array, @user.favourits, "Favoriten" ) %>
             <% @array = build_stats(@array, Customer.where('user_id=?',@user.id), "Kundenbeziehungen" ) %>
             <% @array = build_stats(@array, Transaction.where('ttype=? and user_id=?', "Payment", @user.id), "Transaktionen" ) %>
+            <% @array = build_stats(@array, Email.where('m_to=? or m_from=?', @user.id, @user.id), "Nachrichten" ) %>
+            <% @array = build_stats(@array, @user.searches, "Abfragen" ) %>
             <%= content_tag :div, "", id: "donut-example0", data: {reports: @array} %>
           </div>
           
@@ -935,7 +937,6 @@
 <script>
 Morris.Donut({
   element: 'donut-example0',
-  colors: ["#3c8dbc", "#f56954", "#00a65a", "#0CDE47", "#076ABE", "#998373", "#378238"],
   data: $('#donut-example0').data('reports'),
 }).on('click', function(i, row){
   switch(row.label) {
@@ -992,6 +993,12 @@ Morris.Donut({
         break
       case "Transaktionen":
         loadUrl("<%= user_path(:id => @user.id, :topic => "Transaction") %>");
+        break
+      case "Nachrichten":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Email") %>");
+        break
+      case "Abfragen":
+        loadUrl("<%= home_index6_path(:id => @user.id) %>");
         break
       default:
         loadUrl("<%= user_path(:id => @user.id, :topic => "User") %>");
