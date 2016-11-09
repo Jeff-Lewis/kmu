@@ -273,7 +273,7 @@ def build_medialist2(items, cname)
                           html_string = html_string + '<span></span>'
                           case items.table_name
                             when "users", "companies", "services", "vehicles"
-                              html_string = html_string + showImage2(:medium, item)
+                              #html_string = html_string + showImage2(:medium, item)
                             when "bids"
                               html_string = html_string + showFirstImage(:medium, item, item.bid_details)                              
                             when "jobs"
@@ -403,7 +403,7 @@ def build_medialist2(items, cname)
                             					  if item.price
                         					        html_string = html_string + "<preiss><b>" + sprintf("%05.2f CHF", item.price) + "</b></preiss>"
                         					      end
-                        					  else
+                        					   else
                       					      html_string = html_string + "<preiss><b><i class='glyphicon glyphicon-heart'></i></b></preiss>"
                         					  end
                                     html_string = html_string + "<br>"    					  
@@ -494,11 +494,11 @@ def showFirstImage(size, item, details)
           if pic.avatar_file_name
               image_tag pic.avatar(size), class:"img-rounded"
           else
-              image_tag("no_pic.jpg", :size => :size, class:"img-rounded" )
+              image_tag("no_pic.jpg", :size => size, class:"img-rounded" )
           end
       end
     else
-      image_tag("no_pic.jpg", :size => :size, class:"img-rounded" )
+      image_tag("no_pic.jpg", :size => size, class:"img-rounded" )
     end
 end
 
