@@ -30,10 +30,12 @@
       <%= header("Aktionen " + "<span class='badge'>" + @seranz.to_s + "</span>", true) %>
     <% end %>
   </div>
-  <!--<% if false %>-->
-  <!--  <%= build_medialist("col-sm-6 col-md-4 col-lg-3", @services, "services", true) %>-->
-  <!--<% end %>-->
-  <%= build_medialist2(@services, "services") %>
+  <% if false==false %>
+    <%= build_medialist("col-sm-6 col-md-4 col-lg-3", @services, "services", true) %>
+  <% end %>
+  <% if false %>
+    <%= build_medialist2(@services, "services") %>
+  <% end %>
 
   <div class="panel-body">
     <div class="row">
