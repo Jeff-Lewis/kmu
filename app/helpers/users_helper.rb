@@ -261,6 +261,11 @@ end
 
 def build_medialist2(items, cname)
   html_string = ""
+  
+  items.each do |item|
+    showImage2(:medium,item)
+  end
+  return
   items.each do |item|
 
     html_string = html_string + '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 ">'
