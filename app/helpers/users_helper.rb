@@ -263,10 +263,6 @@ def build_medialist2(items, cname)
   html_string = ""
   
   items.each do |item|
-    html_string = html_string + showImage2(:medium,item)
-  end
-  return html_string.html_safe
-  items.each do |item|
 
     html_string = html_string + '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 ">'
         html_string = html_string + '<div class="row">'
@@ -313,7 +309,7 @@ def build_medialist2(items, cname)
                                     html_string = html_string + " " + item.geo_address + '<br>'
                                     html_string = html_string + '<i class="glyphicon glyphicon-envelope"></i>'
                                     html_string = html_string + " " + item.user.email + '<br>'
-                                  when "services"
+                                  when "service"
                                     if item.social
                                       html_string = html_string + "<i class='glyphicon glyphicon-heart'></i>"+ " "
                                     end
