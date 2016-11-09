@@ -63,9 +63,8 @@ class CalendersController < ApplicationController
   # POST /calenders
   def create(calender)
     @calender = Calender.new(calender)
-
     if @calender.save
-      redirect_to calenders_path :page => session[:page], :vehicle_id => session[:vehicle_id], notice: 'Calender was successfully created.'
+      redirect_to vehicle_path(:id => @calender.vehicle_id, :topic => "Vehiclekalender"), notice: 'Calender was successfully created.'
     else
       render :new
     end
@@ -74,7 +73,7 @@ class CalendersController < ApplicationController
   # PUT /calenders/1
   def update(calender)
     if @calender.update(calender)
-      redirect_to calenders_path :page => session[:page], :vehicle_id => session[:vehicle_id], notice: 'Calender was successfully updated.'
+      redirect_to vehicle_path(:id => @calender.vehicle_id, :topic => "Vehiclekalender"), notice: 'Calender was successfully updated.'
     else
       render :edit
     end
@@ -82,9 +81,9 @@ class CalendersController < ApplicationController
 
   # DELETE /calenders/1
   def destroy
+    @vehicle_id = @calender.vehicle_id
     @calender.destroy
-
-    redirect_to calenders_path :page => session[:page], :vehicle_id => session[:vehicle_id], notice: 'Calender was successfully destroyed.'
+    redirect_to vehicle_path(:id => @vehicle_id, :topic => "Vehiclekalender"), notice: 'Calender was successfully destroyed.'
   end
 
   private

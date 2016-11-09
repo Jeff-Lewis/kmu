@@ -467,16 +467,15 @@ def build_medialist2(items, cname)
                     html_string = html_string + "</div>"
                 html_string = html_string + '<div class="panel panel-list nopadding" onclick="return init_map(0);">'
                   html_string = html_string + '<div class="list-banner">'
-                  html_string = html_string + item.created_at.strftime("%d.%m.%Y")
-                  if cname == "actions"
-                      html_string = html_string + "<a href=/services/"+item.id.to_s + ">"
-                      html_string = html_string + '<i class="glyphicon glyphicon-circle-arrow-right pull-right"></i>'
-                      html_string = html_string + "</a>"
-                  else 
-                      html_string = html_string + "<a href=/"+cname+"/"+item.id.to_s + ">"
-                      html_string = html_string + '<i class="glyphicon glyphicon-circle-arrow-right pull-right"></i>'
-                      html_string = html_string + "</a>"
-                  end
+                    html_string = html_string + item.created_at.strftime("%d.%m.%Y")
+                    #html_string = html_string + item.name
+                    if cname == "actions"
+                        html_string = html_string + "<a href=/services/"+item.id.to_s + ">"
+                    else 
+                        html_string = html_string + "<a href=/"+cname+"/"+item.id.to_s + ">"
+                    end
+                    html_string = html_string + '<i class="glyphicon glyphicon-circle-arrow-right pull-right"></i>'
+                    html_string = html_string + "</a>"
                   html_string = html_string + "</div>"
                 html_string = html_string + "</div>"
                 html_string = html_string + "</div>"
