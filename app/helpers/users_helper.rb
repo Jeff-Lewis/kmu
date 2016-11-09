@@ -259,6 +259,234 @@ def build_medialist(md_string, items, cname, panel)
     html_string.html_safe
 end
 
+def build_medialist2(items, cname)
+
+  html_string = ""
+  items.each do |item|
+
+    html_string = html_string + '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 ">'
+        html_string = html_string + '<div class="row">'
+            html_string = html_string + '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">'
+                html_string = html_string + '<div class="panel panel-default" onclick="return init_map(0);">'
+                    html_string = html_string + '<div class="row padall">'
+                      html_string = html_string + '<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">'
+                          html_string = html_string + '<span></span>'
+                          case items.table_name
+                            when "users", "companies", "services", "vehicles"
+                              html_string = html_string + showImage2(:medium, item)
+                            when "bids"
+                              html_string = html_string + showFirstImage(:medium, item, item.bid_details)                              
+                            when "jobs"
+                              html_string = html_string + showImage2(:medium, item.company)
+                            when "events"
+                              html_string = html_string + showFirstImage(:medium, item, item.event_details)                              
+                            when "hotspots"
+                              html_string = html_string + showFirstImage(:medium, item, item.hotspot_details)                              
+                            when "requests"
+                              html_string = html_string + showFirstImage(:medium, item, item.request_details)                              
+                            when "donations"
+                              html_string = html_string + showFirstImage(:medium, item, item.donation_details)                              
+                          end
+                      html_string = html_string + "</div>"
+                      html_string = html_string + '<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">'
+                        html_string = html_string + '<div class="clearfix">'
+                            html_string = html_string + '<div class="pull-left">'
+                              if (Date.today - item.created_at.to_date).to_i < 5
+                                  html_string = html_string + (image_tag 'neu.png', :size => '30x30', class:'img-rounded')
+                              end 
+                              case items.table_name
+                                  when "users"
+                                    html_string = html_string + '<list-h1>' + item.name + " " + item.lastname + '<br></list-h1><br>'
+                                    html_string = html_string + '<i class="glyphicon glyphicon-map-marker"></i>'
+                                    html_string = html_string + " " + item.geo_address + '<br>'
+                                    html_string = html_string + '<i class="glyphicon glyphicon-envelope"></i>'
+                                    html_string = html_string + " " + item.email + '<br>'
+                                  when "companies"
+                                    html_string = html_string + '<list-h1>' + item.name + '<br></list-h1><br>'
+                                    html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i>'
+                                    html_string = html_string + " " + item.category.name + '<br>'
+                                    html_string = html_string + '<i class="glyphicon glyphicon-map-marker"></i>'
+                                    html_string = html_string + " " + item.geo_address + '<br>'
+                                    html_string = html_string + '<i class="glyphicon glyphicon-envelope"></i>'
+                                    html_string = html_string + " " + item.user.email + '<br>'
+                                  when "services"
+                                    if item.social
+                                      html_string = html_string + "<i class='glyphicon glyphicon-heart'></i>"+ " "
+                                    end
+                                    html_string = html_string + '<list-h1>' + item.name + '<br></list-h1><br>'
+                                    if item.company_id != nil
+                                        html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i>'
+                                        html_string = html_string + " " + item.company.name + "<br>"
+                                    end
+                                    if item.user_id != nil
+                                        html_string = html_string + '<i class="glyphicon glyphicon-user"></i>'
+                                        html_string = html_string + + " " + item.user.name + " "+ item.user.lastname + "<br>"
+                                    end
+                                    if item.date_to != nil
+                                      html_string = html_string + "<i class='glyphicon glyphicon-time'></i>"+ " "
+                                      html_string = html_string + "<ntext>noch </ntext><restlaufzeits>" + (item.date_to.to_date - DateTime.now.to_date).to_i.to_s + "</restlaufzeits><ntext> Tage</ntext><br>"
+                                    end
+                                  when "vehicles"
+                                    html_string = html_string + '<list-h1>' + item.name + '<br></list-h1><br>'
+                                    html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i>'
+                                    html_string = html_string + " " + item.mob_category.name + '<br>'
+                                    if item.company_id != nil
+                                        html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i>'
+                                        html_string = html_string + " " + item.company.name + "<br>"
+                                    end
+                                    if item.user_id != nil
+                                        html_string = html_string + '<i class="glyphicon glyphicon-user"></i>'
+                                        html_string = html_string + + " " + item.user.name + " "+ item.user.lastname + "<br>"
+                                    end
+
+                                  when "bids"
+                                    html_string = html_string + '<list-h1>' + item.name + '<br></list-h1><br>'
+                                    html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i>'
+                                    html_string = html_string + " " + item.category.name + '<br>'
+                                    if item.user_id != nil
+                                        html_string = html_string + '<i class="glyphicon glyphicon-user"></i>'
+                                        html_string = html_string + + " " + item.user.name + " "+ item.user.lastname + "<br>"
+                                    end
+                                    if item.date_to != nil
+                                      html_string = html_string + "<i class='glyphicon glyphicon-time'></i>"+ " "
+                                      html_string = html_string + "<ntext>noch </ntext><restlaufzeits>" + (item.date_to.to_date - DateTime.now.to_date).to_i.to_s + "</restlaufzeits><ntext> Tage</ntext><br>"
+                                    end
+
+                                  when "jobs"
+                                    html_string = html_string + '<list-h1>' + item.name + '<br></list-h1><br>'
+                                    html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i>'
+                                    html_string = html_string + " " + item.company.category.name + '<br>'
+                                    html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i>'
+                                    html_string = html_string + + " " + item.company.name + "<br>"
+                                    if item.date_from != nil
+                                      html_string = html_string + "<i class='glyphicon glyphicon-time'></i>"+ " ab "
+                                      html_string = html_string + item.date_from.strftime("%d.%m.%Y") +"<br>"
+                                    end
+                                    if item.date_to != nil
+                                      html_string = html_string + "<i class='glyphicon glyphicon-time'></i>"+ " befristet bis "
+                                      html_string = html_string + item.date_to.strftime("%d.%m.%Y") +"<br>"
+                                    end
+
+                                  when "events"
+                                    html_string = html_string + '<list-h1>' + item.name + '<br></list-h1><br>'
+                                    html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i>'
+                                    html_string = html_string + " " + item.ev_category.name + '<br>'
+                                    if item.company_id != nil
+                                        html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i>'
+                                        html_string = html_string + " " + item.company.name + "<br>"
+                                    end
+                                    if item.user_id != nil
+                                        html_string = html_string + '<i class="glyphicon glyphicon-user"></i>'
+                                        html_string = html_string + + " " + item.user.name + " "+ item.user.lastname + "<br>"
+                                    end
+                                    if item.date_to != nil
+                                      html_string = html_string + "<i class='glyphicon glyphicon-time'></i>"+ " "
+                                      html_string = html_string + "<ntext>noch </ntext><restlaufzeits>" + (item.date_to.to_date - DateTime.now.to_date).to_i.to_s + "</restlaufzeits><ntext> Tage</ntext><br>"
+                                    end
+
+                                  when "hotspots"
+                                    html_string = html_string + '<list-h1>' + item.name + '<br></list-h1><br>'
+                                    html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i>'
+                                    html_string = html_string + " " + item.hs_category.name + '<br>'
+                                    if item.user_id != nil
+                                        html_string = html_string + '<i class="glyphicon glyphicon-user"></i>'
+                                        html_string = html_string + + " " + item.user.name + " "+ item.user.lastname + "<br>"
+                                    end
+
+                                  when "requests"
+                                    html_string = html_string + '<list-h1>' + item.name + '<br></list-h1><br>'
+                                    if item.user_id != nil
+                                        html_string = html_string + '<i class="glyphicon glyphicon-user"></i>'
+                                        html_string = html_string + + " " + item.user.name + " "+ item.user.lastname + "<br>"
+                                    end
+                    					      if !item.social
+                            					  if item.price
+                        					        html_string = html_string + "<preiss><b>" + sprintf("%05.2f CHF", item.price) + "</b></preiss>"
+                        					      end
+                        					  else
+                      					      html_string = html_string + "<preiss><b><i class='glyphicon glyphicon-heart'></i></b></preiss>"
+                        					  end
+                                    html_string = html_string + "<br>"    					  
+                                    if item.date_to != nil
+                                      html_string = html_string + "<i class='glyphicon glyphicon-time'></i>"+ " "
+                                      html_string = html_string + "<ntext>noch </ntext><restlaufzeits>" + (item.date_to.to_date - DateTime.now.to_date).to_i.to_s + "</restlaufzeits><ntext> Tage</ntext><br>"
+                                    end
+
+                                  when "donations"
+                                    html_string = html_string + '<list-h1>' + item.name + '<br></list-h1><br>'
+                                    if item.date_to != nil
+                                      html_string = html_string + "<i class='glyphicon glyphicon-time'></i>"+ " "
+                                      html_string = html_string + "<ntext>noch </ntext><restlaufzeits>" + (item.date_to.to_date - DateTime.now.to_date).to_i.to_s + "</restlaufzeits><ntext> Tage</ntext><br>"
+                                    end
+                                    if item.company_id != nil
+                                        html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i>'
+                                        html_string = html_string + " " + item.company.name + "<br>"
+                                    end
+                                    if item.user_id != nil
+                                        html_string = html_string + '<i class="glyphicon glyphicon-user"></i>'
+                                        html_string = html_string + + " " + item.user.name + " "+ item.user.lastname + "<br>"
+                                    end
+                                    soll = item.amount
+                                    if item.donation_stats != nil
+                                      ist  = item.donation_stats.sum(:amount)
+                                    else
+                                      ist = 0
+                                    end
+                                    if item.dtype == "Donation"
+                                        html_string = html_string + "<br>Spendenstand<br>"
+                                    end
+                                    if item.dtype == "Reward"
+                                        html_string = html_string + "<br>Stand Unterstützung<br>"
+                                    end
+                                    if item.dtype == "Loan"
+                                        html_string = html_string + "<br>Stand Kreditsumme<br>"
+                                    end
+                                    html_string = html_string + "<preiss>" + sprintf("%05.2f CHF",ist) + "</preiss><br>"
+                                    html_string = html_string + '<div class="progress">'
+                                        html_string = html_string + '<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="' + ist.to_s + '" aria-valuemin="0" aria-valuemax="' + soll.to_s + '" style="width: ' + (ist/soll*100).to_s + '%">'
+                                            html_string = html_string + '<span class="sr-only">40% Complete (success)</span>'
+                                        html_string = html_string + "</div>"
+                                    html_string = html_string + "</div>"
+                                    if item.dtype == "Reward"
+                                        if item.price > 0 
+                                            if ist > 0
+                                                anz = ((item.amount-ist)/item.price).to_i
+                                            else
+                                                anz = (item.amount/item.price).to_i
+                                            end
+                                        else
+                                            anz = 0
+                                        end
+                                        html_string = html_string + "noch "+ anz.to_s + " Unterstützer gesucht"
+                                    end
+
+                              end
+                            html_string = html_string + "</div>"
+                        html_string = html_string + "</div>"
+                      html_string = html_string + "</div>"
+                    html_string = html_string + "</div>"
+                html_string = html_string + '<div class="panel panel-list nopadding" onclick="return init_map(0);">'
+                  html_string = html_string + '<br>'
+                  html_string = html_string + item.created_at.strftime("%d.%m.%Y")
+                  if cname == "actions"
+                      html_string = html_string + "<a href=/services/"+item.id.to_s + ">"
+                      html_string = html_string + '<i class="glyphicon glyphicon-circle-arrow-right pull-right"></i>'
+                      html_string = html_string + "</a>"
+                  else 
+                      html_string = html_string + "<a href=/"+cname+"/"+item.id.to_s + ">"
+                      html_string = html_string + '<i class="glyphicon glyphicon-circle-arrow-right pull-right"></i>'
+                      html_string = html_string + "</a>"
+                  end
+                  html_string = html_string + "<br><br>"
+                html_string = html_string + "</div>"
+                html_string = html_string + "</div>"
+            html_string = html_string + "</div>"
+        html_string = html_string + "</div>"
+    html_string = html_string + "</div>"
+  end
+  return html_string.html_safe
+end
+
 def showFirstImage(size, item, details)
     if details.count > 0
       pic = details.first
@@ -266,11 +494,11 @@ def showFirstImage(size, item, details)
           if pic.avatar_file_name
               image_tag pic.avatar(size), class:"img-rounded"
           else
-              image_tag("no_pic.jpg", :size => "50x50", class:"img-rounded" )
+              image_tag("no_pic.jpg", :size => :size, class:"img-rounded" )
           end
       end
     else
-      image_tag("no_pic.jpg", :size => "50x50", class:"img-rounded" )
+      image_tag("no_pic.jpg", :size => :size, class:"img-rounded" )
     end
 end
 
@@ -296,6 +524,24 @@ def showImage(type, size, item)
                     image_tag("no_pic.jpg", :size => si, class:"img-rounded" )
             end
         end
+    end
+end
+
+def showImage2(size, item)
+    case size
+        when :small
+            si = "50x50"
+        when :thumb
+            si = "100x100"
+        when :medium
+            si = "200x200"
+        when :big
+            si = "500x500"
+    end
+    if item.avatar_file_name
+        image_tag item.avatar(size), class:"card-img-top img-responsive"
+    else
+        image_tag("no_pic.jpg", :size => si, class:"card-img-top img-responsive" )
     end
 end
 

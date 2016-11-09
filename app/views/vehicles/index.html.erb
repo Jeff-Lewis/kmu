@@ -18,7 +18,11 @@
       <%= header("Mobilien " + "<span class='badge'>" + @vehanz.to_s + "</span>", true) %>
   </div>
 
+  <% if false %>
   <%= build_medialist("col-sm-6 col-md-4 col-lg-3",@vehicles,"vehicles", true) %>
+  <% end %>
+  
+  <%= build_medialist2(@vehicles,"vehicles") %>
 
   <div class="panel-body">
     <div class="row">

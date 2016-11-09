@@ -17,6 +17,7 @@
                     <% else %>
 					   <% if current_user.webmaster %>
 							<%= link_to "Webmaster", webmasters_path  %><br>
+							<%= link_to "Test", home_index7_path  %><br>
 					   <% end %>
 					   <% if current_user.superuser %>
 							<%= link_to "App Parameter", appparams_path  %><br>
