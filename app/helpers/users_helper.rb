@@ -309,7 +309,7 @@ def build_medialist2(items, cname)
                                     html_string = html_string + " " + item.geo_address + '<br>'
                                     html_string = html_string + '<i class="glyphicon glyphicon-envelope"></i>'
                                     html_string = html_string + " " + item.user.email + '<br>'
-                                  when "service"
+                                  when "services"
                                     if item.social
                                       html_string = html_string + "<i class='glyphicon glyphicon-heart'></i>"+ " "
                                     end
@@ -320,7 +320,7 @@ def build_medialist2(items, cname)
                                     end
                                     if item.user_id != nil
                                         html_string = html_string + '<i class="glyphicon glyphicon-user"></i>'
-                                        html_string = html_string + + " " + item.user.name + " "+ item.user.lastname + "<br>"
+                                        html_string = html_string + " " + item.user.name + " "+ item.user.lastname + "<br>"
                                     end
                                     if item.date_to != nil
                                       html_string = html_string + "<i class='glyphicon glyphicon-time'></i>"+ " "
@@ -336,7 +336,7 @@ def build_medialist2(items, cname)
                                     end
                                     if item.user_id != nil
                                         html_string = html_string + '<i class="glyphicon glyphicon-user"></i>'
-                                        html_string = html_string + + " " + item.user.name + " "+ item.user.lastname + "<br>"
+                                        html_string = html_string + " " + item.user.name + " "+ item.user.lastname + "<br>"
                                     end
 
                                   when "bids"
@@ -345,7 +345,7 @@ def build_medialist2(items, cname)
                                     html_string = html_string + " " + item.category.name + '<br>'
                                     if item.user_id != nil
                                         html_string = html_string + '<i class="glyphicon glyphicon-user"></i>'
-                                        html_string = html_string + + " " + item.user.name + " "+ item.user.lastname + "<br>"
+                                        html_string = html_string + " " + item.user.name + " "+ item.user.lastname + "<br>"
                                     end
                                     if item.date_to != nil
                                       html_string = html_string + "<i class='glyphicon glyphicon-time'></i>"+ " "
@@ -357,7 +357,7 @@ def build_medialist2(items, cname)
                                     html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i>'
                                     html_string = html_string + " " + item.company.category.name + '<br>'
                                     html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i>'
-                                    html_string = html_string + + " " + item.company.name + "<br>"
+                                    html_string = html_string + " " + item.company.name + "<br>"
                                     if item.date_from != nil
                                       html_string = html_string + "<i class='glyphicon glyphicon-time'></i>"+ " ab "
                                       html_string = html_string + item.date_from.strftime("%d.%m.%Y") +"<br>"
@@ -377,7 +377,7 @@ def build_medialist2(items, cname)
                                     end
                                     if item.user_id != nil
                                         html_string = html_string + '<i class="glyphicon glyphicon-user"></i>'
-                                        html_string = html_string + + " " + item.user.name + " "+ item.user.lastname + "<br>"
+                                        html_string = html_string + " " + item.user.name + " "+ item.user.lastname + "<br>"
                                     end
                                     if item.date_to != nil
                                       html_string = html_string + "<i class='glyphicon glyphicon-time'></i>"+ " "
@@ -390,14 +390,14 @@ def build_medialist2(items, cname)
                                     html_string = html_string + " " + item.hs_category.name + '<br>'
                                     if item.user_id != nil
                                         html_string = html_string + '<i class="glyphicon glyphicon-user"></i>'
-                                        html_string = html_string + + " " + item.user.name + " "+ item.user.lastname + "<br>"
+                                        html_string = html_string + " " + item.user.name + " "+ item.user.lastname + "<br>"
                                     end
 
                                   when "requests"
                                     html_string = html_string + '<list-h1>' + item.name + '<br></list-h1><br>'
                                     if item.user_id != nil
                                         html_string = html_string + '<i class="glyphicon glyphicon-user"></i>'
-                                        html_string = html_string + + " " + item.user.name + " "+ item.user.lastname + "<br>"
+                                        html_string = html_string + " " + item.user.name + " "+ item.user.lastname + "<br>"
                                     end
                     					      if !item.social
                             					  if item.price
@@ -424,7 +424,7 @@ def build_medialist2(items, cname)
                                     end
                                     if item.user_id != nil
                                         html_string = html_string + '<i class="glyphicon glyphicon-user"></i>'
-                                        html_string = html_string + + " " + item.user.name + " "+ item.user.lastname + "<br>"
+                                        html_string = html_string + " " + item.user.name + " "+ item.user.lastname + "<br>"
                                     end
                                     soll = item.amount
                                     if item.donation_stats != nil
