@@ -359,16 +359,16 @@ class Search < ActiveRecord::Base
             self.sql_string = sql_string
             
         when "Spendeninitiativen", "Rewardinitiativen", "Kreditinitiativen"
-#            sql_string[0] = sql_string[0] + " and dtype=?"
-#            if self.search_domain == "Spendeninitiativen"
-#                sql_string << "Donation"
-#            end
-#            if self.search_domain == "Rewardinitiativen"
-#                sql_string << "Reward"
-#            end
-#            if self.search_domain == "Kreditinitiativen"
-#                sql_string << "Loan"
-#            end
+            sql_string[0] = sql_string[0] + " and dtype=?"
+            if self.search_domain == "Spendeninitiativen"
+                sql_string << "Donation"
+            end
+            if self.search_domain == "Rewardinitiativen"
+                sql_string << "Reward"
+            end
+            if self.search_domain == "Kreditinitiativen"
+                sql_string << "Loan"
+            end
 #            if self.keywords != nil and self.keywords != ""
 #                sql_string[0] = sql_string[0] + " and name LIKE ?"
 #                sql_string << "%" + self.keywords + "%"
@@ -399,7 +399,7 @@ class Search < ActiveRecord::Base
                     end
                     sql_string << cli
                 end
-                if self.search_domain == "Rewardinitiativen"
+                if self.search_domain == "Rewardinitiativen" or self.search_domain == "Kreditinitiativen"
                     sql_string[0] = sql_string[0] + " and (company_id IN (?)"
                     @companies = Company.near(self.geo_address, self.distance)
                     cli = []
@@ -437,7 +437,7 @@ if keywords != nil and keywords != ""
             keywords.split.each do |t| 
                 sql_string << "%"+t+"%"
             end
-        when "Angebote", "Aktionen", "Mobilien", "Kleinanzeigen", "Sehenswuerdigkeiten"
+        when "Angebote", "Aktionen", "Mobilien", "Kleinanzeigen", "Sehenswuerdigkeiten", "Spendeninitiativen", "Rewardinitiativen", "Kreditinitiativen"
             sql_string[0] = sql_string[0] + like_token("name",keywords)
             keywords.split.each do |t| 
                 sql_string << "%"+t+"%"

@@ -1343,7 +1343,7 @@ def build_kachel(object, path, glyphicon, logon)
   end
 end
 
-def build_kachel_color(object, path, glyphicon, logon)
+def build_kachel_color(domain, object, path, glyphicon, logon)
   if logon and !user_signed_in?
     return
   else
@@ -1370,11 +1370,12 @@ def build_kachel_color(object, path, glyphicon, logon)
     end
     
     html_string = html_string + link_to(path) do
-      content_tag(:div, nil, class:"col-xs-4 col-sm-3 col-md-2 col-lg-1") do 
-        content_tag(:div, nil, class:"thumbnail", align:"center") do
+      content_tag(:div, nil, class:"col-xs-6 col-sm-4 col-md-3 col-lg-2") do 
+        content_tag(:div, nil, class:"thumbnail kachel_min_height kachel_text", align:"center") do
           content_tag(:span, nil) do
             #content_tag(:i, nil, class:"glyphicon glyphicon-" + glyphicon, style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe+object)
-            image_tag(glyphicon+".png", :size => "45x45") + content_tag(:small_cal, "<br>".html_safe+object)
+            #content_tag(:listh1, domain) + "<br><br>".html_safe + image_tag(glyphicon+".png", :size => "45x45") + "<br><br>".html_safe + content_tag(:listh3, object)
+            content_tag(:listh1, domain) + "<br><br>".html_safe + image_tag(glyphicon, :size => "100x100") + "<br><br>".html_safe + content_tag(:listh3, object)
           end
         end
       end

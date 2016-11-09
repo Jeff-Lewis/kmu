@@ -12,49 +12,60 @@
                   <% when "Privatpersonen" %>
                     <% path = users_path(:filter_id => s.id) %>
                     <% pic = "user" %>
+                    <% pic = "user.jpg" %>
                   <% when "Institutionen" %>
                     <% path = companies_path(:filter_id => s.id) %>
                     <% pic = "copyright-mark" %>
+                    <% pic = "company.jpg" %>
                   <% when "Angebote" %>
                     <% path = services_path(:filter_id => s.id, :stype => "regular") %>
                     <% pic = "shopping-cart" %>
+                    <% pic = "service.jpg" %>
                   <% when "Aktionen" %>
                     <% path = services_path(:filter_id => s.id, :stype => "action") %>
                     <% pic = "time" %>
+                    <% pic = "aktion.jpg" %>
                   <% when "Mobilien" %>
                     <% path = vehicles_path(:filter_id => s.id) %>
                     <% pic = "retweet" %>
+                    <% pic = "vehicle.png" %>
                   <% when "Ausschreibungen" %>
                     <% path = bids_path(:filter_id => s.id) %>
                     <% pic = "pencil" %>
+                    <% pic = "bid.jpg" %>
                   <% when "Kleinanzeigen" %>
                     <% path = requests_path(:filter_id => s.id , :rtype => s.rtype) %>
                     <% pic = "pushpin" %>
+                    <% pic = "kleinanzeigen.jpg" %>
                   <% when "Stellenanzeigen" %>
                     <% path = jobs_path(:filter_id => s.id) %>
                     <% pic = "briefcase" %>
+                    <% pic = "stellenanzeigen.jpg" %>
                   <% when "Veranstaltungen" %>
                     <% path = events_path(:filter_id => s.id) %>
                     <% pic = "glass" %>
+                    <% pic = "veranstaltungen.jpg" %>
                   <% when "Sehenswuerdigkeiten" %>
                     <% path = hotspots_path(:filter_id => s.id) %>
                     <% pic = "camera" %>
+                    <% pic = "ausflug.jpg" %>
                   <% when "Spendeninitiativen" %>
                     <% path = donations_path(:filter_id => s.id, :dtype => "Donation") %>
                     <% pic = "heart" %>
+                    <% pic = "spenden.jpg" %>
                   <% when "Rewardinitiativen" %>
                     <% path = donations_path(:filter_id => s.id, :dtype => "Reward") %>
                     <% pic = "gift" %>
+                    <% pic = "belohnung.jpg" %>
                   <% when "Kreditinitiativen" %>
                     <% path = donations_path(:filter_id => s.id, :dtype => "Loan") %>
                     <% pic = "signal" %>
+                    <% pic = "kredit.jpg" %>
                 <% end %>
 
-                <%= build_kachel(s.name, path, pic, true) %>
-                <% if false %>
-                  <%= build_kachel_color(s.name, path, pic, true) %>
-                <% end %>
-                
+                <%= build_kachel(s.name, path, pic, true) if false %>
+                <%= build_kachel_color(s.search_domain, s.name, path, pic, true) if true %>
+
             <% end %>
             
           </div>

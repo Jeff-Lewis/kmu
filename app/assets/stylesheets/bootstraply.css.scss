@@ -26,8 +26,23 @@ list-h1 {
     font-size: 120%!important;
     font-weight: bold;
 }
-.panel-h2 {
-    
+
+listh1 {
+    color: $color5!important;
+    font-size: 120%!important;
+    font-weight: bold;
+}
+listh3 {
+    color: $color5!important;
+    font-size: 80%!important;
+}
+
+.kachel_min_height {
+    min-height: 200px;
+}
+
+.kachel_text {
+    line-height: 90%;
 }
 
 .list-banner {
