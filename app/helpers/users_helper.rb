@@ -260,7 +260,7 @@ def build_medialist(md_string, items, cname, panel)
 end
 
 def build_medialist2(items, cname)
-  html_string = ""
+  html_string = "<br>"
   
   items.each do |item|
 
@@ -275,17 +275,17 @@ def build_medialist2(items, cname)
                             when "users", "companies", "services", "vehicles"
                               html_string = html_string + showImage2(:medium, item)
                             when "bids"
-                              html_string = html_string + showFirstImage(:medium, item, item.bid_details)                              
+                              html_string = html_string + showFirstImage2(:medium, item, item.bid_details)                              
                             when "jobs"
                               html_string = html_string + showImage2(:medium, item.company)
                             when "events"
-                              html_string = html_string + showFirstImage(:medium, item, item.event_details)                              
+                              html_string = html_string + showFirstImage2(:medium, item, item.event_details)                              
                             when "hotspots"
-                              html_string = html_string + showFirstImage(:medium, item, item.hotspot_details)                              
+                              html_string = html_string + showFirstImage2(:medium, item, item.hotspot_details)                              
                             when "requests"
-                              html_string = html_string + showFirstImage(:medium, item, item.request_details)                              
+                              html_string = html_string + showFirstImage2(:medium, item, item.request_details)                              
                             when "donations"
-                              html_string = html_string + showFirstImage(:medium, item, item.donation_details)                              
+                              html_string = html_string + showFirstImage2(:medium, item, item.donation_details)                              
                           end
                       html_string = html_string + "</div>"
                       html_string = html_string + '<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">'
@@ -466,7 +466,7 @@ def build_medialist2(items, cname)
                       html_string = html_string + "</div>"
                     html_string = html_string + "</div>"
                 html_string = html_string + '<div class="panel panel-list nopadding" onclick="return init_map(0);">'
-                  html_string = html_string + '<br>'
+                  html_string = html_string + '<div class="list-banner">'
                   html_string = html_string + item.created_at.strftime("%d.%m.%Y")
                   if cname == "actions"
                       html_string = html_string + "<a href=/services/"+item.id.to_s + ">"
@@ -477,7 +477,7 @@ def build_medialist2(items, cname)
                       html_string = html_string + '<i class="glyphicon glyphicon-circle-arrow-right pull-right"></i>'
                       html_string = html_string + "</a>"
                   end
-                  html_string = html_string + "<br><br>"
+                  html_string = html_string + "</div>"
                 html_string = html_string + "</div>"
                 html_string = html_string + "</div>"
             html_string = html_string + "</div>"
@@ -524,6 +524,19 @@ def showImage(type, size, item)
                     image_tag("no_pic.jpg", :size => si, class:"img-rounded" )
             end
         end
+    end
+end
+
+def showFirstImage2(size, item, details)
+    if details.count > 0
+      pic = details.first
+      if pic.avatar_file_name
+          image_tag pic.avatar(size), class:"img-rounded"
+      else
+          image_tag("no_pic.jpg", :size => size, class:"img-rounded" )
+      end
+    else
+      image_tag("no_pic.jpg", :size => size, class:"img-rounded" )
     end
 end
 
