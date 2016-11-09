@@ -260,7 +260,7 @@ def build_medialist(md_string, items, cname, panel)
 end
 
 def build_medialist2(items, cname)
-
+return
   html_string = ""
   items.each do |item|
 
@@ -273,7 +273,7 @@ def build_medialist2(items, cname)
                           html_string = html_string + '<span></span>'
                           case items.table_name
                             when "users", "companies", "services", "vehicles"
-                              #html_string = html_string + showImage2(:medium, item)
+                              html_string = html_string + showImage2(:medium, item)
                             when "bids"
                               html_string = html_string + showFirstImage(:medium, item, item.bid_details)                              
                             when "jobs"
