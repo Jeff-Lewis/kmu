@@ -260,7 +260,6 @@ def build_medialist(md_string, items, cname, panel)
 end
 
 def build_medialist2(items, cname)
-return
   html_string = ""
   items.each do |item|
 
